@@ -1,0 +1,5 @@
+Database
+DBMS
+GDBMS
+RDBMS
+DDBMS

@@ -2,6 +2,18 @@
 Im Rahmen dieses Kapitels drei unterschiedliche Arten von \acl{dbms} erläutert. Zu diesen Arten gehören \acl{rdbms}, \acl{ddbms} und \acl{gdbms}. Im Zuge der Erläuterung der \acs{dbms} werden das Modell sowie besondere Eigenschaften angesprochen. Dabei ist es das Ziel dieses Kapitels, einen kurzen Überblick über die aktuell verbreiteten Modelle von \acl{dbms} anzubieten. 
 
 \section{\acl{rdbms}s}
+Das relationale Datenmodell auf dem alle relationalen Datenbankmanagementsysteme aufbauen, hat seinen Ursprung in den 1970er Jahren. Dort wurde es erstmals in \cite{codd_relational_model} beschrieben. Im Rahmen von \cite{codd_relational_model} umreist \citeauthor{codd_relational_model} ein Datenmodell, bei dem Informationen in Form von Tupeln und Relationen organisiert werden. Angelehnt an das von \citeauthor{codd_relational_model} skizzierte Datenmodell, wurden in den folgenden Jahren die ersten relationalen Datenbanksysteme entwickelt. 
+
+Relationale Datenbanksysteme organisieren hierbei ihre Daten in Form von Tabellen (Relationen), Spalten und Zeilen (Tupeln). Tabellen stellen hierbei immer einen bestimmten Entitätentyp dar z.B. ein Auto oder einen Autobesitzer. Diese Entitätentypen verfügen dabei immer über eine oder mehrere fest definierte Attribute. Bei einem Auto könnten solche Attribute das Kennzeichen, der Hersteller, das Modell und das Baujahr sein. Es ist dabei auch möglich, Beziehungen zwischen unterschiedlichen Entitätentypen (Tabellen) aufzubauen. Dadurch ergibt sich beispielsweise die Möglichkeit, eine Tabelle KFZ-Register aufzubauen. Im Rahmen dieser Tabelle kann eine Besitz-Beziehung zwischen Auto und Autobesitzer abgebildet werden. Auf diese Weise unterstützen relationale Datenbanksysteme die verschiedenen folgenden Beziehungstypen: 
+\begin{itemize}
+    \item \textit{one-to-one}, 
+    \item \textit{one-to-many} bzw. \textit{many-to-one} und 
+    \item \textit{many-to-many} -- wenn wie im Beispiel aufgelöst wird. 
+\end{itemize}
+
+Über das Konzept des relationale Konzept der Datenbanken hinaus, gilt es die Abfragesprache SQL herauszustellen. Sie nimmt im Umfeld von \acs{rdbms} eine große Rolle ein. Bekannte relationale Datenbanksysteme wie DB2, PostgreSQL, Oracle Database und Microsoft SQL Server unterstützen alle die Abfragesprache SQL. Einige von den aufgeführten Systemen tragen die Abfragesprache sogar im Namen. Dabei gilt es allerdings zu beachten, dass sich die angesprochenen Datenbanksysteme alle durch verschiedene SQL-Dialekte auszeichnen.
+
+
 
 \section{\acl{ddbms}s}
 

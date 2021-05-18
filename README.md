@@ -15,7 +15,7 @@ sudo apt install texlive texlive-latex-extra texlive-bibtex-extra texlive-lang-g
 
 ```bash
 $ apt update
-$ apt install texlive texlive-latex-extra texlive-lang-german texlive-generic-extra texlive-bibtex-extra latexmk
+$ apt install texlive texlive-latex-extra texlive-lang-german texlive-plain-generic texlive-bibtex-extra latexmk
 ```
 
 ## Build

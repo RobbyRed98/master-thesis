@@ -3,3 +3,4 @@ DBMS
 GDBMS
 RDBMS
 DDBMS
+Entitätsbeziehungen

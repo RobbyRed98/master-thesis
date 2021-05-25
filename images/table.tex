@@ -1,0 +1,51 @@
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c|c|c}
+    \hline
+    \rowcolor[HTML]{EFEFEF} 
+    \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textbf{Fahrzeugnummer}} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textbf{Marke}} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textbf{Model}} & \multicolumn{1}{l}{\cellcolor[HTML]{EFEFEF}\textbf{Baujahr}} \\ \hline
+    FZ-123456789 & Toyota & Starlet & 1997 \\
+    FZ-234567890 & Nissan & Leaf & 2018 \\
+    FZ-345678912 & VW & ID3 & 2020 \\
+    FZ-456789123 & Ford & Fiesta & 2001 \\
+    ... & ... & ... & ... \\ \hline
+    \end{tabular}
+    \caption{Auto Tabelle}
+    \label{tab:auto_table}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c|c}
+    \hline
+    \rowcolor[HTML]{EFEFEF} 
+    \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textbf{Steuernummer}} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textbf{Vorname}} & \multicolumn{1}{l}{\cellcolor[HTML]{EFEFEF}\textbf{Nachname}} \\ \hline
+    BX1212121212 & Robin & Roth \\
+    DX1313131313 & Max & Mustermann \\
+    ... & ... & ... \\ \hline
+    \end{tabular}
+    \caption{Besitzer Tabelle}
+    \label{tab:besitzer_table}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{c|c|c|c|c}
+    \hline
+    \rowcolor[HTML]{EFEFEF} 
+    \textbf{\begin{tabular}[c]{@{}c@{}}Bearbeitungs-\\ nummer\end{tabular}} &
+      \textbf{\begin{tabular}[c]{@{}c@{}}Fahrzeug-\\ nummer\end{tabular}} &
+      \textbf{\begin{tabular}[c]{@{}c@{}}Besitzer-\\ Steuernummer\end{tabular}} &
+      \textbf{Aktiv} &
+      \textbf{Datum} \\ \hline
+    12345-1 & FZ-123456789 & DX1313131313 & False & 1999.05.05 \\
+    23451-1 & FZ-456789123 & DX1313131313 & False & 2002.03.03 \\
+    12345-2 & FZ-123456789 & BX1212121212 & False & 2015.12.12 \\
+    34512-1 & FZ-234567890 & BX1212121212 & True  & 2019.08.08 \\
+    45123-1 & FZ-345678912 & DX1313131313 & True  & 2020.02.02 \\ 
+    ... & ... & ... & ... & ... \\\hline
+    \end{tabular}
+    \caption{Auflösungstabelle Kfz-Register}
+    \label{tab:kfz-register}
+\end{table}
+

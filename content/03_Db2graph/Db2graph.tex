@@ -1,0 +1,14 @@
+\chapter{Db2graph}
+\label{chap:db2graph}
+
+Im Rahmen dieses Kapitels wird IBM Db2graph genauer erläutert. Dabei wird der Ansatz, das Konzept und die bereits in der Dokumentation der Software beschriebenen Einschränkungen eingegangen. 
+
+\section{Ansatz}
+\label{db2graph:ansatz}
+Db2graph wurde mit dem Ziel entwickelt, Informationen mittels Graph-Queries aus einer relationalen Db2 Datenbank abfragen zu können. So wurde Db2graph als eine Art Graph-Erweiterung für Db2 konzipiert. Der Einsatz von Db2graph setzt folglich eine aktive Instanz von Db2 voraus. Diese hält hierbei die Informationen, auf die Db2graph Zugriff hat, in relationaler Form, ohne das Anpassungen für die Einbindung in Db2graph notwendig sind. 
+
+Aus architektonischer Sicht fungiert Db2graph als eine Art Proxy-Anwendung beziehungsweise Graph-Erweiterung, die Gremlin-Graph-Queries in SQL-An\-wei\-sung\-en übersetzt und diese  an eine Db2 Instanz weiterleitet. Darüber hinaus können Db2 und Db2graph zusammengefasst als eine Art Hybrides Datenbankmanagementsystem betrachtet werden. Da es Elemente von Graph- und relationalen Datenbanksystemen vereint. So ist es möglich Graph-Anfragen an ein solches System zu stellen, während dem die Daten in relationaler Form gespeichert werden. Im weiteren Verlauf der Arbeit wird die Kombination aus Db2 und Db2graph verkürzt als Db2graph-System bezeichnet. 
+
+\section{Funktionsweise}
+
+\section{Einschränkungen}

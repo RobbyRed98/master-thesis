@@ -21,6 +21,32 @@ $ latexmk document.tex -interaction=nonstopmode -file-line-error -pdf
 
 ## Structure
 
+Thesis-Aufbau:
+1. Einführung
+    1. Warum interessant?
+    1. Hinweis auf bereits existierendes Paper. 
+1. Theoretische Grundlagen 
+    1. kurze Übersicht Graph vs. relational
+    1. SQL vs. Gremlin vs. Cypher (noch unsicher)
+1. Db2graph
+    1. Ansatz (Hybrid)
+    1. Funktionsweise
+    1. Einschränkungen
+    1. Hinweise verschiedene Versionen
+1. Analyse-Methode
+    1. Bewertungskriterien
+        - Erweiterbarkeit -- Wie viel Plugin- & Framework-Unterstützung?
+        - Performance -- Wie hoch im Vergleich zu Neo4j? (Hauptfokus) (beinhaltet Linkbench-Impls)
+        - (optional) Usablility (Tooling + Konfiguration-Aufwand) vs. Neo4j
+1. Evaluation & Ergebnisse
+    1. Performance-Messungen mit Linkbench
+    1. Erweiterbarkeit Neo4j Plugins + Framework-Support
+    1. (optional) Usablility (Tooling + Konfiguration-Aufwand) vs. Neo4j
+1. Diskussion
+1. Fazit 
+
+### Deprecated 
+
 1. Einleitung
 1. Datenbanken
     1. Relationale Datenbanken

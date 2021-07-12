@@ -39,7 +39,7 @@ Thesis-Aufbau:
 1. Analyse-Methode / Vorgehen
     1. Bewertungskriterien
         - Performance – Wie hoch im Vergleich zu Neo4j? (Hauptfokus) (beinhaltet Details zu Linkbench-Impls)
-        - Erweiterbarkeit – Wie viel Plugin- & Framework-Unterstützung?
+        - Erweiterbarkeit – Wie viel Plugin- & Framework-Unterstützung? (angelehnt an den einen Bericht)
         - (optional) Usablility (Tooling + Konfiguration-Aufwand) vs. Neo4j
 1. Evaluation & Ergebnisse
     1. Performance-Messungen mit Linkbench

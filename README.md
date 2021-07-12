@@ -21,6 +21,9 @@ $ latexmk document.tex -interaction=nonstopmode -file-line-error -pdf
 
 ## Structure
 
+Thema: Fähigkeiten von Db2graph
+Fähigkeit = Erweiterbarkeit & Performance (& Usability)
+
 Thesis-Aufbau:
 1. Einführung
     1. Warum interessant?
@@ -33,10 +36,10 @@ Thesis-Aufbau:
     1. Funktionsweise
     1. Einschränkungen
     1. Hinweise verschiedene Versionen
-1. Analyse-Methode
+1. Analyse-Methode / Vorgehen
     1. Bewertungskriterien
-        - Erweiterbarkeit -- Wie viel Plugin- & Framework-Unterstützung?
-        - Performance -- Wie hoch im Vergleich zu Neo4j? (Hauptfokus) (beinhaltet Linkbench-Impls)
+        - Performance – Wie hoch im Vergleich zu Neo4j? (Hauptfokus) (beinhaltet Details zu Linkbench-Impls)
+        - Erweiterbarkeit – Wie viel Plugin- & Framework-Unterstützung?
         - (optional) Usablility (Tooling + Konfiguration-Aufwand) vs. Neo4j
 1. Evaluation & Ergebnisse
     1. Performance-Messungen mit Linkbench

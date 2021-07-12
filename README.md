@@ -46,6 +46,10 @@ Thesis-Aufbau:
     1. Erweiterbarkeit Neo4j Plugins + Framework-Support
     1. (optional) Usablility (Tooling + Konfiguration-Aufwand) vs. Neo4j
 1. Diskussion
+    1. Warum anders herangehen als Sigmod-Paper?
+    1. Aussagekraft Microbenchmarks.
+    1. Ist Linkbench auf relationale Systeme zugeschnitten?
+    1. Aufgetretene neue Frage: Welches Datensystem für Db2graph bzw. Neo4j korrekt. (In Bezug auf das Linkbench Schema.)
 1. Fazit 
 
 ### Deprecated 

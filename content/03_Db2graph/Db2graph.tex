@@ -5,7 +5,7 @@ Im Rahmen dieses Kapitels wird IBM Db2graph genauer erläutert. Dabei wird der A
 
 \section{Ansatz}
 \label{db2graph:ansatz}
-Db2graph wurde mit dem Ziel entwickelt, Informationen mittels Graph-Queries aus einer relationalen Db2 Datenbank abfragen zu können. So wurde Db2graph als eine Art Graph-Erweiterung für Db2 konzipiert. Der Einsatz von Db2graph setzt folglich eine aktive Instanz von Db2 voraus. Diese hält hierbei die Informationen, auf die Db2graph Zugriff hat, in relationaler Form. Dabei müssen die Daten nicht für die Einbindung in Db2graph angepasst werden.
+Db2graph wurde mit dem Ziel entwickelt, Informationen mittels Graph-Queries aus einer relationalen Db2 Datenbank abfragen zu können. So wurde Db2graph als eine Art Graph-Erweiterung für Db2 konzipiert. Der Einsatz von Db2graph setzt folglich eine aktive Instanz von Db2 voraus \cite{vldb_tian, sigmod_tian}. Diese hält hierbei die Informationen, auf die Db2graph Zugriff hat, in relationaler Form \cite{vldb_tian, sigmod_tian}. Dabei müssen die Daten nicht für die Einbindung in Db2graph angepasst werden \cite{vldb_tian, sigmod_tian}.
 
 \begin{figure}[h]
     \centering
@@ -15,14 +15,14 @@ Db2graph wurde mit dem Ziel entwickelt, Informationen mittels Graph-Queries aus 
     \label{fig:db2graph_system}
 \end{figure}
 
-Wie in \autoref{fig:db2graph_system} erkennbar, fungiert Db2graph aus architektonischer Sicht als eine Art Proxy-Anwendung beziehungsweise Graph-Erweiterung für Db2. Dabei übersetzt sie die von einem Client gesendeten Gremlin-Graph-Queries in SQL-An\-wei\-sung\-en und leitet diese anschließend an eine Db2 Instanz weiter. Darüber hinaus können Db2 und Db2graph zusammengefasst als eine Art Hybrides Datenbankmanagementsystem betrachtet werden. Da es Elemente von Graph- und relationalen Datenbanksystemen vereint. So ist es möglich Graph-Anfragen an ein solches System zu stellen, während dem die Daten in relationaler Form gespeichert werden. Im weiteren Verlauf der Arbeit wird die Kombination aus Db2 und Db2graph verkürzt als Db2graph-System bezeichnet, wie bereits in \autoref{fig:db2graph_system} dargestellt. 
+Wie in \autoref{fig:db2graph_system} erkennbar, fungiert Db2graph aus architektonischer Sicht als eine Art Proxy-Anwendung beziehungsweise Graph-Erweiterung für Db2. Dabei übersetzt sie die von einem Client gesendeten Gremlin-Graph-Queries in SQL-An\-wei\-sung\-en und leitet diese anschließend an eine Db2 Instanz weiter \cite{vldb_tian, sigmod_tian}. Darüber hinaus können Db2 und Db2graph zusammengefasst als eine Art Hybrides Datenbankmanagementsystem betrachtet werden. Da es Elemente von Graph- und relationalen Datenbanksystemen vereint. So ist es möglich Graph-Anfragen an ein solches System zu stellen, während dem die Daten in relationaler Form gespeichert werden. Im weiteren Verlauf der Arbeit wird die Kombination aus Db2 und Db2graph verkürzt als Db2graph-System bezeichnet, wie bereits in \autoref{fig:db2graph_system} dargestellt. 
 
 \section{Aufbau}
 Wie in \autoref{fig:db2graph_aufbau} beschrieben, handelt es sich bei Db2graph um eine modular aufgebaute Anwendung. Die Anwendung besteht dabei aus fünf größeren Komponenten, siehe \autoref{fig:db2graph_aufbau}. Die fünf Komponenten übernehmen dabei die folgenden Rollen und Aufgaben: 
 
 \begin{itemize}
     \item \textbf{TinkerPop-Stack}\\Stellt das Grundgerüst für Db2graph dar. Er parsed eingehende Gremlin-Queries und erstellt auf Basis dessen einen Query-Plan bzw. Abfrage-Plan \cite{vldb_tian}. Dabei interagiert er über API-Aufrufe mit den anderen Modulen \cite{vldb_tian}.
-    \item \textbf{Topology}\\Beinhaltet die Funktionalität für das Mapping von relationalen Tabellen auf eine Graph-Struktur \cite{vldb_tian}, \cite{sigmod_tian}.
+    \item \textbf{Topology}\\Beinhaltet die Funktionalität für das Mapping von relationalen Tabellen auf eine Graph-Struktur \cite{vldb_tian, sigmod_tian}.
     \item \textbf{Graph Structure}\\Hierbei handelt es sich um eine eigene Implementierung einer Graph-Struktur auf deren Basis TinkerPop arbeitet \cite{vldb_tian}. Eine Implementierung dieser Struktur wird benötigt, um den vom TinkerPop-Stack erstellten Query-Plan durchzuführen \cite{sigmod_tian}. 
     \item \textbf{SQL-Dialect}\\Diese Komponente stellt die Funktionalität für die Erzeugung von Db2-kompatiblen SQL-Anweisungen bereit \cite{sigmod_tian}.
     \item \textbf{Traversal-Strategy}\\Dieses Modul stellt dem TinkerPop-Stack optimierte Traversal-Strategies zur Verfügung. Diese werden eingesetzt, um einen vom TinkerPop-Stack aufgestellten Query-Plan zu optimieren, bevor dieser ausgeführt wird \cite{sigmod_tian}.  
@@ -35,10 +35,41 @@ So stellt also der TinkerPop-Stack den Kern von Db2graph dar. Die Topology-, Gra
     \includegraphics[width=\textwidth]{images/db2graph_components.pdf}
     \caption{Aufbau von Db2graph}
     \label{fig:db2graph_aufbau}
+    \vspace{0.5em}
+    \textit{Der hier gezeigter Aufbau von Db2graph   orientiert sich an der Beschreibung der System-Architektur in \cite{vldb_tian} und \cite{sigmod_tian}.}
 \end{figure}
 
 \section{Funktionsweise}
 \label{db2graph:funktionsweise}
-Um die Funktionsweise von Db2graph genauer zu erläutern, wird in diesem Abschnitt die Funktionsweise aus verschiedenen Perspektiven erläutert. Im Rahmen der ersten Perspektive wird detailliert darauf eingegangen, wie ein Db2graph-System die Anfrage eines Clients verarbeitet. Bei der zweiten Perspektive handelt es sich hingegenum die Db2graph interne Perspektive. Im Zuge dessen wird beschrieben, wie eine Gremlin-Abfrage in Db2graph selbst als Anwendung verarbeitet wird. 
+Um die Funktionsweise von Db2graph genauer zu erläutern, wird in diesem Abschnitt die Funktionsweise aus verschiedenen Perspektiven erläutert. Im Rahmen der ersten Perspektive wird detailliert darauf eingegangen, wie ein Db2graph-System die Anfrage eines Clients verarbeitet. Bei der zweiten Perspektive handelt es sich hingegen um die Db2graph interne Perspektive. Im Zuge dessen wird beschrieben, wie eine Gremlin-Abfrage von einer Db2graph-Anwendung intern verarbeitet wird. Im Anschluss an diese beiden Perspektiven wird der Begriff und die Funktionsweise des Mapping in Db2graph genauer erläutert.
+
+\subsection{Db2graph-System}
+Die Funktionsweise beziehungsweise der Ablauf der Verarbeitung einer Graph-Query im Rahmen eines Db2graph läuft wie folgt ab:
+
+\begin{enumerate}
+    \item Ein Client sendet eine Gremlin-Query an Db2graph. 
+    \item Db2graph wandelt die Gremlin-Query in SQL-Statments um. 
+    \item Db2graph sendet die erzeugten SQL-Statments an Db2.
+    \item Db2 verarbeitet die SQL-Statments.
+    \item Db2 leitet die Ergebnisse an Db2graph weiter.
+    \item Db2graph bereitet die von Db2 empfangen Ergebnisse für den Client auf. 
+    \item Db2graph übermittelt die Ergebnisse an den Client.
+\end{enumerate}
+
+Die soeben beschrieben Schritte des Ablaufs können dabei den in der \autoref{fig:db2graph_processing} aufgeführten Schritten zu geordnet werden. Die in \autoref{fig:db2graph_processing} als grün gekennzeichnet Pfeile markieren dabei die Schritte, in den die Anfrage in Form einer Gremlin-Query oder SQL-Anfragen weitergeleitet oder verarbeitet wird. Die Pfeile, welche in \autoref{fig:db2graph_processing} lila gefärbt sind, heben die Schritte hervor, in denen die abgefragten Daten transformiert oder weitergeleitet werden.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{images/db2graph_processing.pdf}
+    \caption{Verarbeitung Graph-Query von einem Db2graph-System}
+    \label{fig:db2graph_processing}
+    \textit{Die hier dargestellten Abläufe basieren hierbei unter anderem auf den in \cite{vldb_tian} und \cite{sigmod_tian} beschrieben Abläufen der Verarbeitung. Darüber hinaus wurden auch einige kleinere Details von \cite{tinkerpop_2020} bezogen.} 
+\end{figure}
+
+
+
+\subsection{Db2graph-Anwendung}
+
+\subsection{Mapping}
 
 \section{Einschränkungen}

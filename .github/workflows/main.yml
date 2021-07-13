@@ -9,10 +9,10 @@ jobs:
       - name: Install TexLive dependecies
         run: |
           sudo apt update
-          sudo apt install texlive texlive-latex-extra texlive-bibtex-extra texlive-lang-german texlive-plain-generic texlive-font-utils texlive-science texlive-latex-extra latexmk
+          sudo apt install texlive texlive-bibtex-extra texlive-extra-utils texlive-font-utils texlive-lang-german texlive-latex-extra texlive-plain-generic texlive-science latexmk
       - name: Compile LaTeX document
         run: |
-          latexmk document.tex -interaction=nonstopmode -file-line-error -pdf --shell-escape
+          latexmk document.tex -interaction=nonstopmode -file-line-error -pdf
       - name: Upload Thesis Artifact
         uses: actions/upload-artifact@master
         with:

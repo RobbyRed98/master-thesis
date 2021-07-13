@@ -9,7 +9,7 @@ jobs:
       - name: Install TexLive dependecies
         run: |
           sudo apt update
-          sudo apt install texlive texlive-latex-extra texlive-bibtex-extra texlive-lang-german texlive-plain-generic texlive-font-utils texlive-science latexmk
+          sudo apt install texlive texlive-latex-extra texlive-bibtex-extra texlive-lang-german texlive-plain-generic texlive-font-utils texlive-science texlive-latex-extra latexmk
       - name: Compile LaTeX document
         run: |
           latexmk document.tex -interaction=nonstopmode -file-line-error -pdf --shell-escape

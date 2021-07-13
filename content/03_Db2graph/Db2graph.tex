@@ -28,6 +28,8 @@ Wie in \autoref{fig:db2graph_aufbau} beschrieben, handelt es sich bei Db2graph u
     \item \textbf{Traversal-Strategy}\\Dieses Modul stellt dem TinkerPop-Stack optimierte Traversal-Strategies zur Verfügung. Diese werden eingesetzt, um einen vom TinkerPop-Stack aufgestellten Query-Plan zu optimieren, bevor dieser ausgeführt wird \cite{sigmod_tian}.  
 \end{itemize}
 
+So stellt also der TinkerPop-Stack den Kern von Db2graph dar. Die Topology-, Graph-Structure und SQL-Dialect-Komponente hingegen bieten Db2graph und Db2 spezifische Funktionalität, auf die der TinkerPop-Stack zugreifen kann. Das Traversal-Strategy-Modul stellt darüber hinaus dem TinkerPop-Stack, optimierte Traversal-Strategies zur Verfügung. Diese helfen dem TinkerPop-Stack dabei die Performance von Query-Plans zu verbessern.  
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{images/db2graph_components.pdf}

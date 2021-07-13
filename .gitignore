@@ -33,3 +33,4 @@
 *.tdo
 *.toc
 *.vrb
+!images/*.pdf

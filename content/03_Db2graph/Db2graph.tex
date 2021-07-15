@@ -5,7 +5,7 @@ Im Rahmen dieses Kapitels wird IBM Db2graph genauer erläutert. Dabei wird der A
 
 \section{Ansatz}
 \label{db2graph:ansatz}
-Db2graph wurde mit dem Ziel entwickelt, Informationen mittels Graph-Queries aus einer relationalen Db2 Datenbank abfragen zu können. So wurde Db2graph als eine Art Graph-Erweiterung für Db2 konzipiert. Der Einsatz von Db2graph setzt folglich eine aktive Instanz von Db2 voraus \cite{vldb_tian, sigmod_tian}. Diese hält hierbei die Informationen, auf die Db2graph Zugriff hat, in relationaler Form \cite{vldb_tian, sigmod_tian}. Dabei müssen die Daten nicht für die Einbindung in Db2graph angepasst werden \cite{vldb_tian, sigmod_tian}.
+Db2graph wurde mit dem Ziel entwickelt, Informationen mittels Graph-Queries aus einer relationalen Db2 Datenbank abfragen zu können. So wurde Db2graph als eine Art Graph-Erweiterung für Db2 konzipiert. Der Einsatz von Db2graph setzt folglich eine aktive Instanz von Db2 voraus \cite{vldb_tian, sigmod_tian}. Diese hält hierbei die Informationen, auf die Db2graph Zugriff hat, in relationaler Form \cite{vldb_tian, sigmod_tian}. Dabei müssen die Daten nicht für die Einbindung in Db2graph angepasst oder umformatiert werden \cite{vldb_tian, sigmod_tian}.
 
 \begin{figure}[h]
     \centering
@@ -18,7 +18,7 @@ Db2graph wurde mit dem Ziel entwickelt, Informationen mittels Graph-Queries aus 
 Wie in \autoref{fig:db2graph_system} erkennbar, fungiert Db2graph aus architektonischer Sicht als eine Art Proxy-Anwendung beziehungsweise Graph-Erweiterung für Db2. Dabei übersetzt sie die von einem Client gesendeten Gremlin-Graph-Queries in SQL-An\-wei\-sung\-en und leitet diese anschließend an eine Db2 Instanz weiter \cite{vldb_tian, sigmod_tian}. Darüber hinaus können Db2 und Db2graph zusammengefasst als eine Art Hybrides Datenbankmanagementsystem betrachtet werden. Da es Elemente von Graph- und relationalen Datenbanksystemen vereint. So ist es möglich Graph-Anfragen an ein solches System zu stellen, während dem die Daten in relationaler Form gespeichert werden \cite{vldb_tian, sigmod_tian}. Im weiteren Verlauf der Arbeit wird die Kombination aus Db2 und Db2graph verkürzt als Db2graph-System bezeichnet, wie bereits in \autoref{fig:db2graph_system} dargestellt. 
 
 \section{Aufbau}
-Wie in \autoref{fig:db2graph_aufbau} beschrieben, handelt es sich bei Db2graph um eine modular aufgebaute Anwendung. Die Anwendung besteht dabei aus fünf größeren Komponenten, siehe \autoref{fig:db2graph_aufbau}. Die fünf Komponenten übernehmen dabei die folgenden Rollen und Aufgaben: 
+Wie in \autoref{fig:db2graph_aufbau} beschrieben, handelt es sich bei Db2graph um eine modular aufgebaute Anwendung. Die Anwendung besteht dabei aus fünf größeren Komponenten \cite{vldb_tian, sigmod_tian,yt_tian}. Die fünf Komponenten übernehmen dabei die folgenden Rollen und Aufgaben: 
 
 \begin{itemize}
     \item \textbf{TinkerPop-Stack}\\Stellt das Grundgerüst für Db2graph dar. Er parst eingehende Gremlin-Queries und erstellt auf Basis dessen einen Query-Plan bzw. Abfrage-Plan \cite{vldb_tian}. Dabei interagiert er über API-Aufrufe mit den anderen Modulen \cite{vldb_tian}.
@@ -97,8 +97,14 @@ Bei dem sogenannten Mapping handelt es sich um den Db2graph-internen Prozess bez
 
 Um das Mapping von relationalen auf Graph-Strukturen durchzuführen, werden den relationalen Tabellen verschiedene Rollen zugewiesen. Dabei sind die zwei folgenden Rollen verfügbar:
 \begin{itemize}
-    \item \textbf{VertexTable}\\
-    \item \textbf{EdgeTable}\\
+    \item \textbf{VertexTable}\\Die Zeilen einer Tabelle werden als Knoten auf einen Graph gemappt \cite{sigmod_tian, yt_tian}.
+    \item \textbf{EdgeTable}\\Die Zeilen dieser Tabelle werden als Kanten auf einen Graph gemappt \cite{sigmod_tian, yt_tian}.
 \end{itemize}
 
-\section{Einschränkungen}
+Um Verbindungen zwischen Kanten und Knoten herzustellen  verfügt eine VertexTable über eine \texttt{vid}. Diese \texttt{vid} kann als eine Art Primärschlüssel betrachtet werden. Die \texttt{vid} setzt sich dabei aus einer oder mehreren Spalten einer relationalen Tabelle zusammen \cite{sigmod_tian, yt_tian}. Ihr Zweck ist es dabei, immer einen einzigen bestimmten Knoten über den Wert den \texttt{vid} identifizieren zu können \cite{sigmod_tian, yt_tian}. 
+
+Auf Basis dieser \texttt{vid} setzt beim Mapping auch die EdgeTable auf. Um einen Quell- und Ziel-Knoten für eine Kante festzulegen, wird bei den EdgeTables angegeben, welche Spalten der Tabelle einen jeweiligen Quell- und Ziel-Knoten referenzieren. Dabei muss, um einen Verstoß gegen die referenzielle Integrität zu vermeiden, der Wert der \texttt{vid} dem Wert der referenzierten Spalten in der EdgeTable entsprechen. Darüber hinaus muss festgelegt werden, wie die  Namen der VertexTables lauten, die den Quell- und Ziel-Knoten einer Kante beinhalten. 
+
+\section{Fähigkeiten}
+
+\section{Versionen}

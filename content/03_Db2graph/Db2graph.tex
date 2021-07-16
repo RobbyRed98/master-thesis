@@ -15,10 +15,10 @@ Db2graph wurde mit dem Ziel entwickelt, Informationen mittels Graph-Queries aus 
     \label{fig:db2graph_system}
 \end{figure}
 
-Wie in \autoref{fig:db2graph_system} erkennbar, fungiert Db2graph aus architektonischer Sicht als eine Art Proxy-Anwendung beziehungsweise Graph-Erweiterung für Db2. Dabei übersetzt sie die von einem Client gesendeten Gremlin-Graph-Queries in SQL-An\-wei\-sung\-en und leitet diese anschließend an eine Db2 Instanz weiter \cite{vldb_tian, sigmod_tian}. Darüber hinaus können Db2 und Db2graph zusammengefasst als eine Art Hybrides Datenbankmanagementsystem betrachtet werden. Da es Elemente von Graph- und relationalen Datenbanksystemen vereint. So ist es möglich Graph-Anfragen an ein solches System zu stellen, während dem die Daten in relationaler Form gespeichert werden \cite{vldb_tian, sigmod_tian}. Im weiteren Verlauf der Arbeit wird die Kombination aus Db2 und Db2graph verkürzt als Db2graph-System bezeichnet, wie bereits in \autoref{fig:db2graph_system} dargestellt. 
+Wie in \autoref{fig:db2graph_system} erkennbar, fungiert Db2graph aus architektonischer Sicht als eine Art Proxy-Anwendung für Db2. Dabei übersetzt sie die von einem Client gesendeten Gremlin-Graph-Queries in SQL-An\-wei\-sung\-en und leitet diese anschließend an eine Db2 Instanz weiter \cite{vldb_tian, sigmod_tian}. Darüber hinaus können Db2 und Db2graph zusammengefasst als eine Art Hybrides Datenbankmanagementsystem betrachtet werden. Da es Elemente von Graph- und relationalen Datenbanksystemen vereint. So ist es möglich Graph-Anfragen an ein solches System zu stellen, während dem die Daten in relationaler Form gespeichert werden \cite{vldb_tian, sigmod_tian}. Im weiteren Verlauf der Arbeit wird die Kombination aus Db2 und Db2graph verkürzt als Db2graph-System bezeichnet, wie bereits in \autoref{fig:db2graph_system} dargestellt. 
 
 \section{Aufbau}
-Wie in \autoref{fig:db2graph_aufbau} beschrieben, handelt es sich bei Db2graph um eine modular aufgebaute Anwendung. Die Anwendung besteht dabei aus fünf größeren Komponenten \cite{vldb_tian, sigmod_tian,yt_tian}. Die fünf Komponenten übernehmen dabei die folgenden Rollen und Aufgaben: 
+Wie in \autoref{fig:db2graph_aufbau} beschrieben, handelt es sich bei Db2graph um eine modular aufgebaute Anwendung. Die Anwendung besteht dabei aus fünf größeren Komponenten. Die fünf Komponenten übernehmen dabei die folgenden Rollen und Aufgaben: 
 
 \begin{itemize}
     \item \textbf{TinkerPop-Stack}\\Stellt das Grundgerüst für Db2graph dar. Er parst eingehende Gremlin-Queries und erstellt auf Basis dessen einen Query-Plan bzw. Abfrage-Plan \cite{vldb_tian}. Dabei interagiert er über API-Aufrufe mit den anderen Modulen \cite{vldb_tian}.
@@ -75,9 +75,10 @@ Im Rahmen dieses Unterabschnitts wird dargelegt, wie eine von Db2graph empfangen
     \item Der TinkerPop-Stack lädt Informationen über die Beschaffenheit des in der Gremlin-Query enthaltenen Zielgraphen aus Topology-Komponente \cite{vldb_tian,sigmod_tian, yt_tian}.
     \item Der TinkerPop-Stack erstellt auf Basis der Gremlin-Query und der Topologie-Informationen einen logischen Query-Plan auf \cite{vldb_tian,sigmod_tian, yt_tian}. 
     \item Der TinkerPop-Stack nutzt das Traversal-Strategy-Modul, um den logischen Query-Plan zu optimieren \cite{vldb_tian,sigmod_tian, yt_tian}.
-    \item Der TinkerPop-Stack wandelt den logischen Query-Plan in einen physikalischen Query-Plan um \cite{vldb_tian,sigmod_tian, yt_tian}. 
+    \item Der TinkerPop-Stack wandelt den optimierten logischen Query-Plan in einen physikalischen Query-Plan um \cite{vldb_tian,sigmod_tian, yt_tian}. 
     \item Bei der Ausführung der Steps im physikalischen Query-Plan werden API-Zugriffe auf die Graph-Structure-Komponente durchgeführt. Um die für diese Zugriffe benötigten Informationen zu beschaffen, lädt die Graph-Structure-Komponente Informationen aus dem Topology-Modul und nutzt die SQL-Dialect-Komponente für die Erzeugung von SQL-Statements. \cite{vldb_tian,sigmod_tian, yt_tian} 
-    \item Die von der Graph-Structure-Komponente erzeugten SQL-Statements werden an eine Db2 Instanz gesendet und verarbeitet. Die daraufhin von Db2 erhalten Ergebnisse werden von der Graph-Structure-Komponente genutzt und als Antwort auf die API-Aufrufe von TinkerPop weitergeleitet. \cite{vldb_tian,sigmod_tian, yt_tian} 
+    \item Die von der Graph-Structure-Komponente erzeugten SQL-Statements werden an eine Db2 Instanz gesendet und von dieser verarbeitet. \cite{vldb_tian,sigmod_tian, yt_tian}
+    \item Die daraufhin von Db2 erhalten und zurückgesendeten Ergebnisse werden von der Graph-Structure-Komponente verarbeitet. Die Graph-Komponente nutzt die verarbeiteten Ergebnisse, um die API-Aufrufe des TinkerPop-Stacks zu beantworten. \cite{vldb_tian,sigmod_tian, yt_tian} 
     \item Nach der Durchführung des physikalischen Query-Plans -- inklusive der API-Aufrufe auf die Graph-Structure-Komponente -- werden die Ergebnisse vom TinkerPop-Stack an den Client übermittelt \cite{vldb_tian,sigmod_tian, yt_tian}.
 \end{enumerate}
 
@@ -105,6 +106,6 @@ Um Verbindungen zwischen Kanten und Knoten herzustellen  verfügt eine VertexTab
 
 Auf Basis dieser \texttt{vid} setzt beim Mapping auch die EdgeTable auf. Um einen Quell- und Ziel-Knoten für eine Kante festzulegen, wird bei den EdgeTables angegeben, welche Spalten der Tabelle einen jeweiligen Quell- und Ziel-Knoten referenzieren. Dabei muss, um einen Verstoß gegen die referenzielle Integrität zu vermeiden, der Wert der \texttt{vid} dem Wert der referenzierten Spalten in der EdgeTable entsprechen. Darüber hinaus muss festgelegt werden, wie die  Namen der VertexTables lauten, die den Quell- und Ziel-Knoten einer Kante beinhalten. 
 
-\section{Fähigkeiten}
+\section{Fähigkeiten \& Einschränkungen}
 
 \section{Versionen}

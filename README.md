@@ -35,6 +35,7 @@ Thesis-Aufbau:
         1. Funktionsweise
         1. Fähigkeiten & Einschränkungen
         1. Hinweise verschiedene Versionen
+    1. Linkbench
 1. Analyse-Methode / Vorgehen
     1. Bewertungskriterien
         - Performance – Wie hoch im Vergleich zu Neo4j? (Hauptfokus) (beinhaltet Details zu Linkbench-Impls)
@@ -48,7 +49,7 @@ Thesis-Aufbau:
     1. Warum anders herangehen als Sigmod-Paper?
     1. Aussagekraft Microbenchmarks.
     1. Ist Linkbench auf relationale Systeme zugeschnitten?
-    1. Aufgetretene neue Frage: Welches Datensystem für Db2graph bzw. Neo4j korrekt. (In Bezug auf das Linkbench Schema.)
+    1. Aufgetretene neue Frage: Welches Datenschema für Db2graph bzw. Neo4j korrekt. (In Bezug auf das Linkbench Schema.)
 1. Fazit 
 
 ### Deprecated 

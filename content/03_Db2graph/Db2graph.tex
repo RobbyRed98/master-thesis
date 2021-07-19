@@ -162,6 +162,51 @@ Wie im \autoref{src:mapping_example} erkennbar lässt die Konfiguration auch wei
 Abschließend zum Thema Mapping sollte auch darauf hingewiesen werden, dass nicht alle Tabellen einer Datenbank oder eines bestimmten Schemas auf einen Graphen gemappt werden müssen. Es ist vollkommen legitim relationalen Tabellen keine Rolle als VertexTable oder EdgeTable zuzuweisen, sollten die Daten im Kontext des Graphen nicht benötigt werden. 
 
 \subsection{Fähigkeiten \& Einschränkungen}
+Im Rahmen dieses Kapitels werden die bekannten Fähigkeiten und Einschränkungen von Db2 Graph kurz zusammengefasst. Dies ist hier von besonderem Interesse, da es sich bei Db2 Graph in Kombination mit Db2 um eine Art hybrides Datenbankmanagementsystem handelt. Auf die besonderen Eigenschaften des Systems, die sich aus der Verbindung von relationalem und Graph-Datenbanksystem ergeben, wird hier auch ebenfalls eingegangen. 
+
+Db2 Graph verfügt über die folgenden Fähigkeiten und Einschränkungen:
+
+\begin{itemize}
+    \item \textbf{Read-Only-Queries}\\
+    Db2 Graph verfügt über eine read-only Implementierung von Apache TinkerPop, daher ist es dazu in der Lage nahe zu alle read-only Gremlin-Queries zu verarbeiten \cite{ibm_docs_limitiations}. Umgekehrt bedeutet dies allerdings auch, dass Db2 Graph nicht fähig ist schreibende Gremlin-Queries zu verarbeiten.
+    \item \textbf{Optimierung}\\
+    Db2 Graph verfügt über mehrere Mechanismen um die Verarbeitung von empfangen Gremlin-Queries zu optimieren, mehr dazu in \autoref{subsec:db2graph_optimierung}.
+    \item \textbf{Datentypen}\\
+    Von Db2 Graph werden nur Datentypen unterstützt, die auch in Db2 vorhanden sind \cite{ibm_docs_limitiations}. Das bedeutet, das nur diese Datentypen als Property-Type eines Knotens oder einer Kante eingesetzt werden kann \cite{ibm_docs_limitiations}. Somit ist es auch nicht möglich verschachtelte Datentypen -- wie z.B. in Neo4j -- als Property-Type zu nutzen. Schließlich werden diese nicht von Db2 Graph unterstützt.
+    \item \textbf{Festes Schema}\\
+    Daten die von Db2 Graph abgefragt werden können verfügen über ein festes Schema. Diese ergibt sich daraus, dass die Daten in einer Db2 Instanz (relational) gehalten und gespeichert werden \cite{sigmod_tian,vldb_tian,yt_tian}.
+    \item \textbf{Gremlin-Graph-API}\\
+    Die Gremlin-Graph-API wird von Db2 Graph nicht unterstützt \cite{ibm_docs_limitiations}. Mehr dazu in !TODO REF Erweiterbarkeit.
+\end{itemize}
+
+\subsection{Optimierung}
+\label{subsec:db2graph_optimierung}
+
+Im Kontext dieses Abschnitts wird eine Übersicht über die Optimierungsmechanismen von Db2 Graph geben. Die Mechanismen lassen sich dabei in die Kategorien Data-Independent Optimizations und Data-Dependent Optimizations einteilen. Im Kontext dieser Kategorien wird auch auf die Optimierungen eingegangen. 
+
+\subsubsection{Data-Independent Optimizations}
+Bei Data-Independent Optimizations handelt es sich um Optimierungstechniken, die Teil des Traversal-Strategy Moduls sind \cite{sigmod_tian}. Sie werden eingesetzt, um einen logischen Query-Plan zu optimieren. Ihr Anwendung erfolgt dann, wenn bestimmte Muster erkannt werden. Optimierungen die in diese Kategorie fallen, können dem Schritt 4. in \autoref{fig:db2graph_intern_processing} zugeordnet werden. 
+
+In die Kategorie Data-Independent Optimizations fallen dabei die folgenden Techniken: 
+
+\begin{itemize}
+    \item \textbf{Predicate Pushdown with Filter Steps}\\
+    Diese Optimierung wird angewandt, wenn ein Graph-Structure-Access-Step wie \texttt{g.V()} oder \texttt{g.E()} von einem oder mehreren Filter-Steps gefolgt wird \cite{sigmod_tian}. Dabei werden alle Filter-Steps in Graph-Structure-Access-Step als Predicats eingebettet \cite{sigmod_tian}. Das Endprodukt der Optimierung stellt nun ein neuer Graph-Step dar, welcher auf Basis des Graph-Structure-Access-Steps und der Filter-Steps erstellt wurde \cite{sigmod_tian}. 
+    
+    Um die Funktionsweise der Optimierung zu verdeutlichen, kann die Gremlin-Query \code{g.V().has(``id", 1).has(``type'', ``A'')} herangezogen werden. Bei der Optimierung des aus dieser Query resultierenden Query-Plans, werden der Graph-Structure-Access-Step und die Has-Steps in einen einzigen neuen Graph-Step umgewandelt. So wird bei der Ausführung dieses neuen Graph-Steps der SQL-Code \code{SELECT * FROM VertexTable WHERE id = 1 AND type = ``A''} erzeugt. An diesem lässt sich erkennen, dass die Has-Steps als Teil einer \code{WHERE}-Bedingung in die Abfrage eingebettet wurden.
+
+    Als Resultat dieser Optimierung sendet Db2 Graph somit weniger Anfragen an DB2 und erhält zugleich kleinere Ergebnismengen.
+
+    \item \textbf{Projection Pushdown with Properties Steps}\\
+    Diese Optimierung greift, wenn Db2 Graph eine Gremlin-Query verarbeitet, in der bestimmte Properties von Knoten oder Kanten abgefragt werden. Hierbei werden die abgefragten Properties in die Projektion eines vorausgegangenen Gremlin-Steps eingebettet. Auf diese Weise erhält Db2 Graph eine kleinere Ergebnismenge von Db2. Diese umfasst dabei lediglich die benötigten Informationen. Dabei gilt es zu beachten, das neben den angegeben Properties, auch die \texttt{id\_cols} -- siehe Zeile 6 und 28 in \autoref{src:mapping_example} -- als Informationen von Db2 Graph benötigt werden. 
+
+
+\end{itemize}
+
+
+
+
+
 
 
 \subsection{Versionen}

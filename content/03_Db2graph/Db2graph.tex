@@ -182,9 +182,10 @@ Db2 Graph verfügt über die folgenden Fähigkeiten und Einschränkungen:
 \subsection{Optimierung}
 \label{subsec:db2graph_optimierung}
 
-Im Kontext dieses Abschnitts wird eine Übersicht über die Optimierungsmechanismen von Db2 Graph geben. Die Mechanismen lassen sich dabei in die Kategorien Data-Independent Optimizations und Data-Dependent Optimizations einteilen. Im Kontext dieser Kategorien wird auch auf die Optimierungen eingegangen. 
+Im Kontext dieses Abschnitts wird eine Übersicht über die Optimierungsmechanismen von Db2 Graph geben. Dabei stützt sich diese Arbeit, auf die in \cite{sigmod_tian} beschrieben Optimierungstechniken \cite{sigmod_tian}. Auch die Unterteilung der Mechanismen in die Kategorien Data-Independent Optimizations und Data-Dependent Optimizations werden dabei aus \cite{sigmod_tian} übernommen.
 
 \subsubsection{Data-Independent Optimizations}
+\label{subsubsec:data_independent_optimizations}
 Bei Data-Independent Optimizations handelt es sich um Optimierungstechniken, die Teil des Traversal-Strategy Moduls sind \cite{sigmod_tian}. Sie werden eingesetzt, um einen logischen Query-Plan zu optimieren. Ihr Anwendung erfolgt dann, wenn bestimmte Muster erkannt werden. Optimierungen die in diese Kategorie fallen, können dem Schritt 4. in \autoref{fig:db2graph_intern_processing} zugeordnet werden. 
 
 In die Kategorie Data-Independent Optimizations fallen dabei die folgenden Techniken: 
@@ -211,7 +212,32 @@ In die Kategorie Data-Independent Optimizations fallen dabei die folgenden Techn
     \item \textbf{GraphStep::VertexStep Mutation}\\
     Diese Optimierung wird angewandt, wenn ein Graph-Structure-Access-Step Vertexes abfragt und von einem Vertex-Step \cite{sigmod_tian}. Die Optimierung zielt dabei darauf ab unnötige SQL-Abfragen zu vermeiden \cite{sigmod_tian}. 
 
-    Die Optimierung lässt sich dabei verständlich anhand der Gremlin-Query \code{g.V(ids).outE()} \cite{sigmod_tian}. Bei den \texttt{ids} handelt es sich hierbei um ein Set an \texttt{vids}, wie in Zeile 4 \autoref{src:mapping_example}. Ohne diese Optimierung würden auf Basis der nicht optimierten Graph-Steps die zwei folgenden SQL-Anweisungen generieren: \code{SELECT * FROM VertexTable WHERE id IN (ids)} und \code{SELECT * FROM EdgeTable WHERE src\_v IN (ids)} \cite{sigmod_tian}. Bei genauerer Betrachtung des ersten SQL-Statements fällt auf, dass diese keinen relevanten Beitrag zur Beantwortung der Gremlin-Query leistet \cite{sigmod_tian}. An dieser Stelle setzt die Optimierung an \cite{sigmod_tian}. Sie mutiert den Vertex-Step in einen Graph-Step der Edges abfragt und die \texttt{ids} als Predicats übernimmt \cite{sigmod_tian}. Dadurch wird die obsolete Abfrage eliminiert und lediglich die SQL-Query \code{SELECT * FROM EdgeTable WHERE src\_v IN (ids)} generiert und an Db2 gesendet.
+    Die Optimierung lässt sich dabei verständlich anhand der Gremlin-Query \code{g.V(ids).outE()} \cite{sigmod_tian}. Bei den \texttt{ids} handelt es sich hierbei um ein Set an \texttt{vids}, wie in Zeile 4 \autoref{src:mapping_example}. Ohne diese Optimierung würden auf Basis der nicht optimierten Graph-Steps die zwei folgenden SQL-Anweisungen generieren: \code{SELECT * FROM VertexTable WHERE id IN (ids)} und \code{SELECT * FROM EdgeTable WHERE src\_v IN (ids)} \cite{sigmod_tian}. Bei genauerer Betrachtung des ersten SQL-Statements fällt auf, dass diese keinen relevanten Beitrag zur Beantwortung der Gremlin-Query leistet \cite{sigmod_tian}. An dieser Stelle setzt die Optimierung an \cite{sigmod_tian}. Sie mutiert den Vertex-Step in einen Graph-Step der Edges abfragt und die \texttt{ids} als Predicats übernimmt \cite{sigmod_tian}. Dadurch wird die obsolete Abfrage eliminiert und lediglich die SQL-Query \code{SELECT * FROM EdgeTable WHERE src\_v IN (ids)} generiert und an Db2 gesendet \cite{sigmod_tian}.
+
+    \item \textbf{Combined Optimizations}\\
+    Alle vorausgegangenen Optimierungen können miteinander kombiniert werden, falls nötig \cite{sigmod_tian}. Dies sorgt dafür, dass die Gremlin-Query \code{g.V(ids).outE().has("link\_type", 123456789).count()} .
+\end{itemize}
+
+\subsubsection{Data-Dependent Optimizations}
+
+Die sogenannten Data-Dependent Optimizations stellen Optimierungstechniken dar, die auf Basis von Topologie Informationen des Graphen Optimierung vornehm\-en. Diese Optimierungen werden dabei im Rahmen des Graph Structure Moduls zur Laufzeit angewandt. Im vorigen Unterabschnitt \nameref{subsubsec:data_independent_optimizations} wurden hauptsächlich Optimierungen angesprochen, die dazu dienen:
+\begin{itemize}
+    \item unnötige Abfragen zu vermeiden, 
+    \item die Antwortmenge so gering wie nur möglich zu halten und 
+    \item das Processing, wenn möglich in Db2 statt Db2 Graph durchzuführen.  
+\end{itemize}
+Im Gegensatz versuchen die Data-Dependent Optimizations die Menge, auf die eine Abfrage durchgeführt wird so klein wie möglich zu halten. Um dies zu erreichen, werden Topologie Informationen herangezogen.
+
+Die folgenden Optimierungstechniken werden dabei herangezogen:
+\begin{itemize}
+    \item \textbf{Using Source/Destination Vertex Tables}\\
+    Diese Optimierung setzt bei den Source- und Destination-Tabellen an, siehe \texttt{src\_v\_tables} und \texttt{dst\_v\_tables} in Zeile 23 - 24 \autoref{src:mapping_example}. Diese werden zur Laufzeit herangezogen um die Abfrage von allen bzw. überflüssigen Tabellen ausschließen zu können \cite{sigmod_tian}.
+
+    Um die Funktionsweise zu verdeutlichen, kann die Abfrage eines beliebigen ausgehenden Knoten einer Kante herangezogen werden \cite{sigmod_tian}. Diese könnte als Gremlin-Query wie folgt aussehen \code{e.outV()} \cite{sigmod_tian}. Ohne die Anwendung der hier besprochenen Optimierungstechniken, würde die Query in das folgende SQL-Statements übersetzt werden \code{SELECT * FROM VertexTable WHERE dst\_v = e.dst\_v} \cite{sigmod_tian}. Dieses SQL-Statement müsste dann einmal alle bekannten Vertex-Tabellen abfragen \cite{sigmod_tian}. Mit der Optimierung hingegen, kann auf Basis der \texttt{dst\_v\_tables} aus der Topologie eine Untermenge an Vertex-Tabellen identifiziert werden, an die durch eine solche SQL-Abfrage abgefragt werden muss \cite{sigmod_tian}. Somit lässt sich die Menge an die Vertex-Tabellen die abgefragt werden müssen, auf eine kleine notwendige Untermenge beschränken \cite{sigmod_tian}. Vergleichbares ist auch im Zusammenhang mit Source-Tabellen möglich.
+    \item \textbf{When A Vertex Table Is Also An Edge Table}
+    Diese spezielle Optimierungstechnik kann angewendet werden, wenn eine Vertex-Tabelle und eine Edge-Tabelle auf dieselbe relationale Tabelle in Db2 gemappt werden. Dann besteht die Möglichkeit, dass eine Abfrage komplett eingespart werden kann und abgefragte Daten auf Basis eines  bereits zuvor abgefragten Graph-Struktur, rekonstruiert werden können. 
+
+    Wird wieder das Beispiel der Gremlin-Query \code{e.outV()} herangezogen. So besteht die Möglichkeit, dass wenn die gemappten relationalen Tabellen einer Edge-Tabelle und Vertex-Tabelle einander entsprechen und die definierten Properties und Felder der Edges-Tabelle mit denen der Vertex-Tabelle überschneiden, eine Abfrage des Vertexes aus der Vertex komplett eingespart werden kann.
 \end{itemize}
 
 \subsection{Versionen}

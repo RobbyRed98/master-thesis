@@ -219,6 +219,7 @@ In die Kategorie Data-Independent Optimizations fallen dabei die folgenden Techn
 \end{itemize}
 
 \subsubsection{Data-Dependent Optimizations}
+\label{subsubsec:data_dependent_optimizations}
 
 Die sogenannten Data-Dependent Optimizations stellen Optimierungstechniken dar, die auf Basis von Topologie Informationen des Graphen Optimierung vornehm\-en. Diese Optimierungen werden dabei im Rahmen des Graph Structure Moduls zur Laufzeit angewandt. Im vorigen Unterabschnitt \nameref{subsubsec:data_independent_optimizations} wurden hauptsächlich Optimierungen angesprochen, die dazu dienen:
 \begin{itemize}
@@ -262,6 +263,31 @@ Die folgenden Optimierungstechniken werden dabei herangezogen:
 \end{itemize}
 
 \subsubsection{Unterschied zwischen Versionen}
-Der Unterschied den beiden Db2 Graph Versionen, die im Rahmen dieser Arbeit untersuchte werden, müssen noch zwei kleinere Unterschied bezüglich der Optimierungen angesprochen werden.  
+\label{subsubsec:optimierung:unterschied_versionen}
+Der Unterschied den beiden Db2 Graph Versionen, die im Rahmen dieser Arbeit untersuchte werden, müssen noch zwei kleinere Unterschied bezüglich der Optimierungen angesprochen werden. 
+
+Die unter \nameref{subsubsec:data_independent_optimizations} und \nameref{subsubsec:data_dependent_optimizations} auf geführten Optimierungstechniken stammen aus dem im Jahr 2020 veröffentlichten Paper \cite{sigmod_tian}. Das Paper führt daher lediglich eine Grundlage an Optimierungstechniken auf, über die Db2 Graph bereits im Juni 2020 verfügte. Beide Versionen Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 sind mit ihrer Veröffentlichung am 30.10.2021 und 07.06.2021 weitaus jünger als das angesprochene Paper. Somit dürften beide Versionen über die im Paper angesprochenen Techniken verfügen, können allerdings auch neue Optimierungstechniken beherrschen. 
+
+In der Dokumentation der beiden neuen Db2 Graph Versionen, werden allerdings keinerlei Optimierungstechniken aufgeführt. Somit gibt es keine weiteren verlässlichen Informationen über weitere beziehungsweise neue Optimierungen. Im weiteren Verlauf der Arbeit konnten allerdings Unterschiede bei der Optimierung zwischen Db2 Graph Beta 3 und V11.5.6.0 bei einigen Queries festgestellt werden. Diese werden im weitern Verlauf dieses Unterabschnitts aufgeführt.
+
+\textbf{Limit Pushown with Limit Steps}\\
+Während der von Db2 Graph Beta 3 generierte SQL-Code, noch den Einsatz Limit-Steps in aus den Gremlin-Queries ignoriert, reflektiert der von V11.5.6.0 generierte Code diese Elemente. 
+
+Unter Betrachtung der in \nameref{subsubsec:data_independent_optimizations} aufgeführten Optimierungsmechanismen kann die Hypothese aufgestellt werden, dass diese neue Limit-Optimierung im Rahmen des Traversal-Strategy Moduls anwendet wird. Schließlich weist diese Art von Optimierung eine große Ähnlichkeit zu Predicate Pushdown with Filter Steps oder Aggregate Pushdown with Aggregation Steps auf. Darüber hinaus lässt sich die Optimierung vermutlich auch in die Kategorie Data-Independent Optimizations einordnen, sollte die Hypothese korrekt sein.
+
+Einen Nachweis für die neue Optimierungstechnik stellt die unterschiedliche Übersetzung der in \autoref{src:nachweis_limit_pushdown} dargestellten Gremlin-Query dar. 
+\begin{lstlisting}[label=src:nachweis_limit_pushdown,caption={Nachweis Limit Pushdown},language=SQL]
+/* Gremlin-Query */
+g.V().limit(100);
+
+-- Von Db2 Graph Beta 3 generiertes SQL-Statement
+SELECT * FROM "LINKDB0"."NODETABLE";
+
+-- Von Db2 Graph V11.5.6.0 generiertes SQL-Statement
+SELECT "ID", "VERSION", "TIME", "ID", "DATA", "TYPE" FROM "LINKDB0"."NODETABLE" FETCH FIRST 100 ROWS;
+\end{lstlisting}
+Im \autoref{src:nachweis_limit_pushdown} ist wie zuvor beschrieben erkennbar, dass der von Db2 Graph Beta 3 generierte SQL-Code den Gremlin-Limit-Step in keinerlei  Form wiederspiegelt. Der von V11.5.6.0 erstellte SQL-Code reflektiert hingegen den Gremlin-Limit-Step durch einen FETCH-FIRST-n-ROWS-Clause.
+
+Durch den Einsatz Optimierungtechnik, kann es somit vermieden werden, den gesamten Inhalt einer oder mehrerer Vertex- beziehunsgweise Edge-Tabellen abzufragen, nur um lediglich 100 Knoten, wie im \autoref{src:nachweis_limit_pushdown} abzufragen. Daher dürfte diese Optimierung einen erheblichen Einfluss auf die Performance von Db2 Graph haben, besonders bei großen Tabellen.
 
 \subsection{Versionen}

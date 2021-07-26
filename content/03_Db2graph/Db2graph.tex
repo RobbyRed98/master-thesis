@@ -266,17 +266,19 @@ Die folgenden Optimierungstechniken werden dabei herangezogen:
 \label{subsubsec:optimierung:unterschied_versionen}
 Der Unterschied den beiden Db2 Graph Versionen, die im Rahmen dieser Arbeit untersuchte werden, müssen noch zwei kleinere Unterschied bezüglich der Optimierungen angesprochen werden. 
 
-Die unter \nameref{subsubsec:data_independent_optimizations} und \nameref{subsubsec:data_dependent_optimizations} auf geführten Optimierungstechniken stammen aus dem im Jahr 2020 veröffentlichten Paper \cite{sigmod_tian}. Das Paper führt daher lediglich eine Grundlage an Optimierungstechniken auf, über die Db2 Graph bereits im Juni 2020 verfügte. Beide Versionen Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 sind mit ihrer Veröffentlichung am 30.10.2021 und 07.06.2021 weitaus jünger als das angesprochene Paper. Somit dürften beide Versionen über die im Paper angesprochenen Techniken verfügen, können allerdings auch neue Optimierungstechniken beherrschen. 
+Die unter \nameref{subsubsec:data_independent_optimizations} und \nameref{subsubsec:data_dependent_optimizations} auf geführten Optimierungstechniken stammen aus dem im Jahr 2020 veröffentlichten Paper \cite{sigmod_tian}. Das Paper führt daher lediglich eine Grundlage an Optimierungstechniken auf, über die Db2 Graph bereits im Juni 2020 verfügte. Beide Versionen Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 sind mit ihrer Veröffentlichung am 30.10.2020 und 07.06.2021 weitaus jünger als das angesprochene Paper. Somit dürften beide Versionen über die im Paper angesprochenen Techniken verfügen, können allerdings auch neue Optimierungstechniken beherrschen. 
 
-In der Dokumentation der beiden neuen Db2 Graph Versionen, werden allerdings keinerlei Optimierungstechniken aufgeführt. Somit gibt es keine weiteren verlässlichen Informationen über weitere beziehungsweise neue Optimierungen. Im weiteren Verlauf der Arbeit konnten allerdings Unterschiede bei der Optimierung zwischen Db2 Graph Beta 3 und V11.5.6.0 bei einigen Queries festgestellt werden. Diese werden im weitern Verlauf dieses Unterabschnitts aufgeführt.
+In der Dokumentation der beiden neuen Db2 Graph Versionen, werden allerdings keinerlei Optimierungstechniken aufgeführt. Somit gibt es keine weiteren verlässlichen Informationen über weitere beziehungsweise neue Optimierungen. Im weiteren Verlauf der Arbeit konnten allerdings Unterschiede bei der Optimierung zwischen Db2 Graph Beta 3 und V11.5.6.0 bei einigen Queries festgestellt werden. Diese werden hier im weiteren Verlauf aufgeführt:
 
-\textbf{Limit Pushown with Limit Steps}\\
-Während der von Db2 Graph Beta 3 generierte SQL-Code, noch den Einsatz Limit-Steps in aus den Gremlin-Queries ignoriert, reflektiert der von V11.5.6.0 generierte Code diese Elemente. 
+\begin{itemize}
+    \item \textbf{Limit Pushown with Limit Steps}\\
+    Während der von Db2 Graph Beta 3 generierte SQL-Code, noch den Einsatz Limit-Steps in aus den Gremlin-Queries ignoriert, reflektiert der von V11.5.6.0 generierte Code diese Elemente. 
 
-Unter Betrachtung der in \nameref{subsubsec:data_independent_optimizations} aufgeführten Optimierungsmechanismen kann die Hypothese aufgestellt werden, dass diese neue Limit-Optimierung im Rahmen des Traversal-Strategy Moduls anwendet wird. Schließlich weist diese Art von Optimierung eine große Ähnlichkeit zu Predicate Pushdown with Filter Steps oder Aggregate Pushdown with Aggregation Steps auf. Darüber hinaus lässt sich die Optimierung vermutlich auch in die Kategorie Data-Independent Optimizations einordnen, sollte die Hypothese korrekt sein.
+    Unter Betrachtung der in \nameref{subsubsec:data_independent_optimizations} aufgeführten Optimierungsmechanismen kann die Hypothese aufgestellt werden, dass diese neue Limit-Optimierung im Rahmen des Traversal-Strategy Moduls anwendet wird. Schließlich weist diese Art von Optimierung eine große Ähnlichkeit zu Predicate Pushdown with Filter Steps oder Aggregate Pushdown with Aggregation Steps auf. Darüber hinaus lässt sich die Optimierung vermutlich auch in die Kategorie Data-Independent Optimizations einordnen, sollte die Hypothese korrekt sein.
 
-Einen Nachweis für die neue Optimierungstechnik stellt die unterschiedliche Übersetzung der in \autoref{src:nachweis_limit_pushdown} dargestellten Gremlin-Query dar. 
-\begin{lstlisting}[label=src:nachweis_limit_pushdown,caption={Nachweis Limit Pushdown},language=SQL]
+    Einen Nachweis für die neue Optimierungstechnik stellt die unterschiedliche Übersetzung der in \autoref{src:nachweis_limit_pushdown} dargestellten Gremlin-Query dar.
+
+\begin{lstlisting}[label=src:nachweis_limit_pushdown,caption={Nachweis Limit Pushdown Optimierung},language=SQL]
 /* Gremlin-Query */
 g.V().limit(100);
 
@@ -286,8 +288,52 @@ SELECT * FROM "LINKDB0"."NODETABLE";
 -- Von Db2 Graph V11.5.6.0 generiertes SQL-Statement
 SELECT "ID", "VERSION", "TIME", "ID", "DATA", "TYPE" FROM "LINKDB0"."NODETABLE" FETCH FIRST 100 ROWS;
 \end{lstlisting}
-Im \autoref{src:nachweis_limit_pushdown} ist wie zuvor beschrieben erkennbar, dass der von Db2 Graph Beta 3 generierte SQL-Code den Gremlin-Limit-Step in keinerlei  Form wiederspiegelt. Der von V11.5.6.0 erstellte SQL-Code reflektiert hingegen den Gremlin-Limit-Step durch einen FETCH-FIRST-n-ROWS-Clause.
 
-Durch den Einsatz Optimierungtechnik, kann es somit vermieden werden, den gesamten Inhalt einer oder mehrerer Vertex- beziehunsgweise Edge-Tabellen abzufragen, nur um lediglich 100 Knoten, wie im \autoref{src:nachweis_limit_pushdown} abzufragen. Daher dürfte diese Optimierung einen erheblichen Einfluss auf die Performance von Db2 Graph haben, besonders bei großen Tabellen.
+    Im \autoref{src:nachweis_limit_pushdown} ist wie zuvor beschrieben erkennbar, dass der von Db2 Graph Beta 3 generierte SQL-Code den Gremlin-Limit-Step in keinerlei  Form widerspiegelt. Der von V11.5.6.0 erstellte SQL-Code reflektiert hingegen den Gremlin-Limit-Step durch einen FETCH-FIRST-n-ROWS-Clause.
+
+    Durch den Einsatz Optimierungstechnik, kann es somit vermieden werden, den gesamten Inhalt einer oder mehrerer Vertex- beziehungsweise Edge-Tabellen abzufragen, nur um lediglich 100 Knoten, wie im \autoref{src:nachweis_limit_pushdown} abzufragen. Daher dürfte diese Optimierung einen erheblichen Einfluss auf die Performance von Db2 Graph haben, besonders bei großen Tabellen.
+
+    \item \textbf{One for all with Joins}\\
+    Wird der erzeugte SQL-Code in \autoref{src:nachweis_one_for_all_join} genauer analysiert, so sticht hervor, dass  Db2 Graph Beta 3 die Anfrage in zwei SQL-Abfragen aufspaltet. Während dem Db2 Graph V11.5.6.0 hingegen einen Join einsetzt, um die Anfrage in einem SQL-Statement zu komprimieren.
+
+    Aufgrund dieser Beobachtung kann die Hypothese aufgestellt werden, dass Db2 Graph V11.5.6.0 über eine neue Optimierungstechnik verfügt, die nicht in \cite{sigmod_tian} erwähnt oder beschrieben wird. Diese im Rahmen dieser Arbeit als One for all with Joins bezeichnete Optimierungstechnik, scheint dafür verantwortlich zu sein, SQL-Abfragen mittels eines Joins in exakt eine Anfrage zu komprimieren. Dies bietet den Vorteil, dass der Overhead der durch das Stellen und Verarbeiten von mehreren SQL-Anfragen an Db2 eliminiert werden kann. 
+
+    Basierend auf diesem Verhalten liegt die Vermutung nahe, dass die Optimierungstechnik in die Kategorie Data-Independent Optimizations eingeordnet werden kann. Schließlich erfolgt die Optimierung nicht auf Basis von Topologie Informationen, wie bei den Data-Dependent Optimizations üblich. Des Weiteren kann die Annahme aufgestellt werden, dass sich die Umsetzung der Optimierungstechnik im Zuge der Optimierung des Query-Plans anbieten würde. Folglich wäre die Optimierungstechnik Teil des Traversal-Strategy Moduls. Da es keinerlei Dokumentation oder Aufzeichnungen über eine solche Optimierungstechnik gibt, kann dies allerdings weder bewiesen, noch widerlegt werden. 
+
+\begin{lstlisting}[label=src:nachweis_one_for_all_join,caption={Nachweis One for all with Joins Optimierung},language=SQL]
+/* Gremlin-Query */
+g.V()
+.hasLabel("NODETABLE")
+.has("ID", 1)
+.outE("LINKTABLE")
+.has("LINK_TYPE", 12345)
+.count()
+
+-- Von Db2 Graph Beta 3 generierte SQL-Statements
+SELECT * FROM "LINKDB0"."NODETABLE" WHERE "ID" = 1;
+SELECT * FROM "LINKDB0"."LINKTABLE" WHERE ("ID1") IN (VALUES (1)) AND "LINK_TYPE" = 12345;
+
+-- Von Db2 Graph V11.5.6.0 generiertes SQL-Statement
+SELECT COUNT(*) FROM "LINKDB0"."NODETABLE" AS VT0, "LINKDB0"."LINKTABLE" AS ET1 WHERE VT0."ID" = 1 AND ET1."LINK_TYPE" = 12345 AND VT0.ID = ET1.ID1
+\end{lstlisting}
+
+    \item \textbf{Weitere Auffälligkeiten}\\
+    Neben der angesprochenen Optimierungstechnik fallen bei der Analyse von \autoref{src:nachweis_one_for_all_join} noch weitere Unterschiede auf. So ist bei Db2 Graph Beta 3 erkennbar, dass keine Aggregation Pushdown Optimization angewandt wird, im Gegensatz zu V11.5.6.0. Dieses Verhalten ist interessant, da die Optimierung bereits im Paper \cite{sigmod_tian} aus dem Juni 2021 aufgeführt wird. Db2 Graph Beta 3 wurde hingegen erst am 30.10.2020 veröffentlichten, mehrere Monate nach dem Paper. 
+
+    Im Kontext dieser Arbeit wird dieses Phänomen jedoch nicht als eine weitere neue Optimierungstechnik betrachtet. Schließlich wurde diese Art von Optimierung bereits sehr früh beschrieben in \cite{sigmod_tian}. Darüber hinaus ist auch Beta 3 dazu in der Lage einen Aggregation Pushdown Optimization durchzuführen, siehe \autoref{src:nachweis_agg_pushdown}. Dafür muss allerdings die Gremlin-Query anders formuliert werden. Daher wird das Phänomen im Rahmen dieser Arbeit als Verbesserung oder Fehlerbehebung der  Aggregation Pushdown Optimization eingestuft, die zwischen Beta 3 und V11.5.6.0 erfolgte.
+
+\begin{lstlisting}[label=src:nachweis_agg_pushdown,caption={Nachweis für Aggregation Pushdown in Db2 Graph Beta 3},language=SQL]
+/* Gremlin-Query */
+g.V(["NODETABLE", 1])
+.outE("LINKTABLE")
+.has("LINK_TYPE", 12345)
+
+-- Von Db2 Graph Beta 3 generiertes SQL-Statement
+SELECT COUNT(*) FROM "LINKDB0"."LINKTABLE" WHERE ("ID1") IN (VALUES (1)) AND "LINK_TYPE" = 12345;
+
+-- Von Db2 Graph V11.5.6.0 generiertes SQL-Statement
+SELECT COUNT(*) FROM "LINKDB0"."LINKTABLE" AS ET1 WHERE (ET1."ID1") IN (VALUES (1)) AND ET1."LINK_TYPE" = 12345;
+\end{lstlisting}
+\end{itemize}
 
 \subsection{Versionen}

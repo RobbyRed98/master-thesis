@@ -379,6 +379,24 @@ Außerdem stellt Beta 3 die Version dar, die eigentlich im Zentrum der Arbeit st
 
 \subsubsection{V11.5.6.0}
 
-Bei der V11.5.6.0 handelt es sich um eine neuere Version von Db2 Graph als Beta 3. Sie stellt die erste allgemein verfügbare Version von Db2 Graph dar, die für den Produkteinsatz freigegeben wurde. Die Veröffentlichung erfolgt dabei als Docker-Container am 07.06.2021. 
+Bei der V11.5.6.0 handelt es sich um eine neuere Version von Db2 Graph als Beta 3. Sie stellt die erste allgemein verfügbare Version von Db2 Graph dar, die für den Produkteinsatz freigegeben wurde. Die Veröffentlichung erfolgte dabei als Docker-Container am 07.06.2021. 
 
-V11.5.6.0 bringt dabei neben der bereits in Beta 3 umgesetzten Funktionalität eine graphische Weboberfläche mit sich \cite{ibm_docs_db2_graph_ui}. Diese wird auch als Db2 Graph UI bezeichnet \cite{ibm_docs_db2_graph_ui}. 
+V11.5.6.0 bringt dabei neben der bereits in Beta 3 umgesetzten Funktionalität eine graphische Weboberfläche mit sich \cite{ibm_docs_db2_graph_ui}. Diese wird auch als Db2 Graph UI bezeichnet \cite{ibm_docs_db2_graph_ui}. Die Weboberfläche ermöglicht es dabei nutzerfreundlicher als bei Beta 3: 
+
+\begin{itemize}
+    \item ein Mapping beziehungsweise eine Graph-Overlay-Konfiguration anzulegen oder zu bearbeiten,
+    \item Db2 Graph zu verwalten und 
+    \item Gremlin-Queries an Db2 Graph zu senden sowie deren Ergebnisse zu visualisieren. 
+\end{itemize}
+
+Für das Erstellen und Anlegen eines Graphen stellt Db2 Graph UI dabei auch einen Editor bereit. In diesem Editor kann ein graphisches Modell angelegt und bearbeitet werden, dass den Graphen visuell abbildet. So kann beispielsweise eine Graph-Overlay mit einigen Klicks erstellt oder angepasst werden, siehe \autoref{fig:db2_graph_ui_editor}. Das in \autoref{fig:db2_graph_ui_editor} dargestellte Modell spiegelt dabei eine Konfiguration vergleichbar mit \autoref{src:mapping_example} wider. Die visuelle Darstellung bietet dabei den Vorteil, dass die Vertex-Tabellen und Edge-Tabellen sowie deren Zusammenspiel miteinander schneller erfasst werden können. Siehe das blaue Hexagon \texttt{NODETABLE}, welches eine Vertex-Tabelle repräsentiert oder den grünen Pfeil \texttt{LINKTABLE} der eine Edge-Tabelle abstrahiert in \autoref{fig:db2_graph_ui_editor}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{images/db2_graph_editor.png}
+    \vspace{0.1em}
+    \caption[Db2 Graph UI -- Graph-Editor]{Db2 Graph UI -- Graph-Editor zum Anlegen oder Editieren einer Graph-Overlay-Konfiguration}
+    \label{fig:db2_graph_ui_editor}
+\end{figure}
+
+% TODO über die Db2 Graph UI Konsole schreiben

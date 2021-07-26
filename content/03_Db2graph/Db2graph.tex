@@ -170,7 +170,7 @@ Db2 Graph verfügt über die folgenden Fähigkeiten und Einschränkungen:
     \item \textbf{Read-Only-Queries}\\
     Db2 Graph verfügt über eine read-only Implementierung von Apache TinkerPop, daher ist es dazu in der Lage nahe zu alle read-only Gremlin-Queries zu verarbeiten \cite{ibm_docs_limitiations}. Umgekehrt bedeutet dies allerdings auch, dass Db2 Graph nicht fähig ist schreibende Gremlin-Queries zu verarbeiten.
     \item \textbf{Optimierung}\\
-    Db2 Graph verfügt über mehrere Mechanismen um die Verarbeitung von empfangen Gremlin-Queries zu optimieren, mehr dazu in \autoref{subsec:db2graph_optimierung}.
+    Db2 Graph verfügt über mehrere Mechanismen um die Verarbeitung von empfangen Gremlin-Queries zu optimieren, mehr dazu in \autoref{db2graph:optimierung}.
     \item \textbf{Datentypen}\\
     Von Db2 Graph werden nur Datentypen unterstützt, die auch in Db2 vorhanden sind \cite{ibm_docs_limitiations}. Das bedeutet, das nur diese Datentypen als Property-Type eines Knotens oder einer Kante eingesetzt werden kann \cite{ibm_docs_limitiations}. Somit ist es auch nicht möglich verschachtelte Datentypen -- wie z.B. in Neo4j -- als Property-Type zu nutzen. Schließlich werden diese nicht von Db2 Graph unterstützt.
     \item \textbf{Festes Schema}\\
@@ -180,9 +180,9 @@ Db2 Graph verfügt über die folgenden Fähigkeiten und Einschränkungen:
 \end{itemize}
 
 \subsection{Optimierung}
-\label{subsec:db2graph_optimierung}
+\label{db2graph:optimierung}
 
-Im Kontext dieses Abschnitts wird eine Übersicht über die Optimierungsmechanismen von Db2 Graph geben. Dabei stützt sich diese Arbeit, auf die in \cite{sigmod_tian} beschrieben Optimierungstechniken \cite{sigmod_tian}. Auch die Unterteilung der Mechanismen in die Kategorien Data-Independent Optimizations und Data-Dependent Optimizations werden dabei aus \cite{sigmod_tian} übernommen.
+Im Kontext dieses Unterabschnitts wird eine Übersicht über die Optimierungsmechanismen von Db2 Graph geben. Dabei stützt sich diese Arbeit, auf die in \cite{sigmod_tian} beschrieben Optimierungstechniken \cite{sigmod_tian}. Auch die Unterteilung der Mechanismen in die Kategorien Data-Independent Optimizations und Data-Dependent Optimizations werden dabei aus \cite{sigmod_tian} übernommen. Zum Schluss werden noch Optimierungsmechanismen angesprochen, die vermutlich nach dem Paper \cite{sigmod_tian} hinzugekommen sind. Diese wurden dabei daran identifiziert, wie sich der von zwei verschiedenen Db2 Graph Versionen erzeugte SQL-Code voneinander unterscheidet. 
 
 \subsubsection{Data-Independent Optimizations}
 \label{subsubsec:data_independent_optimizations}
@@ -337,3 +337,48 @@ SELECT COUNT(*) FROM "LINKDB0"."LINKTABLE" AS ET1 WHERE (ET1."ID1") IN (VALUES (
 \end{itemize}
 
 \subsection{Versionen}
+
+Wie bereits gegen Ende von \compref{db2graph:optimierung} angesprochen, setzt sich diese Arbeit mit zwei verschiedenen Versionen von Db2 Graph auseinander. Bei diesen zwei Versionen handelt es sich um: 
+
+\begin{itemize}
+    \item Db2 Graph Beta 3 und
+    \item Db2 Graph V11.5.6.0.
+\end{itemize}
+
+Im weiteren Verlauf dieses Unterabschnitts werden dabei beide Versionen von Db2 Graph genauer erläutert. Die bereits in \autoref{db2graph:optimierung} angesprochen Unterschiede bezüglich der Optimierungsmechanismen nicht mehr oder lediglich am Rand angesprochen, um Redundanzen zu vermeiden. 
+
+\subsubsection{Beta 3}
+
+Bei der Version Beta 3 handelt es sich hierbei um den Vorgänger-Release von V11.5.6.0. Db2 Graph Beta 3 wurde dabei in Form eines Docker-Containers am 30.10.2020 veröffentlicht. Dabei brachte sie in erster Linie das Grundgerüst der im Paper \cite{sigmod_tian} beschrieben Db2 Graph Anwendung mit sich und abstrahierte die in \cite{sigmod_tian} beschriebene Funktionalität. 
+
+Etwas das es hierbei in Bezug auf den Aspekt Usability herauszustellen gilt, stellt das automatisierte Verfahren dar, mit dem Mapping-Konfigurationen erzeugt werden können. So ist bereits Beta 3 dazu in der Lage anhand eines Datenbankschemas in Db2, ein Mapping- beziehungsweise eine Graph-Overlay-Konfiguration zu generieren. Die generierte Graph-Overlay-Konfiguration enthält dabei eine mögliche Variante eines Mappings der relationalen Struktur in Db2 auf einen Graphen. Diese Konfiguration bildet dabei zwar in den meisten Fällen nicht die angestrebte Graphstruktur ab. Jedoch erleichtert und vereinfacht sie das erzeugen oder die Umsetzung einer eigenen Graphstruktur erheblich. Schließlich kann die erzeugte Overlay-Konfiguration als Konfigurationsbeispiel herangezogen werden oder als Ausgangspunkt für die angestrebte Konfiguration dienen. 
+
+Die Steuerung und Konfiguration von Db2 Graph erfolgt bei Beta 3 ausschließlich über das Terminal mit dem \texttt{manage}-Befehl. Der \texttt{manage}-Befehl unterstützt dabei die in \autoref{src:manage_command} aufgeführten Operationen zur Steuerung und Verwaltung von Db2 Graph. 
+
+\begin{lstlisting}[label=src:manage_command,caption={Beispiel Steuerung und Verwaltung von  Db2 Graph Beta 3},language=BASH]
+# Startet Db2 Graph.
+docker exec -it db2graph manage start
+
+# Stoppt Db2 Graph.
+docker exec -it db2graph manage stop
+
+# Zeigt an ob Db2 Graph gerade laeuft oder angehalten wurde.
+docker exec -it db2graph manage status
+
+# Oeffnet einen Dialog zum erstellen einer Graph-Overlay-
+# Konfiguration
+docker exec -it db2graph manage add
+
+# Gibt die von Db2Graph erzeugten Logs aus.
+docker exec -it db2graph manage logs
+\end{lstlisting}
+
+Neben dem \texttt{manage}-Befehl verfügt Beta 3 über eine Gremlin-Console. Diese kann im Terminal genutzt werden, um einzelne Gremlin-Queries direkt an Db2 Graph zu senden. Somit bietet Db2 Graph einen einfachen Weg bestimmte Gremlin-Queries und deren Performance mittels des Profile-Steps zu untersuchen.
+
+Außerdem stellt Beta 3 die Version dar, die eigentlich im Zentrum der Arbeit stehen sollte. Denn zu Beginn der Arbeit war noch nicht bekannt, wann eine neue Version von Db2 Graph erscheinen würde. 
+
+\subsubsection{V11.5.6.0}
+
+Bei der V11.5.6.0 handelt es sich um eine neuere Version von Db2 Graph als Beta 3. Sie stellt die erste allgemein verfügbare Version von Db2 Graph dar, die für den Produkteinsatz freigegeben wurde. Die Veröffentlichung erfolgt dabei als Docker-Container am 07.06.2021. 
+
+V11.5.6.0 bringt dabei neben der bereits in Beta 3 umgesetzten Funktionalität eine graphische Weboberfläche mit sich \cite{ibm_docs_db2_graph_ui}. Diese wird auch als Db2 Graph UI bezeichnet \cite{ibm_docs_db2_graph_ui}. 

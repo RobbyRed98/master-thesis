@@ -361,4 +361,7 @@
 % Blindtext
 \usepackage{blindtext}
 
+% adding fullrefs
+\newcommand*{\compref}[1]{\hyperref[{#1}]{\autoref*{#1} \textit{\nameref*{#1}}}}
+
 % Hyphenation

@@ -268,15 +268,17 @@ Der Unterschied den beiden Db2 Graph Versionen, die im Rahmen dieser Arbeit unte
 
 Die unter \nameref{subsubsec:data_independent_optimizations} und \nameref{subsubsec:data_dependent_optimizations} auf geführten Optimierungstechniken stammen aus dem im Jahr 2020 veröffentlichten Paper \cite{sigmod_tian}. Das Paper führt daher lediglich eine Grundlage an Optimierungstechniken auf, über die Db2 Graph bereits im Juni 2020 verfügte. Beide Versionen Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 sind mit ihrer Veröffentlichung am 30.10.2020 und 07.06.2021 weitaus jünger als das angesprochene Paper. Somit dürften beide Versionen über die im Paper angesprochenen Techniken verfügen, können allerdings auch neue Optimierungstechniken beherrschen. 
 
-In der Dokumentation der beiden neuen Db2 Graph Versionen, werden allerdings keinerlei Optimierungstechniken aufgeführt. Somit gibt es keine weiteren verlässlichen Informationen über weitere beziehungsweise neue Optimierungen. Im weiteren Verlauf der Arbeit konnten allerdings Unterschiede bei der Optimierung zwischen Db2 Graph Beta 3 und V11.5.6.0 bei einigen Queries festgestellt werden. Diese werden hier im weiteren Verlauf aufgeführt:
+Im weiteren Verlauf stachen dabei die folgenden zwei Unterschiede bei der Optimierung in Db2 Graph Beta 3 und V11.5.6.0 heraus:
 
 \begin{itemize}
-    \item \textbf{Limit Pushown with Limit Steps}\\
-    Während der von Db2 Graph Beta 3 generierte SQL-Code, den Einsatz von Limit-Steps in Gremlin-Queries ignoriert, reflektiert der von V11.5.6.0 generierte Code diese Elemente. 
+    \item \textbf{Limit Pushown}\\
+    Bei dem Limit Pushdown handelt es sich um eine Optimierungstechnik die ab Db2 Graph V11.5.6.0 eingesetzt wird \cite{ibm_docs_optimize}. Sie ermöglicht es Gremlin-Limit- oder Gremlin-Range-Steps direkt in von Db2 Graph generierten SQL-Code einzubetten  \cite{ibm_docs_optimize}. Db2 Graph Beta 3 beherrscht diese Art der Optimierung nicht. 
 
-    Unter Betrachtung der in \nameref{subsubsec:data_independent_optimizations} aufgeführten Optimierungsmechanismen kann die Hypothese aufgestellt werden, dass diese neue Limit-Optimierung im Rahmen des Traversal-Strategy Moduls anwendet wird. Schließlich weist diese Art von Optimierung eine große Ähnlichkeit zu Predicate Pushdown with Filter Steps oder Aggregate Pushdown with Aggregation Steps auf. Darüber hinaus lässt sich die Optimierung vermutlich auch in die Kategorie Data-Independent Optimizations einordnen, sollte die Hypothese korrekt sein.
+    Vergleicht man die Optimierungstechnik, mit denen in \nameref{subsubsec:data_independent_optimizations} aufgeführten Optimierungsmechanismen, so kann die Hypothese aufgestellt werden, dass die Limit-Optimierung  auf Ebene des Traversal-Strategy Moduls implementiert und eingesetzt wird. Schließlich weist diese Art von Optimierung eine große Ähnlichkeit zum Predicate Pushdown with Filter Steps oder Aggregate Pushdown with Aggregation Steps auf. Außerdem wird die Optimierungstechnik in \cite{ibm_docs_optimize} auch in der Nähe der beiden anderen Optimierungen aufgeführt. 
+    
+    Des Weiteren kann auch die Annahme gemacht werden, dass die Optimierungstechnik in die Kategorie Data-Independent Optimizations einzuordnen ist. Schließlich werden beim Limit Pushdown keine Topologie Informationen verwertet. Somit lassen sich die Data-Dependent Optimizations ausschließen.
 
-    Einen Nachweis für die neue Optimierungstechnik stellt die unterschiedliche Übersetzung der in \autoref{src:nachweis_limit_pushdown} dargestellten Gremlin-Query dar.
+    Einen Beispiel für die neue Optimierungstechnik stellt der \autoref{src:nachweis_limit_pushdown} dar. Er zeigt, wie eine Gremlin-Query mit einem Limit-Step von Db2 Graph v11.5.6.0 und Beta 3 unterschiedlich übersetzt wird.
 
 \begin{lstlisting}[label=src:nachweis_limit_pushdown,caption={Nachweis Limit Pushdown Optimierung},language=SQL]
 /* Gremlin-Query */
@@ -293,14 +295,14 @@ SELECT "ID", "VERSION", "TIME", "ID", "DATA", "TYPE" FROM "LINKDB0"."NODETABLE" 
 
     Durch den Einsatz Optimierungstechnik, kann es somit vermieden werden, den gesamten Inhalt einer oder mehrerer Vertex- beziehungsweise Edge-Tabellen abzufragen, nur um lediglich 100 Knoten, wie im \autoref{src:nachweis_limit_pushdown} abzufragen. Daher dürfte diese Optimierung einen erheblichen Einfluss auf die Performance von Db2 Graph haben, besonders bei großen Tabellen.
 
-    \item \textbf{One for all with Joins}\\
-    Wird der erzeugte SQL-Code in \autoref{src:nachweis_one_for_all_join} genauer analysiert, so sticht hervor, dass  Db2 Graph Beta 3 die Anfrage in zwei SQL-Abfragen aufspaltet. Während dem Db2 Graph V11.5.6.0 hingegen einen Join einsetzt, um die Anfrage in einem SQL-Statement zu komprimieren.
+    \item \textbf{Join Pushdown}\\
+    Hierbei handelt es sich um eine Optimierungstechnik, die dazu in der Lage ist, zusammenhängende Anfragen mittels eines Joins in einem SQL-Statement unterzubringen. Hierbei handelt es sich wieder um eine Art der Optimierung, die bisher lediglich in Db2 Graph V11.5.6.0 eingesetzt werden kann -- nicht in Beta 3.
 
-    Aufgrund dieser Beobachtung kann die Hypothese aufgestellt werden, dass Db2 Graph V11.5.6.0 über eine neue Optimierungstechnik verfügt, die nicht in \cite{sigmod_tian} erwähnt oder beschrieben wird. Diese im Rahmen dieser Arbeit als One for all with Joins bezeichnete Optimierungstechnik, scheint dafür verantwortlich zu sein, SQL-Abfragen mittels eines Joins in exakt eine Anfrage zu komprimieren. Dies bietet den Vorteil, dass der Overhead der durch das Stellen und Verarbeiten von mehreren SQL-Anfragen an Db2 eliminiert werden kann. 
+    Ein Beispiel für diese Optimierung stellt \autoref{src:join_pushdown} dar. Darin wird dargestellt wie eine Germlin-Query von Db2 Graph Beta 3 und V11.5.6.0 unterschiedlich übersetzt wird. Der von V11.5.6.0 enthält dabei wie erwartet einen Join zwischen den beiden Tabellen.
 
-    Basierend auf diesem Verhalten liegt die Vermutung nahe, dass die Optimierungstechnik in die Kategorie Data-Independent Optimizations eingeordnet werden kann. Schließlich erfolgt die Optimierung nicht auf Basis von Topologie Informationen, wie bei den Data-Dependent Optimizations üblich. Des Weiteren kann die Annahme aufgestellt werden, dass sich die Umsetzung der Optimierungstechnik im Zuge der Optimierung des Query-Plans anbieten würde. Folglich wäre die Optimierungstechnik Teil des Traversal-Strategy Moduls. Da es keinerlei Dokumentation oder Aufzeichnungen über eine solche Optimierungstechnik gibt, kann dies allerdings weder bewiesen, noch widerlegt werden. 
+    Auch bei dieser Art der Optimierung liegt die Vermutung nahe, dass sie auf der Ebene des Traversal-Strategy Moduls umgesetzt wird und in die Kategorie der Data-Independent Optimizations einzuordnen ist. Schließlich weist sie wie der Limit-Pushdown Ähnlichkeiten zu anderen Optimierungstechniken dieser Kategorie auf. Darüber hinaus wird sie ebenfalls in deren Nähe in \cite{ibm_docs_optimize} aufgeführt.
 
-\begin{lstlisting}[label=src:nachweis_one_for_all_join,caption={Nachweis One for all with Joins Optimierung},language=SQL]
+\begin{lstlisting}[label=src:join_pushdown,caption={Beispiel Join Pushdown},language=SQL]
 /* Gremlin-Query */
 g.V()
 .hasLabel("NODETABLE")
@@ -318,9 +320,9 @@ SELECT COUNT(*) FROM "LINKDB0"."NODETABLE" AS VT0, "LINKDB0"."LINKTABLE" AS ET1 
 \end{lstlisting}
 
     \item \textbf{Weitere Auffälligkeiten}\\
-    Neben der angesprochenen Optimierungstechnik fallen bei der Analyse von \autoref{src:nachweis_one_for_all_join} noch weitere Unterschiede auf. So ist bei Db2 Graph Beta 3 erkennbar, dass keine Aggregation Pushdown Optimization angewandt wird, im Gegensatz zu V11.5.6.0. Dieses Verhalten ist interessant, da die Optimierung bereits im Paper \cite{sigmod_tian} aus dem Juni 2021 aufgeführt wird. Db2 Graph Beta 3 wurde hingegen erst am 30.10.2020 veröffentlichten, mehrere Monate nach dem Paper. 
+    Neben der angesprochenen Optimierungstechnik fallen bei der Analyse von \autoref{src:join_pushdown} noch weitere Unterschiede auf. So ist bei Db2 Graph Beta 3 erkennbar, dass keine Aggregation Pushdown Optimization angewandt wird, im Gegensatz zu V11.5.6.0. Dieses Verhalten ist interessant, da die Optimierung bereits im Paper \cite{sigmod_tian} aus dem Juni 2021 aufgeführt wird. Db2 Graph Beta 3 wurde hingegen erst am 30.10.2020 veröffentlichten, mehrere Monate nach dem Paper. 
 
-    Im Kontext dieser Arbeit wird dieses Phänomen jedoch nicht als eine weitere neue Optimierungstechnik betrachtet. Schließlich wurde diese Art von Optimierung bereits sehr früh beschrieben in \cite{sigmod_tian}. Darüber hinaus ist auch Beta 3 dazu in der Lage einen Aggregation Pushdown Optimization durchzuführen, siehe \autoref{src:nachweis_agg_pushdown}. Dafür muss allerdings die Gremlin-Query anders formuliert werden. Daher wird das Phänomen im Rahmen dieser Arbeit als Verbesserung oder Fehlerbehebung der  Aggregation Pushdown Optimization eingestuft, die zwischen Beta 3 und V11.5.6.0 erfolgte.
+    Im Kontext dieser Arbeit wird dieses Phänomen jedoch nicht als eine weitere neue Optimierungstechnik betrachtet. Schließlich wurde diese Art von Optimierung bereits sehr früh beschrieben in \cite{sigmod_tian}. Darüber hinaus ist auch Beta 3 dazu in der Lage einen Aggregation Pushdown Optimization durchzuführen, siehe \autoref{src:nachweis_agg_pushdown}. Dafür muss allerdings die Gremlin-Query anders formuliert werden. Daher wird das Phänomen im Rahmen dieser Arbeit als Verbesserung oder Fehlerbehebung des Aggregation Pushdown eingestuft, die zwischen Beta 3 und V11.5.6.0 erfolgte.
 
 \begin{lstlisting}[label=src:nachweis_agg_pushdown,caption={Nachweis für Aggregation Pushdown in Db2 Graph Beta 3},language=SQL]
 /* Gremlin-Query */

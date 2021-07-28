@@ -46,3 +46,4 @@ Gremlin-Range-Steps
 Prefixed-IDs
 Prefixed-ID
 Graph-Queries
+Normalisierungsprozess

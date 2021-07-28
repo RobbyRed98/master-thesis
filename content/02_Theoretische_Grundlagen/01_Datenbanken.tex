@@ -28,6 +28,36 @@ Das Graph- als Datenbank-Modell hat seinen Ursprung in der heutigen Form im Jahr
 Graphdatenbanksysteme und das Graph-Modell sind heute als vergleichbar junge Technologien sind heute noch nicht so weit verbreitet, wie beispielsweise, dass relationale Modell. Mit 1,7 \% Marktanteil ordnen sich Graph-Datenbanksysteme, noch weit hinter anderen Technologien ein, wie \textit{Document Stores}, \textit{Key-Values Stores} oder \textit{Wide column stores} \cite{db_engines_ranking_july}, siehe \autoref{}. Jedoch haben Graphdatenbanksysteme seit 2013 einen erheblichen Aufschwung in Popularität erfahren \cite{db_engines_ranking_july}. 
 
 \subsection{Struktur \& Schema}
+Im Rahmen dieses Abschnitts wird auf die vorhandenen Strukturen der Datenbankmodelle eingegangen. Darüber hinaus wird auch das zugrundeliegende Schema genauer erläutert. 
+
+\subsubsection{Relationales Modell}
+\label{datenmodelle:structure:relational}
+Im Zentrum des relationalen Modells steht hierbei das sogenannte Informationsprinzip \cite{rdbms_history}. Dies beschreibt, dass alle Informationen in einer Datenbank ausschließlich in exakt einer Weise repräsentiert werden dürfen \cite{codd_relational_model}. Informationen werden dabei in Form von Tupeln und Relationen organisiert \cite{codd_relational_model}. Für deren Organisation stellen relationale Datenbanksysteme Tabellen, Spalten und Zeilen als Strukturen bereit \cite{rdbms_history}. So werden auf Basis des Informationsprinzips, alle Informationen als Werte in einer Zelle einer bestimmten Tabelle abgelegt \cite{rdbms_history}.
+
+Das relationale Modell setzt bei der Datenhaltung allerdings ein striktes Schema voraus \cite{rdbms_book}. Schließlich fordert das Informationsprinzip, dass alle Informationen immer in genau einer Art und Weise repräsentiert werden müssen \cite{rdbms_history}. Es verlangt somit eine homogene Darstellung der Daten. Allerdings sind viele Daten in der realen Welt heterogen. Dies hat zu Folge, dass Daten einen sogenannten Normalisierungsprozess durchlaufen müssen \cite{rdbms_book}. Bei diesem Prozess werden die Daten in die sogenannte dritte Normalform (3NF) gebracht, wodurch jegliche Anomalien vermieden werden können \cite{rdbms_book}. So können letztendlich die Informationen einer Entität in einem homogenen Typschema abgebildet werden. 
+
+\subsubsection{Graph-Modell}
+Die Grundlage des Graph-Modells stellen sogenannte Vertexes und Edges dar, auf Deutsch Knoten und Kanten \cite{gdbms}. Diese Vertexes und Edges bilden dabei zusammen einen sogenannten Graphen. So werden in einem Graphen einerseits Entitäten in Form eines Knotens repräsentiert \cite{gdbms}. Anderseits bildet es auch explizit Beziehungen zwischen Entitäten mittels Kanten ab \cite{gdbms}. Darauf wird aber \autoref{datenmodelle:beziehungen}  weiter eingegangen.
+
+Das Graph-Modell setzt im Gegensatz zum relationalen Modell auf ein flexibles Datenschema \cite{gdbms}. Dadruch unterstützt es den Umgang mit heterogenen Daten \cite{gdbms}. Denn anstatt einer strikten Typisierung der Entitäten -- durch Tabellen im relationalen Modell -- lassen sich die Daten im Graph-Modell anhand von Labels organisiert werden. Labels markieren dabei Knoten oder Kanten, die dieselbe oder eine ähnliche Rolle einnehmen. Sie sind in ihrer Funktion allerdings nicht mit Tabellen aus dem relationalen Modell vergleichbar. Dies liegt darin begründet, dass Entitäten mit einem bestimmten Label unterschiedliche Informationen aufweisen können. 
+
+\subsection{Beziehungen}
+\label{datenmodelle:beziehungen}
+In diesem Abschnitt wird darauf eingegangen, wie und in welcher Form die Modelle mit Beziehungen zwischen Entitäten abbilden. 
+
+\subsubsection{Relationales Modell}
+Beziehungen im relationalen Modell lassen sich in die drei folgenden Kategorien unterteilen: 
+\begin{itemize}
+    \item \textit{one-to-one}, 
+    \item \textit{one-to-many} (beziehungsweise \textit{many-to-one}) und 
+    \item \textit{many-to-many}.
+\end{itemize}
+Je nachdem welche der drei Kategorien vorliegt, müssen im relationalen Modell die Beziehungen anders aufgelöst werden. Dabei spielen bei allen drei Kategorien die folgenden Begriffe eine Schlüsselrolle:
+\begin{itemize}
+    \item Primärschlüssel, 
+    \item Sekundärschlüssel und
+    \item Joins.
+\end{itemize}
 
 \section{Datenbanken (Deprecated)}
 Im Rahmen dieses Kapitels zwei unterschiedliche Arten von \acl{dbms} erläutert. Zu diesen Arten gehören \acl{rdbms}, \acl{ddbms} und \acl{gdbms}. Im Zuge der Erläuterung der \acs{dbms} werden das Modell, die Geschichte sowie besondere Eigenschaften angesprochen. Ziel ist es dabei nicht die Modelle ausführlich bis in das kleinste Detail zu erklären. Stattdessen soll im Rahmen dieses Kapitels lediglich die grobe Herkunft, das Modell und die Funktionsweise der verschiedenen \acs{dbms}-Konzepte erläutert werden, sodass in den folgenden Kapiteln auf den hier beschriebenen Begriffen und Konzepten aufgebaut werden kann.   

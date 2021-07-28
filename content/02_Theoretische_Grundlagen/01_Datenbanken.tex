@@ -28,48 +28,12 @@ Das Graph- als Datenbank-Modell hat seinen Ursprung in der heutigen Form im Jahr
 Graphdatenbanksysteme und das Graph-Modell sind heute als vergleichbar junge Technologien sind heute noch nicht so weit verbreitet, wie beispielsweise, dass relationale Modell. Mit 1,7 \% Marktanteil ordnen sich Graph-Datenbanksysteme, noch weit hinter anderen Technologien ein, wie \textit{Document Stores}, \textit{Key-Values Stores} oder \textit{Wide column stores} \cite{db_engines_ranking_july}, siehe \autoref{}. Jedoch haben Graphdatenbanksysteme seit 2013 einen erheblichen Aufschwung in Popularität erfahren \cite{db_engines_ranking_july}. 
 
 \subsection{Struktur \& Schema}
+\label{datenmodelle:structure}
 Im Rahmen dieses Abschnitts wird auf die vorhandenen Strukturen der Datenbankmodelle eingegangen. Darüber hinaus wird auch das zugrundeliegende Schema genauer erläutert. 
 
 \subsubsection{Relationales Modell}
 \label{datenmodelle:structure:relational}
-Im Zentrum des relationalen Modells steht hierbei das sogenannte Informationsprinzip \cite{rdbms_history}. Dies beschreibt, dass alle Informationen in einer Datenbank ausschließlich in exakt einer Weise repräsentiert werden dürfen \cite{codd_relational_model}. Informationen werden dabei in Form von Tupeln und Relationen organisiert \cite{codd_relational_model}. Für deren Organisation stellen relationale Datenbanksysteme Tabellen, Spalten und Zeilen als Strukturen bereit \cite{rdbms_history}. So werden auf Basis des Informationsprinzips, alle Informationen als Werte in einer Zelle einer bestimmten Tabelle abgelegt \cite{rdbms_history}.
-
-Das relationale Modell setzt bei der Datenhaltung allerdings ein striktes Schema voraus \cite{rdbms_book}. Schließlich fordert das Informationsprinzip, dass alle Informationen immer in genau einer Art und Weise repräsentiert werden müssen \cite{rdbms_history}. Es verlangt somit eine homogene Darstellung der Daten. Allerdings sind viele Daten in der realen Welt heterogen. Dies hat zu Folge, dass Daten einen sogenannten Normalisierungsprozess durchlaufen müssen \cite{rdbms_book}. Bei diesem Prozess werden die Daten in die sogenannte dritte Normalform (3NF) gebracht, wodurch jegliche Anomalien vermieden werden können \cite{rdbms_book}. So können letztendlich die Informationen einer Entität in einem homogenen Typschema abgebildet werden. 
-
-\subsubsection{Graph-Modell}
-Die Grundlage des Graph-Modells stellen sogenannte Vertexes und Edges dar, auf Deutsch Knoten und Kanten \cite{gdbms}. Diese Vertexes und Edges bilden dabei zusammen einen sogenannten Graphen. So werden in einem Graphen einerseits Entitäten in Form eines Knotens repräsentiert \cite{gdbms}. Anderseits bildet es auch explizit Beziehungen zwischen Entitäten mittels Kanten ab \cite{gdbms}. Darauf wird aber \autoref{datenmodelle:beziehungen}  weiter eingegangen.
-
-Das Graph-Modell setzt im Gegensatz zum relationalen Modell auf ein flexibles Datenschema \cite{gdbms}. Dadruch unterstützt es den Umgang mit heterogenen Daten \cite{gdbms}. Denn anstatt einer strikten Typisierung der Entitäten -- durch Tabellen im relationalen Modell -- lassen sich die Daten im Graph-Modell anhand von Labels organisiert werden. Labels markieren dabei Knoten oder Kanten, die dieselbe oder eine ähnliche Rolle einnehmen. Sie sind in ihrer Funktion allerdings nicht mit Tabellen aus dem relationalen Modell vergleichbar. Dies liegt darin begründet, dass Entitäten mit einem bestimmten Label unterschiedliche Informationen aufweisen können. 
-
-\subsection{Beziehungen}
-\label{datenmodelle:beziehungen}
-In diesem Abschnitt wird darauf eingegangen, wie und in welcher Form die Modelle mit Beziehungen zwischen Entitäten abbilden. 
-
-\subsubsection{Relationales Modell}
-Beziehungen im relationalen Modell lassen sich in die drei folgenden Kategorien unterteilen: 
-\begin{itemize}
-    \item \textit{one-to-one}, 
-    \item \textit{one-to-many} (beziehungsweise \textit{many-to-one}) und 
-    \item \textit{many-to-many}.
-\end{itemize}
-Je nachdem welche der drei Kategorien vorliegt, müssen im relationalen Modell die Beziehungen anders aufgelöst werden. Dabei spielen bei allen drei Kategorien die folgenden Begriffe eine Schlüsselrolle:
-\begin{itemize}
-    \item Primärschlüssel, 
-    \item Sekundärschlüssel und
-    \item Joins.
-\end{itemize}
-
-\section{Datenbanken (Deprecated)}
-Im Rahmen dieses Kapitels zwei unterschiedliche Arten von \acl{dbms} erläutert. Zu diesen Arten gehören \acl{rdbms}, \acl{ddbms} und \acl{gdbms}. Im Zuge der Erläuterung der \acs{dbms} werden das Modell, die Geschichte sowie besondere Eigenschaften angesprochen. Ziel ist es dabei nicht die Modelle ausführlich bis in das kleinste Detail zu erklären. Stattdessen soll im Rahmen dieses Kapitels lediglich die grobe Herkunft, das Modell und die Funktionsweise der verschiedenen \acs{dbms}-Konzepte erläutert werden, sodass in den folgenden Kapiteln auf den hier beschriebenen Begriffen und Konzepten aufgebaut werden kann.   
-
-\subsection{\acl{rdbms}s}
-Bei dem relationalen Datenbankmanagementsystemen handelt es sich um eine verbreitetet und erprobte Art \acs{dbms}. Schließlich solche relationalen Systeme bereits seit einigen Jahren am Markt verfügbar. 
-
-\subsubsection{Geschichte}
-Das relationale Datenmodell auf dem alle relationalen Datenbankmanagementsysteme aufbauen, hat seinen Ursprung in den 1970er Jahren. Dort wurde es erstmals in \cite{codd_relational_model} beschrieben. Im Rahmen von \cite{codd_relational_model} umreist \citeauthor{codd_relational_model} ein Datenmodell, bei dem Informationen in Form von Tupeln und Relationen organisiert werden. Angelehnt an das von \citeauthor{codd_relational_model} skizzierte Datenmodell, wurden in den folgenden Jahren die ersten relationalen Datenbanksysteme entwickelt. 
-
-\subsubsection{Modell}
-Relationale Datenbanksysteme organisieren hierbei ihre Daten in Form von Tabellen (Relationen), Spalten und Zeilen (Tupeln). Tabellen stellen dabei immer einen bestimmten Entitätentyp dar z.B. ein Auto oder einen Autobesitzer. Diese Entitätentypen verfügen immer über ein oder mehrere fest definierte Attribute. Bei einem Auto könnten solche Attribute die Fahrzeugnummer, der Marke, das Modell und das Baujahr sein, siehe \autoref{tab:auto_table}. 
+Im Zentrum des relationalen Modells steht hierbei das sogenannte Informationsprinzip \cite{rdbms_history}. Dies beschreibt, dass alle Informationen in einer Datenbank ausschließlich in exakt einer Weise repräsentiert werden dürfen \cite{codd_relational_model}. Informationen werden dabei in Form von Tupeln und Relationen organisiert \cite{codd_relational_model}. Für deren Organisation stellen relationale Datenbanksysteme Tabellen, Spalten und Zeilen als Strukturen bereit \cite{rdbms_history}. So werden auf Basis des Informationsprinzips, alle Informationen als Werte in einer Zelle einer bestimmten Tabelle abgelegt \cite{rdbms_history}. So lassen sich beispielsweise alle Entitäte  vom Entitätstyp Auto in einer relationalen Tabelle abbilden, siehe \autoref{tab:auto_tabelle}. 
 
 \begin{table}[h]
     \centering
@@ -83,26 +47,58 @@ Relationale Datenbanksysteme organisieren hierbei ihre Daten in Form von Tabelle
     FZ-456789123 & Ford & Fiesta & 2001 \\
     ... & ... & ... & ... \\ \hline
     \end{tabular}
-    \caption{Auto Tabelle}
-    \label{tab:auto_table}
+    \caption{Beispiel relationale Tabelle für den Entitätstyp Auto}
+    \label{tab:auto_tabelle}
 \end{table}
 
-Es ist dabei auch möglich, Beziehungen zwischen unterschiedlichen Entitätentypen (Tabellen) aufzubauen. Hierbei unterstützen relationale Datenbanksysteme die folgenden Typen von Entitätsbeziehungen: 
+Das relationale Modell setzt bei der Datenhaltung allerdings ein striktes Schema voraus \cite{rdbms_book}. Schließlich fordert das Informationsprinzip, dass alle Informationen immer in genau einer Art und Weise repräsentiert werden müssen \cite{rdbms_history}. Es verlangt somit eine homogene Darstellung der Daten. Allerdings sind viele Daten in der realen Welt heterogen. Dies hat zu Folge, dass Daten einen sogenannten Normalisierungsprozess durchlaufen müssen \cite{rdbms_book}. Bei diesem Prozess werden die Daten in die sogenannte dritte Normalform (3NF) gebracht, wodurch jegliche Anomalien vermieden werden können \cite{rdbms_book}. So können letztendlich die Informationen einer Entität in einem homogenen Typschema abgebildet werden. 
+
+\subsubsection{Graph-Modell}
+Die Grundlage des Graph-Modells stellen sogenannte Vertexes und Edges dar, auf Deutsch Knoten und Kanten \cite{gdbms}. Diese Vertexes und Edges bilden dabei zusammen einen sogenannten Graphen. So werden in einem Graphen einerseits Entitäten in Form eines Knotens repräsentiert \cite{gdbms}. Anderseits bildet es auch explizit Beziehungen zwischen Entitäten mittels Kanten ab \cite{gdbms}. Darauf wird aber \autoref{datenmodelle:beziehungen}  weiter eingegangen.
+
+Das Graph-Modell setzt im Gegensatz zum relationalen Modell auf ein flexibles Datenschema \cite{gdbms}. Dadruch unterstützt es den Umgang mit heterogenen Daten \cite{gdbms}. Denn anstatt einer strikten Typisierung der Entitäten -- durch Tabellen im relationalen Modell -- lassen sich die Daten im Graph-Modell anhand von Labels organisiert werden. Labels markieren dabei Knoten oder Kanten, die dieselbe oder eine ähnliche Rolle einnehmen. Sie sind in ihrer Funktion allerdings nicht mit Tabellen aus dem relationalen Modell vergleichbar. Dies liegt darin begründet, dass Entitäten mit einem bestimmten Label unterschiedliche Informationen aufweisen können. 
+
+\subsection{Beziehungen}
+\label{datenmodelle:beziehungen}
+In diesem Abschnitt wird darauf eingegangen, wie und in welcher Form die Modelle mit Beziehungen zwischen Entitäten abbilden. 
+
+\subsubsection{Relationales Modell}
+Das relationale Modell unterstützt Beziehungen insofern, dass es möglich ist Beziehungen zwischen Entitätstyp zu definieren. Diese Beziehungen dabei lassen sich in die drei folgenden Kategorien unterteilen: 
 \begin{itemize}
     \item \textit{one-to-one}, 
-    \item \textit{one-to-many} bzw. \textit{many-to-one} und 
+    \item \textit{one-to-many} (beziehungsweise \textit{many-to-one}) und 
     \item \textit{many-to-many}.
 \end{itemize}
-\textit{One-to-one}- und \textit{one-to-many}-Beziehungen lassen sich dabei ohne großen Aufwand umsetzen. Hierbei muss lediglich eine neue Spalte für Fremdschlüssel in eine der Tabellen eingefügt werden. Dieser verweist auf das identifizierende Attribut -- den Primärschlüssel -- der anderen Tabelle. Die Abstraktion von \textit{many-to-many}-Beziehungen ist hierbei etwas aufwändiger. Dabei muss eine Auflösungstabelle zwischen den zwei Tabellen aufgebaut werden, deren Entitätstypen in einer \textit{many-to-many}-Beziehung stehen. So wäre es beispielsweise möglich eine Besitz-Beziehung zwischen Autos und allen aktuellen und ehemaligen Besitzern aufzubauen. Diese Auflösungstabelle könnte dabei in Form eines Kfz-Registers abstrahiert werden, siehe \autoref{fig:rdbms_m2m}.
+
+Bei der Repräsentation aller Beziehungskategorien spielen  folgenden Begriffe eine Schlüsselrolle:
+\begin{itemize}
+    \item \textit{Primärschlüssel}\\
+    Beschreibt das Einzigartigkeitskriterium der Zeilen in einer Tabelle. Kann sich dabei auch aus mehreren Spalten zusammensetzen. 
+    \item \textit{Sekundärschlüssel}\\
+    Referenziert Zeilen einer anderen Tabelle B anhand des dortigen Primärschlüssels. Er gibt dabei an, welche Spalten von Tabelle A zur Referenz des Primärschlüssels genutzt werden. 
+    \item \textit{Joins}\\
+    Ermöglichen es solche Referenzen im Kontext einer Abfrage aufzulösen.
+\end{itemize}
+
+Bei \textit{one-to-one}- oder \textit{many-to-one}-Beziehungen ist es hierbei ausreichen, den oder die anderen Zeilen aus einer Tabelle mittels Sekundärschlüssel und Primärschlüssels zu referenzieren. Sollten die Informationen dann abgefragt werden, kann die Referenzierung durch einen Join aufgelöst werden.
+
+Das Abbilden von \textit{many-to-many}-Beziehungen erfordert hingegen die Einführung einer Auflösungstabelle, siehe die Kfz-Register Tabelle in \autoref{fig:relationales_modell_many-to-many}. 
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=\textwidth]{images/many-to-many.pdf}
-    \caption{Beispiel RDBMS many-to-many-Beziehungen}
-    \label{fig:rdbms_m2m}
+    \caption{Beispiel many-to-many-Beziehungen im relationalen Modell}
+    \label{fig:relationales_modell_many-to-many}
 \end{figure}
 
-\subsubsection{SQL}
+\subsubsection{Graph-Modell}
+Beim Graph-Modell stellen Beziehungen eine grundlegende Struktur in einem Graphen dar, siehe \autoref{datenmodelle:structure}. Dabei werden im Graph-Modell Beziehungen direkt zwischen Entität aufgebaut, keine Entitätstypen wie im relationalen Modell. 
+
+Es unterstützt dabei alle drei Beziehungskategorien die aus dem relationalen Modell bekannt sind \textit{one-to-one}, \textit{many-to-one} und \textit{many-to-many}. Dabei findet im Graph-Modell keinerlei Unterscheidung zwischen den drei Kategorien statt. Denn zwei Knoten können mehrere Edges haben, die sie miteinander verbinden. Dies ändert aber nichts an Art der Haltung oder Referenzierung von Informationen. Alle Beziehungen werden also immer in Form einer Kante zwischen einem Start- und Zielknoten repräsentiert. Dabei muss allerdings darauf hingewiesen werden, dass der Start- und Zielknoten einer Kante derselbe Knoten sein können.
+
+\subsection{Abfragesprachen}
+
+\subsubsection{SQL (Deprecated)}
 Über das Konzept des relationale Konzept der Datenbanken hinaus, gilt es die Abfragesprache SQL herauszustellen. Die Abfragesprache wurde als relationale Sprachen entworfen \cite{sql_history}. Dies geschah in Reaktion auf das von \citeauthor{codd_relational_model} beschriebene relationale Modell \cite{sql_history}. Darüber hinaus gilt nach \cite{sql_history} SQL als eine einfach zu erlernende Sprache. 
 
 SQL nimmt heute im Umfeld von \acs{rdbms} eine große Rolle ein. Bekannte relationale Datenbanksysteme wie DB2, PostgreSQL, Oracle Database und Microsoft SQL Server unterstützen alle die Abfragesprache SQL. Einige von den aufgeführten Systemen tragen die Abfragesprache sogar im Namen. Dabei gilt es allerdings zu beachten, dass sich die angesprochenen Datenbanksysteme alle durch verschiedene SQL-Dialekte auszeichnen. 
@@ -112,4 +108,4 @@ Die SQL als relationale Sprache ermöglicht es Datenstrukturen in Form von Tabel
 \subsection{\acl{gdbms}s}
 
 
-
+\pagebreak

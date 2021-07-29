@@ -97,15 +97,37 @@ Beim Graph-Modell stellen Beziehungen eine grundlegende Struktur in einem Graphe
 Es unterstützt dabei alle drei Beziehungskategorien die aus dem relationalen Modell bekannt sind \textit{one-to-one}, \textit{many-to-one} und \textit{many-to-many}. Dabei findet im Graph-Modell keinerlei Unterscheidung zwischen den drei Kategorien statt. Denn zwei Knoten können mehrere Edges haben, die sie miteinander verbinden. Dies ändert aber nichts an Art der Haltung oder Referenzierung von Informationen. Alle Beziehungen werden also immer in Form einer Kante zwischen einem Start- und Zielknoten repräsentiert. Dabei muss allerdings darauf hingewiesen werden, dass der Start- und Zielknoten einer Kante derselbe Knoten sein können.
 
 \subsection{Abfragesprachen}
+Im Rahmen dieses Unterabschnitts wird auf Abfragesprachen eingegangen. Dabei werden die Abfragesprachen aufgeführt, die in Datenbanksystemen mit dem jeweiligen Datenmodell verbreitet sind.
 
-\subsubsection{SQL (Deprecated)}
-Über das Konzept des relationale Konzept der Datenbanken hinaus, gilt es die Abfragesprache SQL herauszustellen. Die Abfragesprache wurde als relationale Sprachen entworfen \cite{sql_history}. Dies geschah in Reaktion auf das von \citeauthor{codd_relational_model} beschriebene relationale Modell \cite{sql_history}. Darüber hinaus gilt nach \cite{sql_history} SQL als eine einfach zu erlernende Sprache. 
+\subsubsection{Relationales Modell}
+Im Feld der relationalen Datenbanksysteme ist die Abfragesprache SQL weit verbreitet \cite{sql_history}. Sie wurde von Donald D. Chamberlin und Raymond F. Boyce im Rahmen des \textit{System R} Projekts entwickelt \cite{sql_history}. SQL wurde dabei mit der Motivation entworfen eine einfache Abfragesprache für relationale Daten zu entwickeln \cite{sql_history}. 
 
-SQL nimmt heute im Umfeld von \acs{rdbms} eine große Rolle ein. Bekannte relationale Datenbanksysteme wie DB2, PostgreSQL, Oracle Database und Microsoft SQL Server unterstützen alle die Abfragesprache SQL. Einige von den aufgeführten Systemen tragen die Abfragesprache sogar im Namen. Dabei gilt es allerdings zu beachten, dass sich die angesprochenen Datenbanksysteme alle durch verschiedene SQL-Dialekte auszeichnen. 
+Bei SQL handelt es sich um eine deklarative Abfragesprache \cite{sql_history}. Der grundlegende Aufbau der Sprache und die Syntax können dabei der \autoref{src:sql_example} entnommen werden. So ist in \autoref{src:sql_example} klar erkennbar, dass sich alle Operationen auf Tabellen und Spalten beziehen. So arbeitet die Sprache -- wie erwartet -- in den Strukturen des relationalen Modells.
 
-Die SQL als relationale Sprache ermöglicht es Datenstrukturen in Form von Tabelle zu definieren. Für das Schreiben der Daten in die Tabelle sowie das Auslesen, Ändern und Löschen bietet SQL ebenfalls Operationen an. Mit Primär- und Fremdschlüssel verfügt der SQL-Sprachumfang auch über Konstrukte zur Abbildung von Entitätsbeziehungen. 
+\begin{lstlisting}[caption={Beispiel SQL-Queries},language=SQL,label=src:sql_example]
+/* Tabelle erstellen */
+CREATE TABLE Autos (
+    Fahrzeugnummer VARCHAR(50), 
+    Marke VARCHAR(10), 
+    Modell VARCHAR(10), 
+    Baujahr INT,
+    Primary Key(Fahrzeugnummer)
+);
 
-\subsection{\acl{gdbms}s}
+/* Daten in Tabelle schreiben */
+INSERT INTO Autos 
+(Fahrzeugnummer, Marke, Modell, Baujahr) 
+("FZ-123456789", "Toyota", "Starlet", 1997);
 
+/* Daten Abfragen */
+SELECT Marke, Model, Baujahr FROM Autos 
+WHERE Fahrzeugnummer = "FZ-123456789";
 
-\pagebreak
+/* Daten Loeschen */
+DELETE FROM Autos WHERE Fahrzeugnummer = "FZ-123456789";
+\end{lstlisting}
+
+Des Weiteren muss darauf hingewiesen werden, dass SQL als Sprache standardisiert wurde \cite{sql_history}. Allerdings gibt es heute trotz des Standards weiterhin sogenannte SQL-Dialekte. So können sich einige SQL Sprachelemente je nach Datenbanksystem oder Hersteller weiterhin unterscheiden. 
+
+\subsubsection{Graph-Modell}
+

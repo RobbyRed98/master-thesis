@@ -103,9 +103,9 @@ Das Abbilden von \textit{many-to-many}-Beziehungen erfordert hingegen die Einfü
 \end{figure}
 
 \subsubsection{Graph-Modell}
-Beim Graph-Modell stellen Beziehungen eine grundlegende Struktur in einem Graphen dar, siehe \autoref{datenmodelle:structure}. Dabei werden im Graph-Modell Beziehungen direkt zwischen Entität aufgebaut, keine Entitätstypen wie im relationalen Modell, siehe \autoref{fig:beispiel_graph} und \autoref{fig:relationales_modell_many-to-many}.
+Beim Graph-Modell stellen Beziehungen eine grundlegende Struktur in einem Graphen dar \cite{gdbms}, siehe \autoref{datenmodelle:structure}. Dabei werden im Graph-Modell Beziehungen direkt zwischen Entität aufgebaut \cite{gdbms}, keine Entitätstypen wie im relationalen Modell, siehe \autoref{fig:beispiel_graph} und \autoref{fig:relationales_modell_many-to-many}.
 
-Es unterstützt dabei alle drei Beziehungskategorien die aus dem relationalen Modell bekannt sind \textit{one-to-one}, \textit{many-to-one} und \textit{many-to-many}. Dabei findet im Graph-Modell keinerlei Unterscheidung zwischen den drei Kategorien statt. Denn zwei Knoten können mehrere Edges haben, die sie miteinander verbinden. Dies ändert aber nichts an Art der Haltung oder Referenzierung von Informationen. Alle Beziehungen werden also immer in Form einer Kante zwischen einem Start- und Zielknoten repräsentiert. Dabei muss allerdings darauf hingewiesen werden, dass der Start- und Zielknoten einer Kante derselbe Knoten sein können.
+Es unterstützt dabei alle drei Beziehungskategorien, die aus dem relationalen Modell bekannt sind \textit{one-to-one}, \textit{many-to-one} und \textit{many-to-many}. Dabei findet im Graph-Modell keinerlei Unterscheidung zwischen den drei Kategorien statt. Denn zwei Knoten können mehrere Edges haben, die sie miteinander verbinden. Dies ändert aber nichts an Art der Haltung oder Referenzierung von Informationen. Alle Beziehungen werden also immer in Form einer Kante zwischen einem Start- und Zielknoten repräsentiert \cite{gdbms}. Dabei muss allerdings darauf hingewiesen werden, dass der Start- und Zielknoten einer Kante derselbe Knoten sein können.
 
 \subsection{Abfragesprachen}
 Im Rahmen dieses Unterabschnitts wird auf Abfragesprachen eingegangen. Dabei werden die Abfragesprachen aufgeführt, die in Datenbanksystemen mit dem jeweiligen Datenmodell verbreitet sind.
@@ -182,4 +182,4 @@ Das relationale Modell fordert ein striktes Schema ein. Daten dürfen darin aufg
 
 Beim Graph-Modell steht die Repräsentation von Beziehungen zwischen Daten bereits im Zentrum des Modells. So ist es möglich mittels einer Kante, die Beziehung zwischen zwei Entitäten (Knoten) zu modellieren. Beim relationalen Modell werden hingegen Entitätstypen miteinander in Beziehung gesetzt. Dies geschieht durch die Referenzierung einer Zeile einer anderen Tabelle anhand eines einzigartigen Merkmals.
 
-Als Abfragesprache dominiert bei den relationalen Datenbanksystemen das deklarative SQL. Im Umfeld der Graphdatenbanksysteme existiert eine Vielzahl an Sprachen. Dazu gehören die für die Arbeit relevanten Abfragensprachen Gremlin und Cypher. 
+Als Abfragesprache dominiert bei den relationalen Datenbanksystemen das deklarative SQL. Im Umfeld der Graphdatenbanksysteme existiert eine Vielzahl an Sprachen. Dazu gehören die für die Arbeit relevanten Abfragesprachen Gremlin und Cypher. 

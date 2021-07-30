@@ -55,3 +55,4 @@ Entitätstypen
 Edges
 Vertexes
 Entitätstyp
+Queries

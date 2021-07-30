@@ -47,3 +47,11 @@ Prefixed-IDs
 Prefixed-ID
 Graph-Queries
 Normalisierungsprozess
+Graph-Traversal
+Gremlin
+Cypher
+Graphdatenbanksysteme
+Entitätstypen
+Edges
+Vertexes
+Entitätstyp

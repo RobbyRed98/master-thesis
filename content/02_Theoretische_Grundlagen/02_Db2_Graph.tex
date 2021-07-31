@@ -7,7 +7,7 @@ Im Rahmen dieses Kapitels wird IBM Db2 Graph genauer erläutert. Dabei wird der 
 \label{db2graph:ansatz}
 Db2 Graph wurde mit dem Ziel entwickelt, Informationen mittels Graph-Queries aus einer relationalen Db2 Datenbank abfragen zu können \cite{vldb_tian, sigmod_tian}. So wurde Db2 Graph als eine Art Graph-Erweiterung für Db2 konzipiert. Der Einsatz von Db2 Graph setzt folglich eine aktive Instanz von Db2 voraus \cite{vldb_tian, sigmod_tian}. Diese hält hierbei die Informationen, auf die Db2 Graph Zugriff hat, in relationaler Form \cite{vldb_tian, sigmod_tian}. Dabei müssen die Daten nicht für die Einbindung in Db2 Graph angepasst oder umformatiert werden \cite{vldb_tian, sigmod_tian}.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{images/db2graph_system.pdf}
     \vspace{0.1em}
@@ -32,7 +32,7 @@ Wie in \autoref{fig:db2graph_aufbau} beschrieben, handelt es sich bei Db2 Graph 
 
 So stellt also der TinkerPop-Stack den Kern von Db2 Graph dar. Die Topology-, Graph-Structure- und SQL-Dialect-Komponente abstrahieren die Db2 Graph spezifische Funktionalität, auf die der TinkerPop-Stack zugreifen kann \cite{sigmod_tian}. Zusätzlich dazu stellt das Traversal-Strategy-Modul dem TinkerPop-Stack, optimierte Traversal-Strategies bereit \cite{sigmod_tian}. Diese helfen dem TinkerPop-Stack dabei die Performance von Query-Plans zu verbessern \cite{sigmod_tian}.  
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{images/db2graph_components.pdf}
     \caption{Aufbau von Db2 Graph}
@@ -62,7 +62,7 @@ Die Funktionsweise beziehungsweise der Ablauf der Verarbeitung einer Graph-Query
 
 Die soeben beschriebenen Schritte des Ablaufs können dabei den in der \autoref{fig:db2graph_processing} aufgeführten Schritten zu geordnet werden. Die in \autoref{fig:db2graph_processing} als grün gekennzeichnet Pfeile markieren dabei die Schritte, in den die Anfrage in Form einer Gremlin-Query oder SQL-Anfragen weitergeleitet oder verarbeitet wird. Die Pfeile, welche in \autoref{fig:db2graph_processing} lila gefärbt sind, heben die Schritte hervor, in denen die abgefragten Daten transformiert oder weitergeleitet werden.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{images/db2graph_processing.pdf}
     \caption{Externe Verarbeitung Db2 Graph}
@@ -89,7 +89,7 @@ Im Rahmen dieses Unterabschnitts wird dargelegt, wie eine von Db2 Graph empfange
 
 Die in der zuvor aufgelisteten Schritten werden im Fall von 1. bis 7. auch nochmal in der \autoref{fig:db2graph_intern_processing} visuell dargestellt.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{images/db2graph_intern_processing.pdf}
     \caption{Interne Verarbeitung Db2 Graph}
@@ -407,7 +407,7 @@ V11.5.6.0 bringt dabei neben der bereits in Beta 3 umgesetzten Funktionalität e
 
 Die automatische Graph-Overlay-Konfiguration die bereits aus Beta bekannt ist, ist dabei auch ein Bestandteil von Db2 Graph V11.5.6.0. Sie kann hierbei allerdings nicht nur im Rahmen des \texttt{manage}-Befehls genutzt werden. Sondern lässt sich auch im Rahmen von Db2 Graph UI nutzen. Das \texttt{manage}-Command und die Gremlin-Console sind darüber hinaus -- nach Beta 3 -- ebenfalls als Werkzeuge in V11.5.6.0 verfügbar.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{images/db2_graph_editor.png}
     \vspace{0.1em}
@@ -419,7 +419,7 @@ Für das Erstellen und Anlegen eines Graphen stellt Db2 Graph UI dabei auch eine
 
 Zusätzlich zu dem Graph-Modeler bietet Db2 Graph UI auch eine Art Web-Console an \cite{ibm_docs_db2_graph_ui}. Diese wird auch als Query-Editor bezeichnet \cite{ibm_docs_db2_graph_ui}. Sie kann dabei dazu genutzt werden, Gremlin-Queries an Db2 Graph senden, ähnlich wie die Gremlin-Console. Die Web-Console setzt sich dabei allerdings durch ihre weiteren Funktionen von der Gremlin-Console ab. So besitzt die Web-Console auch die Fähigkeit, die abgefragten Elemente eines Graphen visuell darzustellen \cite{ibm_docs_db2_graph_ui}. Einerseits verschafft dies dem Nutzer einen Überblick über die Ergebnisse einer Gremlin-Query, siehe \autoref{fig:db2_graph_webconsole}. Anderseits bietet sie auch die Möglichkeit, mit der Ergebnismenge zu interagieren. Diese Interaktion ergibt sich daraus, dass sich abgebildete Knoten und Kanten auch anklicken und verschieben lassen.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{images/db2_graph_webconsole.png}
     \vspace{0.1em}

@@ -1,0 +1,42 @@
+\section{Linkbench}
+
+Wird der die Funktionsweise und der Ansatz hinter dem Benchmark Linkbench genauer beschrieben. Schließlich spielt der Benchmark im Rahmen dieser Arbeit eine wichtige Rolle bezüglich der Performance Ermittlung für die Datenbanksysteme Neo4j und Db2 Graph. Er wird dabei auch im Rahmen dieser Arbeit um entsprechende Adapter für jene Datenbanksysteme erweitert. Dazu allerdings mehr in REF an Linkbench Impl. Dieser Abschnitt fokussiert sich dabei auf die Theorie hinter dem Benchmark. 
+
+Der Linkbench Benchmark wurde von Facebook entwickelt \cite{linkbench_paper}. Die Motivation hinter der Entwicklung des Benchmarks war es, einen Benchmark zu schaffen, der reale Datenbankarbeitslasten in sozialen Netzwerken beziehungsweise Anwendungen reflektiert \cite{linkbench_paper}. 
+
+Aufgrund dessen arbeitet der Benchmark mit einer Datenstruktur die sich am Facebook-Social-Graph orientiert \cite{linkbench_paper}. Das Linkbench-Github-Repository von Facebook führt ein Beispiel-Schema für das relationale Datenbanksystem MySQL auf. Die darin beschriebene Datenbankstruktur sieht dabei wie folgt auf \autoref{src:linkbench_mysql}. 
+
+\begin{lstlisting}[caption={Linkbench MySQL-Schema},language=SQL,label=src:linkbench_mysql]
+CREATE TABLE `linktable` (
+    `id1` bigint(20) unsigned NOT NULL DEFAULT '0',
+    `id2` bigint(20) unsigned NOT NULL DEFAULT '0',
+    `link_type` bigint(20) unsigned NOT NULL DEFAULT '0',
+    `visibility` tinyint(3) NOT NULL DEFAULT '0',
+    `data` varchar(255) NOT NULL DEFAULT '',
+    `time` bigint(20) unsigned NOT NULL DEFAULT '0',
+    `version` int(11) unsigned NOT NULL DEFAULT '0',
+    PRIMARY KEY (link_type, `id1`,`id2`),
+    KEY `id1_type` (`id1`,`link_type`,`visibility`,`time`,`id2`,`version`,`data`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 PARTITION BY key(id1) PARTITIONS 16;
+    
+CREATE TABLE `counttable` (
+    `id` bigint(20) unsigned NOT NULL DEFAULT '0',
+    `link_type` bigint(20) unsigned NOT NULL DEFAULT '0',
+    `count` int(10) unsigned NOT NULL DEFAULT '0',
+    `time` bigint(20) unsigned NOT NULL DEFAULT '0',
+    `version` bigint(20) unsigned NOT NULL DEFAULT '0',
+    PRIMARY KEY (`id`,`link_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+    
+CREATE TABLE `nodetable` (
+    `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    `type` int(10) unsigned NOT NULL,
+    `version` bigint(20) unsigned NOT NULL,
+    `time` int(10) unsigned NOT NULL,
+    `data` mediumtext NOT NULL,
+    PRIMARY KEY(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+\end{lstlisting}
+
+Bei den Operationen, die während des Benchmarks gemessen werden, handelt es sich um klassische CRUD-Operationen für Einträge, welche die Knoten und Kanten eines Graphen repräsentieren \cite{linkbench_paper}.
+

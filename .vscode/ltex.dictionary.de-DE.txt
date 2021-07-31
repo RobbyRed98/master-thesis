@@ -56,3 +56,4 @@ Edges
 Vertexes
 Entitätstyp
 Queries
+Workloads

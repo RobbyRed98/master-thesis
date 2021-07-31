@@ -20,7 +20,7 @@ Das relationale Modell hat seinen Ursprung in den 1970er Jahren \cite{rdbms_hist
 
 Heute haben relationale Datenbanksysteme eine große Verbreitung gefunden, siehe \autoref{fig:dbms_marketshare}. So sollen nach \cite{db_engines_ranking_july} relationale Datenbanksysteme 72,7 \% des gesamten Datenbankmarktes ausmachen (Stand Juli 2021). Folglich kann dem relationalen Modell und relationalen Datenbanksystemen eine marktbeherrschende Rolle zugeschrieben werden.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=\textwidth]{images/marketshare_dbms.pdf}
     \caption{Marktanteile nach Datenbankmanagementsystem-Kategorie}
@@ -42,7 +42,7 @@ Im Rahmen dieses Abschnitts wird auf die vorhandenen Strukturen der Datenbankmod
 \label{datenmodelle:structure:relational}
 Im Zentrum des relationalen Modells steht das sogenannte Informationsprinzip \cite{rdbms_history}. Dies beschreibt, dass alle Informationen in einer Datenbank ausschließlich in exakt einer Weise repräsentiert werden dürfen \cite{codd_relational_model}. Informationen werden dabei in Form von Tupeln und Relationen organisiert \cite{codd_relational_model}. Für deren Organisation stellen relationale Datenbanksysteme Tabellen, Spalten und Zeilen als Strukturen bereit \cite{rdbms_history}. So werden auf Basis des Informationsprinzips, alle Informationen als Werte in einer Zelle einer bestimmten Tabelle repräsentiert \cite{rdbms_history}. So lassen sich beispielsweise alle Entitäten vom Entitätstyp Auto in einer relationalen Tabelle abbilden, siehe \autoref{tab:auto_tabelle}. 
 
-\begin{table}[h]
+\begin{table}[ht]
     \centering
     \begin{tabular}{c|c|c|c}
     \hline
@@ -67,7 +67,7 @@ Die Grundlage des Graph-Modells stellen sogenannte Vertexes und Edges dar, auf D
 
 Das Graph-Modell setzt im Gegensatz zum relationalen Modell auf ein flexibles Datenschema \cite{gdbms}. Dadurch unterstützt es den Umgang mit heterogenen Daten \cite{gdbms}. So sind in \autoref{fig:beispiel_graph} beispielsweise Personen und Autos Teil desselben Graphen. Denn anstatt einer strikten Typisierung der Entitäten lassen sich die Daten im Graph-Modell anhand von Labels organisiert werden. Labels markieren dabei Knoten oder Kanten, die dieselbe oder eine ähnliche Rolle einnehmen. Siehe \autoref{fig:beispiel_graph}, darin werden die als Auto gelabelten Knoten in hellbraun markiert, während die Personen rot gekennzeichnet werden. Sie sind in ihrer Funktion allerdings nicht mit Tabellen aus dem relationalen Modell vergleichbar. Dies liegt darin begründet, dass Entitäten mit einem bestimmten Label unterschiedliche Informationen aufweisen können. So werden beispielsweise in \autoref{fig:beispiel_graph} 
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.75\textwidth]{images/example_graph.pdf}
     \caption{Beispiel Graph}

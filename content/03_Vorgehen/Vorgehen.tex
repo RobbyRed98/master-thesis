@@ -20,6 +20,16 @@ Stattdessen wurde der Benchmark aus folgenden Gründen ausgesucht:
 Bevor der Linkbench-Benchmark für die Performance-Analyse im Rahmen dieser Arbeit gewählt wurde, wurde auch der SNB-Benchmark als möglich Alternative gehandelt. Bei diesem  handelt es sich um einen deutlich neueren Benchmark für Graph-Daten als Linkbench \cite{snb_paper}. Dieser wurde vom LDBC-Projekt initiiert und entwickelt \cite{snb_paper}. Der Benchmark versucht dabei sowohl OLTP- als auch OLAP-Workloads abzubilden, anders als Linkbench der hauptsächlich OLTP-Operationen abdeckt \cite{snb_paper}. Die Wahl viel allerdings wie zuvor beschrieben auf Linkbench, da der Aufwand für die Anbindung von Db2 Graph an diesen Benchmark als geringer eingestuft wurde.  
 
 \subsection{Vergleich}
-Um die Linkbench-Ergebnisse von Db2 Graph später besser einordnen zu können, werden die Messergebnisse im Rahmen dieser Analyse mit denen des Datenbanksystems Neo4j verglichen. Dieses Vorgehen wurde hierbei gewählt, da es sich bei Neo4j um ein bekanntes, natives Graph-Datenbankmanagementsystem handelt.
+Um die Linkbench-Ergebnisse von Db2 Graph später besser einordnen zu können, werden die Messergebnisse im Rahmen dieser Analyse mit denen des Datenbanksystems Neo4j verglichen. Dieses Vorgehen wurde hierbei gewählt, da es sich bei Neo4j um ein bekanntes, natives Graph-Datenbankmanagementsystem handelt. Dadurch stellt Neo4j einen aussagekräftige Referenz dar, an der Db2 Graph gemessen werden kann. 
 
 \subsection{Implementierung}
+Um Neo4j, Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 an Linkbench anzubinden wurden im Rahmen dieser Arbeit vier verschiedenen Adapter implementiert. Zu diesen Adaptern gehören:
+\begin{itemize}
+    \item \texttt{Neo4j}-Adapter für Neo4j,
+    \item \texttt{Db2GraphOld}-Adapter für Db2 Graph Beta 3, 
+    \item \texttt{Db2Graph}-Adapter für Db2 Graph V11.5.6.0 und
+    \item \texttt{Db2}-Adapter -- wird hauptsächlich von den Adaptern für Db2 Graph als Basis genutzt.
+\end{itemize}
+Weitere Details bezüglich der Implementierung werden in \todo{Referenz für Implementierungskapitel} erläutert.
+
+\subsection{Messungen}

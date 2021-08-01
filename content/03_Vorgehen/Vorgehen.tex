@@ -17,8 +17,9 @@ Stattdessen wurde der Benchmark aus folgenden Gründen ausgesucht:
     \item Linkbench ist flexibel konfigurier- und erweiterbar, siehe \autoref{linkbench}. 
     \item Der Aufwand für die Implementierung eines Adapters für Db2 Graph wurde als im Rahmen dieser Arbeit möglich eingeschätzt.
 \end{itemize}
-Bevor der Linkbench-Benchmark für die Performance-Analyse im Rahmen dieser Arbeit gewählt wurde, wurde auch der SNB-Benchmark als möglich Alternative gehandelt. Bei diesem  handelt es sich um einen deutlich neueren Benchmark für Graph-Daten als Linkbench. Dieser wurde vom LDBC-Projekt initiiert und entwickelt. Der Benchmark versucht dabei sowohl OLTP- als auch OLAP-Workloads abzubilden, anders als Linkbench der hauptsächlich OLTP-Operationen abdeckt. Die Wahl viel allerdings wie zuvor beschrieben auf Linkbench, da der Aufwand für die Anbindung von Db2 Graph an diesen Benchmark als geringer eingestuft wurde.  
+Bevor der Linkbench-Benchmark für die Performance-Analyse im Rahmen dieser Arbeit gewählt wurde, wurde auch der SNB-Benchmark als möglich Alternative gehandelt. Bei diesem  handelt es sich um einen deutlich neueren Benchmark für Graph-Daten als Linkbench \cite{snb_paper}. Dieser wurde vom LDBC-Projekt initiiert und entwickelt \cite{snb_paper}. Der Benchmark versucht dabei sowohl OLTP- als auch OLAP-Workloads abzubilden, anders als Linkbench der hauptsächlich OLTP-Operationen abdeckt \cite{snb_paper}. Die Wahl viel allerdings wie zuvor beschrieben auf Linkbench, da der Aufwand für die Anbindung von Db2 Graph an diesen Benchmark als geringer eingestuft wurde.  
 
 \subsection{Vergleich}
 Um die Linkbench-Ergebnisse von Db2 Graph später besser einordnen zu können, werden die Messergebnisse im Rahmen dieser Analyse mit denen des Datenbanksystems Neo4j verglichen. Dieses Vorgehen wurde hierbei gewählt, da es sich bei Neo4j um ein bekanntes, natives Graph-Datenbankmanagementsystem handelt.
 
+\subsection{Implementierung}

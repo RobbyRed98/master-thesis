@@ -93,6 +93,15 @@ Der Linkbench Benchmark kann an verschiedenen Stellen konfiguriert werden \cite{
 
 In der Adapter-Konfiguration werden dabei Werte festgelegt, die für die Konfiguration der Datenbank-Adapter benötigt werden \cite{fb_linkbench_github}. So werden darin beispielsweise Informationen angegeben die für den Verbindungsaufbau und die Authentifizierung an einer Datenbank benötigt werden \cite{fb_linkbench_github}. Unter anderem wird darin auch bestimmt, welche Workload-Konfiguration während eines Benchmark-Durchlaufs herangezogen wird \cite{fb_linkbench_github}. 
 
-Die Workload-Konfiguration regelt hingegen, die Zusammensetzung des Workloads während eines Benchmark-Durchlaufs \cite{fb_linkbench_github}. Darüber hinaus werden in dieser Konfiguration wichtige Details für den Datengenerator des Benchmarks festgelegt \cite{fb_linkbench_github}. So bestimmt die Konfiguration in der Load-Phase, welche Daten in eine Datenbank geschrieben werden \cite{fb_linkbench_github}. Zugleich wird von der Workload-Konfiguration bestimmt, wie sich der Operations-Mix während der Request-Phase zusammen setzt \cite{fb_linkbench_github}.  
+Die Workload-Konfiguration regelt hingegen, die Zusammensetzung des Workloads während eines Benchmark-Durchlaufs \cite{fb_linkbench_github}. Darüber hinaus werden in dieser Konfiguration wichtige Details für den Datengenerator des Benchmarks festgelegt \cite{fb_linkbench_github}. So bestimmt die Konfiguration in der Load-Phase, welche Daten in eine Datenbank geschrieben werden \cite{fb_linkbench_github}. Zugleich wird von der Workload-Konfiguration bestimmt, wie sich der Operations-Mix während der Request-Phase zusammen setzt \cite{fb_linkbench_github}.
 
 \subsection{Zusammenfassung}
+Bei Linkbench handelt es sich um einen Benchmark für Datenbanksysteme. Er legt seinen Fokus auf das Messen der Performance von Graph-Operationen. Die Struktur der Daten spiegelt dabei einen Social-Graph wider. 
+
+Bei den Graph-Operationen die in Linkbench gebenchmarkt werden handelt es sich um klassische CRUD-Operationen für Knoten und Kanten (Links). Aus diesem Muster sticht lediglich die \texttt{countLink}-Operation heraus. Sie ist die einzige Operation, bei der es zu einer Aggregation kommen kann, je nach Adapter-Implementierung. 
+
+Der Linkbench-Benchmark kann bei in zwei verschiedenen Phasen operieren. Während der Load-Phase werden hierbei Daten generiert und in eine Datenbank geschrieben. In der Request-Phase findet das eigentliche Benchmarking statt. In ihr wird die Performance der Graph-Operationen ermittelt und abschließend eine Statistik erzeugt. Die Messungen in der Request-Phase setzen dabei einen in der Load-Phase erzeugten Datensatz voraus. 
+
+Linkbench ist als Open-Source-Projekt unter der Apache-2.0-Lizenz auf Github verfügbar. Die Anbindung neuer Datenbanksysteme an den Benchmark setzt die Implementierung eines Datenbanksystem-spezifischen Adapters voraus. 
+
+Der Adapter verfügt über viele Konfiguration-Möglichkeiten. Einerseits liegen Adapter-Konfigurationen vor, welche Datenbanksystem-spezifische Einstellungen verwalten. Darüber hinaus gibt es Workload-Konfigurationen, sie organisieren  die Steuerung der Load- oder Request-Phase. 

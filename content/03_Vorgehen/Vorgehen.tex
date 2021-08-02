@@ -32,4 +32,68 @@ Um Neo4j, Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 an Linkbench anzubinden wurde
 \end{itemize}
 Weitere Details bezüglich der Implementierung werden in \todo{Referenz für Implementierungskapitel} erläutert.
 
-\subsection{Messungen}
+\subsection{Parameter}
+Die Messungen die im Rahmen dieser Arbeit durchgeführt werden, können anhand von zwei Hauptparametern unterschieden werden:
+\begin{itemize}
+    \item die Verteilung / Struktur der Datensätze und 
+    \item die Größe der Datensätze. 
+\end{itemize}
+Diese beiden Messparameter spielen hierbei im Kontext aller Messungen eine wichtige Rolle. 
+
+Darüber hinaus gibt es noch die zwei Nebenparameter:
+\begin{itemize}
+    \item Ergebnismenge und 
+    \item Query-Stil. 
+\end{itemize}
+Diese spielen hierbei entweder bei Messungen mit real- oder mit konstant-verteilten Datensätzen eine Rolle.  
+
+\subsubsection{Verteilung}
+Bei der Struktur der Datensätze kann zwischen den beiden folgenden Verteilungen unterschieden werden: 
+
+\begin{itemize}
+    \item \textit{konstante Verteilung}\\
+    Hierbei besitzt jeder Knoten im Datensatz exakt dieselbe Anzahl an Kanten (Links) wie jeder andere Knoten. Im Rahmen dieser Arbeit wurde bei allen Messungen immer eine konstante 10er-Verteilung gewählt. Dies bedeutet das jeder Knoten genau 10 Kanten aufweist.  
+    \item \textit{reale Verteilung}\\
+    Hierbei ist die Verteilung von Kanten (Links) auf Knoten einer realen Verteilung eines Social-Graphs nachempfunden. Die Anzahl der Kanten, über die ein Knoten verfügt, bewegt sich dabei bei allen Messungen die in dieser Arbeit durchgeführt werden zwischen 2 und ca. 5.000.000. Dabei gibt es sehr viele Knoten mit einer geringen Anzahl an Kanten wie zwei und einzelne Knoten die mehr als 1.000.000 Kanten aufweisen. 
+\end{itemize}
+
+Die real-Verteilung wurde hierbei für die Messungen gewählt, da sie eine realitätsnahe Zusammensetzung eines Social-Graphs aufweist. Die Messergebnisse lassen somit Schlüsse darauf zu, wie sich das System bei solchen Workloads in der Praxis verhalten würde.
+
+Die konstante Verteilung wurde entgegen der real-Verteilung nicht aufgrund ihrer Praxis-nähe für die Messungen ausgewählt. Stattdessen wurde Sie für die Messungen herangezogen, da Db2 Graph Beta 3 bei ersten Versuchen Schwierigkeiten mit einer hohen Kantenzahl in real-Verteilten Datensätzen aufwies. Das Benchmarking der \texttt{getLinkList}-Operation verursachte hierbei früher oder später einen beinahe Stillstand des Benchmark-Durchlaufs. 
+
+Dieses Verhalten kann hierbei damit begründet werden, dass sich Db2 Graph Beta 3 damit schwertut, mit großen Datenmengen von über 100.000 Kanten je Knoten zu arbeiten. Darüber hinaus kann dieses Problem von Db2 Graph Beta 3 mit real-verteilten Datensätzen auch nicht durch die Begrenzung der Ergebnismenge im Rahmen der Gremlin-Query gelöst werden. Schließlich beherrscht Db2 Graph Beta 3 die Optimierungstechnik \textit{Limit Pushdown} nicht, siehe \autoref{db2graph:optimierung}. 
+
+Aufgrund dessen und da es nachvollziehbarer Weise nicht zielführend wäre, die maximale Kanten auf Knoten Verteilung eines real-verteilten Datensatzes zu verändern, wurde auch entschieden, konstant-verteilte Datensätze als Teil der Messungen mit aufzunehmen. Schließlich ergibt sich dadurch die Möglichkeit Messergebnisse für Db2 Graph Beta 3 zu erzielen und diese mit V11.5.6.0 und Neo4j zu vergleichen. Allerdings nur unter der Voraussetzung, dass eine kleine konstante Verteilung gewählt wird, wie die konstante 10er-Verteilung. 
+
+Außerdem gilt es hierbei noch anzumerken, dass es keine Messungen von Db2 Graph Beta 3 und real-verteilten Datensätzen im Rahmen dieser Arbeit erfolgen. Da des zuvor angesprochenen Problems von Db2 Graph Beta 3 mit derart verteilten Datensätzen.
+
+\subsubsection{Größe}
+Dieser Hauptparameter wurde dabei für die Messungen gewählt, um herauszufinden, wie sich die Datenbanksysteme beim Umgang mit kleineren (Linkbench-10M) und größeren (Linkbench-100M) Datensätzen verhalten. 
+
+Hierbei wird in dieser Arbeit zwischen Datensätzen mit der Knoten Anzahl 10 Millionen und 100 Millionen unterschieden. Angelehnt an \cite{sigmod_tian} werden die Messergebnisse für die verschiedenen Knotenzahlen hier auch als:
+\begin{itemize}
+    \item Linkbench-10M für 10 Millionen Knoten und 
+    \item Linkbench-100M für 100 Millionen Knoten bezeichnet.
+\end{itemize}
+Dadurch fällt die Unterscheidung zwischen den beiden Größenordnungen leichter. 
+
+Dabei muss allerdings im Auge behalten werden, dass sich die Größe der Datenmengen je nach Verteilung eines Datensatzes weiterhin unterscheiden kann. Schließlich verfügen die Datensätze bei gleicher Knoten Anzahl über unterschiedlich viele Kanten, siehe \autoref{tab:kanten_anzahl}. So weisen in \autoref{tab:kanten_anzahl} konstant verteilte Datensätze fast die doppelte Anzahl an Kanten auf, wie real-verteilte Datensätze, bei der identischen Konfiguration Größen-Parameters. 
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{l|r|r}
+    \hline
+    \rowcolor[HTML]{EFEFEF} 
+    \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Verteilung}} & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Linkbench-10M}} & \multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Linkbench-100M}} \\ \hline
+    real & ca. 53.000.000 Kanten & ca. 530.000.000 Kanten \\
+    konstant & 100.000.000 Kanten & 1.000.000.000 Kanten \\ \hline
+    \end{tabular}
+    \caption{Übersicht Linkbench Kantenanzahl}
+    \label{tab:kanten_anzahl}
+    \vspace{1em}
+    \textit{}
+\end{table}
+
+Aufgrund dessen sollte auch später vom Vergleich der Messergebnisse zwischen den unterschiedlich verteilten Datensätzen bei Linkbench-10M und Linkbench-100M abgesehen werden.
+\subsubsection{Ergebnismenge}
+Dieser Parameter 

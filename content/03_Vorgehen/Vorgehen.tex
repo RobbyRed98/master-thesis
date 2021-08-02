@@ -32,10 +32,23 @@ Um Neo4j, Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 an Linkbench anzubinden wurde
 \end{itemize}
 Weitere Details bezüglich der Implementierung werden in \todo{Referenz für Implementierungskapitel} erläutert.
 
-\subsection{Operation \& Metriken}
+\subsection{Operationen}
+Für die Performance-Analyse der Datenbanksysteme werden im Rahmen dieser Arbeit die folgenden Operationen von Linkbench herangezogen:
+\begin{itemize}
+    \item \texttt{getNode},
+    \item \texttt{getLink},
+    \item \texttt{countLink} und
+    \item \texttt{getLinkList}.
+\end{itemize}
+Die Auswahl wurde getroffen, da Db2 Graph Beta 3 und v11.5.6.0 ausschließen lesende-Operationen unterstützen. Bei alle anderen Operationen die in \autoref{linkbench:operationen} aufgeführt werden handelt es sich jedoch um schreibende Operationen. Daher muss auf diese verzichtet werden. 
+
+Im Zuge der Performance-Analyse der Datenbanksysteme werden allerdings bei Messungen mit real-verteilten Datensätzen vier verschiedene Varianten der \texttt{getLinkList}-Operation eingesetzt. Mehr dazu in \autoref{analyse:parameter}.
+
+\subsection{Metriken}
 
 
 \subsection{Parameter}
+\label{analyse:parameter}
 Die Messungen die im Rahmen dieser Arbeit durchgeführt werden, können anhand von zwei Hauptparametern unterschieden werden:
 \begin{itemize}
     \item die Verteilung / Struktur der Datensätze und 

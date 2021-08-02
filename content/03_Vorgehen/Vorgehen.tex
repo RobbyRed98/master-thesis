@@ -32,6 +32,9 @@ Um Neo4j, Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 an Linkbench anzubinden wurde
 \end{itemize}
 Weitere Details bezüglich der Implementierung werden in \todo{Referenz für Implementierungskapitel} erläutert.
 
+\subsection{Operation \& Metriken}
+
+
 \subsection{Parameter}
 Die Messungen die im Rahmen dieser Arbeit durchgeführt werden, können anhand von zwei Hauptparametern unterschieden werden:
 \begin{itemize}
@@ -61,7 +64,7 @@ Die real-Verteilung wurde hierbei für die Messungen gewählt, da sie eine reali
 
 Die konstante Verteilung wurde entgegen der real-Verteilung nicht aufgrund ihrer Praxis-nähe für die Messungen ausgewählt. Stattdessen wurde Sie für die Messungen herangezogen, da Db2 Graph Beta 3 bei ersten Versuchen Schwierigkeiten mit einer hohen Kantenzahl in real-Verteilten Datensätzen aufwies. Das Benchmarking der \texttt{getLinkList}-Operation verursachte hierbei früher oder später einen beinahe Stillstand des Benchmark-Durchlaufs. 
 
-Dieses Verhalten kann hierbei damit begründet werden, dass sich Db2 Graph Beta 3 damit schwertut, mit großen Datenmengen von über 100.000 Kanten je Knoten zu arbeiten. Darüber hinaus kann dieses Problem von Db2 Graph Beta 3 mit real-verteilten Datensätzen auch nicht durch die Begrenzung der Ergebnismenge im Rahmen der Gremlin-Query gelöst werden. Schließlich beherrscht Db2 Graph Beta 3 die Optimierungstechnik \textit{Limit Pushdown} nicht, siehe \autoref{db2graph:optimierung}. 
+Dieses Verhalten kann hierbei damit begründet werden, dass sich Db2 Graph Beta 3 damit schwertut, mit großen Ergebnismengen von über 100.000 Kanten je Knoten zu arbeiten. Darüber hinaus kann dieses Problem von Db2 Graph Beta 3 mit real-verteilten Datensätzen auch nicht durch die Begrenzung der Ergebnismenge im Rahmen der Gremlin-Query gelöst werden. Schließlich beherrscht Db2 Graph Beta 3 die Optimierungstechnik \textit{Limit Pushdown} nicht, siehe \autoref{db2graph:optimierung}. 
 
 Aufgrund dessen und da es nachvollziehbarer Weise nicht zielführend wäre, die maximale Kanten auf Knoten Verteilung eines real-verteilten Datensatzes zu verändern, wurde auch entschieden, konstant-verteilte Datensätze als Teil der Messungen mit aufzunehmen. Schließlich ergibt sich dadurch die Möglichkeit Messergebnisse für Db2 Graph Beta 3 zu erzielen und diese mit V11.5.6.0 und Neo4j zu vergleichen. Allerdings nur unter der Voraussetzung, dass eine kleine konstante Verteilung gewählt wird, wie die konstante 10er-Verteilung. 
 
@@ -95,5 +98,32 @@ Dabei muss allerdings im Auge behalten werden, dass sich die Größe der Datenme
 \end{table}
 
 Aufgrund dessen sollte auch später vom Vergleich der Messergebnisse zwischen den unterschiedlich verteilten Datensätzen bei Linkbench-10M und Linkbench-100M abgesehen werden.
+
 \subsubsection{Ergebnismenge}
-Dieser Parameter 
+Dieser Parameter regelt bei den Messungen mit real-verteilten Datensätzen, wie groß die Ergebnismenge bei der \texttt{getLinkList}-Operation maximal werden kann. Konkret legt der Parameter dabei fest, wie viele Kanten maximal Teil der Ergebnismenge einer \texttt{getLinkList}-Operation sein können.
+
+Durch die Variation des Parameters kann hierbei ermittelt werden, wie sich die Größe der Ergebnismengen, auf die Performance der Datenbanksysteme auswirkt. 
+
+Die Beschränkung der Ergebnismenge wird dabei in der Linkbench-Workload-Konfiguration vorgenommen. Für die Konfiguration muss dort der Wert für \texttt{range\_limit} angepasst werden. 
+
+Dieser Parameter wird dabei als Bestandteil aller Messungen bei real-verteilten Datensätzen herangezogen. Schließlich sind bei diesen auch größere Ergebnismengen möglich. Das Limit der Ergebnismenge bei der \texttt{getLinkList}-Operation variiert bei diesen Messungen immer zwischen: 
+\begin{itemize}
+    \item 100,
+    \item 1.000,
+    \item 10.000 und
+    \item 100.000.
+\end{itemize}
+
+So werden bei den Messungen mit Bezug zu real-verteilten Datensätzen statt der vier regulären, die folgenden sieben Operationen gebenchmarkt:
+\begin{itemize}
+    \item \texttt{getNode},
+    \item \texttt{getLink},
+    \item \texttt{countLink},
+    \item \texttt{getLinkList(100)},
+    \item \texttt{getLinkList(1.000)},
+    \item \texttt{getLinkList(10.000)} und
+    \item \texttt{getLinkList(100.000)}.
+\end{itemize}
+Der Wert in der Klammer bei der \texttt{getLinkList}-Operation gibt dabei das Limit für die Ergebnismenge an. 
+
+\subsubsection{Query-Stil}

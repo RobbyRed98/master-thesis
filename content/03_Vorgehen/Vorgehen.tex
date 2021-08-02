@@ -44,8 +44,21 @@ Die Auswahl wurde getroffen, da Db2 Graph Beta 3 und v11.5.6.0 ausschließen les
 
 Im Zuge der Performance-Analyse der Datenbanksysteme werden allerdings bei Messungen mit real-verteilten Datensätzen vier verschiedene Varianten der \texttt{getLinkList}-Operation eingesetzt. Mehr dazu in \autoref{analyse:parameter}.
 
-\subsection{Metriken}
+\todo{Listing mit regulären Operationen}
 
+\subsection{Metriken}
+Bei den Messungen im Rahmen der Arbeit werden die folgenden Metriken herangezogen: 
+
+\begin{itemize}
+    \item Latenz und 
+    \item Durchsatz.
+\end{itemize}
+
+Der Begriff Latenz bezeichnet dabei den Zeitraum zwischen dem Abschicken einer Anfrage an ein Datenbanksystem und dem Eintreffen der Antwort auf die Anfrage. Alternative könnte die Latenz auch als Verarbeitungszeit betrachtet werden. 
+
+Unter der Metrik Durchsatz wird dabei erfasst, wie viele Operationen pro Sekunde im Durchschnitt während einer Messung durchgeführt werden. 
+
+Darüber hinaus werden während jeder Messungen die Betriebssystemstatistiken erfasst. NMON zeichnet dabei einmal pro Minute einen Datenpunkt auf. Diese Statistiken werden hierbei nicht als eine weitere Metrik betrachtet. Die registrierten Daten können allerdings bei der Auswertung der Ergebnisse ergänzend hinzugezogen werden.
 
 \subsection{Parameter}
 \label{analyse:parameter}
@@ -140,3 +153,4 @@ So werden bei den Messungen mit Bezug zu real-verteilten Datensätzen statt der 
 Der Wert in der Klammer bei der \texttt{getLinkList}-Operation gibt dabei das Limit für die Ergebnismenge an. 
 
 \subsubsection{Query-Stil}
+Der Query-Stil stellt einen weiteren Parameter Nebenparameter dar. Dabei wird zwischen sogenannten regulären Queries und ID-Queries unterschieden. Bei den regulären Queries handelt es sich um die in \todo{Referenz reguläre Operationen}

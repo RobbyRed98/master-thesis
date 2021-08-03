@@ -17,7 +17,7 @@ Db2 Graph wurde mit dem Ziel entwickelt, Informationen mittels Graph-Queries aus
 
 Wie in \autoref{fig:db2graph_system} erkennbar, fungiert Db2 Graph aus architektonischer Sicht als eine Art Proxy-Anwendung für Db2. Dabei übersetzt sie die von einem Client gesendeten Gremlin-Graph-Queries in SQL-An\-wei\-sung\-en \cite{vldb_tian, sigmod_tian}. Diese werden anschließend an eine Db2 Instanz weitergeleitet \cite{vldb_tian, sigmod_tian}. 
 
-Db2 Graph und Db2 erfüllen somit gemeinsam die Rolle einer Read-Only-Graphdatenbank. Db2 Graph vereint dabei Elemente von Graph- und relationalen Datenbanksystemen. So ist es möglich Graph-Anfragen an ein solches System zu stellen, während dem die Daten in relationaler Form gespeichert werden \cite{vldb_tian, sigmod_tian}. 
+Db2 Graph und Db2 erfüllen somit gemeinsam die Rolle einer Read-Only-Graph\-daten\-bank. Db2 Graph vereint dabei Elemente von Graph- und relationalen Datenbanksystemen. So ist es möglich Graph-Anfragen an ein System zu stellen, das die Daten in relationaler Form speichert \cite{vldb_tian, sigmod_tian}. Dadurch bringt Db2 Graph das Abfragen von Elementen einer Graphstruktur mit einer relationalen Datenhaltung zusammen. 
 
 \subsection{Aufbau}
 Wie in \autoref{fig:db2graph_aufbau} beschrieben, handelt es sich bei Db2 Graph um eine modular aufgebaute Anwendung. Die Anwendung besteht dabei aus fünf größeren Komponenten. Diese fünf Komponenten übernehmen dabei die folgenden Rollen und Aufgaben: 
@@ -30,7 +30,7 @@ Wie in \autoref{fig:db2graph_aufbau} beschrieben, handelt es sich bei Db2 Graph 
     \item \textit{Traversal-Strategy}\\Dieses Modul stellt dem TinkerPop-Stack optimierte Traversal-Strategies zur Verfügung. Diese werden eingesetzt, um einen vom TinkerPop-Stack aufgestellten Query-Plan zu optimieren, bevor dieser ausgeführt wird \cite{sigmod_tian}.  
 \end{itemize}
 
-So stellt also der TinkerPop-Stack den Kern von Db2 Graph dar. Die Topology-, Graph-Structure- und SQL-Dialect-Komponente abstrahieren die Db2 Graph spezifische Funktionalität, auf die der TinkerPop-Stack zugreifen kann \cite{sigmod_tian}. Zusätzlich dazu stellt das Traversal-Strategy-Modul dem TinkerPop-Stack, optimierte Traversal-Strategies bereit \cite{sigmod_tian}. Diese helfen dem TinkerPop-Stack dabei die Performance von Query-Plans zu verbessern \cite{sigmod_tian}.  
+Der TinkerPop-Stack stellt somit den Kern von Db2 Graph dar. Die Topology-, Graph-Structure- und SQL-Dialect-Komponente abstrahieren die Db2 Graph spezifische Funktionalität, auf die der TinkerPop-Stack zugreifen kann \cite{sigmod_tian}. Zusätzlich dazu stellt das Traversal-Strategy-Modul dem TinkerPop-Stack, optimierte Traversal-Strategies bereit \cite{sigmod_tian}. Diese helfen dem TinkerPop-Stack dabei die Performance von Query-Plans zu verbessern \cite{sigmod_tian}.  
 
 \begin{figure}[ht]
     \centering
@@ -43,13 +43,12 @@ So stellt also der TinkerPop-Stack den Kern von Db2 Graph dar. Die Topology-, Gr
 
 \subsection{Funktionsweise}
 \label{db2graph:funktionsweise}
-Um die Funktionsweise von Db2 Graph genauer zu erläutern, wird in diesem Abschnitt die Funktionsweise aus verschiedenen Perspektiven erläutert. Im Rahmen der ersten externen Perspektive wird detailliert darauf eingegangen, wie die Anfrage eines Clients in Db2 Graph und Db2 verarbeitet. Der Fokus liegt hierbei auf der Kommunikation zwischen den Anwendungen. Bei der zweiten Perspektive handelt es sich hingegen um die Db2 Graph interne Perspektive. Im Zuge dessen wird beschrieben, wie eine Gremlin-Abfrage von einer Db2 Graph-Anwendung intern verarbeitet wird. 
+Um die Funktionsweise von Db2 Graph genauer zu erläutern, wird in diesem Abschnitt die Funktionsweise aus verschiedenen Perspektiven erläutert. Im Rahmen der ersten externen Perspektive wird detailliert darauf eingegangen, wie die Anfrage eines Clients in Db2 Graph und Db2 verarbeitet wird. Der Fokus liegt hierbei auf der Kommunikation zwischen den Anwendungen. Bei der zweiten Perspektive handelt es sich hingegen um die Db2 Graph interne Perspektive. Im Zuge dessen wird beschrieben, wie eine Gremlin-Abfrage von einer Db2 Graph-Anwendung intern verarbeitet wird. 
 
-Im Anschluss an diese beiden Perspektiven wird der Begriff und die Funktionsweise des Mapping in Db2 Graph genauer erläutert. Da die damit verbundenen Topologie-Informationen eine wichtige Rolle in Db2 Graph einnehmen. 
+Im Anschluss an diese beiden Perspektiven wird der Begriff und die Funktionsweise des Mapping in Db2 Graph genauer erläutert. Schließlich spielen die damit in Verbindung stehenden Topologie-Informationen eine wichtige Rolle für die Verarbeitung von Anfragen.
 
 \subsubsection{Extern}
-Die Funktionsweise beziehungsweise der Ablauf der Verarbeitung einer Graph-Query im Kontext eines Clients und Db2 Graph-Systems läuft wie folgt ab:
-
+Im Rahmen dieses Unterabschnitts wird darauf eingegangen, wie die Verarbeitung einer Anfrage (Gremlin-Query) im Kontext der voneinander entkoppelten Bestandteile Client(-Anwendung), Db2 Graph und Db2 erfolgt. Der Ablauf der  Verarbeitung kann dabei in die folgenden Schritte unterteilt werden: 
 \begin{enumerate}
     \item Ein Client sendet eine Gremlin-Query an Db2 Graph. 
     \item Db2 Graph wandelt die Gremlin-Query in SQL-Statements um. 
@@ -60,7 +59,7 @@ Die Funktionsweise beziehungsweise der Ablauf der Verarbeitung einer Graph-Query
     \item Db2 Graph übermittelt die Ergebnisse an den Client.
 \end{enumerate}
 
-Die soeben beschriebenen Schritte des Ablaufs können dabei den in der \autoref{fig:db2graph_processing} aufgeführten Schritten zu geordnet werden. Die in \autoref{fig:db2graph_processing} als grün gekennzeichnet Pfeile markieren dabei die Schritte, in den die Anfrage in Form einer Gremlin-Query oder SQL-Anfragen weitergeleitet oder verarbeitet wird. Die Pfeile, welche in \autoref{fig:db2graph_processing} lila gefärbt sind, heben die Schritte hervor, in denen die abgefragten Daten transformiert oder weitergeleitet werden.
+Die soeben beschriebenen Schritte des Ablaufs können dabei den in der \autoref{fig:db2graph_processing} aufgeführten Schritten zugeordnet werden. Die in \autoref{fig:db2graph_processing} als grün gekennzeichnet Pfeile markieren dabei die Schritte, in den die Anfrage in Form einer Gremlin-Query oder SQL-Anfragen weitergeleitet oder verarbeitet wird. Die Pfeile, welche in \autoref{fig:db2graph_processing} lila gefärbt sind, heben die Schritte hervor, in denen die abgefragten Daten transformiert oder weitergeleitet werden.
 
 \begin{figure}[ht]
     \centering
@@ -68,26 +67,26 @@ Die soeben beschriebenen Schritte des Ablaufs können dabei den in der \autoref{
     \caption{Externe Verarbeitung Db2 Graph}
     \label{fig:db2graph_processing}
     \vspace{1em}
-    \textit{Die hier dargestellten Abläufe basieren hierbei unter anderem auf den in} \cite{vldb_tian} \textit{und} \cite{sigmod_tian} \textit{beschrieben Abläufen der Verarbeitung. Darüber hinaus wurden auch einige kleinere Details von} \cite{tinkerpop_2020} \textit{bezogen.} 
+    \textit{Die dargestellten Abläufe basieren hierbei unter anderem auf den in} \cite{vldb_tian} \textit{und} \cite{sigmod_tian} \textit{beschrieben Abläufen der Verarbeitung. Darüber hinaus wurden auch einige kleinere Details von} \cite{tinkerpop_2020} \textit{bezogen.} 
 \end{figure}
 
 \subsubsection{Intern}
 Im Rahmen dieses Unterabschnitts wird dargelegt, wie eine von Db2 Graph empfangene Gremlin-Query intern verarbeitet wird. Der Ablauf kann dabei in die folgenden Schritte gegliedert werden: 
 
 \begin{enumerate}
-    \item Ein Client baut Verbindung auf und sendet eine Gremlin-Query Db2 Graph.
+    \item Ein Client baut eine Verbindung auf und sendet eine Gremlin-Query Db2 Graph.
     \item Der TinkerPop-Stack lädt Informationen über die Beschaffenheit des in der Gremlin-Query enthaltenen Zielgraphen aus Topology-Komponente \cite{vldb_tian,sigmod_tian, yt_tian}.
-    \item Der TinkerPop-Stack erstellt auf Basis der Gremlin-Query und der Topologie-Informationen einen logischen Query-Plan auf \cite{vldb_tian,sigmod_tian, yt_tian}. 
+    \item Der TinkerPop-Stack erstellt auf Basis der Gremlin-Query und der Topologie-Informationen einen logischen Query-Plan \cite{vldb_tian,sigmod_tian, yt_tian}. 
     \item Der TinkerPop-Stack nutzt das Traversal-Strategy-Modul, um den logischen Query-Plan zu optimieren \cite{vldb_tian,sigmod_tian, yt_tian}. Wie und welche Optimierungen an dieser Stelle angewandt werden, werden in \nameref{db2graph:optimierung} unter \autoref{subsubsec:data_independent_optimizations} genauer erläutert.
     \item Der TinkerPop-Stack wandelt den optimierten logischen Query-Plan in einen physikalischen Query-Plan um \cite{vldb_tian,sigmod_tian, yt_tian}. 
     \item Bei der Ausführung der Steps im physikalischen Query-Plan werden API-Zugriffe auf die Graph-Structure-Komponente durchgeführt \cite{vldb_tian,sigmod_tian, yt_tian}. Um die für diese Zugriffe benötigten Informationen zu beschaffen, lädt die Graph-Structure-Komponente Informationen aus dem Topology-Modul und nutzt die SQL-Dialect-Komponente für die Erzeugung von SQL-Statements \cite{vldb_tian,sigmod_tian, yt_tian}. Bei diesem Schritt können ebenfalls Optimierung angewandt werden. Diese werden in \autoref{db2graph:optimierung} unter \nameref{subsubsec:data_dependent_optimizations} aufgeführt und beschrieben.
-    \item Die von der Graph-Structure-Komponente erzeugten SQL-Statements werden an eine Db2 Instanz gesendet und von dieser verarbeitet. \cite{vldb_tian,sigmod_tian, yt_tian}
-    \item Die daraufhin von Db2 erhalten und zurückgesendeten Ergebnisse werden von der Graph-Structure-Komponente verarbeitet. \cite{yt_tian} 
-    \item Die Graph-Komponente nutzt die verarbeiteten Ergebnisse, um die API-Aufrufe des TinkerPop-Stacks zu beantworten. \cite{vldb_tian,sigmod_tian, yt_tian} 
+    \item Die von der Graph-Structure-Komponente erzeugten SQL-Statements werden an eine Db2 Instanz gesendet und von dieser verarbeitet \cite{vldb_tian,sigmod_tian, yt_tian}.
+    \item Die daraufhin von Db2 erhalten und zurückgesendeten Ergebnisse werden von der Graph-Structure-Komponente verarbeitet \cite{yt_tian}. 
+    \item Die Graph-Komponente nutzt die verarbeiteten Ergebnisse, um die API-Aufrufe des TinkerPop-Stacks zu beantworten \cite{vldb_tian,sigmod_tian, yt_tian}.
     \item Nach der Durchführung des physikalischen Query-Plans -- inklusive der API-Aufrufe auf die Graph-Structure-Komponente -- werden die Ergebnisse vom TinkerPop-Stack an den Client übermittelt \cite{vldb_tian,sigmod_tian, yt_tian}.
 \end{enumerate}
 
-Die in der zuvor aufgelisteten Schritten werden im Fall von 1. bis 7. auch nochmal in der \autoref{fig:db2graph_intern_processing} visuell dargestellt.
+Die in der zuvor aufgelisteten Schritten 1. bis 7. wurden dabei in der \autoref{fig:db2graph_intern_processing} visuell dargestellt.
 
 \begin{figure}[ht]
     \centering
@@ -101,7 +100,7 @@ Die in der zuvor aufgelisteten Schritten werden im Fall von 1. bis 7. auch nochm
 \subsubsection{Mapping}
 Bei dem sogenannten Mapping handelt es sich um den Db2 Graph-internen Prozess beziehungsweise Technik, bei dem eine Graph-Struktur relationalen Daten überge\-stülpt wird beziehungsweise diese überlagert. Der Prozess kann auch als Graph-Overlaying bezeichnet werden. Vereinfacht ausgedrückt, handelt es sich dabei um die Spezifikation der Topologie des von Db2 Graph abgebildeten Graphen. In dieser Spezifikation wird festgelegt, welche relationalen Tabellen und Spalten auf welche Graph-Elemente (Knoten und Kanten) gemappt werden. 
 
-Für die Bereitstellung und Verarbeitung des Mapping in Db2 Graph ist dabei die Topology-Komponente zuständig. Das Mapping wird dabei in einer als Graph-Overlay-Konfiguration bezeichneten Datei festgehalten.  
+Für die Bereitstellung und Verarbeitung des Mapping in Db2 Graph ist hierbei die Topology-Komponente zuständig. Das Mapping wird dabei in einer als Graph-Overlay-Konfiguration bezeichneten Datei festgehalten.  
 
 Um das Mapping von relationalen auf Graph-Strukturen durchzuführen, werden den relationalen Tabellen verschiedene Rollen zugewiesen. Dabei sind die zwei folgenden Rollen verfügbar:
 \begin{itemize}
@@ -109,11 +108,13 @@ Um das Mapping von relationalen auf Graph-Strukturen durchzuführen, werden den 
     \item \textit{Edge-Tabelle}\\Die Zeilen dieser Tabelle werden als Kanten auf einen Graph gemappt \cite{sigmod_tian, yt_tian}.
 \end{itemize}
 
-Um Verbindungen zwischen Kanten und Knoten herzustellen  verfügt eine Vertex-Tabelle über eine \texttt{vid}. Diese \texttt{vid} kann als eine Art Primärschlüssel betrachtet werden. Die \texttt{vid} setzt sich dabei aus einer oder mehreren Spalten einer relationalen Tabelle und einem Prefix zusammen \cite{sigmod_tian, yt_tian}, siehe \texttt{prefix} und \texttt{id\_cols} Zeile 5-6 in \autoref{src:mapping_example}. Ihr Zweck ist es dabei, immer einen einzigen bestimmten Knoten über den Wert den \texttt{vid} identifizieren zu können \cite{sigmod_tian, yt_tian}. 
+% TODO Basti würde hier ein Schaubild gefallen
 
-Auf Basis dieser \texttt{vid} -- Zeile 4 - 7 \autoref{src:mapping_example} -- setzt beim Mapping auch die Edge-Tabelle auf. So ist es notwendig den Quell- und Ziel-Knoten einer Kante in der Edge-Tabelle anzugeben. Dafür muss bei der Referenzierung eines Quell-Knoten in der Graph-Overlay-Konfiguration die Tabellen-ID der Vertex-Tabelle angegeben werden, die den Quell-Knoten enthält, siehe \texttt{table\_id} und \texttt{src\_v\_tables} Zeile 8 und 23 in \autoref{src:mapping_example}. Zusätzlich dazu müssen auch die Spalten in der Edge-Tabelle spezifiziert werden, anhand derer eine Zeile der Vertex-Tabelle referenziert wird, siehe \texttt{src\_v\_cols} in Zeile 21 \autoref{src:mapping_example}. Die Referenzierung eines Ziel-Knotens funktioniert dabei ähnlich. Der einzige Unterschied stellt dabei die Verwendung der Felder \texttt{dst\_v\_cols} und \texttt{dst\_v\_tables} in Zeile 22 und 24 des \autoref{src:mapping_example} dar, statt \texttt{src\_v\_tables} und \texttt{src\_v\_cols}.
+Um Verbindungen zwischen Kanten und Knoten herzustellen verfügt eine Vertex-Tabelle über eine Vertex-ID (\texttt{vid}). Diese \texttt{vid} kann als eine Art Primärschlüssel betrachtet werden. Die \texttt{vid} setzt sich dabei aus einer oder mehreren Spalten einer relationalen Tabelle und einem Prefix zusammen \cite{sigmod_tian, yt_tian}, siehe \texttt{prefix} und \texttt{id\_cols} Zeile 5-6 in \autoref{src:mapping_example}. Ihr Zweck ist es dabei, immer einen einzigen bestimmten Knoten über den Wert den \texttt{vid} identifizieren zu können \cite{sigmod_tian, yt_tian}. 
 
-Wie im \autoref{src:mapping_example} erkennbar lässt die Konfiguration auch weitere Anpassungen bezüglich des Mappings und der Graph-Topologie zu. So ist es beispielsweise möglich die Labels für Knoten und Kanten auf Basis einer Vertex-Tabelle oder Edge-Tabelle zu definieren, siehe Zeile 15 und 43 \autoref{src:mapping_example}. Der Kern des Mappings spielt sich dabei aber wie zuvor beschrieben auf Basis der Parameter \texttt{vid}, \texttt{table\_id}, \texttt{src\_v\_cols}, \texttt{dst\_v\_cols} sowie \texttt{dst\_v\_tables} und \texttt{src\_v\_tables} ab. Diese Werte bestimmten, wie die relationalen Daten auf einem Graph abgebildet werden.
+Auf Basis dieser \texttt{vid} -- Zeile 4 - 7 \autoref{src:mapping_example} -- setzt beim Mapping auch die Edge-Tabelle auf. So ist es notwendig den Quell- und Ziel-Knoten einer Kante in der Edge-Tabelle anzugeben. Dafür muss bei der Referenzierung eines Quell-Knoten in der Graph-Overlay-Konfiguration die Tabellen-ID der Vertex-Tabelle angegeben werden, die den Quell-Knoten enthält. Siehe \texttt{table\_id} und \texttt{src\_v\_tables} Zeile 8 und 23 in \autoref{src:mapping_example}. Zusätzlich dazu müssen auch die Spalten in der Edge-Tabelle spezifiziert werden, anhand derer eine Zeile der Vertex-Tabelle referenziert wird. Siehe \texttt{src\_v\_cols} in Zeile 21 \autoref{src:mapping_example}. Die Referenzierung eines Ziel-Knotens funktioniert dabei ähnlich. Der einzige Unterschied stellt dabei die Verwendung der Felder \texttt{dst\_v\_cols} und \texttt{dst\_v\_tables} in Zeile 22 und 24 des \autoref{src:mapping_example} dar, statt \texttt{src\_v\_tables} und \texttt{src\_v\_cols}.
+
+Wie im \autoref{src:mapping_example} erkennbar ist, lässt die Konfiguration auch weitere Anpassungen bezüglich des Mappings und der Graph-Topologie zu. So ist es beispielsweise möglich die Labels für Knoten und Kanten auf Basis einer Vertex-Tabelle oder Edge-Tabelle zu definieren, siehe Zeile 15 und 43 \autoref{src:mapping_example}. Der Kern des Mappings spielt sich dabei aber wie zuvor beschrieben auf Basis der Parameter \texttt{vid}, \texttt{table\_id}, \texttt{src\_v\_cols}, \texttt{dst\_v\_cols} sowie \texttt{dst\_v\_tables} und \texttt{src\_v\_tables} ab. Diese Werte bestimmten, wie die relationalen Daten auf einem Graph abgebildet werden.
 
 \begin{lstlisting}[caption={Beispiel Auschnitt Mapping Konfiguration},language=json,label=src:mapping_example]
 {
@@ -168,7 +169,7 @@ Wie im \autoref{src:mapping_example} erkennbar lässt die Konfiguration auch wei
 Abschließend zum Thema Mapping sollte auch darauf hingewiesen werden, dass nicht alle Tabellen einer Datenbank oder eines bestimmten Schemas auf einen Graphen gemappt werden müssen. Es ist vollkommen legitim relationalen Tabellen keine Rolle als Vertex-Tabelle oder Edge-Tabelle zuzuweisen. Besonders, wenn die Daten im Kontext des Graphen nicht benötigt werden. 
 
 \subsection{Fähigkeiten \& Einschränkungen}
-Im Rahmen dieses Kapitels werden die bekannten Fähigkeiten und Einschränkungen von Db2 Graph kurz zusammengefasst. Dies ist hier von besonderem Interesse, da es sich bei Db2 Graph in Kombination mit Db2 um eine Art hybrides Datenbankmanagementsystem handelt. Auf die besonderen Eigenschaften des Systems, die sich aus der Verbindung von relationalem und Graph-Datenbanksystem ergeben, wird hier auch ebenfalls eingegangen. 
+Im Rahmen dieses Kapitels werden die bekannten Fähigkeiten und Einschränkungen von Db2 Graph kurz zusammengefasst. Dies ist hier von besonderem Interesse, da es sich bei Db2 Graph in Kombination mit Db2 um eine Art hybrides Datenbankmanagementsystem handelt. Auf die besonderen Eigenschaften des Systems, die sich aus der Verbindung von relationalem und Graph-Datenbanksystem ergeben, wird hier ebenfalls eingegangen. 
 
 Db2 Graph verfügt über die folgenden Fähigkeiten und Einschränkungen:
 
@@ -178,9 +179,9 @@ Db2 Graph verfügt über die folgenden Fähigkeiten und Einschränkungen:
     \item \textit{Optimierung}\\
     Db2 Graph verfügt über mehrere Mechanismen um die Verarbeitung von empfangen Gremlin-Queries zu optimieren, mehr dazu in \autoref{db2graph:optimierung}.
     \item \textit{Datentypen}\\
-    Von Db2 Graph werden nur Datentypen unterstützt, die auch in Db2 vorhanden sind \cite{ibm_docs_limitiations}. Das bedeutet, das nur diese Datentypen als Property-Type eines Knotens oder einer Kante eingesetzt werden kann \cite{ibm_docs_limitiations}. Somit ist es auch nicht möglich verschachtelte Datentypen -- wie z.B. in Neo4j -- als Property-Type zu nutzen. Schließlich werden diese nicht von Db2 Graph unterstützt.
+    Von Db2 Graph werden nur Datentypen unterstützt, die auch in Db2 vorhanden sind \cite{ibm_docs_limitiations}. Das bedeutet, das nur diese Datentypen als Property-Type eines Knotens oder einer Kante eingesetzt werden können \cite{ibm_docs_limitiations}. Somit ist es auch nicht möglich verschachtelte Datentypen -- wie z.B. in Neo4j -- als Property-Type zu nutzen. Schließlich werden diese nicht von Db2 Graph unterstützt.
     \item \textit{Festes Schema}\\
-    Daten die von Db2 Graph abgefragt werden können verfügen über ein festes Schema. Diese ergibt sich daraus, dass die Daten in einer Db2 Instanz (relational) gehalten und gespeichert werden \cite{sigmod_tian,vldb_tian,yt_tian}.
+    Daten die von Db2 Graph abgefragt werden können, verfügen über ein festes Schema. Diese ergibt sich daraus, dass die Daten in einer Db2 Instanz (relational) gehalten und gespeichert werden \cite{sigmod_tian,vldb_tian,yt_tian}.
     \item \textit{Gremlin-Graph-API}\\
     Die Gremlin-Graph-API wird von Db2 Graph nicht unterstützt \cite{ibm_docs_limitiations}. Mehr dazu in !TODO REF Erweiterbarkeit.
 \end{itemize}
@@ -188,9 +189,9 @@ Db2 Graph verfügt über die folgenden Fähigkeiten und Einschränkungen:
 \subsection{Optimierung}
 \label{db2graph:optimierung}
 
-Im Kontext dieses Unterabschnitts wird eine Übersicht über die Optimierungsmechanismen von Db2 Graph geben. Dabei stützt sich diese Arbeit, auf die in \cite{sigmod_tian} beschrieben Optimierungstechniken \cite{sigmod_tian}. Auch die Unterteilung der Mechanismen in die Kategorien Data-Independent Optimizations und Data-Dependent Optimizations werden dabei aus \cite{sigmod_tian} übernommen. Zum Schluss werden noch Optimierungsmechanismen angesprochen, die nach dem Paper \cite{sigmod_tian} hinzugekommen sind und in \cite{ibm_docs_optimize} beschrieben werden. Dabei handelt es sich auch um Optimierungen, die nicht von beiden im Rahmen dieser Arbeit untersuchten Db2 Graph Versionen unterstützt werden. 
+Im Kontext dieses Unterabschnitts wird eine Übersicht über die Optimierungsmechanismen von Db2 Graph geben. Hierfür stützt sich diese Arbeit, auf die in \cite{sigmod_tian} beschrieben Optimierungstechniken. Auch die Unterteilung der Mechanismen in die Kategorien Data-Independent Optimizations und Data-Dependent Optimizations werden dabei aus \cite{sigmod_tian} übernommen. Zum Schluss werden noch Optimierungsmechanismen angesprochen, die nach dem Paper \cite{sigmod_tian} hinzugekommen sind und in \cite{ibm_docs_optimize} beschrieben werden. Dabei handelt es sich auch um Optimierungen, die nicht von beiden im Rahmen dieser Arbeit untersuchten Db2 Graph Versionen unterstützt werden. 
 
-Diese Optimierungen sind notwendig, da ohne ihresgleichen:
+Diese Optimierungen sind notwendig, da ohne sie:
 
 \begin{itemize}
     \item bei jeder Anfrage alle Vertex- oder Edge-Tabellen abgefragt werden würden, 
@@ -213,13 +214,13 @@ In die Kategorie Data-Independent Optimizations fallen dabei die folgenden Techn
     Infolge dieser Optimierung erhält Db2 Graph von Db2  kleinere Ergebnismenge.
 
     \item \textit{Projection Pushdown with Properties Steps}\\
-    Diese Optimierung greift, wenn Db2 Graph eine Gremlin-Query verarbeitet, in der bestimmte Properties von Knoten oder Kanten abgefragt werden \cite{sigmod_tian}. Dabei werden die abgefragten Properties in die Projektion eines vorausgegangenen Gremlin-Steps eingebettet. Auf diese Weise erhält Db2 Graph eine kleinere Ergebnismenge von Db2. Diese umfasst dabei lediglich die benötigten Informationen. Dabei gilt es zu beachten, das neben den angegeben Properties, auch die \texttt{id\_cols} -- siehe Zeile 6 und 28 in \autoref{src:mapping_example} -- als Informationen von Db2 Graph benötigt werden. 
+    Diese Optimierung greift, wenn Db2 Graph eine Gremlin-Query verarbeitet, in der bestimmte Properties von Knoten oder Kanten abgefragt werden \cite{sigmod_tian}. Dabei werden die abgefragten Properties in die Projektion eines vorausgegangenen Gremlin-Steps eingebettet. Auf diese Weise erhält Db2 Graph eine kleinere Ergebnismenge von Db2. Diese umfasst dabei lediglich die benötigten Informationen. Darüber hinaus gilt es zu beachten, dass neben den angegeben Properties, auch die \texttt{id\_cols} -- siehe Zeile 6 und 28 in \autoref{src:mapping_example} -- als Informationen von Db2 Graph benötigt werden. 
 
-    Ein gutes Beispiel für dafür, wie die Optimierung durchgeführt wird, bietet die Gremlin-Query \code{g.V().values(``data'', ``time'')}. Die Projektion aus dem Values-Step wird dabei zusammen mit den \texttt{id\_cols} in den Graph-Structure-Access-Step integriert. So wird der neue optimierte Graph-Step später in folgende SQL-Anweisungen übersetzt \code{SELECT id, type,
+    Ein gutes Beispiel dafür, wie die Optimierung durchgeführt wird, bietet die Gremlin-Query \code{g.V().values(``data'', ``time'')}. Die Projektion aus dem Values-Step wird dabei zusammen mit den \texttt{id\_cols} in den Graph-Structure-Access-Step integriert. So wird der neue optimierte Graph-Step später in die folgende SQL-Anweisungen übersetzt: \code{SELECT id, type,
     data, time FROM VertexTable}. Ohne die Optimierung wäre der Graph-Step so übersetzt worden: \code{SELECT * FROM VertexTable}.
 
     \item \textit{Aggregate Pushdown with Aggregation Steps}\\
-    Wenn ein Graph-Structure-Access-Step von einem Aggregations-Step gefolgt wird, wie \texttt{count}, \texttt{mean}, \texttt{min}, \texttt{max} und \texttt{sum} setzt die Optimierung ein \cite{sigmod_tian}. Dabei wird die Aggregation in den Graph-Structure-Access-Step eingebettet \cite{sigmod_tian}. Dadurch erhält Db2 Graph bei der Ausführung des neuen Graph-Steps ausschließlich die bereits von Db2 aggregierten Ergebnisse.
+    Wenn ein Graph-Structure-Access-Step von einem Aggregations-Step, wie \texttt{count}, \texttt{mean}, \texttt{min}, \texttt{max} und \texttt{sum}, gefolgt wird, setzt die Optimierung ein \cite{sigmod_tian}. Dabei wird die Aggregation in den Graph-Structure-Access-Step eingebettet \cite{sigmod_tian}. Dadurch erhält Db2 Graph bei der Ausführung des neuen Graph-Steps ausschließlich die bereits von Db2 aggregierten Ergebnisse.
     
     Die Gremlin-Query \code{g.V().count()} würde dabei zu einem einzelnen Graph-Step optimiert \cite{sigmod_tian}. Dieser ließe sich dann später bei der Ausführung in den SQL-Code \code{SELECT COUNT(*) FROM VertexTable} übersetzen \cite{sigmod_tian}.
 

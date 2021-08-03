@@ -57,6 +57,4 @@ Vertexes
 Entitätstyp
 Queries
 Workloads
-Graphdatenbanksystemen
-Graphdatenbanksystems
-Graphdatenbanksystem
+Graphmodell

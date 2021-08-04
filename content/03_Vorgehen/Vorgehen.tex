@@ -40,11 +40,76 @@ Für die Performance-Analyse der Datenbanksysteme werden im Rahmen dieser Arbeit
     \item \texttt{countLink} und
     \item \texttt{getLinkList}.
 \end{itemize}
-Die Auswahl wurde getroffen, da Db2 Graph Beta 3 und v11.5.6.0 ausschließen lesende-Operationen unterstützen. Bei alle anderen Operationen die in \autoref{linkbench:operationen} aufgeführt werden handelt es sich jedoch um schreibende Operationen. Daher muss auf diese verzichtet werden. 
+Die Auswahl wurde getroffen, da Db2 Graph Beta 3 und v11.5.6.0 ausschließen lesende-Operationen unterstützen. Bei allen anderen Operationen die in \autoref{linkbench:operationen} aufgeführt werden handelt es sich jedoch um schreibende Operationen. Daher muss auf diese verzichtet werden. 
 
-Im Zuge der Performance-Analyse der Datenbanksysteme werden allerdings bei Messungen mit real-verteilten Datensätzen vier verschiedene Varianten der \texttt{getLinkList}-Operation eingesetzt. Mehr dazu in \autoref{analyse:parameter}.
+In \autoref{src:gremlin_queries} werden die Gremlin-Queries aufgeführt, die für das Benchmarking von Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 eingesetzt wurden. 
+\begin{lstlisting}[label=src:gremlin_queries,caption={ Gremlin Queries (regulär)},language=Java]
+/* getNode */
+g.V()
+ .hasLabel("NODETABLE")
+ .has("ID", <NODE_ID>);
 
-\todo{Listing mit regulären Operationen}
+/* getLink */
+g.E()
+ .hasLabel("LINKTABLE")
+ .has("LINK_TYPE", <LINK_TYPE>)
+ .has("ID1", <NODE_ID1>)
+ .has("ID2", P.within(<NODE_ID2s>))
+
+/* countLinks */
+g.V()
+ .hasLabel("NODETABLE")
+ .has("ID", <NODE_ID>)
+ .outE("LINKTABLE")
+ .has("LINK_TYPE", <LINK_TYPE>)
+ .count()
+
+/* getLinkList */
+g.V()
+ .hasLabel("NODETABLE")
+ .has("ID", <NODE_ID1>)
+ .outE("LINKTABLE")
+ .has("LINK_TYPE", <LINK_TYPE>)
+ .limit(<LIMIT>);
+\end{lstlisting}
+
+Für das Benchmarking von Neo4j wurden hingegen die  Cypher-Queries in \autoref{src:cypher_queries}. Neo4j unterstützt zwar auch Gremlin als Abfragesprache \cite{gdbms}. Allerdings handelt es sich bei Cypher um die bevorzugte Abfragesprache zur Interaktion mit Neo4j \cite{gdbms}.
+
+\begin{lstlisting}[label=src:cypher_queries,caption={Cypher Queries (regulär)},language=CQL]
+/* getNode */
+MATCH (n:node{id: $id}) 
+RETURN n.id AS ID, n.type AS TYPE, 
+    n.version AS VERSION, n.time AS TIME, 
+    n.data AS DATA
+
+/* getLink */
+MATCH (n1:node{id: $id1})-[l:link{link_type: $link_type}]->(n2:node) 
+WHERE n2.id IN $id2s 
+RETURN n1.id AS ID1, n2.id AS ID2, 
+    l.link_type AS LINK_TYPE, 
+    l.visibility AS VISIBILITY, 
+    l.data AS DATA, l.time AS TIME, 
+    l.version AS VERSION
+
+/* countLinks */
+MATCH (:node{id: $id1})-
+    [l:link{link_type: $link_type}]->
+    (:node) 
+RETURN COUNT(l) AS COUNT
+
+/* getLinkList */
+MATCH (n1:node{id: $id1})-
+    [l:link{link_type: $link_type}]->
+    (n2:node) 
+RETURN n1.id AS ID1, n2.id AS ID2, 
+    l.link_type AS LINK_TYPE, 
+    l.visibility AS VISIBILITY, 
+    l.data AS DATA, l.time AS TIME, 
+    l.version AS VERSION 
+LIMIT $limit
+\end{lstlisting}
+
+Im Zuge der Performance-Analyse der Datenbanksysteme werden allerdings bei Messungen mit real-verteilten Datensätzen vier verschiedene Varianten der \texttt{getLinkList}-Operation eingesetzt. Darauf wird in im Detail eingegangen \autoref{analyse:parameter}.
 
 \subsection{Metriken}
 Bei den Messungen im Rahmen der Arbeit werden die folgenden Metriken herangezogen: 
@@ -150,7 +215,51 @@ So werden bei den Messungen mit Bezug zu real-verteilten Datensätzen statt der 
     \item \texttt{getLinkList(10.000)} und
     \item \texttt{getLinkList(100.000)}.
 \end{itemize}
-Der Wert in der Klammer bei der \texttt{getLinkList}-Operation gibt dabei das Limit für die Ergebnismenge an. 
+
+Der Wert in der Klammer bei der \texttt{getLinkList}-Operation gibt dabei das Limit für die Ergebnismenge an. So nehmen die Platzhalter \texttt{<LIMIT>} und \texttt{\$limit}
+in \autoref{src:gremlin_queries} und \autoref{src:cypher_queries} bei der \texttt{getLinkList}-Operation die zuvor aufgeführten Werte an, im Rahmen der Messungen.
 
 \subsubsection{Query-Stil}
-Der Query-Stil stellt einen weiteren Parameter Nebenparameter dar. Dabei wird zwischen sogenannten regulären Queries und ID-Queries unterschieden. Bei den regulären Queries handelt es sich um die in \todo{Referenz reguläre Operationen}
+Der Query-Stil stellt einen weiteren Parameter Nebenparameter dar. Dabei wird zwischen sogenannten regulären Queries und ID-Queries unterschieden. 
+
+Bei den regulären Queries handelt es sich um die Anfragen, die bereits in \autoref{src:gremlin_queries} und \autoref{src:cypher_queries} aufgeführt wurden. Die Queries werden als reguläre Queries bezeichnet, da sie nahezu Bestandteil aller Messreihen sind, siehe \todo{Referenz Messreihen}. 
+
+Die sogenannten ID-Queries unterscheiden sich bezüglich der Logik der Abfrage nur geringfügig von sogenannten regulären Queries. Allerdings werden die Gremlin-Queries anders formuliert als bei den regulären Queries. So nutzen die Gremlin ID-Queries in \autoref{src:gremlin_id_queries} eine Gremlin-ID -- ähnlich der \texttt{vid} oder \texttt{eid} von Db2 Graph in \autoref{db2graph:funktionsweise} -- um einen bestimmten Knoten oder Kante direkt im ersten Schritt herauszufiltern. Dies ist in \autoref{src:gremlin_id_queries} daran erkennbar, dass dort parametrisierte Versionen der Steps \texttt{V()} und \texttt{E()} zum Einsatz kommen. Dabei wird zu Beginn auf die für die regulären Queries typischen \texttt{has}- und \texttt{hasLabel}-Steps verzichtet.
+
+\begin{lstlisting}[label=src:gremlin_id_queries,caption={Gremlin ID-Queries},language=Java]
+/* getNode */
+g.V(["NODETABLE",<NODE_ID>]);
+
+/* getLink */
+g.E(["LINKTABLE", <NODE_ID1>, <NODE_ID2>, <LINK_TYPE>])
+
+/* countLinks */
+g.V(["NODETABLE",<NODE_ID1>])
+ .outE("LINKTABLE")
+ .has("LINK_TYPE", <LINK_TYPE>)
+
+/* getLinkList */
+g.V(["NODETABLE",<NODE_ID1>])
+ .outE("LINKTABLE")
+ .has("LINK_TYPE",  <LINK_TYPE>)
+ .limit(<LIMIT>)
+\end{lstlisting}
+
+Die Logik zwischen den regulären und ID-Queries unterscheidet sich, wie zuvor erwähnt lediglich geringfügig. Dies beutet das alle Queries dieselben Informationen abfragen, außer bei der \texttt{getLink}-Operation. Während bei dieser Operationen bei den regulären Queries eine Menge an IDs (\texttt{<NODE\_ID2s>}) für den Endknoten genutzt werden, so wird bei den ID-Queries ausschließlich eine ID (<NODE\_ID2>) herangezogen. 
+
+Aufgrund dessen und da der Hauptunterschied zwischen den Query-Stilen den Aufbau der Gremlin-Queries betrifft, muss bei den Cypher ID-Queries lediglich die \texttt{getLink}-Operation wie in \autoref{src:cypher_id_queries} dargestellt
+angepasst werden. Dies ist notwendig, um sicherzustellen, dass die Gremlin und Cypher ID-Queries dieselbe Abfragelogik aufweisen und somit dieselben Informationen abfragen. 
+\begin{lstlisting}[label=src:cypher_id_queries,caption={Cypher ID-Queries},language=CQL]
+/* getLink */
+MATCH (n1:node{id: $id1})-[l:link{link_type: $link_type}]->(n2:node{id: $id2}) 
+RETURN n1.id AS ID1, n2.id AS ID2, 
+    l.link_type AS LINK_TYPE, 
+    l.visibility AS VISIBILITY, 
+    l.data AS DATA, l.time AS TIME, 
+    l.version AS VERSION,
+\end{lstlisting}
+
+\subsection{Datenbanksysteme}
+
+\subsection{Messreihen}
+Die im Rahmen dieser Arbeit durchgeführten Messungen werden auf Basis einer bestimmten Konfiguration der Parameter aus \autoref{analyse:parameter} in Messreihen eingeteilt. 

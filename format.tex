@@ -311,6 +311,29 @@
       {]}{{{\color{delim}{]}}}}{1},
 }
 
+\lstdefinelanguage{CQL}{
+	basicstyle=\normalfont\ttfamily,
+	keywords={},
+	otherkeywords={
+		-,->
+	},
+	keywords = [2]{MATCH, WHERE, RETURN, COUNT, LIMIT, IN, AS, AND},
+	keywordstyle=\color{red},
+	keywordstyle=[2]\color{blue},
+	numbers=left,
+	numberstyle=\scriptsize,
+	stepnumber=1,
+	numbersep=8pt,
+	showstringspaces=false,
+	breaklines=true,
+	frame=top,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	stringstyle=\color{red}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+
 %----------------------------------------------------------
 % Footnotespacing
 %----------------------------------------------------------

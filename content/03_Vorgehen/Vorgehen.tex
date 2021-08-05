@@ -289,6 +289,8 @@ In den folgenden Unterabschnitten werden dabei die wichtige Anwendungs- beziehun
 \subsubsection{Db2}
 Die beiden Db2 Graph Versionen verwenden im Rahmen der Performance-Analyse bei allen Messungen dieselbe Db2 Instanz. Dadurch wird gewährleistet, dass beide auf ein relationales Datenbankmanagementsystem zugreifen, das sich nicht in der Konfiguration zwischen den Db2 Graph Versionen unterscheidet. Außerdem können somit beide Db2 Graph Versionen auf Basis eines identischen Datensatzes operieren. Auf diese Weise kann eine Verzerrung der Messergebnisse vermieden werden und beide Versionen von Db2 Graph arbeiten während des Benchmarking unter denselben Voraussetzungen.
 
+\todo{Version und Lizensierung von Db2 erwähnen}
+
 Bei der Db2 Instanz, die von beiden Db2 Graph Versionen genutzt wird, gilt es dabei zu erwähnen, dass sie so konfiguriert wurde, dass ihr 180 GB an Arbeitsspeicher zur Verfügung stehen. Darüber hinaus verfügt sie über die für Linkbench benötigte Datenbank \texttt{linkdb0}. Diese weist im Kontext aller Messungen das in \autoref{src:linkdb0_schema} beschrieben Datenbankschema auf:
 
 \begin{lstlisting}[label=src:linkdb0_schema,caption={Db2 Instanz Datenbankschema für linkdb0},language=SQL]
@@ -347,7 +349,25 @@ Die \texttt{gremlin-server.yaml} Konfiguration sowie die Ressourcen-Parameter de
     Die Erhöhung wurde hierbei allerdings lediglich als eine Art Vorsichtsmaßnahme durchgeführt. Schließlich unterstützt Db2 Graph lediglich lesende Queries. Dies hat zur Folge, dass der Gremlin-Server eigentlich nicht auf blockende Operationen zurückgreifen sollte. Allerdings ist nicht bekannt, ob Db2 Graph in der Praxis wirklich nur auf nicht-blockende Operationen zurückgreift. Daher wurde der Wert des Gremlin-Pools analog zu Thread-Pool-Worker angehoben. 
 \end{itemize}
 
+\todo{Graph-Schema aufführen.}
+
 \subsubsection{Neo4j}
+Alle Messungen die im Rahmen der Performance-Analyse durchgeführt werden, nutzen dieselbe Neo4j-Instanz. Bei dieser Instanz handelt es sich um die Community-Edition von Neo4j in Version 4.3. An der Konfiguration von Neo4j ändert sich zwischen den verschiedenen Messreihen nichts. Sie weist somit immer dieselbe Konfiguration auf. Bei dieser Konfiguration gilt es die folgenden Parameter hervorzuheben: 
+\begin{itemize}
+    \item 160 GB Page Cache und
+    \item maximaler JVM Heap 64 GB.
+\end{itemize}
+Der Page Cache kann hierbei als das Neo4j-Pendant zum Bufferpool von Db2 betrachtet werden. Daher wurde mit ca. 164 GB und 160 GB auch eine vergleichbare beide Konfiguration gewählt. Der JVM Heap in Neo4j und der Gremlin-Memory der Db2 Graph Konfiguration wurden hierbei aufgrund einer ähnlichen Funktion als vergleichbar angesehen, weshalb beide auf 64 GB gesetzt wurden.
+
+Bei Neo4j handelt es sich um eine native Graphdatenbank, die auf dem in \autoref{datenmodelle} beschrieben Graphmodell basiert. Dadurch unterstützt Neo4j ein flexibles Datenbankschema, wie in \autoref{datenmodelle:structure}bereits beschrieben. Neo4j unterstützt allerdings trotz des flexiblen Schemas die Definition von Constraints. Ein solcher Constraint und ein Index werden hierbei in den Graphdatenbank eingerichtet, um einen fairen Vergleich von zwischen den Db2graph Versionen (+ Db2) und Neo4j zu ermöglichen. Der in \autoref{src:neo4j_schema} beschriebene Constraint und Index werden hierbei eingeführt, um dafür zu sorgen, dass ähnliche Indexe wie in Db2 auch in Neo4j existieren. Schließlich werden in Db2 beim Anlegen eines Primärschlüssels automatisch Indexe für dessen Bestandteile erzeugt. Zum Ausgleich werden daher die \autoref{src:neo4j_schema} spezifizierten Konstrukte angelegt. Der Constraint in \autoref{src:neo4j_schema} sorgt dabei dafür, dass keine Knoten mit dem Label \texttt{node}, dieselbe ID aufweisen können. Zugleich wird im Zuge dessen auch ein Index auf die ID von \texttt{node}-gelabelten Knoten erstellt.
+
+\begin{lstlisting}[label=src:neo4j_schema,caption={Neo4j Instanz Datenbankschema},language=CQL]
+# Constraint aehnlich einem Primaerschluessel fuer Knoten
+CREATE CONSTRAINT unique_node_id IF NOT EXISTS ON (n:node) ASSERT n.id IS UNIQUE;
+
+# Index fuer die Kanten-Property link_type
+CREATE INDEX link_type_index FOR ()-[l:link]-() ON (l.link_type);
+\end{lstlisting}
 
 \subsection{Messreihen}
 Die im Rahmen dieser Arbeit durchgeführten Messungen werden auf Basis einer bestimmten Konfiguration der Parameter aus \autoref{analyse:parameter} in Messreihen eingeteilt. 

@@ -284,13 +284,54 @@ Im Rahmen der Performance-Analyse werden Messungen mit den folgenden Datenbanksy
     \item Db2 Graph V11.5.6.0 (+ Db2) und
     \item Neo4j.
 \end{itemize}
-Die Konfiguration dieser Datenbanksysteme wird in den folgenden Unterabschnitten genauer beschrieben. 
+In den folgenden Unterabschnitten werden dabei die wichtige Anwendungs- beziehungsweise System-Konfigurationen beschrieben. 
 
 \subsubsection{Db2}
 Die beiden Db2 Graph Versionen verwenden im Rahmen der Performance-Analyse bei allen Messungen dieselbe Db2 Instanz. Dadurch wird gewährleistet, dass beide auf ein relationales Datenbankmanagementsystem zugreifen, das sich nicht in der Konfiguration zwischen den Db2 Graph Versionen unterscheidet. Außerdem können somit beide Db2 Graph Versionen auf Basis eines identischen Datensatzes operieren. Auf diese Weise kann eine Verzerrung der Messergebnisse vermieden werden und beide Versionen von Db2 Graph arbeiten während des Benchmarking unter denselben Voraussetzungen.
 
+Bei der Db2 Instanz, die von beiden Db2 Graph Versionen genutzt wird, gilt es dabei zu erwähnen, dass sie so konfiguriert wurde, dass ihr 180 GB an Arbeitsspeicher zur Verfügung stehen. Darüber hinaus verfügt sie über die für Linkbench benötigte Datenbank \texttt{linkdb0}. Diese weist im Kontext aller Messungen das in \autoref{src:linkdb0_schema} beschrieben Datenbankschema auf:
+
+\begin{lstlisting}[label=src:linkdb0_schema,caption={Db2 Instanz Datenbankschema für linkdb0},language=SQL]
+CREATE TABLE linkdb0.nodetable
+(
+    id      bigint NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+    type    int       NOT NULL,
+    version numeric   NOT NULL,
+    time    int       NOT NULL,
+    data    clob(48000)  NOT NULL,
+    PRIMARY KEY (id)
+) ORGANIZE BY ROW COMPRESS YES;
+
+CREATE TABLE linkdb0.linktable
+(
+    id1        bigint  NOT NULL DEFAULT '0',
+    id2        bigint  NOT NULL DEFAULT '0',
+    link_type  bigint  NOT NULL DEFAULT '0',
+    visibility smallint     NOT NULL DEFAULT '0',
+    data       varchar(255) NOT NULL DEFAULT '',
+    time       bigint  NOT NULL DEFAULT '0',
+    version    bigint       NOT NULL DEFAULT '0',
+    PRIMARY KEY (link_type, id1, id2)
+) ORGANIZE BY ROW COMPRESS YES;
+
+/* Exisitiert, wird aber nicht genutzt. */
+CREATE TABLE linkdb0.counttable
+(
+    id        bigint NOT NULL DEFAULT '0',
+    link_type bigint NOT NULL DEFAULT '0',
+    count     int         NOT NULL DEFAULT '0',
+    time      bigint NOT NULL DEFAULT '0',
+    version   bigint NOT NULL DEFAULT '0',
+    PRIMARY KEY (id, link_type)
+) ORGANIZE BY ROW COMPRESS YES;
+\end{lstlisting}
+
+An dem in \autoref{src:linkdb0_schema} beschriebenen Schema kann dabei abgelesen werden, dass alle Tabellen adaptive Kompression nutzen. Darüber hinaus existiert in \autoref{src:linkdb0_schema} eine Count-Tabelle (\texttt{linkdb0.counttable}) die von den Linkbench-Adaptern für Db2 Graph Beta 3 und V11.5.6.0 nicht genutzt wird. Sie ist lediglich vorhanden, da Linkbench ihre Existenz voraussetzt. 
+
+Neben dem Datenbankschema von \texttt{linkdb0} muss auch noch darauf hingewiesen werden, dass die Datenbank einen Bufferpool (\texttt{IBMDEFAULTBP}) der Größe 163,920 GB nutzt. Der Bufferpool besteht dabei aus exakt 40.000.000 Seiten, mit einer Seitengröße (\texttt{PAGESIZE}) von 4096 Byte.
+
 \subsubsection{Db2 Graph}
-Die Version Beta 3 und V11.5.6.0 von Db2 Graph verfügen im Rahmen der Performance-Analyse eine vergleichbare Konfiguration. Lediglich die in V11.5.6.0 neu eingeführte \texttt{db2graph-server.yaml} und \texttt{db2graph-internal.yaml} sorgen dafür, dass es Konfigurationsunterschiede zwischen beiden Versionen gibt. Auf diese beiden Konfigurationen wird allerdings nicht näher eingegangen. Schließlich wurden die beiden Konfigurationen nicht für die Messungen angepasst. Somit wird im Rahmen der Performance-Analyse die mit Db2 Graph V11.5.6.0 ausgelieferte Standard-Konfiguration von \texttt{db2graph-server.yaml} und \texttt{db2graph-internal.yaml} her\-angezogen. 
+Die Version Beta 3 und V11.5.6.0 von Db2 Graph verfügen im Rahmen der Performance-Analyse eine vergleichbare Konfiguration. Lediglich die in V11.5.6.0 neu eingeführte \texttt{db2graph-server.yaml} und \texttt{db2graph-internal.yaml} sorgen dafür, dass es Konfigurationsunterschiede zwischen beiden Versionen gibt. Auf diese beiden Konfigurationen wird allerdings nicht näher eingegangen. Schließlich wurden die beiden Konfigurationen nicht für die Messungen angepasst. Somit wird im Rahmen der Performance-Analyse die mit Db2 Graph V11.5.6.0 ausgelieferte Standard-Konfiguration von \texttt{db2graph-server.yaml} und \texttt{db2graph-internal.yaml} her\-angezogen.
 
 Die \texttt{gremlin-server.yaml} Konfiguration sowie die Ressourcen-Parameter des Gremlin-Servers von Db2 Graph Beta 3 und V11.5.6.0 wurde beide allerdings gleichermaßen für die Messungen angepasst. Unter diese Anpassungen fallen:
 \begin{itemize}
@@ -305,6 +346,8 @@ Die \texttt{gremlin-server.yaml} Konfiguration sowie die Ressourcen-Parameter de
     
     Die Erhöhung wurde hierbei allerdings lediglich als eine Art Vorsichtsmaßnahme durchgeführt. Schließlich unterstützt Db2 Graph lediglich lesende Queries. Dies hat zur Folge, dass der Gremlin-Server eigentlich nicht auf blockende Operationen zurückgreifen sollte. Allerdings ist nicht bekannt, ob Db2 Graph in der Praxis wirklich nur auf nicht-blockende Operationen zurückgreift. Daher wurde der Wert des Gremlin-Pools analog zu Thread-Pool-Worker angehoben. 
 \end{itemize}
+
+
 
 \subsection{Messreihen}
 Die im Rahmen dieser Arbeit durchgeführten Messungen werden auf Basis einer bestimmten Konfiguration der Parameter aus \autoref{analyse:parameter} in Messreihen eingeteilt. 

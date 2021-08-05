@@ -259,7 +259,52 @@ RETURN n1.id AS ID1, n2.id AS ID2,
     l.version AS VERSION,
 \end{lstlisting}
 
+\subsection{Umgebung}
+Für alle Messungen, die Teil der Performance-Analyse sind, wird im Rahmen der Arbeit derselbe Server herangezogen. Bei diesem handelt es sich um einen Ubuntu-Server 20.04.2 LTS mit folgenden Charakteristika:
+\begin{itemize}
+    \item 32 CPUs (AMD EPYC 7502P), 
+    \item 256 GB Arbeitsspeicher,
+    \item 500 GB SSD-Hauptspeicher,
+    \item \texttt{ext4} als Dateisystem und 
+    \item dem Linux-Kernel \texttt{5.4.0-77-generic}.
+\end{itemize}
+Des Weiteren gilt es dabei herauszustellen, dass die folgenden Datenbanksysteme während Messungen alle als Docker-Container betrieben werden: 
+\begin{itemize}
+    \item Db2,
+    \item Db2 Graph Beta 3,
+    \item Db2 Graph V11.5.6.0 und 
+    \item Neo4j. 
+\end{itemize}
+Jedes dieser Systeme wird in einem eigenen Container betrieben. 
+
 \subsection{Datenbanksysteme}
+Im Rahmen der Performance-Analyse werden Messungen mit den folgenden Datenbanksystemen durchgeführt: 
+\begin{itemize}
+    \item Db2 Graph Beta 3 (+ Db2),
+    \item Db2 Graph V11.5.6.0 (+ Db2) und
+    \item Neo4j.
+\end{itemize}
+Die Konfiguration dieser Datenbanksysteme wird in den folgenden Unterabschnitten genauer beschrieben. 
+
+\subsubsection{Db2}
+Die beiden Db2 Graph Versionen verwenden im Rahmen der Performance-Analyse bei allen Messungen dieselbe Db2 Instanz. Dadurch wird gewährleistet, dass beide auf ein relationales Datenbankmanagementsystem zugreifen, das sich nicht in der Konfiguration zwischen den Db2 Graph Versionen unterscheidet. Außerdem können somit beide Db2 Graph Versionen auf Basis eines identischen Datensatzes operieren. Auf diese Weise kann eine Verzerrung der Messergebnisse vermieden werden und beide Versionen von Db2 Graph arbeiten während des Benchmarking unter denselben Voraussetzungen.
+
+\subsubsection{Db2 Graph}
+Die Version Beta 3 und V11.5.6.0 von Db2 Graph verfügen im Rahmen der Performance-Analyse eine vergleichbare Konfiguration. Lediglich die in V11.5.6.0 neu eingeführte \texttt{db2graph-server.yaml} und \texttt{db2graph-internal.yaml} sorgen dafür, dass es Konfigurationsunterschiede zwischen beiden Versionen gibt. Auf diese beiden Konfigurationen wird allerdings nicht näher eingegangen. Schließlich wurden die beiden Konfigurationen nicht für die Messungen angepasst. Somit wird im Rahmen der Performance-Analyse die mit Db2 Graph V11.5.6.0 ausgelieferte Standard-Konfiguration von \texttt{db2graph-server.yaml} und \texttt{db2graph-internal.yaml} her\-angezogen. 
+
+Die \texttt{gremlin-server.yaml} Konfiguration sowie die Ressourcen-Parameter des Gremlin-Servers von Db2 Graph Beta 3 und V11.5.6.0 wurde beide allerdings gleichermaßen für die Messungen angepasst. Unter diese Anpassungen fallen:
+\begin{itemize}
+    \item \textit{Gremlin-Memory}\\
+    Dieser Ressourcen-Parameter legt fest wie viel Memory der Gremlin-Server des TinkerPop-Stacks im maximal Fall nutzen kann. Der Standard-Wert beträgt hier bei beiden Db2 Graph Versionen normalerweise 4 GB. Um eine möglichst hohe Performance mit beiden Db2 Graph Versionen zu erzielen wurde das Memory-Limit für den Gremlin-Server im Rahmen der Messungen allerdings auf 64 GB angehoben. 
+    \item \textit{Thread-Pool-Worker}\\
+    Der Wert für Thread-Pool-Worker regelt, wie viele Threads für die Verarbeitung von nicht-blockenden Operationen im Gremlin-Server bereitstehen \cite{tinkerpop_2020}. Der Wert ist dabei normalerweise auf 0 gesetzt, was zur Folge hat, das die Anzahl von verfügbaren Prozessoren herangezogen wird \cite{tinkerpop_2020}. Dies hätte im Rahmen der Messumgebung zur Folge, dass die Thread-Pool-Worker standardmäßig auf 32 gesetzt werden würden. 
+    
+    Um eine möglichst hohe Performance für die Db2 Graph Versionen bei den Messungen zu gewährleisten, wurde der Wert allerdings auf 128 erhöht. Da es dadurch den Gremlin-Server dahingehen unterstützt, große Lasten besser zu verarbeiten. So ist es dem Gremlin-Server dadurch möglich 50 oder 100 Anfragen, die von den entsprechenden Linkbench-Threads während des Benchmarking gesendet werden, auf einmal zu bearbeiten. 
+    \item \textit{Gremlin-Pool}\\
+    Der Wert für den Gremlin-Pool spezifiziert, wie viele Threads dem Gremlin-Server für die Verarbeitung von blockenden Operationen zur Verfügung stehen \cite{tinkerpop_2020}. Ähnlich wie Thread-Pool-Worker zieht er in der Standard-Konfiguration die verfügbare Prozessoranzahl (32) heran \cite{tinkerpop_2020}. Um eine höhere Performance zu erreichen, wurde er allerdings ebenfalls auf 128 erhöht. 
+    
+    Die Erhöhung wurde hierbei allerdings lediglich als eine Art Vorsichtsmaßnahme durchgeführt. Schließlich unterstützt Db2 Graph lediglich lesende Queries. Dies hat zur Folge, dass der Gremlin-Server eigentlich nicht auf blockende Operationen zurückgreifen sollte. Allerdings ist nicht bekannt, ob Db2 Graph in der Praxis wirklich nur auf nicht-blockende Operationen zurückgreift. Daher wurde der Wert des Gremlin-Pools analog zu Thread-Pool-Worker angehoben. 
+\end{itemize}
 
 \subsection{Messreihen}
 Die im Rahmen dieser Arbeit durchgeführten Messungen werden auf Basis einer bestimmten Konfiguration der Parameter aus \autoref{analyse:parameter} in Messreihen eingeteilt. 

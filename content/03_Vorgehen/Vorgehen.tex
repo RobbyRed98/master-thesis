@@ -421,11 +421,14 @@ Der Page Cache kann hierbei als das Neo4j-Pendant zum Bufferpool von Db2 betrach
 Bei Neo4j handelt es sich um eine native Graphdatenbank, die auf dem in \autoref{datenmodelle} beschrieben Graphmodell basiert. Dadurch unterstützt Neo4j ein flexibles Datenbankschema, wie in \autoref{datenmodelle:structure}bereits beschrieben. Neo4j unterstützt allerdings trotz des flexiblen Schemas die Definition von Constraints. Ein solcher Constraint und ein Index werden hierbei in den Graphdatenbank eingerichtet, um einen fairen Vergleich von zwischen den Db2graph Versionen (+ Db2) und Neo4j zu ermöglichen. Der in \autoref{src:neo4j_schema} beschriebene Constraint und Index werden hierbei eingeführt, um dafür zu sorgen, dass ähnliche Indexe wie in Db2 auch in Neo4j existieren. Schließlich werden in Db2 beim Anlegen eines Primärschlüssels automatisch Indexe für dessen Bestandteile erzeugt. Zum Ausgleich werden daher die \autoref{src:neo4j_schema} spezifizierten Konstrukte angelegt. Der Constraint in \autoref{src:neo4j_schema} sorgt dabei dafür, dass keine Knoten mit dem Label \texttt{node}, dieselbe ID aufweisen können. Zugleich wird im Zuge dessen auch ein Index auf die ID von \texttt{node}-gelabelten Knoten erstellt.
 
 \begin{lstlisting}[label=src:neo4j_schema,caption={Neo4j Instanz Datenbankschema},language=CQL]
-# Constraint aehnlich einem Primaerschluessel fuer Knoten
-CREATE CONSTRAINT unique_node_id IF NOT EXISTS ON (n:node) ASSERT n.id IS UNIQUE;
+// Constraint aehnlich einem Primaerschluessel fuer Knoten
+CREATE CONSTRAINT unique_node_id 
+ON (n:node) ASSERT n.id IS UNIQUE;
 
-# Index fuer die Kanten-Property link_type
-CREATE INDEX link_type_index FOR ()-[l:link]-() ON (l.link_type);
+// Index fuer die Kanten-Property link_type
+CREATE INDEX link_type_index 
+FOR ()-[l:link]-() 
+ON (l.link_type);
 \end{lstlisting}
 
 \subsection{Messreihen}

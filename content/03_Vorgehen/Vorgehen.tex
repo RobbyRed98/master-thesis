@@ -486,7 +486,57 @@ Die Messreihe ähnelt in ihrer Beschaffenheit der Messreihe Linkbench-Const-10M.
 Lediglich der Query-Stil unterscheidet sich von dem von  Linkbench-Const-10M. So werden bei den Messungen im Rahmen dieser Reihe, die ID-Queries statt der regulären Queries herangezogen. Es handelt sich hierbei um die einzige Messreihe im Rahmen der Arbeit, bei der dies der Fall ist.
 
 \subsubsection{Linkbench-Const-100M}
+Im Kontext dieser Reihe erfolgen Messungen mit den Datenbanksystemen:
+\begin{itemize}
+    \item Db2 Graph Beta 3,
+    \item Db2 Graph V11.5.6.0 und 
+    \item Neo4j. 
+\end{itemize}
+
+Hierbei werden folgende Parameter bei allen Messungen herangezogen:
+\begin{itemize}
+    \item reguläre Queries,
+    \item konstante Verteilung (Datensatz) und
+    \item Linkbench-100M (Datensatzgröße).
+\end{itemize}
+Bei allen Messungen, die Teil dieser Messreihe sind, wird ein konstant (10) verteilter Datensatz eingesetzt, welcher 100 Millionen Knoten und 1 Milliarde Kanten umfasst. Des Weiteren kommen bei diesen Messungen die regulären Queries zum Einsatz. 
+
+Die Ergebnismenge als Parameter spielt im Rahmen dieser Reihe aus denselben Gründen wie bei Linkbench-Const-10M und Linkbench-Const-10M-ID keine Rolle.
 
 \subsubsection{Linkbench-Real-10M}
+Bei dieser Messreihe werden Messungen mit den Datenbanksystemen:
+\begin{itemize}
+    \item Db2 Graph V11.5.6.0 und 
+    \item Neo4j durchgeführt. 
+\end{itemize}
+
+Die Messungen im Rahmen dieser Messreihe werden dabei mit folgenden Parametern durchgeführt:
+\begin{itemize}
+    \item reguläre Queries,
+    \item variierende Beschränkung der Ergebnismenge,
+    \item reale Verteilung (Datensatz) und 
+    \item Linkbench-10M (Datensatzgröße).
+\end{itemize}
+Bei den im Kontext der Reihe durchgeführten Messungen werden demnach die regulären Queries eingesetzt. Außerdem wird bevor die Messungen vorgenommen werden können, ein Datensatz mit einer realen Verteilung erzeugt. Dieser erzeugte Datensatz, welcher für das Benchmarking der Datenbanksysteme herangezogen wird, setzt sich dabei aus 10 Millionen Knoten und ca. 53 Millionen Kanten zusammen. Darüber hinaus werden im Rahmen der Messreihe, die Beschränkung der Ergebnismenge, das auch als Range-Limit bezeichnet wird, variiert. So gibt es Messungen mit dem regulären Range-Limit von 100 und 1.000, 10.000 sowie 100.000.
 
 \subsubsection{Linkbench-Real-100M}
+Teil dieser Reihe sind Messungen mit den Datenbanksystemen:
+\begin{itemize}
+    \item Db2 Graph V11.5.6.0 und 
+    \item Neo4j. 
+\end{itemize}
+
+Außerdem finden allen Messungen im Kontext der Messreihe auf der Basis der folgenden Haupt- und Nebenparameter statt:
+\begin{itemize}
+    \item reguläre Queries,
+    \item variierende Beschränkung der Ergebnismenge,
+    \item reale Verteilung (Datensatz) und
+    \item Linkbench-100M (Datensatzgröße).
+\end{itemize}
+Die Messreihe ähnelt hier im Aufbau der Linkbench-Real-10M Reihe stark. So werden bei dieser ebenfalls reguläre Queries eingesetzt, es werden mehrere Messungen für die \texttt{getLinkList}-Operation durchgeführt, mit variierendem Range-Limit und der Datensatz auf dem die Messungen basieren ist real verteilt. Allerdings umfasst der hierbei verwendete Datensatz 100 Millionen Knoten und ca. 530 Millionen Kanten, statt den 10 Millionen Knoten und ca. 53 Millionen Kanten bei der Messreihe Linkbench-Real-10M.
+
+\todo{Anfrage-/Messmenge als Parameter Einführen}
+
+\todo{Überblick Einführen}
+
+\todo{Hierarchie Transformieren}

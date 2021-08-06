@@ -260,6 +260,7 @@ RETURN n1.id AS ID1, n2.id AS ID2,
 \end{lstlisting}
 
 \subsection{Umgebung}
+\label{analyse:umgebung}
 Für alle Messungen, die Teil der Performance-Analyse sind, wird im Rahmen der Arbeit derselbe Server herangezogen. Bei diesem handelt es sich um einen Ubuntu-Server 20.04.2 LTS mit folgenden Charakteristika:
 \begin{itemize}
     \item 32 CPUs (AMD EPYC 7502P), 
@@ -414,7 +415,7 @@ Alle Messungen die im Rahmen der Performance-Analyse durchgeführt werden, nutze
     \item 160 GB Page Cache und
     \item maximaler JVM Heap 64 GB.
 \end{itemize}
-Der Page Cache kann hierbei als das Neo4j-Pendant zum Bufferpool von Db2 betrachtet werden. Daher wurde mit ca. 164 GB und 160 GB auch eine vergleichbare beide Konfiguration gewählt. Der JVM Heap in Neo4j und der Gremlin-Memory der Db2 Graph Konfiguration wurden hierbei aufgrund einer ähnlichen Funktion als vergleichbar angesehen, weshalb beide auf 64 GB gesetzt wurden.
+Der Page Cache kann hierbei als das Neo4j-Pendant zum Bufferpool von Db2 betrachtet werden. Daher wurde mit ca. 164 GB und 160 GB auch eine vergleichbare Konfiguration für beide gewählt. Der JVM Heap in Neo4j und der Gremlin-Memory von Db2 Graph wurden hierbei aufgrund ihrer ähnlichen Funktion ebenfalls als vergleichbar angesehen, weshalb beide auf 64 GB gesetzt wurden.
 
 Bei Neo4j handelt es sich um eine native Graphdatenbank, die auf dem in \autoref{datenmodelle} beschrieben Graphmodell basiert. Dadurch unterstützt Neo4j ein flexibles Datenbankschema, wie in \autoref{datenmodelle:structure}bereits beschrieben. Neo4j unterstützt allerdings trotz des flexiblen Schemas die Definition von Constraints. Ein solcher Constraint und ein Index werden hierbei in den Graphdatenbank eingerichtet, um einen fairen Vergleich von zwischen den Db2graph Versionen (+ Db2) und Neo4j zu ermöglichen. Der in \autoref{src:neo4j_schema} beschriebene Constraint und Index werden hierbei eingeführt, um dafür zu sorgen, dass ähnliche Indexe wie in Db2 auch in Neo4j existieren. Schließlich werden in Db2 beim Anlegen eines Primärschlüssels automatisch Indexe für dessen Bestandteile erzeugt. Zum Ausgleich werden daher die \autoref{src:neo4j_schema} spezifizierten Konstrukte angelegt. Der Constraint in \autoref{src:neo4j_schema} sorgt dabei dafür, dass keine Knoten mit dem Label \texttt{node}, dieselbe ID aufweisen können. Zugleich wird im Zuge dessen auch ein Index auf die ID von \texttt{node}-gelabelten Knoten erstellt.
 
@@ -431,4 +432,61 @@ ON (l.link_type);
 
 \subsection{Messreihen}
 \label{analyse:messreihen}
-Die im Rahmen dieser Arbeit durchgeführten Messungen werden auf Basis einer bestimmten Konfiguration der Parameter aus \autoref{analyse:parameter} in Messreihen eingeteilt. 
+Die im Rahmen dieser Arbeit durchgeführten Messungen werden auf Basis einer bestimmten Konfiguration der Parameter aus \autoref{analyse:parameter} in Messreihen eingeteilt. Die Zusammensetzung dieser Messreihen werden dabei im Rahmen dieses Abschnitts beschrieben. 
+
+Bevor damit allerdings begonnen werden kann, werden hier nochmals kurz die Parameter und Konfigurationen zusammengefasst, die über alle Messreihen hinweg konstant bleiben:
+\begin{itemize}
+    \item \textit{Umgebung}\\
+    In der in \autoref{analyse:umgebung} beschrieben Umgebung, werden alle Messreihen durchgeführt. 
+    \item \textit{Linkbench-Threads}\\
+    Linkbench arbeitet in der Request-Phase immer mit 50 Threads die gleichzeitig Anfragen an ein Datenbanksystem schicken.
+    \item \textit{Db2 Datenbankschema}\\
+    Das Db2-Datenbankschema von \texttt{linkdb0} aus \autoref{src:linkdb0_schema} wird zwischen den Messreihen nicht verändert oder angepasst. 
+    \item \textit{Konfiguration Db2 Graph Beta 3 \& V11.5.6.0}\\
+    Die Graph-Overlay-Konfiguration in \autoref{src:db2graph_mapping} und die Gremlin-Server-Konfiguration der Db2 Graph Versionen bleiben über alle Messungen hinweg unverändert.
+    \item \textit{Konfiguration \& Datenbankschema Neo4j}\\
+    Die in Konfiguration von Neo4j und das bei den Messungen eingesetzte Datenbankschema \autoref{src:neo4j_schema} bleiben über die Messreihen hinweg unverändert. 
+\end{itemize}
+
+In den folgenden Unterabschnitten werden nun die verschiedenen Messreihen genauer erläutert. Der Name einer Reihe setzt sich dabei aus dem Namen des Benchmarks (Linkbench), der Abkürzung für die gewählte Verteilung (Const oder Real) des Datensatzes und der Größe des Datensatzes (10M oder 100M) zusammen. Falls bei einer Messreihe ID-Queries statt den regulären Queries zum Einsatz kommen, wird abschließend noch ID angehängt.
+
+\subsubsection{Linkbench-Const-10M}
+Im Rahmen dieser Messreihe werden Messungen mit den Datenbanksystemen:
+\begin{itemize}
+    \item Db2 Graph Beta 3,
+    \item Db2 Graph V11.5.6.0 und 
+    \item Neo4j durchgeführt. 
+\end{itemize}
+Die Messungen werden dabei auf Basis der folgenden Eigenschaften beziehungsweise Parameter durchgeführt:
+\begin{itemize}
+    \item reguläre Queries,
+    \item konstante Verteilung (Datensatz) und
+    \item Linkbench-10M (Datensatzgröße).
+\end{itemize}
+Wie bei den Parametern beschrieben werden im Rahmen dieser Messreihe die regulären Queries herangezogen. Der für die Messungen erzeugte Datensatz besteht hingegen aus 10 Millionen Knoten und 100 Millionen Kanten. Darüber hinaus weist er eine konstante 10er-Verteilung auf. Das bedeutet jeder Knoten verfügt über exakt 10 ausgehende Kanten. 
+
+Der Parameter Ergebnismenge beziehungsweise, dessen Variation, spielt im Kontext der Messreihe keine Rolle. So wird der Parameter bei allen Messungen der \texttt{getLinkList}-Operation auf 10.000 beschränkt. In der Praxis sollte diese Beschränk\-ung jedoch nie zum Einsatz kommen. Denn aufgrund der konstanten 10er-Verteilung des Datensatzes, weist jeder Knoten immer exakt 10 Kanten auf. Dies hat zur Folge, dass die Ergebnismenge im Maximalfall aus diesen 10 Kanten bestehen kann. 
+
+\subsubsection{Linkbench-Const-10M-ID}
+Teil dieser Messreihe sind Messungen mit den Datenbanksystemen:
+\begin{itemize}
+    \item Db2 Graph Beta 3,
+    \item Db2 Graph V11.5.6.0 und 
+    \item Neo4j. 
+\end{itemize}
+
+Zugleich finden allen Messungen im Rahmen der Messreihe auf der Basis der folgenden Haupt- und Nebenparameter statt:
+\begin{itemize}
+    \item Queries-ID,
+    \item konstante Verteilung (Datensatz) und
+    \item Linkbench-10M (Datensatzgröße).
+\end{itemize}
+Die Messreihe ähnelt in ihrer Beschaffenheit der Messreihe Linkbench-Const-10M. Der Datensatz bei den Messungen weist eine konstante 10er-Verteilung auf und setzt sich aus 10 Millionen Knoten und 100 Millionen Kanten zusammen. Die Beschränkung der Ergebnismenge spielt ebenfalls keine Rolle. 
+
+Lediglich der Query-Stil unterscheidet sich von dem von  Linkbench-Const-10M. So werden bei den Messungen im Rahmen dieser Reihe, die ID-Queries statt der regulären Queries herangezogen. Es handelt sich hierbei um die einzige Messreihe im Rahmen der Arbeit, bei der dies der Fall ist.
+
+\subsubsection{Linkbench-Const-100M}
+
+\subsubsection{Linkbench-Real-10M}
+
+\subsubsection{Linkbench-Real-100M}

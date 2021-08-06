@@ -222,7 +222,7 @@ in \autoref{src:gremlin_queries} und \autoref{src:cypher_queries} bei der \textt
 \subsubsection{Query-Stil}
 Der Query-Stil stellt einen weiteren Parameter Nebenparameter dar. Dabei wird zwischen sogenannten regulären Queries und ID-Queries unterschieden. 
 
-Bei den regulären Queries handelt es sich um die Anfragen, die bereits in \autoref{src:gremlin_queries} und \autoref{src:cypher_queries} aufgeführt wurden. Die Queries werden als reguläre Queries bezeichnet, da sie nahezu Bestandteil aller Messreihen sind, siehe \todo{Referenz Messreihen}. 
+Bei den regulären Queries handelt es sich um die Anfragen, die bereits in \autoref{src:gremlin_queries} und \autoref{src:cypher_queries} aufgeführt wurden. Die Queries werden als reguläre Queries bezeichnet, da sie nahezu Bestandteil aller Messreihen sind, auf diese wird in \autoref{analyse:messreihen} weiter eingegangen. 
 
 Die sogenannten ID-Queries unterscheiden sich bezüglich der Logik der Abfrage nur geringfügig von sogenannten regulären Queries. Allerdings werden die Gremlin-Queries anders formuliert als bei den regulären Queries. So nutzen die Gremlin ID-Queries in \autoref{src:gremlin_id_queries} eine Gremlin-ID -- ähnlich der \texttt{vid} oder \texttt{eid} von Db2 Graph in \autoref{db2graph:funktionsweise} -- um einen bestimmten Knoten oder Kante direkt im ersten Schritt herauszufiltern. Dies ist in \autoref{src:gremlin_id_queries} daran erkennbar, dass dort parametrisierte Versionen der Steps \texttt{V()} und \texttt{E()} zum Einsatz kommen. Dabei wird zu Beginn auf die für die regulären Queries typischen \texttt{has}- und \texttt{hasLabel}-Steps verzichtet.
 
@@ -289,9 +289,7 @@ In den folgenden Unterabschnitten werden dabei die wichtige Anwendungs- be\-zieh
 \subsubsection{Db2}
 Die beiden Db2 Graph Versionen verwenden im Rahmen der Performance-Analyse bei allen Messungen dieselbe Db2 Instanz. Dadurch wird gewährleistet, dass beide auf ein relationales Datenbankmanagementsystem zugreifen, das sich nicht in der Konfiguration zwischen den Db2 Graph Versionen unterscheidet. Außerdem können somit beide Db2 Graph Versionen auf Basis eines identischen Datensatzes operieren. Auf diese Weise kann eine Verzerrung der Messergebnisse vermieden werden und beide Versionen von Db2 Graph arbeiten während des Benchmarking unter denselben Voraussetzungen.
 
-\todo{Version und Lizensierung von Db2 erwähnen}
-
-Bei der Db2 Instanz, die von beiden Db2 Graph Versionen genutzt wird, gilt es dabei zu erwähnen, dass sie so konfiguriert wurde, dass ihr 180 GB an Arbeitsspeicher zur Verfügung stehen. Darüber hinaus verfügt sie über die für Linkbench benötigte Datenbank \texttt{linkdb0}. Diese weist im Kontext aller Messungen das in \autoref{src:linkdb0_schema} beschrieben Datenbankschema auf:
+Bei der Db2 Instanz, die von beiden Db2 Graph Versionen genutzt wird, handelt es sich um die Db2 Advanced Edition in Version v11.5.5.1. Per Konfiguration wurden ihr 180 GB an Arbeitsspeicher zugewiesen. Darüber hinaus verfügt sie über die für Linkbench benötigte Datenbank \texttt{linkdb0}. Diese weist im Kontext aller Messungen das in \autoref{src:linkdb0_schema} beschrieben Datenbankschema auf:
 
 \begin{lstlisting}[label=src:linkdb0_schema,caption={Db2 Instanz Datenbankschema für linkdb0},language=SQL]
 CREATE TABLE linkdb0.nodetable
@@ -432,6 +430,7 @@ ON (l.link_type);
 \end{lstlisting}
 
 \subsection{Messreihen}
+\label{analyse:messreihen}
 Die im Rahmen dieser Arbeit durchgeführten Messungen werden auf Basis einer bestimmten Konfiguration der Parameter aus \autoref{analyse:parameter} in Messreihen eingeteilt. 
 
 \todo{Vereinheitlichen von Graph-Struktur und Graphstruktur.}

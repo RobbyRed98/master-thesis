@@ -24,8 +24,8 @@ Wie in \autoref{fig:db2graph_aufbau} beschrieben, handelt es sich bei Db2 Graph 
 
 \begin{itemize}
     \item \textit{TinkerPop-Stack}\\Stellt das Grundgerüst für Db2 Graph dar. Er parst eingehende Gremlin-Queries und erstellt auf Basis dessen einen Query-Plan bzw. Abfrage-Plan \cite{vldb_tian}. Dabei interagiert er über API-Aufrufe mit den anderen Modulen \cite{vldb_tian}.
-    \item \textit{Topology}\\Beinhaltet die Funktionalität für das Mapping von relationalen Tabellen auf eine Graph-Struktur \cite{vldb_tian, sigmod_tian}.
-    \item \textit{Graph Structure}\\Hierbei handelt es sich um eine eigene Implementierung einer Graph-Struktur, auf deren Basis TinkerPop arbeitet \cite{vldb_tian}. Eine Implementierung dieser Struktur wird benötigt, um den vom TinkerPop-Stack erstellten Query-Plan durchzuführen \cite{sigmod_tian}. 
+    \item \textit{Topology}\\Beinhaltet die Funktionalität für das Mapping von relationalen Tabellen auf eine Graphstruktur \cite{vldb_tian, sigmod_tian}.
+    \item \textit{Graph Structure}\\Hierbei handelt es sich um eine eigene Implementierung einer Graphstruktur, auf deren Basis TinkerPop arbeitet \cite{vldb_tian}. Eine Implementierung dieser Struktur wird benötigt, um den vom TinkerPop-Stack erstellten Query-Plan durchzuführen \cite{sigmod_tian}. 
     \item \textit{SQL-Dialect}\\Diese Komponente stellt die Funktionalität für die Erzeugung von Db2-kompatiblen SQL-Anweisungen bereit \cite{sigmod_tian}.
     \item \textit{Traversal-Strategy}\\Dieses Modul stellt dem TinkerPop-Stack optimierte Traversal-Strategies zur Verfügung. Diese werden eingesetzt, um einen vom TinkerPop-Stack aufgestellten Query-Plan zu optimieren, bevor dieser ausgeführt wird \cite{sigmod_tian}.  
 \end{itemize}
@@ -98,11 +98,11 @@ Die in der zuvor aufgelisteten Schritten 1. bis 7. wurden dabei in der \autoref{
 \end{figure}
 
 \subsubsection{Mapping}
-Bei dem sogenannten Mapping handelt es sich um den Db2 Graph-internen Prozess beziehungsweise Technik, bei dem eine Graph-Struktur relationalen Daten überge\-stülpt wird beziehungsweise diese überlagert. Der Prozess kann auch als Graph-Overlaying bezeichnet werden. Vereinfacht ausgedrückt, handelt es sich dabei um die Spezifikation der Topologie des von Db2 Graph abgebildeten Graphen. In dieser Spezifikation wird festgelegt, welche relationalen Tabellen und Spalten auf welche Graph-Elemente (Knoten und Kanten) gemappt werden. 
+Bei dem sogenannten Mapping handelt es sich um den Db2 Graph-internen Prozess beziehungsweise Technik, bei dem eine Graphstruktur relationalen Daten überge\-stülpt wird beziehungsweise diese überlagert. Der Prozess kann auch als Graph-Overlaying bezeichnet werden. Vereinfacht ausgedrückt, handelt es sich dabei um die Spezifikation der Topologie des von Db2 Graph abgebildeten Graphen. In dieser Spezifikation wird festgelegt, welche relationalen Tabellen und Spalten auf welche Graph-Elemente (Knoten und Kanten) gemappt werden. 
 
 Für die Bereitstellung und Verarbeitung des Mapping in Db2 Graph ist hierbei die Topology-Komponente zuständig. Das Mapping wird dabei in einer als Graph-Overlay-Konfiguration bezeichneten Datei festgehalten.  
 
-Um das Mapping von relationalen auf Graph-Strukturen durchzuführen, werden den relationalen Tabellen verschiedene Rollen zugewiesen. Dabei sind die zwei folgenden Rollen verfügbar:
+Um das Mapping von relationalen auf Graphstrukturen durchzuführen, werden den relationalen Tabellen verschiedene Rollen zugewiesen. Dabei sind die zwei folgenden Rollen verfügbar:
 \begin{itemize}
     \item \textit{Vertex-Tabelle}\\Die Zeilen einer Tabelle werden als Knoten auf einen Graph gemappt \cite{sigmod_tian, yt_tian}.
     \item \textit{Edge-Tabelle}\\Die Zeilen dieser Tabelle werden als Kanten auf einen Graph gemappt \cite{sigmod_tian, yt_tian}.
@@ -252,7 +252,7 @@ Die folgenden Optimierungstechniken werden dabei herangezogen:
     Um die Funktionsweise zu verdeutlichen, kann die Abfrage eines beliebigen ausgehenden Knoten einer Kante herangezogen werden \cite{sigmod_tian}. Diese könnte als Gremlin-Query wie folgt aussehen \code{e.outV()} \cite{sigmod_tian}. Ohne die Anwendung der hier besprochenen Optimierungstechniken, würde die Query in das folgende SQL-Statements übersetzt werden \code{SELECT * FROM VertexTable WHERE dst\_v = e.dst\_v} \cite{sigmod_tian}. Dieses SQL-Statement müsste dann einmal alle bekannten Vertex-Tabellen abfragen \cite{sigmod_tian}. Mit der Optimierung hingegen, kann auf Basis der \texttt{dst\_v\_tables} aus der Topologie eine Untermenge an Vertex-Tabellen identifiziert werden, an die durch eine solche SQL-Abfrage abgefragt werden muss \cite{sigmod_tian}. Somit lässt sich die Menge an die Vertex-Tabellen die abgefragt werden müssen, auf eine kleine notwendige Untermenge beschränken \cite{sigmod_tian}. Vergleichbares ist auch im Zusammenhang mit Source-Tabellen möglich.
 
     \item \textit{When A Vertex Table Is Also An Edge Table}\\
-    Diese spezielle Optimierungstechnik kann angewendet werden, wenn eine Vertex-Tabelle und eine Edge-Tabelle auf dieselbe relationale Tabelle in Db2 gemappt werden \cite{sigmod_tian}. Dann besteht die Möglichkeit, dass eine Abfrage komplett eingespart werden kann und abgefragte Daten auf Basis eines  bereits zuvor abgefragten Graph-Struktur, rekonstruiert werden können \cite{sigmod_tian}. 
+    Diese spezielle Optimierungstechnik kann angewendet werden, wenn eine Vertex-Tabelle und eine Edge-Tabelle auf dieselbe relationale Tabelle in Db2 gemappt werden \cite{sigmod_tian}. Dann besteht die Möglichkeit, dass eine Abfrage komplett eingespart werden kann und abgefragte Daten auf Basis eines  bereits zuvor abgefragten Graphstruktur, rekonstruiert werden können \cite{sigmod_tian}. 
 
     Wird wieder das Beispiel der Gremlin-Query \code{e.outV()} herangezogen -- \code{e} stellt hierbei eine Kante dar \cite{sigmod_tian}. So besteht die Möglichkeit, dass wenn die gemappten relationalen Tabellen einer Edge-Tabelle und Vertex-Tabelle einander entsprechen und die Prefixed-IDs definierten Properties und Felder der Edge-Tabelle, sich mit denen der Vertex-Tabelle überschneiden, eine Abfrage des Vertexes aus der Vertex-Tabelle komplett eingespart werden kann \cite{sigmod_tian}. Statt die Abfrage durchzuführen, kann in diesem besonderen Fall der Vertex basierend auf der Edge \code{e} rekonstruiert werden \cite{sigmod_tian}.
 

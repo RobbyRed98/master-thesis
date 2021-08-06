@@ -284,7 +284,7 @@ Im Rahmen der Performance-Analyse werden Messungen mit den folgenden Datenbanksy
     \item Db2 Graph V11.5.6.0 (+ Db2) und
     \item Neo4j.
 \end{itemize}
-In den folgenden Unterabschnitten werden dabei die wichtige Anwendungs- beziehungsweise System-Konfigurationen beschrieben. 
+In den folgenden Unterabschnitten werden dabei die wichtige Anwendungs- be\-zieh\-ungs\-wei\-se System-Konfigurationen beschrieben. 
 
 \subsubsection{Db2}
 Die beiden Db2 Graph Versionen verwenden im Rahmen der Performance-Analyse bei allen Messungen dieselbe Db2 Instanz. Dadurch wird gewährleistet, dass beide auf ein relationales Datenbankmanagementsystem zugreifen, das sich nicht in der Konfiguration zwischen den Db2 Graph Versionen unterscheidet. Außerdem können somit beide Db2 Graph Versionen auf Basis eines identischen Datensatzes operieren. Auf diese Weise kann eine Verzerrung der Messergebnisse vermieden werden und beide Versionen von Db2 Graph arbeiten während des Benchmarking unter denselben Voraussetzungen.
@@ -349,7 +349,66 @@ Die \texttt{gremlin-server.yaml} Konfiguration sowie die Ressourcen-Parameter de
     Die Erhöhung wurde hierbei allerdings lediglich als eine Art Vorsichtsmaßnahme durchgeführt. Schließlich unterstützt Db2 Graph lediglich lesende Queries. Dies hat zur Folge, dass der Gremlin-Server eigentlich nicht auf blockende Operationen zurückgreifen sollte. Allerdings ist nicht bekannt, ob Db2 Graph in der Praxis wirklich nur auf nicht-blockende Operationen zurückgreift. Daher wurde der Wert des Gremlin-Pools analog zu Thread-Pool-Worker angehoben. 
 \end{itemize}
 
-\todo{Graph-Schema aufführen.}
+Beide Versionen von Db2 Graph nutzen darüber hinaus die in \autoref{src:db2graph_mapping} dargestellte Graph-Overlay-Konfiguration, zum Mapping der in \autoref{src:linkdb0_schema} beschrieben Tabellen auf eine Graphstruktur. Hierbei wird die \texttt{linkdb0.nodetable} aus \autoref{src:linkdb0_schema} als Vertex-Tabelle in \autoref{src:db2graph_mapping} herangezogen, während die \texttt{linkdb0.linktable} die Rolle einer Edge-Tabelle übernimmt. 
+\begin{lstlisting}[label=src:db2graph_mapping,caption={Graph-Overlay-Konfiguration Db2 Graph},language=json]
+...
+"jdbc_num_conn": 100,
+"v_tables": [
+    {
+        "vid": {
+            "prefix": "LINKDB0.NODETABLE",
+            "id_cols": [
+                "ID"
+            ]
+        },
+        "table_id": "LINKDB0.NODETABLE",
+        "table": {
+            "schema_name": "LINKDB0",
+            "table_name": "NODETABLE"
+        },
+        "label": {
+            "fixed_label": true,
+            "label": "NODETABLE"
+        }
+    }
+],
+"e_tables": [
+    {
+        "src_v_cols": [
+            "ID1"
+        ],
+        "dst_v_cols": [
+            "ID2"
+        ],
+        "src_v_tables": [
+            "LINKDB0.NODETABLE"
+        ],
+        "dst_v_tables": [
+            "LINKDB0.NODETABLE"
+        ],
+        "eid": {
+            "implicit_id": false,
+            "id": {
+                "prefix": "LINKDB0.LINKTABLE",
+                "id_cols": [
+                    "LINK_TYPE",
+                    "ID1",
+                    "ID2"
+                ]
+            }
+        },
+        "table_id": "LINKDB0.LINKTABLE",
+        "table": {
+            "schema_name": "LINKDB0",
+            "table_name": "LINKTABLE"
+        },
+        "label": {
+            "fixed_label": true,
+            "label": "LINKTABLE"
+        }
+    }
+]
+\end{lstlisting}
 
 \subsubsection{Neo4j}
 Alle Messungen die im Rahmen der Performance-Analyse durchgeführt werden, nutzen dieselbe Neo4j-Instanz. Bei dieser Instanz handelt es sich um die Community-Edition von Neo4j in Version 4.3. An der Konfiguration von Neo4j ändert sich zwischen den verschiedenen Messreihen nichts. Sie weist somit immer dieselbe Konfiguration auf. Bei dieser Konfiguration gilt es die folgenden Parameter hervorzuheben: 
@@ -371,3 +430,5 @@ CREATE INDEX link_type_index FOR ()-[l:link]-() ON (l.link_type);
 
 \subsection{Messreihen}
 Die im Rahmen dieser Arbeit durchgeführten Messungen werden auf Basis einer bestimmten Konfiguration der Parameter aus \autoref{analyse:parameter} in Messreihen eingeteilt. 
+
+\todo{Vereinheitlichen von Graph-Struktur und Graphstruktur.}

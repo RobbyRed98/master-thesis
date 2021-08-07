@@ -459,6 +459,23 @@ FOR ()-[l:link]-()
 ON (l.link_type);
 \end{lstlisting}
 
+\section{Messungen}
+Im Rahmen dieses Abschnitts wird kurz beschrieben, die Messungen im Rahmen dieser Arbeit aufgebaut werden beziehungsweise gegliedert sind. Für die Messungen existieren im Rahmen dieser Arbeit die folgenden drei Begriffe beziehungsweise Einheiten:
+\begin{itemize}
+    \item Benchmark-Durchlauf,
+    \item Serie und 
+    \item Messreihe. 
+\end{itemize}
+
+\subsection{Benchmark-Durchlauf}
+Ein Benchmark-Durchlauf stellt dabei die kleinste Einheit dar, auf die die Messungen in dieser Arbeit heruntergebrochen werden können. Ein Benchmark-Durchlauf deckt hierbei -- wie der Name bereits vermuten lässt -- den Durchlauf eines Benchmarks für eine bestimmte Graph-Operation ab. 
+
+\subsection{Messserie}
+Unter dem Begriff Messserie werden die Benchmark-Durchläufe für alle Graph-Operationen eines bestimmten Datenbanksystems zusammengefasst. Die Serie umfasst somit alle Benchmark-Durchläufe für die in \autoref{analyse:operationen} oder \autoref{analyse:parameter:ergebnissmenge} aufgezählten Operationen. 
+
+\subsection{Messreihe}
+In einer Messreihe werden die Messserien mehrerer Datenbanksysteme zusammengefasst. Dabei verfügen alle Datenbanksysteme deren Messserien Teil der Messreihe sind über selbe Konfiguration der in \autoref{analyse:parameter} beschriebenen Parameter. 
+
 \section{Messreihen}
 \label{analyse:messreihen}
 Die im Rahmen dieser Arbeit durchgeführten Messungen werden auf Basis einer bestimmten Konfiguration der Parameter aus \autoref{analyse:parameter} in Messreihen eingeteilt. Die Zusammensetzung dieser Messreihen werden dabei im Rahmen dieses Abschnitts beschrieben. 
@@ -573,4 +590,4 @@ Die Messreihe ähnelt hier im Aufbau der Linkbench-Real-10M Reihe stark. So werd
 
 \todo{Überblick Einführen}
 
-\todo{Hierarchie Transformieren}
+\todo{Evtl. Messungen überarbeiten}

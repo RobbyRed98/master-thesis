@@ -1,23 +1,21 @@
 \chapter{Vorgehen}
 \label{vorgehen}
-Dieses Kapitel befasst sich mit der Methode und dem Aufbau, der für die Performance-Analyse von Db2 Graph und seinem Vergleich mit einem anderen Graphdatenbanksystem gewählt wurde. 
+Dieses Kapitel befasst sich mit der Methode und dem Aufbau, der für die Performance-Analyse von Db2 Graph und den Vergleich mit einem anderen Graphdatenbanksystem gewählt wurde. 
 
 \section{Bezug zu anderen Arbeiten}
-Bevor genauer auf die Methode der Performance-Analyse eingegangen werden kann, muss darauf hingewiesen werden, dass die einige Elemente der Analyse, sich an dem Vorgehen in einer anderen Arbeit orientieren. 
+Bevor genauer auf die Methode der Performance-Analyse eingegangen werden kann, muss darauf hingewiesen werden, dass sich einige Elemente der Analyse, an dem Vorgehen einer anderen Arbeit orientieren. 
 
 So wird in dem Paper \cite{sigmod_tian} ebenfalls eine Performance-Analyse mit Db2 Graph und anderen Datenbanksystemen durchgeführt. Da das Paper \cite{sigmod_tian} in einigen Teilen ähnliche Ziele wie diese Arbeit verfolgt, werden einige Aspekte der Performance-Analyse aus diesem Paper in diese Arbeit übernommen. 
 
-So spiegeln die in \autoref{analyse:metriken} beschriebenen Metriken, auch die aus \cite{sigmod_tian} bekannten Metriken Latenz und Durchsatz wider.
+So spiegeln die in \autoref{analyse:metriken} beschriebenen Metriken, die aus \cite{sigmod_tian} bekannten Metriken Latenz und Durchsatz wider.
 
 Auch bei der Wahl des Linkbench Benchmark, fiel ins Gewicht, dass dieser bereits in \cite{sigmod_tian} für die Performance-Analyse von Db2 Graph eingesetzt wurde. Allerdings war dies nicht der entscheidende Faktor für die Wahl von Linkbench als Mittel zur Performance-Analyse in dieser Arbeit. Die Wahl von Linkbench als Benchmark wird dabei in \autoref{analyse:benchmark} im Detail begründet. 
 
-Allerdings muss ebenfalls darauf hingewiesen werden, dass es auch größere Unterschiede zwischen den Messungen im Kontext dieser Arbeit und denen von \cite{sigmod_tian} gibt. So unterscheiden sich die für die Messungen genutzten Db2 Graph Versionen und die Implementierung der Linkbench-Adapter. Darüber hinaus setzt sich der für die Performance-Analyse genutzte Datensatz in \cite{sigmod_tian} anders zusammen, als alle in \autoref{analyse:messreihen} beschriebenen Messreihen dieser Arbeit.
+Darüber hinaus muss darauf hingewiesen werden, dass es auch größere Unterschiede zwischen den Messungen im Kontext dieser Arbeit und denen von \cite{sigmod_tian} gibt. So unterscheiden sich die für die Messungen genutzten Db2 Graph Versionen und die Implementierung der Linkbench-Adapter. Außerdem setzt sich der für die Performance-Analyse genutzte Datensatz in \cite{sigmod_tian} anders zusammen, als alle in \autoref{analyse:messreihen} beschriebenen Messreihen dieser Arbeit.
 
 \section{Benchmark}
 \label{analyse:benchmark}
-Der Benchmark Linkbench wurde nicht ausschließlich als Mittel für die Performance-Analyse gewählt, weil dieser auch in \cite{sigmod_tian} eingesetzt wurde. 
-
-Stattdessen wurde der Benchmark aus folgenden Gründen ausgesucht:
+Der Benchmark Linkbench wurde nicht ausschließlich als Mittel für die Performance-Analyse gewählt, weil dieser auch in \cite{sigmod_tian} eingesetzt wurde. Stattdessen wurde der Benchmark aus folgenden Gründen ausgesucht:
 \begin{itemize}
     \item Es handelt sich bei Linkbench um einen Benchmark für Graph-Daten.
     \item Der Workload des Benchmarks ist einer realen Arbeitslast nachempfunden, auch wenn er sich hauptsächlich auf OLTP-Operationen beschränkt, siehe \autoref{linkbench:operationen}. 
@@ -25,21 +23,30 @@ Stattdessen wurde der Benchmark aus folgenden Gründen ausgesucht:
     \item Linkbench ist flexibel konfigurier- und erweiterbar, siehe \autoref{linkbench}. 
     \item Der Aufwand für die Implementierung eines Adapters für Db2 Graph wurde als im Rahmen dieser Arbeit möglich eingeschätzt.
 \end{itemize}
-Bevor der Linkbench-Benchmark für die Performance-Analyse im Rahmen dieser Arbeit gewählt wurde, wurde auch der SNB-Benchmark als möglich Alternative gehandelt. Bei diesem  handelt es sich um einen deutlich neueren Benchmark für Graph-Daten als Linkbench \cite{snb_paper}. Dieser wurde vom LDBC-Projekt initiiert und entwickelt \cite{snb_paper}. Der Benchmark versucht dabei sowohl OLTP- als auch OLAP-Workloads abzubilden, anders als Linkbench der hauptsächlich OLTP-Operationen abdeckt \cite{snb_paper}. Die Wahl viel allerdings wie zuvor beschrieben auf Linkbench, da der Aufwand für die Anbindung von Db2 Graph an diesen Benchmark als geringer eingestuft wurde.  
+Bevor der Linkbench Benchmark für die Performance-Analyse im Rahmen dieser Arbeit ausgewählt wurde, wurde auch der SNB-Benchmark als möglich Alternative gehandelt. Bei diesem  handelt es sich um einen deutlich neueren Benchmark für Graph-Daten als Linkbench \cite{snb_paper}. Dieser wurde vom LDBC-Projekt initiiert und entwickelt \cite{snb_paper}. Der Benchmark versucht dabei sowohl OLTP- als auch OLAP-Workloads abzubilden, anders als Linkbench der hauptsächlich OLTP-Operationen abdeckt \cite{snb_paper}. Die Wahl viel allerdings wie zuvor beschrieben auf Linkbench, da der Aufwand für die Anbindung von Db2 Graph an diesen Benchmark als geringer eingestuft wurde.  
 
 \section{Vergleich}
 \label{analyse:vergleich}
-Um die Linkbench-Ergebnisse von Db2 Graph später besser einordnen zu können, werden die Messergebnisse im Rahmen dieser Analyse mit denen des Datenbanksystems Neo4j verglichen. Dieses Vorgehen wurde hierbei gewählt, da es sich bei Neo4j um ein bekanntes, natives Graph-Datenbankmanagementsystem handelt. Dadurch stellt Neo4j einen aussagekräftige Referenz dar, an der Db2 Graph gemessen werden kann. 
+Um die Linkbench-Ergebnisse von Db2 Graph später im Rahmen der Analyse besser einordnen zu können, findet ein Vergleich der Db2 Graph Ergebnisse, mit denen von Neo4j statt. Dieses Datenbanksystem wurde hierbei als eine Art Referenzpunkt für die Performance von Db2 Graph gewählt, da es sich bei diesem um ein bekanntes natives Graphdatenbanksystem handelt \cite{gdbms}. Folglich ist Neo4j als Datenbanksystem auch in allen Messreihen vertreten, siehe \autoref{analyse:messreihen}.
 
 \section{Implementierung}
 \label{analyse:Implementierung}
-Um Neo4j, Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 an Linkbench anzubinden wurden im Rahmen dieser Arbeit vier verschiedenen Adapter implementiert. Zu diesen Adaptern gehören:
+Um eine Performance-Analyse für Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 durchzuführen und ebenfalls Referenzwerte für Neo4j zu erhalten, müssen im Rahmen dieser Arbeit die folgenden vier Adapter für Linkbench implementiert werden:
 \begin{itemize}
     \item \texttt{Neo4j}-Adapter für Neo4j,
     \item \texttt{Db2GraphOld}-Adapter für Db2 Graph Beta 3, 
     \item \texttt{Db2Graph}-Adapter für Db2 Graph V11.5.6.0 und
-    \item \texttt{Db2}-Adapter -- wird hauptsächlich von den Adaptern für Db2 Graph als Basis genutzt.
+    \item \texttt{Db2}-Adapter.
 \end{itemize}
+
+Für Neo4j muss im Rahmen der Arbeit ein Adapter implementiert werden, da frei verfügbaren Linkbench-Neo4j-Adapter wie beispielsweise \cite{neo_linkbench_github} auf dem technischen Stand von 2013 sind. Daher sind diese Adapter nicht dazu in der Lage, die Fähigkeiten neuer Neo4j-Versionen auszuschöpfen. So wird in \cite{neo_linkbench_github} eine veraltete Java-basierte Traversal-API zur Interaktion mit Neo4j eingesetzt, obwohl inzwischen die Cypher-Abfragesprache die bevorzugte Form der Interaktion mit Neo4j ist \cite{gdbms}.
+
+Eine eigene Adapter-Implementierung für Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 ist hingegen ebenfalls notwendig, da Db2 Graph an sich eine neue Technologie darstellt, die erst seit einer kurzen Dauer auf dem Markt ist. Darüber hinaus handelt es sich bei den in \cite{sigmod_tian} für die Durchführung der Messungen eingesetzten Db2Graph-Linkbench-Adapter um die bisher einzige bekannte Implementierung eines solchen Adapters. Dieser Adapter wurde dabei allerdings für die Anbindung einer älteren Db2 Graph Version an Linkbench entwickelt und ist darüber hinaus nicht frei zugänglich.
+
+Die Entwicklung von zwei verschiedener Adaptern für Beta 3 und V11.5.6.0 ist darüber hinaus auch nötig. Denn schließlich unterscheiden sich die Db2 Graph Versionen, wie in \autoref{db2graph:versionen} bereits erläutert, bezüglich des Verbindungsaufbaus und des Session-Managements. 
+
+Bevor mit der Implementierung der Db2Graph-Linkbench-Adapter begonnen werden, kann wird im Rahmen dieser Arbeit allerdings ein Db2-Linkbench-Adapter entwickelt. Dieser dient dabei als Basis für die Db2Graph-Linkbench-Adapter. So müssen bei der Implementierung der Db2Graph-Linkbench-Adapter hauptsächlich die lesenden Operationen des Adapters überschrieben werden. Bei den schreibenden Operationen die beiden Db2 Graph Versionen nicht beherrschen, können die jeweiligen Adapter dann auf die Operationen des Db2-Linkbench-Adapters zurückgreifen, um diese direkt in Db2 Graph umzusetzen.
+
 Weitere Details bezüglich der Implementierung werden in \todo{Referenz für Implementierungskapitel} erläutert.
 
 \section{Operationen}

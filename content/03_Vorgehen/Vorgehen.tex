@@ -146,23 +146,24 @@ Darüber hinaus werden während jeder Messungen die Betriebssystemstatistiken er
 
 \section{Parameter}
 \label{analyse:parameter}
-Die Messungen die im Rahmen dieser Arbeit durchgeführt werden, können anhand von zwei Hauptparametern unterschieden werden:
+Im Rahmen dieses Abschnitts wird auf die Parameter eingegangen, die bei der Unterscheidung der im Rahmen der Arbeit durchgeführten Messreihen eine zentrale Rolle spielen. 
+Dabei handelt es sich um die drei folgenden Hauptparameter:
 \begin{itemize}
-    \item die Verteilung / Struktur der Datensätze und 
-    \item die Größe der Datensätze. 
+    \item Verteilung der Datensätze, 
+    \item Größe der Datensätze und 
+    \item Messumfang.
 \end{itemize}
-Diese beiden Messparameter spielen hierbei im Kontext aller Messungen eine wichtige Rolle. 
+Diese drei Parameter werden als Hauptparameter bezeichnet, da sie bei allen Messungen eine Rolle spielen.
 
-Darüber hinaus gibt es noch die zwei Nebenparameter:
+Neben diesen Hauptparametern existieren auch noch die folgenden zwei Nebenparameter:
 \begin{itemize}
     \item Ergebnismenge und 
     \item Query-Stil. 
 \end{itemize}
-Diese spielen hierbei entweder bei Messungen mit real- oder mit konstant-verteilten Datensätzen eine Rolle.  
+Sie werden so genannt, da eine Variation der beiden Messparameter ausschließlich zwischen im Kontext der Messreihen mit einer realer oder einer konstanten Verteilung stattfindet, nicht aber beiden. 
 
 \subsection{Verteilung}
-Bei der Struktur der Datensätze kann zwischen den beiden folgenden Verteilungen unterschieden werden: 
-
+Bei der Verteilung der Datensätze kann als Parameter zwischen den beiden folgenden Verteilungen unterschieden werden: 
 \begin{itemize}
     \item \textit{konstante Verteilung}\\
     Hierbei besitzt jeder Knoten im Datensatz exakt dieselbe Anzahl an Kanten (Links) wie jeder andere Knoten. Im Rahmen dieser Arbeit wurde bei allen Messungen immer eine konstante 10er-Verteilung gewählt. Dies bedeutet das jeder Knoten genau 10 Kanten aufweist.  
@@ -203,11 +204,19 @@ Dabei muss allerdings im Auge behalten werden, dass sich die Größe der Datenme
     \end{tabular}
     \caption{Übersicht Linkbench Kantenanzahl}
     \label{tab:kanten_anzahl}
-    \vspace{1em}
-    \textit{}
 \end{table}
 
 Aufgrund dessen sollte auch später vom Vergleich der Messergebnisse zwischen den unterschiedlich verteilten Datensätzen bei Linkbench-10M und Linkbench-100M abgesehen werden.
+
+\subsection{Messumfang}
+Unter dem Begriff Messumfang, wird im Rahmen dieser Arbeit, die Anzahl an Graphoperationen, wie \texttt{getNode} oder \texttt{getLink} verstanden, die während eines Benchmarkdurchlaufs ausgeführt werden. Bei den in \autoref{analyse:messreihen} beschriebenen Messreihen nimmt der Parameter dabei entweder:
+\begin{itemize}
+    \item 2.500.000 oder
+    \item 25.000.000 an. 
+\end{itemize}
+Das heißt, dass für das Benchmarking einer bestimmten Art an Graphoperationen (z.B. \texttt{countLinks}), diese Operation 2.500.000 oder 25.000.000 Mal ausgeführt wurde. 
+
+Welchen der beiden Werte der Parameter dabei im Zuge einer Messreihe annimmt, hängt dabei davon ab, ob der Parameter  Ergebnismenge im Kontext dieser Messreihe eine Rolle spielt. Ist dies der Fall, wird der Wert 2.500.000 für den Messumfang herangezogen. Das ist dabei notwendig, da das Benchmarking der \texttt{getLinkList}-Operation mit großen Ergebnismengen, die Performance beeinträchtigt \todo{Referenziere Messergebnisse}. Durch einigen geringeren Messumfang kann somit sichergestellt werden, dass diese Messungen nicht den zeitlichen Rahmen eines Tages sprengen.
 
 \subsection{Ergebnismenge}
 Dieser Parameter regelt bei den Messungen mit real-verteilten Datensätzen, wie groß die Ergebnismenge bei der \texttt{getLinkList}-Operation maximal werden kann. Konkret legt der Parameter dabei fest, wie viele Kanten maximal Teil der Ergebnismenge einer \texttt{getLinkList}-Operation sein können.
@@ -480,12 +489,15 @@ Im Rahmen dieser Messreihe werden Messungen mit den Datenbanksystemen:
 Die Messungen werden dabei auf Basis der folgenden Eigenschaften beziehungsweise Parameter durchgeführt:
 \begin{itemize}
     \item reguläre Queries,
+    \item Messumfang von 25.000.000,
     \item konstante Verteilung (Datensatz) und
     \item Linkbench-10M (Datensatzgröße).
 \end{itemize}
 Wie bei den Parametern beschrieben werden im Rahmen dieser Messreihe die regulären Queries herangezogen. Der für die Messungen erzeugte Datensatz besteht hingegen aus 10 Millionen Knoten und 100 Millionen Kanten. Darüber hinaus weist er eine konstante 10er-Verteilung auf. Das bedeutet jeder Knoten verfügt über exakt 10 ausgehende Kanten. 
 
 Der Parameter Ergebnismenge beziehungsweise, dessen Variation, spielt im Kontext der Messreihe keine Rolle. So wird der Parameter bei allen Messungen der \texttt{getLinkList}-Operation auf 10.000 beschränkt. In der Praxis sollte diese Beschränk\-ung jedoch nie zum Einsatz kommen. Denn aufgrund der konstanten 10er-Verteilung des Datensatzes, weist jeder Knoten immer exakt 10 Kanten auf. Dies hat zur Folge, dass die Ergebnismenge im Maximalfall aus diesen 10 Kanten bestehen kann. 
+
+Da das Benchmarking einer Operationsart aufgrund der konstant kleinen Ergebnismenge voraussichtlich den Zeitraum eines Tages einhalten kann, wird hier ein Messumfang von 25.000.000 gewählz.
 
 \subsection{Linkbench-Const-10M-ID}
 Teil dieser Messreihe sind Messungen mit den Datenbanksystemen:
@@ -498,10 +510,11 @@ Teil dieser Messreihe sind Messungen mit den Datenbanksystemen:
 Zugleich finden allen Messungen im Rahmen der Messreihe auf der Basis der folgenden Haupt- und Nebenparameter statt:
 \begin{itemize}
     \item Queries-ID,
+    \item Messumfang von 25.000.000,
     \item konstante Verteilung (Datensatz) und
     \item Linkbench-10M (Datensatzgröße).
 \end{itemize}
-Die Messreihe ähnelt in ihrer Beschaffenheit der Messreihe Linkbench-Const-10M. Der Datensatz bei den Messungen weist eine konstante 10er-Verteilung auf und setzt sich aus 10 Millionen Knoten und 100 Millionen Kanten zusammen. Die Beschränkung der Ergebnismenge spielt ebenfalls keine Rolle. 
+Die Messreihe ähnelt in ihrer Beschaffenheit der Messreihe Linkbench-Const-10M. Der Datensatz bei den Messungen weist eine konstante 10er-Verteilung auf und setzt sich aus 10 Millionen Knoten und 100 Millionen Kanten zusammen. Die Beschränkung der Ergebnismenge spielt ebenfalls keine Rolle, weshalb auch ein Messumfang von 25.000.000 herangezogen werden kann. 
 
 Lediglich der Query-Stil unterscheidet sich von dem von  Linkbench-Const-10M. So werden bei den Messungen im Rahmen dieser Reihe, die ID-Queries statt der regulären Queries herangezogen. Es handelt sich hierbei um die einzige Messreihe im Rahmen der Arbeit, bei der dies der Fall ist.
 
@@ -516,12 +529,13 @@ Im Kontext dieser Reihe erfolgen Messungen mit den Datenbanksystemen:
 Hierbei werden folgende Parameter bei allen Messungen herangezogen:
 \begin{itemize}
     \item reguläre Queries,
+    \item Messumfang von 25.000.000,
     \item konstante Verteilung (Datensatz) und
     \item Linkbench-100M (Datensatzgröße).
 \end{itemize}
 Bei allen Messungen, die Teil dieser Messreihe sind, wird ein konstant (10) verteilter Datensatz eingesetzt, welcher 100 Millionen Knoten und 1 Milliarde Kanten umfasst. Des Weiteren kommen bei diesen Messungen die regulären Queries zum Einsatz. 
 
-Die Ergebnismenge als Parameter spielt im Rahmen dieser Reihe aus denselben Gründen wie bei Linkbench-Const-10M und Linkbench-Const-10M-ID keine Rolle.
+Die Ergebnismenge als Parameter spielt im Rahmen dieser Reihe aus denselben Gründen wie bei Linkbench-Const-10M und Linkbench-Const-10M-ID keine Rolle. Dementsprechend nimmt der Messumfang auch hier 25.000.000 an.
 
 \subsection{Linkbench-Real-10M}
 Bei dieser Messreihe werden Messungen mit den Datenbanksystemen:
@@ -533,11 +547,12 @@ Bei dieser Messreihe werden Messungen mit den Datenbanksystemen:
 Die Messungen im Rahmen dieser Messreihe werden dabei mit folgenden Parametern durchgeführt:
 \begin{itemize}
     \item reguläre Queries,
+    \item Messumfang von 2.500.000,
     \item variierende Beschränkung der Ergebnismenge,
     \item reale Verteilung (Datensatz) und 
     \item Linkbench-10M (Datensatzgröße).
 \end{itemize}
-Bei den im Kontext der Reihe durchgeführten Messungen werden demnach die regulären Queries eingesetzt. Außerdem wird bevor die Messungen vorgenommen werden können, ein Datensatz mit einer realen Verteilung erzeugt. Dieser erzeugte Datensatz, welcher für das Benchmarking der Datenbanksysteme herangezogen wird, setzt sich dabei aus 10 Millionen Knoten und ca. 53 Millionen Kanten zusammen. Darüber hinaus werden im Rahmen der Messreihe, die Beschränkung der Ergebnismenge, das auch als Range-Limit bezeichnet wird, variiert. So gibt es Messungen mit dem regulären Range-Limit von 100 und 1.000, 10.000 sowie 100.000.
+Bei den im Kontext der Reihe durchgeführten Messungen werden demnach die regulären Queries eingesetzt. Außerdem wird bevor die Messungen vorgenommen werden können, ein Datensatz mit einer realen Verteilung erzeugt. Dieser erzeugte Datensatz, welcher für das Benchmarking der Datenbanksysteme herangezogen wird, setzt sich dabei aus 10 Millionen Knoten und ca. 53 Millionen Kanten zusammen. Darüber hinaus werden im Rahmen der Messreihe, die Beschränkung der Ergebnismenge, das auch als Range-Limit bezeichnet wird, variiert. So gibt es Messungen mit dem regulären Range-Limit von 100 und 1.000, 10.000 sowie 100.000. Um das Benchmarking einer Operationsart hier im zeitlichen Rahmen eines Tages durchführen zu können, wird bei dieser Messreihe ein Messumfang von 2.500.000 gewählt. 
 
 \subsection{Linkbench-Real-100M}
 Teil dieser Reihe sind Messungen mit den Datenbanksystemen:
@@ -549,13 +564,12 @@ Teil dieser Reihe sind Messungen mit den Datenbanksystemen:
 Außerdem finden allen Messungen im Kontext der Messreihe auf der Basis der folgenden Haupt- und Nebenparameter statt:
 \begin{itemize}
     \item reguläre Queries,
+    \item Messumfang von 2.500.000,
     \item variierende Beschränkung der Ergebnismenge,
     \item reale Verteilung (Datensatz) und
     \item Linkbench-100M (Datensatzgröße).
 \end{itemize}
-Die Messreihe ähnelt hier im Aufbau der Linkbench-Real-10M Reihe stark. So werden bei dieser ebenfalls reguläre Queries eingesetzt, es werden mehrere Messungen für die \texttt{getLinkList}-Operation durchgeführt, mit variierendem Range-Limit und der Datensatz auf dem die Messungen basieren ist real verteilt. Allerdings umfasst der hierbei verwendete Datensatz 100 Millionen Knoten und ca. 530 Millionen Kanten, statt den 10 Millionen Knoten und ca. 53 Millionen Kanten bei der Messreihe Linkbench-Real-10M.
-
-\todo{Anfrage-/Messmenge als Parameter Einführen}
+Die Messreihe ähnelt hier im Aufbau der Linkbench-Real-10M Reihe stark. So werden bei dieser ebenfalls reguläre Queries eingesetzt, der Messumfang beträgt 2.500.000, es werden mehrere Messungen für die \texttt{getLinkList}-Operation durchgeführt, mit variierendem Range-Limit und der Datensatz auf dem die Messungen basieren ist auch real verteilt. Allerdings umfasst der hierbei verwendete Datensatz 100 Millionen Knoten und ca. 530 Millionen Kanten, statt den 10 Millionen Knoten und ca. 53 Millionen Kanten bei der Messreihe Linkbench-Real-10M.
 
 \todo{Überblick Einführen}
 

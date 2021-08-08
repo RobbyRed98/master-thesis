@@ -572,6 +572,43 @@ Außerdem finden allen Messungen im Kontext der Messreihe auf der Basis der folg
 \end{itemize}
 Die Messreihe ähnelt hier im Aufbau der Linkbench-Real-10M Reihe stark. So werden bei dieser ebenfalls reguläre Queries eingesetzt, der Messumfang beträgt 2.500.000, es werden mehrere Messungen für die \texttt{getLinkList}-Operation durchgeführt, mit variierendem Range-Limit und der Datensatz auf dem die Messungen basieren ist auch real verteilt. Allerdings umfasst der hierbei verwendete Datensatz 100 Millionen Knoten und ca. 530 Millionen Kanten, statt den 10 Millionen Knoten und ca. 53 Millionen Kanten bei der Messreihe Linkbench-Real-10M.
 
+\subsection{Übersicht}
+In diesen Abschnitt werden alle Messreihen und ihre Parameter nochmals übersichtlich in den beiden Tabellen \autoref{tab:uebersicht_messreihen_datensatz} und \autoref{tab:uebersicht_messreihen_parameter} zusammengefasst. In \autoref{tab:uebersicht_messreihen_datensatz} werden dabei die Datensatz-spezifischen Parameter der Messreihen aufgeführt. Die Parameter Messumfang, Ergebnismenge und der Query-Stil werden hingegen in \autoref{tab:uebersicht_messreihen_parameter} aufgelistet.
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{l|r|r|c}
+    \hline
+    \rowcolor[HTML]{EFEFEF} 
+    \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}{\color[HTML]{333333} }} & \multicolumn{3}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Datensatz}} \\ \cline{2-4} 
+    \rowcolor[HTML]{EFEFEF} 
+    \multicolumn{1}{c|}{\multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}{\color[HTML]{333333} \textbf{Messreihe}}}} & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Knoten}} & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Kanten}} & \multicolumn{1}{l}{\cellcolor[HTML]{EFEFEF}\textbf{Verteilung}} \\ \hline
+    Linkbench-Const-10M & 10.000.000 & 100.000.000 & konstant \\
+    Linkbench-Const-10M-ID & 10.000.000 & 100.000.000 & konstant \\
+    Linkbench-Const-100M & 100.000.000 & 1.000.000.000 & konstant \\
+    Linkbench-Real-10M & 10.000.000 & 100.000.000 & real \\
+    Linkbench-Real-100M & 100.000.000 & 1.000.000.000 & real \\ \hline
+    \end{tabular}
+    \caption{Übersicht Datensatzparameter der Messreihen}
+    \label{tab:uebersicht_messreihen_datensatz}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{l|r|c|l}
+    \hline
+    \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}{\color[HTML]{333333} }} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}} & \cellcolor[HTML]{EFEFEF} & \multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}} \\
+    \multicolumn{1}{c|}{\multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}{\color[HTML]{333333} \textbf{Messreihe}}}} & \multicolumn{1}{l|}{\multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}\textbf{Messumfang}}} & \multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}\textbf{\begin{tabular}[c]{@{}c@{}}Variation der \\ Ergebnismenge\end{tabular}}} & \multicolumn{1}{c}{\multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}\textbf{Queries}}} \\ \hline
+    Linkbench-Const-10M & 25.000.000 & - & regulär \\
+    Linkbench-Const-10M-ID & 25.000.000 & - & ID \\
+    Linkbench-Const-100M & 25.000.000 & - & regulär \\
+    Linkbench-Real-10M & 2.500.000 & x & regulär \\
+    Linkbench-Real-100M & 2.500.000 & x & regulär \\ \hline
+    \end{tabular}
+    \caption{Übersicht Parameter der Messreihen}
+    \label{tab:uebersicht_messreihen_parameter}
+\end{table}
+
 \todo{Überblick Einführen}
 
 \section{Ablauf der Messungen}

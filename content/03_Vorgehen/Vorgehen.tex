@@ -1,6 +1,6 @@
 \chapter{Vorgehen}
 \label{vorgehen}
-Dieses Kapitel befasst sich mit der Methode und dem Aufbau, der für die Performance-Analyse von Db2 Graph und den Vergleich mit einem anderen Graphdatenbanksystem gewählt wurde. 
+Dieses Kapitel befasst sich mit der Methode und dem Aufbau, der Performance-Analyse von Db2 Graph. Darüber hinaus wird auch darauf eingegangen welche Maßnahmen ergriffen wurden, um die von Db2 Graph  erzeilte Performance einordnen zu können. 
 
 \section{Bezug zu anderen Arbeiten}
 Bevor genauer auf die Methode der Performance-Analyse eingegangen werden kann, muss darauf hingewiesen werden, dass sich einige Elemente der Analyse, an dem Vorgehen einer anderen Arbeit orientieren. 
@@ -23,10 +23,12 @@ Der Benchmark Linkbench wurde nicht ausschließlich als Mittel für die Performa
     \item Linkbench ist flexibel konfigurier- und erweiterbar, siehe \autoref{linkbench}. 
     \item Der Aufwand für die Implementierung eines Adapters für Db2 Graph wurde als im Rahmen dieser Arbeit möglich eingeschätzt.
 \end{itemize}
-Bevor der Linkbench Benchmark für die Performance-Analyse im Rahmen dieser Arbeit ausgewählt wurde, wurde auch der SNB-Benchmark als möglich Alternative gehandelt. Bei diesem  handelt es sich um einen deutlich neueren Benchmark für Graph-Daten als Linkbench \cite{snb_paper}. Dieser wurde vom LDBC-Projekt initiiert und entwickelt \cite{snb_paper}. Der Benchmark versucht dabei sowohl OLTP- als auch OLAP-Workloads abzubilden, anders als Linkbench der hauptsächlich OLTP-Operationen abdeckt \cite{snb_paper}. Die Wahl viel allerdings wie zuvor beschrieben auf Linkbench, da der Aufwand für die Anbindung von Db2 Graph an diesen Benchmark als geringer eingestuft wurde.  
+Bevor der Linkbench Benchmark für die Performance-Analyse im Rahmen dieser Arbeit ausgewählt wurde, wurde auch der SNB-Benchmark als eine mögliche Alternative gehandelt. Dabei handelt es sich um einen deutlich neueren Benchmark für Graph-Daten, im Vergleich zu Linkbench \cite{snb_paper}. Dieser wurde vom LDBC-Projekt initiiert und entwickelt \cite{snb_paper}. 
 
-\section{Vergleich}
-\label{analyse:vergleich}
+Der SNB versucht dabei sowohl OLTP- als auch OLAP-Workloads abzubilden, im Gegensatz zu Linkbench der hauptsächlich OLTP-Operationen abdeckt \cite{snb_paper}. Die Wahl fiel allerdings trotz dieser Eigenschaft auf  Linkbench, da der Aufwand für die Anbindung von Db2 Graph an diesen Benchmark als geringer eingestuft wurde.
+
+\section{Einordnung}
+\label{analyse:einordnung}
 Um die Linkbench-Ergebnisse von Db2 Graph später im Rahmen der Analyse besser einordnen zu können, findet ein Vergleich der Db2 Graph Ergebnisse, mit denen von Neo4j statt. Dieses Datenbanksystem wurde hierbei als eine Art Referenzpunkt für die Performance von Db2 Graph gewählt, da es sich bei diesem um ein bekanntes natives Graphdatenbanksystem handelt \cite{gdbms}. Folglich ist Neo4j als Datenbanksystem auch in allen Messreihen vertreten, siehe \autoref{analyse:messreihen}.
 
 \section{Implementierung}
@@ -608,8 +610,6 @@ In diesen Abschnitt werden alle Messreihen und ihre Parameter nochmals übersich
     \caption{Übersicht Parameter der Messreihen}
     \label{tab:uebersicht_messreihen_parameter}
 \end{table}
-
-\todo{Überblick Einführen}
 
 \section{Ablauf der Messungen}
 Im Rahmen dieses Abschnitts wird darauf eingegangen, wie die Messungen der Datenbanksysteme als Teil der in \autoref{analyse:messreihen} beschriebenen Messreihen durchgeführt werden. 

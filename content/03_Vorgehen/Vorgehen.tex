@@ -32,6 +32,25 @@ Der SNB versucht dabei sowohl OLTP- als auch OLAP-Workloads abzubilden, im Gegen
 Um die Linkbench-Ergebnisse von Db2 Graph später im Rahmen der Analyse besser einordnen zu können, findet ein Vergleich der Db2 Graph Ergebnisse, mit denen von Neo4j statt. Dieses Datenbanksystem wurde hierbei als eine Art Referenzpunkt für die Performance von Db2 Graph gewählt, da es sich bei diesem um ein bekanntes natives Graphdatenbanksystem handelt \cite{gdbms}. Folglich ist Neo4j als Datenbanksystem auch in allen Messreihen vertreten, siehe \autoref{analyse:messreihen}.
 
 \section{Implementierung}
+\label{analyse:implementierung}
+In diesem Abschnitt wird auf die Implementierung der Datenbanksystem-Adapter für Linkbench eingegangen. Diese werden benötigt um die im Rahmen der Performance-Analyse untersuchten Datenbanksysteme:
+\begin{itemize}
+    \item Db2 Graph Beta 3, 
+    \item Db2 Graph V11.5.6.0 und
+    \item Neo4j
+\end{itemize}
+an den Linkbench Benchmark anzubinden. Bevor allerdings auf die Umsetzung der Adapter eingegangen werden kann, muss erörtert werden, ob bereits für die Datenbanksysteme eine Adapter-Implementierung existiert und verfügbar ist. Im Anschluss daran wird dann auf die Implementierung der Adapter eingegangen.
+
+\subsection{Evaluation existierender Adapter}
+Im Rahmen dieses Unterabschnitts werden bereits existierende Linkbench-Adapter für Db2 Graph und Neo4j aufgeführt und evaluiert. Bei der Evaluation wird untersucht, ob die Adapter für die Performance-Analyse der Datenbanksysteme dieser Arbeit herangezogen werden können oder ein neuer Adapter implementiert werden muss. 
+
+\subsubsection{Db2 Graph}
+Bei dem Datenbanksystem Db2 Graph ist bekannt, das es hierfür bereits eine Adapter-Implementierung für Linkbench existieren muss. Schließlich werden in \cite{sigmod_tian} Db2 Graph Ergebnisse für den Linkbench Benchmark präsentiert. Dabei gilt es allerdings zu beachten, dass der darin eingesetzte Adapter für eine ältere Version von Db2 Graph konzipiert wurde, die unter Umständen nicht mit Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 kompatibel ist. Außerdem wurde der Adapter nie öffentlich verfügbar gemacht. Daher müssen die Adapter für die Db2 Graph Versionen für die Performance-Analyse neu implementiert werden. 
+
+\subsubsection{Neo4j}
+Auch ein Adapter für Neo4j muss im Rahmen dieser Arbeit neu implementiert werden. Dies rührt daher, dass einzig frei verfügbare Neo4j-Adapter aus \cite{neo_linkbench_github} auf dem technischen Stand von 2013 ist. Aufgrund dessen ist der Adapter nicht dazu in der Lage, die Fähigkeiten neuer Neo4j-Versionen auszuschöpfen. So setzt der Adapter aus \cite{neo_linkbench_github} zur Interaktion mit Neo4j eine veraltete Java-basierte Traversal-API eingesetzt, obwohl inzwischen die Abfragesprache Cypher die bevorzugte Form der Interaktion mit Neo4j ist \cite{gdbms}.
+
+\section{Implementierung}
 \label{analyse:Implementierung}
 Um eine Performance-Analyse für Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 durchzuführen und ebenfalls Referenzwerte für Neo4j zu erhalten, müssen im Rahmen dieser Arbeit die folgenden vier Adapter für Linkbench implementiert werden:
 \begin{itemize}

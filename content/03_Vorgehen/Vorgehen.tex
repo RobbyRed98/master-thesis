@@ -219,6 +219,7 @@ Das heißt, dass für das Benchmarking einer bestimmten Art an Graphoperationen 
 Welchen der beiden Werte der Parameter dabei im Zuge einer Messreihe annimmt, hängt dabei davon ab, ob der Parameter  Ergebnismenge im Kontext dieser Messreihe eine Rolle spielt. Ist dies der Fall, wird der Wert 2.500.000 für den Messumfang herangezogen. Das ist dabei notwendig, da das Benchmarking der \texttt{getLinkList}-Operation mit großen Ergebnismengen, die Performance beeinträchtigt \todo{Referenziere Messergebnisse}. Durch einigen geringeren Messumfang kann somit sichergestellt werden, dass diese Messungen nicht den zeitlichen Rahmen eines Tages sprengen.
 
 \subsection{Ergebnismenge}
+\label{analyse:parameter:ergebnismenge}
 Dieser Parameter regelt bei den Messungen mit real-verteilten Datensätzen, wie groß die Ergebnismenge bei der \texttt{getLinkList}-Operation maximal werden kann. Konkret legt der Parameter dabei fest, wie viele Kanten maximal Teil der Ergebnismenge einer \texttt{getLinkList}-Operation sein können.
 
 Durch die Variation des Parameters kann hierbei ermittelt werden, wie sich die Größe der Ergebnismengen, auf die Performance der Datenbanksysteme auswirkt. 
@@ -459,23 +460,6 @@ FOR ()-[l:link]-()
 ON (l.link_type);
 \end{lstlisting}
 
-\section{Messungen}
-Im Rahmen dieses Abschnitts wird kurz beschrieben, die Messungen im Rahmen dieser Arbeit aufgebaut werden beziehungsweise gegliedert sind. Für die Messungen existieren im Rahmen dieser Arbeit die folgenden drei Begriffe beziehungsweise Einheiten:
-\begin{itemize}
-    \item Benchmark-Durchlauf,
-    \item Serie und 
-    \item Messreihe. 
-\end{itemize}
-
-\subsection{Benchmark-Durchlauf}
-Ein Benchmark-Durchlauf stellt dabei die kleinste Einheit dar, auf die die Messungen in dieser Arbeit heruntergebrochen werden können. Ein Benchmark-Durchlauf deckt hierbei -- wie der Name bereits vermuten lässt -- den Durchlauf eines Benchmarks für eine bestimmte Graph-Operation ab. 
-
-\subsection{Messserie}
-Unter dem Begriff Messserie werden die Benchmark-Durchläufe für alle Graph-Operationen eines bestimmten Datenbanksystems zusammengefasst. Die Serie umfasst somit alle Benchmark-Durchläufe für die in \autoref{analyse:operationen} oder \autoref{analyse:parameter:ergebnissmenge} aufgezählten Operationen. 
-
-\subsection{Messreihe}
-In einer Messreihe werden die Messserien mehrerer Datenbanksysteme zusammengefasst. Dabei verfügen alle Datenbanksysteme deren Messserien Teil der Messreihe sind über selbe Konfiguration der in \autoref{analyse:parameter} beschriebenen Parameter. 
-
 \section{Messreihen}
 \label{analyse:messreihen}
 Die im Rahmen dieser Arbeit durchgeführten Messungen werden auf Basis einer bestimmten Konfiguration der Parameter aus \autoref{analyse:parameter} in Messreihen eingeteilt. Die Zusammensetzung dieser Messreihen werden dabei im Rahmen dieses Abschnitts beschrieben. 
@@ -590,4 +574,11 @@ Die Messreihe ähnelt hier im Aufbau der Linkbench-Real-10M Reihe stark. So werd
 
 \todo{Überblick Einführen}
 
-\todo{Evtl. Messungen überarbeiten}
+\section{Ablauf der Messungen}
+Im Rahmen dieses Abschnitts wird darauf eingegangen, wie die Messungen der Datenbanksysteme als Teil der in \autoref{analyse:messreihen} beschriebenen Messreihen durchgeführt werden. 
+
+Um die Performance eines Datenbanksystems zu messen, werden mehrere Benchmark-Durchläufe durchgeführt. Dabei wird für jede gebenchmarkte Operation ein eigener Benchmark-Durchlauf ausgeführt. So macht eine Operation immer 100 \% des Operationsmix während eines Durchlaufs aus. 
+
+Je nachdem als Teil welcher Messreihe die Performance eines Datenbanksystems gemessen wird, werden dabei die vier in \autoref{analyse:operationen} aufgeführten oder die sieben in \autoref{analyse:parameter:ergebnismenge} dargestellten Operationen gebenchmarkt. 
+
+Bei diesen Benchmark-Durchläufen wird die gebenchmarkte Operation von 50 Threads jeweils 50.000 oder 500.000 Mal ausgeführt und gemessen. Wie häufig eine Operation von den Threads durchgeführt wird, hängt dabei von der Konfiguration des Parameters Messumfang ab. Beträgt dieser 2.500.000 so führen die Threads ihn jeweils 50.000 Mal durch. Nimmt er den Wert 25.000.000 an, wird die Operation 500.000 Mal von einem Thread verrichtet. 

@@ -1,10 +1,10 @@
 \section{Linkbench}
 \label{linkbench}
 
-Wird der Benchmark Linkbench genauer beschrieben. Schließlich spielt der Benchmark im Rahmen dieser Arbeit eine wichtige Rolle bezüglich der Performance Ermittlung für die Datenbanksysteme Neo4j und Db2 Graph. Er wird dabei auch im Rahmen dieser Arbeit um entsprechende Adapter für jene Datenbanksysteme erweitert. Dazu allerdings mehr in REF an Linkbench Impl. Dieser Abschnitt fokussiert sich dabei auf die Theorie hinter dem Benchmark. 
+Wird der Benchmark Linkbench genauer beschrieben. Schließlich spielt der Benchmark im Rahmen dieser Arbeit eine wichtige Rolle bezüglich der Performance Ermittlung für die Datenbanksysteme Neo4j und Db2 Graph. Er wird dabei auch im Rahmen dieser Arbeit um entsprechende Adapter für jene Datenbanksysteme erweitert. Dazu allerdings mehr in \todo{Referen Implementierung}. Dieser Abschnitt fokussiert sich dabei auf die Theorie hinter dem Benchmark. 
 
 \subsection{Motivation}
-Der Linkbench Benchmark wurde von Facebook entwickelt \cite{linkbench_paper}. Die Motivation hinter der Entwicklung des Benchmarks war es, einen Benchmark zu schaffen, der reale Datenbankarbeitslasten in sozialen Netzwerken beziehungsweise Anwendungen reflektiert \cite{linkbench_paper}. 
+Der Benchmark Linkbench wurde von Facebook entwickelt \cite{linkbench_paper}. Die Motivation hinter der Entwicklung des Benchmarks war es, einen Benchmark zu schaffen, der reale Datenbankarbeitslasten in sozialen Netzwerken beziehungsweise Anwendungen reflektiert \cite{linkbench_paper}. Ein weiteres Ziel dabei war es, anhand des Benchmarks, die Performance von Datenbanksystemen bei solchen Workloads messen und einordnen zu können \cite{linkbench_paper}.
 
 \subsection{Datenstruktur \& Schema}
 Aufgrund dessen arbeitet der Benchmark mit einer Datenstruktur die sich am Facebook-Social-Graph orientiert \cite{linkbench_paper}. Das Linkbench-Github-Repository \cite{fb_linkbench_github} von Facebook führt ein Beispiel-Schema für das relationale Datenbanksystem MySQL auf. Die darin beschriebene Datenbankstruktur sieht dabei wie folgt auf \autoref{src:linkbench_mysql} \cite{fb_linkbench_github}. 
@@ -73,6 +73,7 @@ Hier werden alle Kanten- beziehungsweise Link-spezifischen Operationen kurz erl�
     \item \texttt{getLinkList}\\
     Fragt Links ab, die mit einem bestimmten Knoten verbunden sind \cite{fb_linkbench_github}.
 \end{itemize}
+\todo{Etwas bezüglich OLTP-Lastigkeit schreiben!}
 
 \subsection{Phasen}
 Der Benchmark kennt zwei Phasen während eines Durchlaufs: 

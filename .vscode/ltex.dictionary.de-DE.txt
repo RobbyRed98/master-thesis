@@ -60,3 +60,7 @@ Workloads
 Graphmodell
 Linkbench
 Graphdatenbanksystem
+Graphmodells
+Graphdatenbanksystems
+Graphdatenbanksystemen
+Vertices

@@ -1,25 +1,22 @@
 \section{Datenbankmodelle}
 \label{datenmodelle}
-In diesem Abschnitt werden die Grundlagen des relationalen und Graph-basierten Datenbankmodell skizziert. Diese sind im Rahmen dieser Arbeit von wesentlicher Bedeutung. Schließlich vereint die in \compref{chap:db2graph} beschriebene Graph-Erweiterung sowohl Elemente des relationalen, als auch des Graphmodells.
+In diesem Abschnitt werden die Grundlagen des Graph-basierten Datenbankmodells  skizziert. Dieses Graphmodell ist im Rahmen dieser Arbeit von wesentlicher Bedeutung. Schließlich vereint die in \autoref{chap:db2graph} beschriebene Graph-Erweiterung, Elemente des relationalen und Graph-basierten Datenbankmodells. Grundkenntnisse über das relationalen Modell werden dabei hingegen im Rahmen dieser Arbeit vorausgesetzt. Sollten keine Grundkenntnisse über relationale Datenbanksysteme vorhanden sein, empfehlen sich \cite{rdbms_book} und \cite{codd_relational_model} als Einstieg.
 
-Um einen Überblick über diese Modelle zu geben, werden beide unter einem jeweiligen Aspekt des Modells einander gegenüber gestellt. Zu den Aspekten dieses Vergleichs gehören: 
-
+Um die Grundlagen des Graphmodells in diesem Abschnitt zu vermittelten, werden die folgenden Aspekte des Modells angesprochen:
 \begin{itemize}
-    \item Herkunft \& Verbreitung,
-    \item Struktur \& Schema,
-    \item Beziehungen und
-    \item Abfragesprachen.
+    \item Herkunft und Verbreitung,
+    \item Struktur und Schema.
 \end{itemize}
+Die Beschränkung auf diese Aspekte wurde dabei vorgenommen, da die Erläuterung weiterer Aspekt über den Rahmen dieser Arbeit hinausgehen würde. 
 
-Die Beschränkung auf diese Aspekte wurde dabei vorgenommen, da ein tiefgreifender Vergleich beider Modelle über den Rahmen der Arbeit hinausgehen würde. Dieser Abschnitt vermittelt hierbei die für das Verständnis der Arbeit benötigten Informationen bezüglich der Datenbankmodelle. Abschließend werden die wichtigsten Ergebnisse nochmals kurz zusammengefasst.  
+Anschließend findet eine kurze Gegenüberstellung des Graphmodells mit dem relationalen Modell statt. Im nächsten Unterabschnitt wird auf die Abfragesprachen von relationalen und Graphdatenbanksystemen eingegangen.
 
-\subsection{Herkunft \& Verbreitung}
-In diesem Unterabschnitt wird auf die Herkunft und aktuelle Verbreitung der beiden Modell eingegangen. Die Verbreitung wird dabei an der aktuellen Verbreitung von relationalen und Graph-Datenbanksystemen gemessen. 
+Zum Schluss werden die Informationen nochmals kurz zusammengefasst. 
 
-\subsubsection{Relationales Modell}
-Das relationale Modell hat seinen Ursprung in den 1970er Jahren \cite{rdbms_history}. Seine Grundlagen wurden dabei erstmals in \cite{codd_relational_model} von \citeauthor{codd_relational_model} umrissen. In den folgenden Jahren  wurde beim IBM Research unter dem Namen \textit{System R} ein erstes relationales Datenbanksystem entwickelt \cite{rdbms_history}. Hervorzuheben ist hierbei, dass die Paper die im Zuge der Forschung und Entwicklung am \textit{System R} veröffentlicht wurden, der Öffentlichkeit frei zur Verfügung gestellt wurden \cite{rdbms_history}. Wodurch auch andere Unternehmen auf diesem Wissen aufbauen konnten.
+\subsection{Herkunft und Verbreitung}
+Das Graphmodell als Datenbankmodell hat seinen Ursprung in der heutigen Form im Jahr 1999 \cite{gdbms}. Dabei wurde das Graphmodell mit der Motivation entwickelt, vermeintliche Nachteile oder Probleme des relational Modells auszuräumen \cite{gdbms}.
 
-Heute haben relationale Datenbanksysteme eine große Verbreitung gefunden, siehe \autoref{fig:dbms_marketshare}. So sollen nach \cite{db_engines_ranking_july} relationale Datenbanksysteme 72,7 \% des gesamten Datenbankmarktes ausmachen (Stand Juli 2021). Folglich kann dem relationalen Modell und relationalen Datenbanksystemen die marktbeherrschende Rolle zugeschrieben werden.
+Graphdatenbanksysteme und das Graphmodell sind heute als vergleichbar junge Technologien noch nicht so weit verbreitet wie beispielsweise, dass relationale Modell. Mit 1,7 \% Marktanteil ordnen sich Graphdatenbanksysteme noch weit hinter anderen Technologien ein, wie \textit{Document Stores}, \textit{Key-Values Stores} oder \textit{Wide column stores} \cite{db_engines_ranking_july} (\autoref{fig:dbms_marketshare}). Jedoch haben Graphdatenbanksysteme seit 2013 einen erheblichen Aufschwung in ihrer Popularität erfahren \cite{db_engines_ranking_july}. Der dort ermittelte Popularitäts-Score für die verschiedenen Datenbankkategorien zeigt dabei hierbei einen klaren Aufwärtstrend \cite{db_engines_ranking_july}. 
 
 \begin{figure}[ht]
     \centering
@@ -30,43 +27,13 @@ Heute haben relationale Datenbanksysteme eine große Verbreitung gefunden, siehe
     \textit{Bei den hier abgebildeten Werten handelt es sich um die aufgerundeten Werte aus} \cite{db_engines_ranking_july}\textit{.}
 \end{figure}
 
-\subsubsection{Graphmodell}
-Das Graphmodell als Datenbankmodell hat seinen Ursprung in der heutigen Form im Jahr 1999 \cite{gdbms}. Dabei wurde das Graphmodell mit der Motivation entwickelt, vermeintliche Nachteile oder Probleme des relational Modells auszuräumen \cite{gdbms}.
-
-Graphdatenbanksysteme und das Graphmodell sind heute als vergleichbar junge Technologien noch nicht so weit verbreitet wie beispielsweise, dass relationale Modell. Mit 1,7 \% Marktanteil ordnen sich Graph-Datenbanksysteme noch weit hinter anderen Technologien ein, wie \textit{Document Stores}, \textit{Key-Values Stores} oder \textit{Wide column stores} \cite{db_engines_ranking_july}, siehe \autoref{fig:dbms_marketshare}. Jedoch haben Graphdatenbanksysteme seit 2013 einen erheblichen Aufschwung in ihrer Popularität erfahren \cite{db_engines_ranking_july}. 
-
-\subsection{Struktur \& Schema}
+\subsection{Struktur und Schema}
 \label{datenmodelle:structure}
-Im Rahmen dieses Abschnitts wird auf die vorhandenen Strukturen der Datenbankmodelle eingegangen. Darüber hinaus wird auch das zugrundeliegende Schema genauer erläutert. 
+Die Grundlage des Graphmodells stellen sogenannte Knoten und Kanten dar (\textit{engl. Vertexes oder Vertices}) und Kanten (\textit{engl. Edges}) dar. Diese Knoten und Kanten bilden dabei zusammen einen sogenannten Graphen. So werden in einem Graphen einerseits Entitäten in Form eines Knotens repräsentiert \cite{gdbms}, wie beispielsweise \textit{Robin} oder \textit{ID3} in \autoref{fig:beispiel_graph}. Anderseits bildet es auch explizit Beziehungen zwischen Entitäten mittels Kanten ab \cite{gdbms}, wie \textit{besitzt}, \textit{besaß} oder \textit{kennt} in \autoref{fig:beispiel_graph}. Auf Beziehungen wird in \autoref{datenmodelle:beziehungen} weiter eingegangen. 
 
-\subsubsection{Relationales Modell}
-\label{datenmodelle:structure:relational}
-Im Zentrum des relationalen Modells steht das sogenannte Informationsprinzip \cite{rdbms_history}. Dies beschreibt, dass alle Informationen in einer Datenbank ausschließlich in exakt einer Weise repräsentiert werden dürfen \cite{codd_relational_model}. Informationen werden dabei in Form von Tupeln und Relationen organisiert \cite{codd_relational_model}. Für deren Organisation stellen relationale Datenbanksysteme Tabellen, Spalten und Zeilen als Strukturen bereit \cite{rdbms_history}. So werden auf Basis des Informationsprinzips, alle Informationen als Werte in einer Zelle einer bestimmten Tabelle repräsentiert \cite{rdbms_history}. Dadurch lassen sich beispielsweise alle Entitäten vom Entitätstyp Auto in einer relationalen Tabelle abbilden, siehe \autoref{tab:auto_tabelle}. 
+Knoten und Kanten können dabei in diesem Modell anhand von sogenannten Labels organisiert werden. So können Knoten oder Kanten, die eine ähnliche Rolle einnehmen, dieselben Labels zugewiesen werden. Die Verwendung von Labels wird hierbei in \autoref{fig:beispiel_graph} durch die unterschiedlichen Farben gekennzeichnet. So werden darin die als Auto gelabelten Knoten in hellbraun markiert, während die Personen rot eingefärbt werden. Sie sind in ihrer Funktion allerdings nicht mit Tabellen aus dem relationalen Modell vergleichbar. Dies liegt darin begründet, dass Entitäten mit einem bestimmten Label unterschiedliche Informationen aufweisen können. So werden bei \autoref{fig:beispiel_graph} alle Personen-Knoten mit ihrer \texttt{Name}-Property abgebildet, während alle Auto-Knoten ihre \texttt{Modell}-Property darin aufführen.
 
-\begin{table}[ht]
-    \centering
-    \begin{tabular}{c|c|c|c}
-    \hline
-    \rowcolor[HTML]{EFEFEF} 
-    \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textbf{Fahrzeugnummer}} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textbf{Marke}} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}\textbf{Model}} & \multicolumn{1}{l}{\cellcolor[HTML]{EFEFEF}\textbf{Baujahr}} \\ \hline
-    FZ-123456789 & Toyota & Starlet & 1997 \\
-    FZ-234567890 & Nissan & Leaf & 2018 \\
-    FZ-345678912 & VW & ID3 & 2020 \\
-    FZ-456789123 & Ford & Fiesta & 2001 \\
-    ... & ... & ... & ... \\ \hline
-    \end{tabular}
-    \caption{Beispiel relationale Tabelle}
-    \vspace{0.1em}
-    \textit{Hier wird eine einzelne relationale Tabelle gezeigt. Die gezeigten Daten repräsentieren dabei verschiedene Entitäten des Typs Auto.}
-    \label{tab:auto_tabelle}
-\end{table}
-
-Das relationale Modell setzt bei der Datenhaltung allerdings ein striktes Schema voraus \cite{rdbms_book}, weil Informationen nach dem Informationsprinzip ausschließlich auf eine Weise repräsentiert werden dürfen \cite{rdbms_history}. Es verlangt somit eine homogene Darstellung der Daten. Allerdings sind viele Daten in der realen Welt heterogen. Dies hat zu Folge, dass Daten einen sogenannten Normalisierungsprozess durchlaufen müssen \cite{rdbms_book}. Bei diesem Prozess werden die Daten in die sogenannte dritte Normalform (3NF) gebracht, wodurch jegliche Anomalien vermieden werden können \cite{rdbms_book}. So können letztendlich die Informationen einer Entität in einem homogenen Typschema abgebildet werden. 
-
-\subsubsection{Graphmodell}
-Die Grundlage des Graphmodells stellen sogenannte Vertexes und Edges dar, auf Deutsch Knoten und Kanten \cite{gdbms}. Diese Vertexes und Edges bilden dabei zusammen einen sogenannten Graphen. So werden in einem Graphen einerseits Entitäten in Form eines Knotens repräsentiert \cite{gdbms}, wie beispielsweise \textit{Robin} oder \textit{ID3} in \autoref{fig:beispiel_graph}. Anderseits bildet es auch explizit Beziehungen zwischen Entitäten mittels Kanten ab \cite{gdbms}, wie \textit{besitzt}, \textit{besaß} oder \textit{kennt} in \autoref{fig:beispiel_graph}. Auf Beziehungen wird in \autoref{datenmodelle:beziehungen} weiter eingegangen.
-
-Das Graphmodell setzt im Gegensatz zum relationalen Modell auf ein flexibles Datenschema \cite{gdbms}. Dadurch unterstützt es den Umgang mit heterogenen Daten \cite{gdbms}. So sind in \autoref{fig:beispiel_graph} beispielsweise Personen und Autos Teil desselben Graphen. Denn anstatt einer strikten Typisierung der Entitäten lassen sich die Daten im Graphmodell anhand von Labels organisieren. Labels markieren dabei Knoten oder Kanten, die dieselbe oder eine ähnliche Rolle einnehmen. Die Verwendung von Labels wird hierbei in \autoref{fig:beispiel_graph} durch die unterschiedlichen Farben gekennzeichnet. So werden darin die als Auto gelabelten Knoten in hellbraun markiert, während die Personen rot eingefärbt werden. Sie sind in ihrer Funktion allerdings nicht mit Tabellen aus dem relationalen Modell vergleichbar. Dies liegt darin begründet, dass Entitäten mit einem bestimmten Label unterschiedliche Informationen aufweisen können. So werden bei \autoref{fig:beispiel_graph} alle Personen-Knoten mit ihrer \texttt{Name}-Property abgebildet, während alle Auto-Knoten ihre \texttt{Modell}-Property darin aufführen.
+Das Graphmodell setzt, anders als das relationale Modell, auf ein flexibles Datenbankschema \cite{gdbms}. Durch dieses flexible Schema fällt es leicht heterogene Daten in dem Graphmodell abzubilden. 
 
 \begin{figure}[ht]
     \centering
@@ -79,41 +46,7 @@ Das Graphmodell setzt im Gegensatz zum relationalen Modell auf ein flexibles Dat
 
 \subsection{Beziehungen}
 \label{datenmodelle:beziehungen}
-In diesem Abschnitt wird darauf eingegangen, wie und in welcher Form die Modelle Beziehungen zwischen Entitäten abbilden. 
-
-\subsubsection{Relationales Modell}
-Das relationale Modell unterstützt Beziehungen insofern, dass es möglich ist Beziehungen zwischen Entitätstypen zu definieren. Diese Beziehungen lassen sich dabei in die drei folgenden Kategorien unterteilen: 
-\begin{itemize}
-    \item \textit{one-to-one}, 
-    \item \textit{one-to-many} (beziehungsweise \textit{many-to-one}) und 
-    \item \textit{many-to-many}.
-\end{itemize}
-
-Bei der Repräsentation aller Beziehungskategorien spielen  folgenden Begriffe eine Schlüsselrolle:
-\begin{itemize}
-    \item \textit{Primärschlüssel}\\
-    Beschreibt das Einzigartigkeitskriterium der Zeilen in einer Tabelle. Kann sich dabei auch aus mehreren Spalten zusammensetzen. 
-    \item \textit{Sekundärschlüssel}\\
-    Referenziert Zeilen einer anderen Tabelle B anhand des dortigen Primärschlüssels. Er gibt dabei an, welche Spalten von Tabelle A zur Referenz des Primärschlüssels genutzt werden. 
-    \item \textit{Joins}\\
-    Ermöglichen es solche Referenzen im Kontext einer Abfrage aufzulösen.
-\end{itemize}
-
-Bei \textit{one-to-one}- oder \textit{many-to-one}-Beziehungen genügt es, den oder die anderen Zeilen aus einer Tabelle mittels Sekundärschlüssel und Primärschlüssels zu referenzieren. Sollten die Informationen dann abgefragt werden, kann die Referenzierung durch einen Join aufgelöst werden.
-
-Das Abbilden von \textit{many-to-many}-Beziehungen erfordert hingegen die Einführung einer Auflösungstabelle, siehe die Kfz-Register Tabelle in \autoref{fig:relationales_modell_many-to-many}. 
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=\textwidth]{images/many-to-many.pdf}
-    \caption{Beispiel many-to-many-Beziehungen im relationalen Modell}
-    \label{fig:relationales_modell_many-to-many}
-\end{figure}
-
-\subsubsection{Graphmodell}
-Beim Graphmodell stellen Beziehungen eine grundlegende Struktur in einem Graphen dar \cite{gdbms}, siehe \autoref{datenmodelle:structure}. Dabei werden im Graphmodell Beziehungen direkt zwischen Entitäten aufgebaut \cite{gdbms}, wie in \autoref{fig:beispiel_graph} erkennbar. 
-
-Es unterstützt dadurch alle drei Beziehungskategorien, die aus dem relationalen Modell bekannt sind \textit{one-to-one}, \textit{many-to-one} und \textit{many-to-many}. Dabei findet im Graphmodell jedoch keinerlei Unterscheidung zwischen den drei Kategorien statt. Denn zwei Knoten können mehrere Edges haben, die sie miteinander verbinden. Dies ändert aber nichts an Art der Abbildung oder Referenzierung von Informationen. Alle Beziehungen werden also immer in Form einer Kante zwischen einem Start- und Zielknoten repräsentiert \cite{gdbms}. Zugleich muss darauf hingewiesen werden, dass es sich bei einem Start- und einer Kante, um denselben Knoten handeln kann. 
+Beim Graphmodell stellen Beziehungen eine grundlegende Struktur in einem Graphen dar \cite{gdbms}, siehe \autoref{datenmodelle:structure}. Dabei werden im Graphmodell Beziehungen direkt zwischen Entitäten aufgebaut \cite{gdbms}, wie in \autoref{fig:beispiel_graph} erkennbar. Alle Beziehungen werden also immer in Form einer Kante zwischen einem Start- und Zielknoten repräsentiert \cite{gdbms}. Zugleich muss darauf hingewiesen werden, dass es sich bei einem Start- und einer Kante, um denselben Knoten handeln kann. 
 
 \subsection{Abfragesprachen}
 Im Rahmen dieses Unterabschnitts wird auf Abfragesprachen eingegangen. Dabei werden die Abfragesprachen aufgeführt, die in Datenbanksystemen mit dem jeweiligen Datenmodell verbreitet sind.

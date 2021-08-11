@@ -1,6 +1,6 @@
 \section{Datenbankmodelle}
 \label{datenmodelle}
-In diesem Abschnitt werden die Grundlagen des Graph-basierten Datenbankmodells skizziert. Dieses Graphmodell ist im Rahmen dieser Arbeit von wesentlicher Bedeutung. Schließlich vereint die in \autoref{chap:db2graph} beschriebene Graph-Erweiterung, Elemente des relationalen und Graph-basierten Datenbankmodells. Grundkenntnisse über das relationalen Modell werden dabei hingegen im Rahmen dieser Arbeit vorausgesetzt. Sollten keine Grundkenntnisse über relationale Datenbanksysteme vorhanden sein, empfehlen sich \cite{rdbms_book} und \cite{codd_relational_model} als Einstieg.
+In diesem Abschnitt werden die Grundlagen des Graph-basierten Datenbankmodells skizziert. Dieses Graphmodell ist im Rahmen dieser Arbeit von wesentlicher Bedeutung. Schließlich vereint die in \autoref{chap:db2graph} beschriebene Graph-Erweiterung, Elemente des relationalen und Graph-basierten Datenbankmodells. Grundkenntnisse über das relationale Modell werden dabei hingegen im Rahmen dieser Arbeit vorausgesetzt. Sollten keine Grundkenntnisse über relationale Datenbanksysteme vorhanden sein, empfehlen sich \cite{rdbms_book} und \cite{codd_relational_model} als Einstieg.
 
 Um die Grundlagen des Graphmodells in diesem Abschnitt zu vermittelten, werden die folgenden Aspekte des Modells angesprochen:
 \begin{itemize}
@@ -16,9 +16,9 @@ Zum Schluss werden die Informationen nochmals kurz zusammengefasst.
 \subsection{Herkunft und Verbreitung}
 Das Graphmodell als Datenbankmodell hat seinen Ursprung in der heutigen Form im Jahr 1999 \cite{gdbms}. Laut 
 
-Dabei wurde das Graphmodell mit der Motivation entwickelt, vermeintliche Nachteile oder Probleme des relational Modells auszuräumen \cite{gdbms}.
+Dabei wurde das Graphmodell mit der Motivation entwickelt, vermeintliche Nachteile oder Probleme des relationalen Modells auszuräumen \cite{gdbms}.
 
-Graphdatenbanksysteme und das Graphmodell sind heute als vergleichbar junge Technologien noch nicht so weit verbreitet wie beispielsweise, dass relationale Modell. Mit 1,7 \% der Ranking-Punkte in \cite{db_engines_ranking_july} ordnen sich Graphdatenbanksysteme dabei noch weit hinter anderen Technologien ein, wie \textit{Document Stores}, \textit{Key-Values Stores} oder \textit{Wide column stores} \cite{db_engines_ranking_july} (\autoref{fig:dbms_marketshare}). Jedoch haben Graphdatenbanksysteme seit 2013 laut \cite{db_engines_ranking_july} erheblichen Aufschwung in ihrer Popularität erfahren. So weist diese Datenbanksystemkategorien dort für den Zeitraum 01.2013 bis 07.2021 eine Verhundertfachung des Popularitäts-Score auf \cite{db_engines_ranking_july}. 
+Graphdatenbanksysteme und das Graphmodell sind heute als vergleichbar junge Technologien noch nicht so weit verbreitet wie beispielsweise, dass relationale Modell. Mit 1,7 \% der Ranking-Punkte in \cite{db_engines_ranking_july} ordnen sich Graphdatenbanksysteme dabei noch weit hinter anderen Technologien ein, wie \textit{Document Stores}, \textit{Key-Values Stores} oder \textit{Wide column stores} \cite{db_engines_ranking_july} (\autoref{fig:dbms_marketshare}). Jedoch haben Graphdatenbanksysteme seit 2013 laut \cite{db_engines_ranking_july} erheblichen Aufschwung in ihrer Popularität erfahren. So hat sich der Popularitätsscore dieser Datenbanksystemkategorie im Zeitraum von 01.2013 bis 07.2021 verhundertfacht \cite{db_engines_ranking_july}. 
 
 \begin{figure}[ht]
     \centering
@@ -35,7 +35,7 @@ Die Grundlage des Graphmodells stellen sogenannte Knoten und Kanten dar (\textit
 
 Knoten und Kanten können dabei in diesem Modell anhand von sogenannten Labels organisiert werden. So können Knoten oder Kanten, die eine ähnliche Rolle einnehmen, dieselben Labels zugewiesen werden. Die Verwendung von Labels wird hierbei in \autoref{fig:beispiel_graph} durch die unterschiedlichen Farben gekennzeichnet. So werden darin die als Auto gelabelten Knoten in hellbraun markiert, während die Personen rot eingefärbt werden. 
 
-Das Graphmodell setzt, anders als das relationale Modell, auf ein flexibles Datenbankschema \cite{gdbms}. Durch dieses flexible Schema fällt es leicht heterogene Daten in dem Graphmodell abzubilden. 
+Das Graphmodell setzt anders als das relationale Modell auf ein flexibles Datenbankschema \cite{gdbms}. Durch dieses flexible Schema fällt es leicht, heterogene Daten in dem Graphmodell abzubilden. 
 
 \begin{figure}[ht]
     \centering
@@ -55,16 +55,16 @@ In der folgenden Aufzählung werden dabei die drei wichtigsten Unterschiede zwis
     \item Im relationalen Modell werden alle Informationen in Tabellen abgelegt \cite{rdbms_book}. Im Graphmodell werden die Daten in Knoten und Kanten gehalten \cite{gdbms}. 
     \item Beziehungen werden in einem Graphdatenbanksystem durch Kanten zwischen einem Start- und Zielknoten repräsentiert \cite{gdbms}. Beim relationalen Modell werden Beziehungen durch die Referenzierung eines Primärschlüssels einer anderen Tabelle vorgenommen \cite{rdbms_book}. 
 \end{itemize}
-Bei der genaueren Betrachtung der Unterschiede aus der vorausgegangenen Aufzählung fällt jedoch auf, dass diese auch als Ähnlichkeiten betrachtet werden können. So verfügen beide Modelle trotz ihrer unterschiedlichen Herangehensweise über ein Schema, besitzen Strukturen in denen Informationen gehalten werden und bieten die Möglichkeit Beziehungen abzubilden. Somit scheinen die beiden Modell zumindest bezüglich dieser Aspekte äquivalent zu sein. Schließlich verfügen beide Datenmodelle über Strukturen und Mechanismen, um Daten zu halten und Beziehung zu modellieren. 
+Bei der genaueren Betrachtung der Unterschiede aus der vorausgegangenen Aufzählung fällt jedoch auf, dass diese auch als Ähnlichkeiten betrachtet werden können. So verfügen beide Modelle trotz ihrer unterschiedlichen Herangehensweise über ein Schema, besitzen Strukturen, in denen Informationen gehalten werden und bieten die Möglichkeit, Beziehungen abzubilden. Somit scheinen die beiden Modell zumindest bezüglich dieser Aspekte äquivalent zu sein. Schließlich verfügen beide Datenmodelle über Strukturen und Mechanismen, um Daten zu halten und Beziehung zu modellieren. 
 
 Wenn nun allerdings beide Datenmodelle über die Mittel verfügen, Daten zu halten und Beziehungen abzubilden, stellt sich die Frage: \textit{Wann sollte welches Datenmodell herangezogen werden?}
 
-Die ausführliche Beantwortung dieser Frage würde hierbei einmal mehr den Rahmen der Arbeit sprengen. Allerdings können die beiden folgenden Szenarien kleine Einblicke dazu geben. 
+Die ausführliche Beantwortung dieser Frage würde hierbei einmal mehr den Rahmen der Arbeit sprengen. Allerdings können die beiden folgenden Szenarien und die abschließenden Anmerkungen kleine Einblicke dazu geben. 
 
 \subsubsection{Szenario 1.}
-In diesem Szenario wird auf Queries eingegangen bei denen Beziehungen beziehungsweise der Beziehungsgrad eine wichtige Rolle spielen. 
+In diesem Szenario wird auf Queries eingegangen, bei denen Beziehungen beziehungsweise der Beziehungsgrad eine wichtige Rolle spielen. 
 
-Hierfür wird eine Angestelltenhierarchie eines Unternehmens herangezogen. Bei den Daten, die die Modelle hierbei repräsentieren sollen, handelt es sich um einen Datensatz an Angestellten. Diese angestellten verfügen hierbei wie in \autoref{fig:angestellten_tabelle} und \autoref{fig:angestellten_graph} erkennbar über einen Namen und einen Vorgesetzten, dem sie unterstellt sind. 
+Hierfür wird eine Angestelltenhierarchie eines Unternehmens herangezogen. Bei den Daten, die die Modelle hierbei repräsentieren sollen, handelt es sich um einen Datensatz an Angestellten. Diese Angestellten verfügen hierbei wie in \autoref{fig:angestellten_tabelle} und \autoref{fig:angestellten_graph} erkennbar über einen Namen und einen Vorgesetzten, dem sie unterstellt sind. 
 
 Nun soll in diesem Szenario ermittelt werden, wer \textit{Alice} Vorgesetzter dritten Grades in diesem Unternehmen ist. Also wer der Vorgesetzte des Vorgesetzten des Vorgesetzten von \textit{Alice} ist. Bei dem Graphen in \autoref{fig:angestellten_tabelle} kann dies leicht nachvollzogen werden. Es muss lediglich dreimal den \texttt{hat\_vorgesetzten}-gelabelten Kanten gefolgt werden, bis der Zielknoten \textit{Dave} erreicht wird. 
 
@@ -75,7 +75,7 @@ Nun soll in diesem Szenario ermittelt werden, wer \textit{Alice} Vorgesetzter dr
     \label{fig:angestellten_graph}
 \end{figure}
 
-Bei \autoref{fig:angestellten_tabelle} ist der Aufwand jedoch etwas höher. Hier müssen für die Ermittlung des Namen des Vorgesetzten dritten Grades mindestens zwei Joins der Tabelle mit sich selbst durchgeführt werden. Dies stellt bei den kleinen Tabellen und dem niedrigen Grad im Anwendungsfall noch kein Problem dar. Bei einem größeren Datensatz oder einem höheren Grad würden beide Faktoren die Last und Performance des Datenbanksystems stark beeinträchtigen. Schließlich sind solche rekursiven Joins Ressourcen-intensiv, besonders wenn zwei große Tabellen gejoined werden \cite{gdbms}. 
+Bei \autoref{fig:angestellten_tabelle} ist der Aufwand jedoch etwas höher. Hier müssen zur Ermittlung des Namens des Vorgesetzten dritten Grades mindestens zwei Joins der Tabelle mit sich selbst durchgeführt werden. Dies stellt bei den kleinen Tabellen und dem niedrigen Grad im Anwendungsfall noch kein Problem dar. Bei einem größeren Datensatz oder einem höheren Grad würden beide Faktoren die Last und Performance des Datenbanksystems stark beeinträchtigen. Schließlich sind solche rekursiven Joins Ressourcen-intensiv, besonders wenn zwei große Tabellen gejoined werden \cite{gdbms}. 
 
 \begin{figure}[ht]
     \centering
@@ -85,7 +85,132 @@ Bei \autoref{fig:angestellten_tabelle} ist der Aufwand jedoch etwas höher. Hier
 \end{figure}
 
 \subsubsection{Szenario 2.}
+In diesem Szenario wird auf die Modellierung von heterogenen im Rahmen der beiden Datenmodelle eingegangen. Dafür wird in diesem Szenario versucht, ein Inventar an Küchengeräten und ihre dazugehörigen Küchen mit den jeweiligen Modellen abzubilden. 
 
+\autoref{tab:kaffeemaschinen} bis \autoref{tab:kuechen} stellen dabei die Tabellen dar, die für die Abbildung der verschiedenen Küchengeräte und jeweiligen Küchen im relationalen Modell erforderlich sind. Dabei fällt auf das für die Darstellung von zehn Küchengeräten acht verschiedene Tabellen benötigt werden. Schließlich handelt es sich bei den Küchengeräten um heterogene Daten, welche für die Erfassung aller Merkmale im strikten Schema des relationalen Modells, eine solche Handhabung erfordern. 
+
+Diese Vielzahl an Tabellen sorgt darüber hinaus dafür, dass sich beispielsweise die Abfrage aller Geräte, die zur Küche von \textit{Alice} gehören, sehr kompliziert gestaltet. Denn bei einem solchen Prozess müssen viele verschiedene Tabellen miteinander gejoined werden. Daher kann daraus geschlossen werden, dass sich das relationale Modell nicht für die Modellierung solcher heterogenen Daten eignen.
+
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|c|r|c|c}
+    \hline
+    \rowcolor[HTML]{EFEFEF} 
+    \textbf{Gerätenummer} & \textbf{Hersteller} & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Baujahr}} & \textbf{Vollautomat} & \textbf{Küche} \\ \hline
+    Jura-123 & Jura & 2012 & TRUE & 1 \\
+    Delonghi-456 & Delonghi & 2019 & FALSE & 2 \\ \hline
+    \end{tabular}
+    \caption{Kaffeemaschinen}
+    \label{tab:kaffeemaschinen}
+\end{table}
+
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|c|c|c|c}
+    \hline
+    \rowcolor[HTML]{EFEFEF} 
+    \textbf{Gerätenummer} & \textbf{Hersteller} & \textbf{Baujahr} & \textbf{Grillfunktion} & \textbf{Küche} \\ \hline
+    Bosch-1000 & Bosch & \multicolumn{1}{r|}{2013} & TRUE & 1 \\ \hline
+    \end{tabular}
+    \caption{Mikrowellen}
+    \label{tab:mikrowellen}
+\end{table}
+
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|c|c|c}
+    \hline
+    \rowcolor[HTML]{EFEFEF} 
+    \textbf{Gerätenummer} & \textbf{Hersteller} & \textbf{Baujahr} & \textbf{Küche} \\ \hline
+    Tefal-100 & Tefal & \multicolumn{1}{r|}{2020} & 2 \\ \hline
+    \end{tabular}
+    \caption{Fritteusen}
+    \label{tab:fritteuse}
+\end{table}
+
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|c|r|r|c}
+    \hline
+    \rowcolor[HTML]{EFEFEF} 
+    \textbf{Gerätenummer} & \textbf{Hersteller} & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Baujahr}} & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Max. Temp. in °C}} & \textbf{Küche} \\ \hline
+    Miele-365 & Miele & 2010 & 250 & 2 \\
+    AEG-200 & AEG & 2013 & 300 & 1 \\ \hline
+    \end{tabular}
+    \caption{Backöfen}
+    \label{tab:backoefen}
+\end{table}
+
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|c|r|c|c}
+    \hline
+    \rowcolor[HTML]{EFEFEF} 
+    \textbf{Gerätenummer} & \textbf{Hersteller} & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Baujahr}} & \textbf{Gefrierfach} & \textbf{Küche} \\ \hline
+    Liebherr-1 & Liebherr & 2015 & TRUE & 1 \\
+    Liebherr-2 & Liebherr & 2017 & FALSE & 2 \\ \hline
+    \end{tabular}
+    \caption{Kühlschränke}
+    \label{tab:kuehlschraenke}
+\end{table}
+
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|c|c|c|c}
+    \hline
+    \rowcolor[HTML]{EFEFEF} 
+    \textbf{Gerätenummer} & \textbf{Hersteller} & \textbf{Baujahr} & \textbf{Füllmenge in l} & \textbf{Küche} \\ \hline
+    Unold-1 & Unold & \multicolumn{1}{r|}{2017} & 1,5 & 2 \\ \hline
+    \end{tabular}
+    \caption{Brotbackautomaten}
+    \label{tab:brotbackautomaten}
+\end{table}
+
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|c|c|c|c|c}
+    \hline
+    \rowcolor[HTML]{EFEFEF} 
+    \textbf{\begin{tabular}[c]{@{}c@{}}Geräte-\\ nummer\end{tabular}} & \textbf{Hersteller} & \textbf{Baujahr} & \textbf{\begin{tabular}[c]{@{}c@{}}Füllmenge\\ in Liter\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Dampfgar-\\ funktion\end{tabular}} & \textbf{Küche} \\ \hline
+    Zojirushi-1 & Zojirushi & \multicolumn{1}{r|}{2008} & 1 & FALSE & 2 \\ \hline
+    \end{tabular}
+    \caption{Reiskocher}
+    \label{tab:reiskocher}
+\end{table}
+
+\begin{table}[!h]
+    \centering
+    \begin{tabular}{c|c}
+    \hline
+    \rowcolor[HTML]{EFEFEF} 
+    \textbf{Nummer} & \textbf{Besitzer} \\ \hline
+    1 & Alice \\
+    2 & Bob \\ \hline
+    \end{tabular}
+    \caption{Küchen}
+    \label{tab:kuechen}
+\end{table}
+
+Die in \autoref{fig:kuechen_graph} dargestellte Repräsentation der Küchen und Küchengeräte in einem Graphmodell zeigt hingegen, dass sich das Graphmodell für die Haltung heterogener Daten eignet. Schließlich muss lediglich den eingehenden \textit{gehört}-Kanten gefolgt werden, wenn ermittelt werden soll, welche Küchengeräte alle zur Küche von \textit{Alice} gehören.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/kuechen_graph.pdf}
+    \caption{Küchen Graph}
+    \label{fig:kuechen_graph}
+\end{figure}
+
+\subsubsection{Anmerkungen}
+Auch wenn die beiden zuvor aufgeführten Szenarien hier die Vorteile des Graphmodells betont haben, so können alle Szenarien auch mit dem relationalen Modell abgebildet werden. 
+
+Des Weiteren gilt es darauf hinzuweisen, dass die Softwareentwicklung für ein relationales Datenbanksystem in einigen Fällen, mit weniger Aufwand verbunden sein kann. Denn wenn auch in Szenario 2. mehrere Tabellen für die Abbildung der Küchengeräte benötigt werden, so ist bei der Abfrage eines Eintrags aus einer dieser Tabellen immer gesichert, das er über Werte für die als Spalten definierten Eigenschaften verfügt. Bei Datenbanken, die auf dem Graphmodell basieren, ist dies nicht automatisch gesichert. Hier können Knoten mit denselben Labels unterschiedliche Eigenschaften und Werte aufweisen. So muss die entwickelte Software mit solch heterogenen Daten umgehen können. Daraus ergibt sich jedoch häufig ein höherer Aufwand. 
+
+\subsection{Zusammenfassung}
+Bei dem Graphmodell und Graphdatenbanksystemen handelt es sich noch um eine recht junge Technologie, die bisher lediglich eine vergleichsweise kleine Verbreitung gefunden hat. Allerdings scheint sie in den letzten Jahren ein Aufschwung in Popularität erfahren zu haben. 
+
+Die Grundstrukturen des Graphmodells stellen hierbei Knoten und Kanten. Diese Strukturen werden hierbei dazu herangezogen Entitäten und ihre Beziehungen zueinander zu repräsentieren. Darüber hinaus setzt das Graphmodell auf ein flexibles Datenbankschema. In diesem werden die Knoten und Kanten anhand von Labels organisiert.
+
+Zwischen dem Graphmodell und relationalen Datenmodell gibt es einige größere Unterschiede, allerdings lassen sich mit beiden Modellen Entitäten und ihre Beziehungen repräsentieren. Dies bedeutet aber nicht, dass sich auch beide Modelle für die Abbildung derselben Daten eignen. So scheint es Szenarien und Anwendungsfälle zu geben, für die sich jeweils eines der Modelle besser eignet. 
 
 \section{Abfragesprachen}
 In diesem Abschnitt wird auf die für die Arbeit relevanten Abfragesprachen:
@@ -94,10 +219,10 @@ In diesem Abschnitt wird auf die für die Arbeit relevanten Abfragesprachen:
     \item Gremlin und
     \item Cypher eingegangen.
 \end{itemize}
-Ziel dieses Abschnittes ist es dabei eine kleine Übersicht über die Abfragesprachen zu geben, die im Kontext dieser Arbeit eine besondere Rolle spielen. Abschließend werden die wichtigsten Punkte des Abschnitts nochmal kurz zusammengefasst.
+Ziel dieses Abschnittes ist es dabei, eine kleine Übersicht über die Abfragesprachen zu geben, die im Kontext dieser Arbeit eine besondere Rolle spielen. Abschließend werden die wichtigsten Punkte des Abschnitts noch mal kurz zusammengefasst.
 
 \subsection{SQL}
-Bei SQL handelt es sich um eine Abfragesprache, die im Feld der relationalen Datenbanksysteme weit verbreitet ist \cite{sql_history}. Sie wurde von Donald D. Chamberlin und Raymond F. Boyce im Rahmen des \textit{System R} Projekts entwickelt \cite{sql_history}. SQL wurde dabei mit der Motivation entworfen eine einfache Abfragesprache für relationale Daten zu entwickeln \cite{sql_history}. 
+Bei SQL handelt es sich um eine Abfragesprache, die im Feld der relationalen Datenbanksysteme weit verbreitet ist \cite{sql_history}. Sie wurde von Donald D. Chamberlin und Raymond F. Boyce im Rahmen des \textit{System R} Projekts entwickelt \cite{sql_history}. SQL wurde dabei mit der Motivation entworfen, eine einfache Abfragesprache für relationale Daten zu entwickeln \cite{sql_history}. 
 
 SQL selbst stellt hierbei eine deklarative Abfragesprache dar \cite{sql_history}. Der grundlegende Aufbau der Sprache und die Syntax können dabei \autoref{src:sql_example} entnommen werden. So ist in \autoref{src:sql_example} klar erkennbar, dass sich alle Operationen auf Tabellen und Spalten beziehen. Die Sprache arbeitet also -- wie erwartet -- in den Strukturen des relationalen Modells.
 
@@ -128,14 +253,14 @@ Des Weiteren muss darauf hingewiesen werden, dass SQL als Sprache standardisiert
 
 \subsection{Gremlin}
 
-Bei Gremlin handelt es sich um eine Abfragesprache die für  Graphdatenbanksystemen \cite{tinkerpop_2020}. Die Sprache steht dabei in direkter Verbindung mit dem TinkerPop Projekt  \cite{tinkerpop_2020}. Zu den Datenbanksystemen, die die Abfragesprache nutzen, gehört neben Db2 Graph, das im Rahmen der Arbeit eine wichtige Rolle spielt, gehören auch:
+Bei Gremlin handelt es sich um eine Abfragesprache für  Graphdatenbanksysteme \cite{tinkerpop_2020}. Die Sprache steht dabei in direkter Verbindung mit dem TinkerPop-Projekt  \cite{tinkerpop_2020}. Zu den Datenbanksystemen, die die Abfragesprache nutzen, gehört neben Db2 Graph, das im Rahmen der Arbeit eine wichtige Rolle spielt, gehören auch:
 \begin{itemize}
     \item JanusGraph \cite{janusgraph_2020},
     \item Amazon Neptune \cite{neptune_2021} und 
     \item CosmosDB von Microsoft \cite{cosmosdb_2021}.
 \end{itemize}
 
-Für die Interaktion mit den Graphen bietet Gremlin dabei zwei verschiedene Abfragestile \cite{gremlin_paper}. So ist es einerseits möglich imperativ einen sogenannten Graph-Traversal durchzuführen, um mit dem Graph zu interagieren \cite{gremlin_paper}. Anderseits ist es allerdings auch möglich einen deklarativen Pattern-Matching-Stil zu wählen \cite{gremlin_paper}. Im Rahmen dieser Arbeit wurde bei Gremlin-Queries immer der imperative Graph-Traversal basierte Ansatz gewählt \cite{gremlin_paper}. Daher werden als Beispiel in \autoref{src:gremlin_example} lediglich imperative Queries aufgeführt. 
+Für die Interaktion mit den Graphen bietet Gremlin dabei zwei verschiedene Abfragestile \cite{gremlin_paper}. So ist es einerseits möglich, imperativ einen sogenannten Graph-Traversal durchzuführen, um mit dem Graph zu interagieren \cite{gremlin_paper}. Anderseits ist es allerdings auch möglich, einen deklarativen Pattern-Matching-Stil zu wählen \cite{gremlin_paper}. Im Rahmen dieser Arbeit wurde bei Gremlin-Queries immer der imperative Graph-Traversal basierte Ansatz gewählt \cite{gremlin_paper}. Daher werden als Beispiel in \autoref{src:gremlin_example} lediglich imperative Queries aufgeführt. 
 
 \begin{lstlisting}[caption={Beispiel Gremlin-Queries},language=JAVA,label=src:gremlin_example]
 /* Daten in den Graph einfuegen */
@@ -151,7 +276,7 @@ g.V().hasLabel("Person").has('Name', 'Max').drop();
 \end{lstlisting}
 
 \subsection{Cypher}
-Die Abfragesprache Cypher, wurde mit dem Ziel entworfen eine einfache, deklarative Art der Interaktion mit Graph-Daten zu ermöglichen \cite{gdbms}. Eine wichtige Sprachkomponente stellt dabei der Pattern-Matching-Stiel dar \cite{gdbms}. Von den beiden für die Arbeit relevanten Datenbanksystemen Neo4j und Db2 Graph unterstützt allerdings nur Neo4j die Sprache -- zumindest direkt. 
+Die Abfragesprache Cypher, wurde mit dem Ziel entworfen, eine einfache deklarative Art der Interaktion mit Graph-Daten zu ermöglichen \cite{gdbms}. Eine wichtige Sprachkomponente stellt dabei der Pattern-Matching-Stiel dar \cite{gdbms}. Von den beiden für die Arbeit relevanten Datenbanksystemen Neo4j und Db2 Graph unterstützt allerdings nur Neo4j die Sprache -- zumindest direkt. 
 
 In \autoref{src:cypher_example} werden hierbei einige Beispiel-Cypher-Queries aufgeführt. Diese sind mit den Gremlin-Queries in \autoref{src:gremlin_example} bezüglich ihrer Funktion vergleichbar. 
 
@@ -166,7 +291,7 @@ MATCH (:Person{name: "Robin"})-[:besitzt]->(n2) RETURN n2.modell;
 MATCH (n:Person{name: "Robin"}) DETACH DELETE n;
 \end{lstlisting}
 
-Neben Neo4j das im Kontext der Arbeit eine wichtige Rolle spielt unterstützen auch die Datenbanksysteme:
+Neben Neo4j das im Kontext der Arbeit eine wichtige Rolle spielt, unterstützen auch die folgenden Datenbanksysteme Cypher als Abfragesprache:
 \begin{itemize}
     \item RedisGraph \cite{redisgraph_2021},
     \item SAP HANA Graph \cite{opencypher_2021} und

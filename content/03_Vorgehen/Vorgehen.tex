@@ -1,6 +1,28 @@
 \chapter{Vorgehen}
 \label{vorgehen}
-Dieses Kapitel befasst sich mit der Methode und dem Aufbau, der Performance-Analyse von Db2 Graph. Darüber hinaus wird auch darauf eingegangen welche Maßnahmen ergriffen wurden, um die von Db2 Graph  erzeilte Performance einordnen zu können. 
+Dieses Kapitel befasst sich mit der Methode und dem Aufbau, der Performance-Analyse von Db2 Graph. Darüber hinaus wird auch darauf eingegangen welche Maßnahmen ergriffen wurden, um die von Db2 Graph erzeilte Performance einordnen zu können. 
+
+\section{Reproduktion}
+Wie in der Einleitung \todo{Link einfügen} beschrieben, war es das eigentliche Ziel dieser Arbeit, die in \cite{sigmod_tian} erzielten Werte für Db2 Graph zu reproduzieren und mit neuen Werten für Neo4j zu vergleichen. 
+
+Allerdings stellte sich nach einigen Recherchen hierbei heraus, dass sich die Werte aus \cite{sigmod_tian} im Rahmen dieser Arbeit nicht reproduzieren lassen. 
+
+Eine Reproduktion der Ergebnisse der Performance-Analyse aus \cite{sigmod_tian} setzt hierbei die folgenden sieben Punkte voraus:
+\begin{itemize}
+    \item dieselbe Version von Db2 Graph,
+    \item dieselbe Db2- und Db2-Graph-Konfiguration,
+    \item derselbe Benchmark,
+    \item derselbe Db2-Graph-Benchmark-Adapter,
+    \item dieselbe Benchmark-Konfiguration,
+    \item derselbe Datensatz und 
+    \item dieselbe Umgebung (OS, Ressourcen, etc.) wie in \cite{sigmod_tian}.
+\end{itemize}
+Von diesen sieben Voraussetzungen können im Rahmen der Arbeit jedoch lediglich zwei teilweise erfüllt werden. Bei diesen zwei Voraussetzungen, die sich teilweise erfüllen lassen, handelt es sich um den Benchmark und die Ressourcen. Die Ressourcen werden hierbei in \cite{sigmod_tian} recht beschrieben. Darüber hinaus wird auch in \cite{sigmod_tian} aufgeführt, dass Linkbench als Benchmark für die Messungen herangezogen wird. Allerdings wird keine Auskunft darüber gegeben, welche Version beziehungsweise Implementierung von Linkbench für die Messungen genutzt wird.
+
+Bezüglich der anderen Punkte werden im Rahmen von \cite{sigmod_tian} keinerlei Informationen bereitgestellt. So ist beispielsweise nicht bekannt, mit welcher Version von Db2 Graph die Messungen durchgeführt wurden. Es ist allerdings wahrscheinlich, dass es sich weder um die Version Beta 3 noch V11.5.6.0 handelt, die über den Zeitraum der Arbeit verfügbar waren. Schließlich wurden beide Versionen mehrere Monate nach der Arbeit veröffentlicht. 
+
+
+
 
 \section{Bezug zu anderen Arbeiten}
 Bevor genauer auf die Methode der Performance-Analyse eingegangen werden kann, muss darauf hingewiesen werden, dass sich einige Elemente der Analyse, an dem Vorgehen einer anderen Arbeit orientieren. 

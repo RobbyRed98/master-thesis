@@ -85,7 +85,7 @@ Bei \autoref{fig:angestellten_tabelle} ist der Aufwand jedoch etwas höher. Hier
 \end{figure}
 
 \subsubsection{Szenario 2.}
-In diesem Szenario wird auf die Modellierung von heterogenen im Rahmen der beiden Datenmodelle eingegangen. Dafür wird in diesem Szenario versucht, ein Inventar an Küchengeräten und ihre dazugehörigen Küchen mit den jeweiligen Modellen abzubilden. 
+In diesem Szenario wird auf die Modellierung von heterogenen Daten im Rahmen der beiden Datenmodelle eingegangen. Dafür wird in diesem Szenario versucht, ein Inventar an Küchengeräten und ihre dazugehörigen Küchen mit den jeweiligen Modellen abzubilden. 
 
 \autoref{tab:kaffeemaschinen} bis \autoref{tab:kuechen} stellen dabei die Tabellen dar, die für die Abbildung der verschiedenen Küchengeräte und jeweiligen Küchen im relationalen Modell erforderlich sind. Dabei fällt auf das für die Darstellung von zehn Küchengeräten acht verschiedene Tabellen benötigt werden. Schließlich handelt es sich bei den Küchengeräten um heterogene Daten, welche für die Erfassung aller Merkmale im strikten Schema des relationalen Modells, eine solche Handhabung erfordern. 
 
@@ -191,7 +191,7 @@ Diese Vielzahl an Tabellen sorgt darüber hinaus dafür, dass sich beispielsweis
     \label{tab:kuechen}
 \end{table}
 
-Die in \autoref{fig:kuechen_graph} dargestellte Repräsentation der Küchen und Küchengeräte in einem Graphmodell zeigt hingegen, dass sich das Graphmodell für die Haltung heterogener Daten eignet. Schließlich muss lediglich den eingehenden \textit{gehört}-Kanten gefolgt werden, wenn ermittelt werden soll, welche Küchengeräte alle zur Küche von \textit{Alice} gehören.
+Die in \autoref{fig:kuechen_graph} dargestellte Repräsentation der Küchen und Küchengeräte in einem Graphmodell zeigt hingegen, dass sich das Graphmodell für die Haltung heterogener Daten eignet. Schließlich muss hierbei lediglich den eingehenden \textit{gehört}-Kanten gefolgt werden, wenn ermittelt werden soll, welche Küchengeräte alle zur Küche von \textit{Alice} gehören.
 
 \begin{figure}[ht]
     \centering
@@ -201,14 +201,14 @@ Die in \autoref{fig:kuechen_graph} dargestellte Repräsentation der Küchen und 
 \end{figure}
 
 \subsubsection{Anmerkungen}
-Auch wenn die beiden zuvor aufgeführten Szenarien hier die Vorteile des Graphmodells betont haben, so können alle Szenarien auch mit dem relationalen Modell abgebildet werden. 
+Auch wenn die beiden zuvor aufgeführten Szenarien hier die Vorteile des Graphmodells betonten, so können alle Szenarien auch mit dem relationalen Modell abgebildet werden. 
 
-Des Weiteren gilt es darauf hinzuweisen, dass die Softwareentwicklung für ein relationales Datenbanksystem in einigen Fällen, mit weniger Aufwand verbunden sein kann. Denn wenn auch in Szenario 2. mehrere Tabellen für die Abbildung der Küchengeräte benötigt werden, so ist bei der Abfrage eines Eintrags aus einer dieser Tabellen immer gesichert, das er über Werte für die als Spalten definierten Eigenschaften verfügt. Bei Datenbanken, die auf dem Graphmodell basieren, ist dies nicht automatisch gesichert. Hier können Knoten mit denselben Labels unterschiedliche Eigenschaften und Werte aufweisen. So muss die entwickelte Software mit solch heterogenen Daten umgehen können. Daraus ergibt sich jedoch häufig ein höherer Aufwand. 
+Des Weiteren gilt es darauf hinzuweisen, dass die Softwareentwicklung für ein relationales Datenbanksystem in einigen Fällen mit weniger Entwicklungsaufwand als beim Graphmodell verbunden sein kann. Denn wenn auch in Szenario 2. mehrere Tabellen für die Abbildung der Küchengeräte benötigt werden, so ist bei der Abfrage eines Eintrags aus einer dieser Tabellen immer gesichert, dass er über Werte für die als Spalten definierten Eigenschaften verfügt. Bei Datenbanken, die auf dem Graphmodell basieren, ist dies nicht automatisch gesichert. Hier können Knoten mit denselben Labels unterschiedliche Eigenschaften und Werte aufweisen. So muss die entwickelte Software mit solchen heterogenen Daten umgehen können. Daraus ergibt sich jedoch meist ein höherer Entwicklungsaufwand. 
 
 \subsection{Zusammenfassung}
 Bei dem Graphmodell und Graphdatenbanksystemen handelt es sich noch um eine recht junge Technologie, die bisher lediglich eine vergleichsweise kleine Verbreitung gefunden hat. Allerdings scheint sie in den letzten Jahren ein Aufschwung in Popularität erfahren zu haben. 
 
-Die Grundstrukturen des Graphmodells stellen hierbei Knoten und Kanten. Diese Strukturen werden hierbei dazu herangezogen Entitäten und ihre Beziehungen zueinander zu repräsentieren. Darüber hinaus setzt das Graphmodell auf ein flexibles Datenbankschema. In diesem werden die Knoten und Kanten anhand von Labels organisiert.
+Die Grundstrukturen des Graphmodells stellen hierbei Knoten und Kanten dar. Diese Strukturen werden hierbei dazu herangezogen Entitäten und ihre Beziehungen zueinander zu repräsentieren. Darüber hinaus setzt das Graphmodell auf ein flexibles Datenbankschema. In diesem werden die Knoten und Kanten anhand von Labels organisiert.
 
 Zwischen dem Graphmodell und relationalen Datenmodell gibt es einige größere Unterschiede, allerdings lassen sich mit beiden Modellen Entitäten und ihre Beziehungen repräsentieren. Dies bedeutet aber nicht, dass sich auch beide Modelle für die Abbildung derselben Daten eignen. So scheint es Szenarien und Anwendungsfälle zu geben, für die sich jeweils eines der Modelle besser eignet. 
 

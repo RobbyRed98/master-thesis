@@ -1,6 +1,6 @@
 \section{Datenbankmodelle}
 \label{datenmodelle}
-In diesem Abschnitt werden die Grundlagen des Graph-basierten Datenbankmodells skizziert. Dieses Graphmodell ist im Rahmen dieser Arbeit von wesentlicher Bedeutung. Schließlich vereint die in \autoref{chap:db2graph} beschriebene Graph-Erweiterung, Elemente des relationalen und Graph-basierten Datenbankmodells. Grundkenntnisse über das relationale Modell werden dabei hingegen im Rahmen dieser Arbeit vorausgesetzt. Sollten keine Grundkenntnisse über relationale Datenbanksysteme vorhanden sein, empfehlen sich \cite{rdbms_book} und \cite{codd_relational_model} als Einstieg.
+In diesem Abschnitt werden die Grundlagen des Graph-basierten Datenbankmodells skizziert. Dieses Graphmodell ist im Rahmen dieser Arbeit von wesentlicher Bedeutung. Schließlich vereint die in \autoref{chap:db2graph} beschriebene Graph-Erweiterung, Elemente des relationalen und Graph-basierten Datenbankmodells. Grundkenntnisse über das relationale Modell werden im Rahmen dieser Arbeit vorausgesetzt. Sollten keine Grundkenntnisse über relationale Datenbanksysteme vorhanden sein, empfehlen sich \cite{rdbms_book} und \cite{codd_relational_model} als Einstieg.
 
 Um die Grundlagen des Graphmodells in diesem Abschnitt zu vermittelten, werden die folgenden Aspekte des Modells angesprochen:
 \begin{itemize}
@@ -14,11 +14,9 @@ Anschließend findet eine kurze Gegenüberstellung des Graphmodells mit dem rela
 Zum Schluss werden die Informationen nochmals kurz zusammengefasst. 
 
 \subsection{Herkunft und Verbreitung}
-Das Graphmodell als Datenbankmodell hat seinen Ursprung in der heutigen Form im Jahr 1999 \cite{gdbms}. Laut 
+Das Graphmodell als Datenbankmodell hat seinen Ursprung in der heutigen Form im Jahr 1999 \cite{gdbms}. Laut \cite{gdbms} wurde das Graphmodell dabei mit der Motivation entwickelt, Nachteile und Probleme des relationalen Modells auszuräumen. 
 
-Dabei wurde das Graphmodell mit der Motivation entwickelt, vermeintliche Nachteile oder Probleme des relationalen Modells auszuräumen \cite{gdbms}.
-
-Graphdatenbanksysteme und das Graphmodell sind heute als vergleichbar junge Technologien noch nicht so weit verbreitet wie beispielsweise, dass relationale Modell. Mit 1,7 \% der Ranking-Punkte in \cite{db_engines_ranking_july} ordnen sich Graphdatenbanksysteme dabei noch weit hinter anderen Technologien ein, wie \textit{Document Stores}, \textit{Key-Values Stores} oder \textit{Wide column stores} \cite{db_engines_ranking_july} (\autoref{fig:dbms_marketshare}). Jedoch haben Graphdatenbanksysteme seit 2013 laut \cite{db_engines_ranking_july} erheblichen Aufschwung in ihrer Popularität erfahren. So hat sich der Popularitätsscore dieser Datenbanksystemkategorie im Zeitraum von 01.2013 bis 07.2021 verhundertfacht \cite{db_engines_ranking_july}. 
+Graphdatenbanksysteme und das Graphmodell sind heute als vergleichbar junge Technologien noch nicht so weit verbreitet wie beispielsweise, dass relationale Modell. Mit 1,7 \% der Ranking-Punkte in \cite{db_engines_ranking_july} ordnen sich Graphdatenbanksysteme dabei noch weit hinter anderen Technologien ein, wie \textit{Document Stores}, \textit{Key-Values Stores} oder \textit{Wide column stores} \cite{db_engines_ranking_july} (\autoref{fig:dbms_marketshare}). Jedoch haben Graphdatenbanksysteme seit 2013 laut \cite{db_engines_ranking_july} einen erheblichen Aufschwung in ihrer Popularität erfahren. So hat sich der Popularitätsscore dieser Datenbanksystemkategorie im Zeitraum von 01.2013 bis 07.2021 verhundertfacht \cite{db_engines_ranking_july}. 
 
 \begin{figure}[ht]
     \centering
@@ -31,9 +29,9 @@ Graphdatenbanksysteme und das Graphmodell sind heute als vergleichbar junge Tech
 
 \subsection{Struktur und Schema}
 \label{datenmodelle:structure}
-Die Grundlage des Graphmodells stellen sogenannte Knoten und Kanten dar (\textit{engl. Vertexes oder Vertices}) und Kanten (\textit{engl. Edges}) dar. Bei einem Graph handelt es sich hierbei um eine Menge an Knoten und Kanten \cite{gdbms}. In einem solchen Graphen werden dabei Entitäten als Knoten repräsentiert, wie zum Beispiel \textit{Robin} oder \textit{ID3} in \autoref{fig:beispiel_graph}. Die Kanten repräsentieren hingegen, in welcher Beziehung diese Entitäten zueinander stehen. Dies lässt sich gut an den Kanten \textit{besitzt}, \textit{besaß} oder \textit{kennt} in \autoref{fig:beispiel_graph} nachvollziehen. Wie in \autoref{fig:beispiel_graph} auch erkennbar ist, verfügen die Kanten dabei immer über eine Richtung. Also einen Start- und einen Zielknoten den sie verbinden. 
+Die Grundlage des Graphmodells stellen sogenannte Knoten (\textit{engl. Vertices oder Vertexes}) und Kanten (\textit{engl. Edges}) dar. Bei einem Graph handelt es sich hierbei um eine Menge an Knoten und Kanten \cite{gdbms}. In einem solchen Graphen werden dabei Entitäten als Knoten repräsentiert, wie zum Beispiel \textit{Robin} oder \textit{ID3} (\autoref{fig:beispiel_graph}). Die Kanten repräsentieren hingegen, in welcher Beziehung diese Entitäten zueinander stehen. Dies lässt sich exemplarisch an den Kanten \textit{besitzt}, \textit{besaß} oder \textit{kennt} nachvollziehen (\autoref{fig:beispiel_graph}). Wie in \autoref{fig:beispiel_graph} auch erkennbar ist, verfügen die Kanten dabei immer über eine Richtung. Also einen Start- und einen Zielknoten den sie verbinden. 
 
-Knoten und Kanten können dabei in diesem Modell anhand von sogenannten Labels organisiert werden. So können Knoten oder Kanten, die eine ähnliche Rolle einnehmen, dieselben Labels zugewiesen werden. Die Verwendung von Labels wird hierbei in \autoref{fig:beispiel_graph} durch die unterschiedlichen Farben gekennzeichnet. So werden darin die als Auto gelabelten Knoten in hellbraun markiert, während die Personen rot eingefärbt werden. 
+Knoten und Kanten können dabei in diesem Modell anhand von sogenannten Labels organisiert werden. So können Knoten oder Kanten, die eine ähnliche Rolle einnehmen, dieselben Labels zugewiesen werden. Die Verwendung von Labels wird hierbei in \autoref{fig:beispiel_graph} durch die unterschiedlichen Farben gekennzeichnet. So werden darin die als Auto gelabelten Knoten hellbraun markiert, während die Personen rot eingefärbt werden. 
 
 Das Graphmodell setzt anders als das relationale Modell auf ein flexibles Datenbankschema \cite{gdbms}. Durch dieses flexible Schema fällt es leicht, heterogene Daten in dem Graphmodell abzubilden. 
 
@@ -64,7 +62,7 @@ Die ausführliche Beantwortung dieser Frage würde hierbei einmal mehr den Rahme
 \subsubsection{Szenario 1.}
 In diesem Szenario wird auf Queries eingegangen, bei denen Beziehungen beziehungsweise der Beziehungsgrad eine wichtige Rolle spielen. 
 
-Hierfür wird eine Angestelltenhierarchie eines Unternehmens herangezogen. Bei den Daten, die die Modelle hierbei repräsentieren sollen, handelt es sich um einen Datensatz an Angestellten. Diese Angestellten verfügen hierbei wie in \autoref{fig:angestellten_tabelle} und \autoref{fig:angestellten_graph} erkennbar über einen Namen und einen Vorgesetzten, dem sie unterstellt sind. 
+Hierfür wird eine Angestelltenhierarchie eines Unternehmens herangezogen. Bei den Daten, die die Modelle hierbei repräsentieren sollen, handelt es sich um einen Datensatz an Angestellten. Diese Angestellten verfügen dabei wie in \autoref{fig:angestellten_tabelle} und \autoref{fig:angestellten_graph} erkennbar über einen Namen und einen Vorgesetzten, dem sie unterstellt sind. 
 
 Nun soll in diesem Szenario ermittelt werden, wer \textit{Alice} Vorgesetzter dritten Grades in diesem Unternehmen ist. Also wer der Vorgesetzte des Vorgesetzten des Vorgesetzten von \textit{Alice} ist. Bei dem Graphen in \autoref{fig:angestellten_tabelle} kann dies leicht nachvollzogen werden. Es muss lediglich dreimal den \texttt{hat\_vorgesetzten}-gelabelten Kanten gefolgt werden, bis der Zielknoten \textit{Dave} erreicht wird. 
 
@@ -208,7 +206,7 @@ Des Weiteren gilt es darauf hinzuweisen, dass die Softwareentwicklung für ein r
 \subsection{Zusammenfassung}
 Bei dem Graphmodell und Graphdatenbanksystemen handelt es sich noch um eine recht junge Technologie, die bisher lediglich eine vergleichsweise kleine Verbreitung gefunden hat. Allerdings scheint sie in den letzten Jahren ein Aufschwung in Popularität erfahren zu haben. 
 
-Die Grundstrukturen des Graphmodells stellen hierbei Knoten und Kanten dar. Diese Strukturen werden hierbei dazu herangezogen Entitäten und ihre Beziehungen zueinander zu repräsentieren. Darüber hinaus setzt das Graphmodell auf ein flexibles Datenbankschema. In diesem werden die Knoten und Kanten anhand von Labels organisiert.
+Die Grundstrukturen des Graphmodells stellen hierbei Knoten und Kanten dar. Diese Strukturen werden dazu herangezogen Entitäten und ihre Beziehungen zueinander zu repräsentieren. Darüber hinaus setzt das Graphmodell auf ein flexibles Datenbankschema. In diesem werden die Knoten und Kanten anhand von Labels organisiert.
 
 Zwischen dem Graphmodell und relationalen Datenmodell gibt es einige größere Unterschiede, allerdings lassen sich mit beiden Modellen Entitäten und ihre Beziehungen repräsentieren. Dies bedeutet aber nicht, dass sich auch beide Modelle für die Abbildung derselben Daten eignen. So scheint es Szenarien und Anwendungsfälle zu geben, für die sich jeweils eines der Modelle besser eignet. 
 
@@ -253,7 +251,7 @@ Des Weiteren muss darauf hingewiesen werden, dass SQL als Sprache standardisiert
 
 \subsection{Gremlin}
 
-Bei Gremlin handelt es sich um eine Abfragesprache für  Graphdatenbanksysteme \cite{tinkerpop_2020}. Die Sprache steht dabei in direkter Verbindung mit dem TinkerPop-Projekt  \cite{tinkerpop_2020}. Zu den Datenbanksystemen, die die Abfragesprache nutzen, gehört neben Db2 Graph, das im Rahmen der Arbeit eine wichtige Rolle spielt, gehören auch:
+Bei Gremlin handelt es sich um eine Abfragesprache für  Graphdatenbanksysteme \cite{tinkerpop_2020}. Die Sprache steht dabei in direkter Verbindung mit dem TinkerPop-Projekt  \cite{tinkerpop_2020}. Zu den Datenbanksystemen, die die Abfragesprache nutzen, gehören neben Db2 Graph, das im Rahmen der Arbeit eine wichtige Rolle spielt, auch:
 \begin{itemize}
     \item JanusGraph \cite{janusgraph_2020},
     \item Amazon Neptune \cite{neptune_2021} und 
@@ -276,7 +274,7 @@ g.V().hasLabel("Person").has('Name', 'Max').drop();
 \end{lstlisting}
 
 \subsection{Cypher}
-Die Abfragesprache Cypher, wurde mit dem Ziel entworfen, eine einfache deklarative Art der Interaktion mit Graph-Daten zu ermöglichen \cite{gdbms}. Eine wichtige Sprachkomponente stellt dabei der Pattern-Matching-Stiel dar \cite{gdbms}. Von den beiden für die Arbeit relevanten Datenbanksystemen Neo4j und Db2 Graph unterstützt allerdings nur Neo4j die Sprache -- zumindest direkt. 
+Die Abfragesprache Cypher, wurde mit dem Ziel entworfen, eine einfache deklarative Art der Interaktion mit Graph-Daten zu ermöglichen \cite{gdbms}. Eine wichtige Sprachkomponente stellt dabei der Pattern-Matching-Stil dar \cite{gdbms}. Von den beiden für die Arbeit relevanten Datenbanksystemen Neo4j und Db2 Graph unterstützt allerdings nur Neo4j die Sprache -- zumindest direkt. 
 
 In \autoref{src:cypher_example} werden hierbei einige Beispiel-Cypher-Queries aufgeführt. Diese sind mit den Gremlin-Queries in \autoref{src:gremlin_example} bezüglich ihrer Funktion vergleichbar. 
 
@@ -303,4 +301,4 @@ Bei den im Rahmen der Arbeit relevanten Abfragesprachen handelt es sich um SQL, 
 
 SQL stellt dabei eine Abfragesprache für relationale Datenbanksysteme dar, während Gremlin und Cypher für den Einsatz bei Graphdatenbanksystemen konzipiert wurden. 
 
-Bei SQL und Cypher handelt es sich um deklarative Abfragesprachen. Gremlin hingegen neben einem imperativen Abfragestil auch eine deklarative Art Queries zu formulieren. 
+Bei SQL und Cypher handelt es sich um deklarative Abfragesprachen. Gremlin hingegen unterstützt neben einem deklarativen auch einen imperativen Abfragestil. 

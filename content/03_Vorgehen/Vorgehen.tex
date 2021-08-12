@@ -43,6 +43,46 @@ Sollten jedoch keine der für die Messungen benötigten Adapter-Implementierung 
 
 Abschließend gilt es darauf hinzuweisen, dass auch wenn beim neuen Ziel einige Elemente aus \cite{sigmod_tian} übernommen werden, die im Rahmen dieser Arbeit und die in \cite{sigmod_tian} erzielten Ergebnisse nicht vergleichbar sind.
 
+\section{Begriffe oder Messungen}
+\todo{Beschreiben, was Messung, was Messreihe, was Ergebnis evtl. Metrik inkludieren.}
+
+\section{Linkbench}
+Auch wenn sich das Ziel der Arbeit geändert hat, so wird Linkbench weiterhin als Benchmark zur Performance-Analyse herangezogen. Daher wird eine Implementierung für Linkbench benötigt sowie Adapter für Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j. Die Wahl der Linkbench und Adapter Implementierung sowie ihre Umsetzungen werden allerdings in \autoref{implementierung} beschrieben. 
+
+In diesem Abschnitt als Teil des Kapitels \nameref{vorgehen}wird auf die Begriffe: 
+\begin{itemize}
+    \item Linkbench-Threads,
+    \item Request-Anzahl und
+    \item Request-Menge eingegangen.
+\end{itemize}
+Hierbei handelt es sich um wichtige Konfigurationen von Linkbench. Diese spielen während der \textit{Request}-Phase des Benchmarks eine Rolle. Darüber hinaus stellen sie auch relevante Parameter für die im Rahmen der Performance-Analyse durchgeführten Messungen dar. 
+
+\subsection{Linkbench-Threads}
+\label{analyse:linkbench:threads}
+Hierbei handelt es sich um eine Einstellung des Benchmarks, die in der Adapter-Konfiguration von Linkbench erfolgt. Innerhalb der Konfiguration wird sie auch durch den Key \texttt{requesters} gesetzt. 
+
+Im Rahmen der Arbeit wird die Konfiguration allerdings als Linkbench-Threads bezeichnet, da durch diese spezifiziert wird, wie viele Threads während des Benchmarks gleichzeitig Requests beziehungsweise Graph-Queries an ein Datenbanksystem senden.
+
+Es handelt sich hierbei somit um eine Einstellung, die einen erheblichen Einfluss auf die bei der Performance-Analyse erzielten Ergebnisse hat. Schließlich hat die Anzahl der Threads, die gleichzeitig während den Messungen Anfragen an ein Datenbanksystem stellen, einen großen Einfluss darauf, welche Last während des Benchmarks auf ein Datenbanksystem ausgeübt wird. 
+
+Bei den Linkbench-Threads handelt es sich darüber hinaus um einen Parameter, der über alle Messreihen der Arbeit hinweg konstant den Wert 50 aufweist. So kann sichergestellt werden, dass während den Messungen alle Datenbanksysteme zumindest in dieser Hinsicht derselben Last ausgesetzt sind. 
+
+\subsection{Request-Anzahl}
+\label{Request-Anzahl}
+Bei der Request-Anzahl handelt es sich ebenfalls wie bei den Linkbench-Threads um eine Einstellung, die in der Adapter-Konfiguration von Linkbench vorgenommen wird. Um sie festzulegen, muss ein Wert für \texttt{requests} angegeben werden. 
+
+Zum besseren Verständnis wird die Konfiguration allerdings im weiteren Verlauf als Request-Anzahl bezeichnet. Die Request-Anzahl regelt dabei, wie viele Graph-Queries von jeweils einem der Linkbench-Threads an das zu benchmarkende Datenbanksystem gesendet werden, bevor eine \textit{Request}-Phase endet und eine Statistik aufgestellt wird. 
+
+Der Faktor wirkt sich dadurch signifikant darauf aus, wie lange eine \textit{Request-Phase} andauert, bevor Linkbench die Ergebnisse für das untersuchte Datenbanksystem in Form einer Statistik bereitstellt. Zugleich bietet er einen Anhaltspunkt für die Qualität der durchgeführten Messungen. Denn um so mehr Graph-Queries Teil des Benchmarks sind, desto ein detailliertes Bild erhält Linkbench von der Performance der Datenbanksysteme. Darüber hinaus Fall bei einer höheren Anzahl an Messungen, auch Anomalien weniger ins Gewicht, welche die Messergebnisse gegebenenfalls verzerren könnten.
+
+Im Rahmen der in der Arbeit durchgeführten Messreihen musste hierbei ein Kompromiss zwischen der Qualität und der Dauer einer \textit{Request}-Phase von Linkbench gefunden werden. 
+
+So wird bei allen Messungen, die auf Basis eines konstant-verteilten Datensatzes durchgeführt werden, die Request-Anzahl von 500.000 eingesetzt. Diese Anzahl wurde hierbei gewählt, da sie ein detailliertes Bild von der Performance eines Datenbanksystems zeichnet und sich die \textit{Request}-Phase für alle drei Datenbanksysteme unterhalb eines Zeitraums von drei Stunden befindet -- sollte es zu keinen Anomalien kommen. 
+
+Für die Messungen, die auf Basis eines real-verteilten Datensatzes erfolgen, wird lediglich eine Request-Anzahl von 50.000 herangezogen. Dies hängt damit zusammen, dass hierbei deutlich umfangreichere Ergebnismengen möglich sind. So kann es je nach Variation der \texttt{getLinkList}-Operation, zu einer Ergebnismenge von bis 100.000 Links (Kanten) kommen. Eine solch große Ergebnismenge hat hierbei einen signifikanten Einfluss auf die Performance der Datenbanksysteme während des Benchmarks. Dies kann zur Folge haben, dass die Performance eines Datenbanksystems nachweisbar einbricht, besonders im Vergleich zu Messungen auf Basis eines konstant zehn verteilten Datensatzes. Um weiterhin eine Performance von unter drei Stunden für eine Request-Phase gewährleisten zu können, wurde die Request-Anzahl daher reduziert. Auch wenn dadurch nicht dieselbe Qualität der Ergebnisse erreicht werden kann, wie bei den Messungen mit einem konstant verteilten Datensatz.
+
+Die unterschiedliche Request-Anzahl bei verschiedenen stellt hierbei einen wichtigen Punkt dar, der später beim Vergleich Ergebnisse miteinander beachtet werden muss. Schließlich fällt beispielsweise bei Messungen mit einer geringeren Request-Anzahl die Anfangsphase, in der die Datenbanksysteme oft erst warmlaufen, stärker ins Gewicht als bei Messungen mit einer höheren Request-Anzahl. 
+
 \section{Operationen}
 \label{analyse:operationen}
 Für die Performance-Analyse der Datenbanksysteme werden im Rahmen dieser Arbeit die folgenden Operationen von Linkbench herangezogen:

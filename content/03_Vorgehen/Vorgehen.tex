@@ -118,7 +118,7 @@ Wobei es allerdings anzumerken gilt, dass bei den Messungen mit Bezug zu real-ve
 \end{itemize}
 Die eingeklammerten Zahlen bei \texttt{getLinkList} repräsentieren hierbei die obere Grenze der Ergebnismenge der Operation. Die Rolle und der Einsatz der Begrenzung der Ergebnismenge wird dabei im nächsten Abschnitt \autoref{analyse:ergebnismenge} im Detail erläutert. 
 
-\ection{Begrenzung der Ergebnismenge}
+\section{Begrenzung der Ergebnismenge}
 \label{analyse:ergebnismenge}
 In diesem Abschnitt wird auf die Rolle der Begrenzung der Ergebnismenge bei der \texttt{getLinkList}-Operation genauer eingegangen. Diese spielt hierbei im Kontext der Performance-Analyse eine wichtige Rolle, da sie bei einigen Messungen eine wichtige Stellung als Messparameter einnimmt, welches es bei der Auswertung der Ergebnisse zu beachten gilt. 
 
@@ -145,26 +145,10 @@ Dieser Abschnitt setzt sich mit den Gremlin- und Cypher-Queries auseinander die 
 Es gilt dabei darauf hinzuweisen, dass die in diesem Abschnitt dargestellten Queries in gewissem Ausmaß der Implementierung der Adapter in \autoref{implementierung} vorgreift. Allerdings nehmen die Queries eine signifikante Rolle bei den Messungen ein. Schließlich handelt es sich bei ihnen um die Anfragen, die bei der Durchführung einer Operation während des Benchmarks zur Interaktion mit den Datenbanksystemen herangezogen wird. Daher werden sie in diesem Abschnitt des Kapitels \autoref{vorgehen} näher beschrieben.
 
 \subsection{Reguläre Queries}
-Bei den regulären Queries handelt es sich um die Queries die allen bis auf einer Messreihe für die Messungen herangezogen werden. 
+Bei den regulären Queries handelt es sich um die Queries die allen bis auf einer Messreihe für die Messungen herangezogen werden. Die entsprechenden Queries die in der Abfragesprache Gremlin formuliert wurden, werden dabei in \autoref{src:gremlin_queries} aufgeführt. Die entsprechenden Queries die in der Abfragesprache Cypher umgesetzt wurden, werden hingegen in \autoref{src:cypher_queries} abgebildet. Im Zuge dessen gilt es darauf hinzuweisen, dass in \autoref{src:gremlin_queries} Platzhalter innerhalb der Queries von \texttt{<} und \texttt{>} umschlossen werden. Bei \autoref{src:cypher_queries} werden sie hingegen mittels eines anführenden \texttt{\$} gekennzeichnet.
 
-\section{Datensatz}
+Die Gremlin- und Cypher-Queries, welche im \autoref{src:cypher_queries} und \autoref{src:gremlin_queries} aufgeführt werden verfügen darüber hinaus über dieselbe Abfragelogik. Damit ist gemeint, dass beide dieselben Daten abfragen, wodurch sie also äquivalent zueinander sind. Die Gremlin-Queries werden dabei zur Abfrage von Db2 Graph Beta 3 und V11.5.6.0 genutzt, während die Cypher-Queries für Neo4j zum Einsatz kommen. 
 
-\subsection{Konstant-verteilte Datensätze}
-
-\subsection{Real-verteilte Datensätze}
-
-\section{Operationen}
-\label{analyse:operationen}
-Für die Performance-Analyse der Datenbanksysteme werden im Rahmen dieser Arbeit die folgenden Operationen von Linkbench herangezogen:
-\begin{itemize}
-    \item \texttt{getNode},
-    \item \texttt{getLink},
-    \item \texttt{countLink} und
-    \item \texttt{getLinkList}.
-\end{itemize}
-Die Auswahl wurde getroffen, da Db2 Graph Beta 3 und V11.5.6.0 ausschließen lesende-Operationen unterstützen. Bei allen anderen Operationen die in \autoref{linkbench:operationen} aufgeführt werden handelt es sich jedoch um schreibende Operationen. Daher muss auf diese verzichtet werden. 
-
-In \autoref{src:gremlin_queries} werden die Gremlin-Queries aufgeführt, die für das Benchmarking von Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 eingesetzt wurden. 
 \begin{lstlisting}[label=src:gremlin_queries,caption={ Gremlin Queries (regulär)},language=Java]
 /* getNode */
 g.V()
@@ -194,8 +178,6 @@ g.V()
  .has("LINK_TYPE", <LINK_TYPE>)
  .limit(<LIMIT>);
 \end{lstlisting}
-
-Für das Benchmarking von Neo4j wurden hingegen die  Cypher-Queries in \autoref{src:cypher_queries}. Neo4j unterstützt zwar auch Gremlin als Abfragesprache \cite{gdbms}. Allerdings handelt es sich bei Cypher um die bevorzugte Abfragesprache zur Interaktion mit Neo4j \cite{gdbms}.
 
 \begin{lstlisting}[label=src:cypher_queries,caption={Cypher Queries (regulär)},language=CQL]
 /* getNode */
@@ -230,6 +212,33 @@ RETURN n1.id AS ID1, n2.id AS ID2,
     l.version AS VERSION 
 LIMIT $limit
 \end{lstlisting}
+
+\subsubsection{ID-Queries}
+Bei den ID-Queries handelt es sich um eine Abwandlung der regulären Queries. Ihr Hauptunterschied zu den regulären Queries besteht dabei darin, dass sie sich in der Art der Formulierung der Gremlin-Queries von den regulären Queries unterscheiden. Allerdings gibt es auch einen kleinen Unterschied bezüglich der Abfragelogik von \texttt{getLink}, weshalb bei dieser Operation weder die Gremlin- noch die Cypher-ID-Queries äquivalent regulären Pendants sind.  
+
+
+
+\section{Datensatz}
+
+\subsection{Konstant-verteilte Datensätze}
+
+\subsection{Real-verteilte Datensätze}
+
+\section{Operationen}
+\label{analyse:operationen}
+Für die Performance-Analyse der Datenbanksysteme werden im Rahmen dieser Arbeit die folgenden Operationen von Linkbench herangezogen:
+\begin{itemize}
+    \item \texttt{getNode},
+    \item \texttt{getLink},
+    \item \texttt{countLink} und
+    \item \texttt{getLinkList}.
+\end{itemize}
+Die Auswahl wurde getroffen, da Db2 Graph Beta 3 und V11.5.6.0 ausschließen lesende-Operationen unterstützen. Bei allen anderen Operationen die in \autoref{linkbench:operationen} aufgeführt werden handelt es sich jedoch um schreibende Operationen. Daher muss auf diese verzichtet werden. 
+
+In \autoref{src:gremlin_queries} werden die Gremlin-Queries aufgeführt, die für das Benchmarking von Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 eingesetzt wurden. 
+
+
+Für das Benchmarking von Neo4j wurden hingegen die  Cypher-Queries in \autoref{src:cypher_queries}. Neo4j unterstützt zwar auch Gremlin als Abfragesprache \cite{gdbms}. Allerdings handelt es sich bei Cypher um die bevorzugte Abfragesprache zur Interaktion mit Neo4j \cite{gdbms}.
 
 Im Zuge der Performance-Analyse der Datenbanksysteme werden allerdings bei Messungen mit real-verteilten Datensätzen vier verschiedene Varianten der \texttt{getLinkList}-Operation eingesetzt. Darauf wird in im Detail eingegangen \autoref{analyse:parameter}.
 

@@ -63,3 +63,4 @@ Graphdatenbanksystem
 Graphmodells
 Graphdatenbanksystemen
 Grapherweiterung
+Query

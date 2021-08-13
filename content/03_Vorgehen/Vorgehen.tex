@@ -92,7 +92,7 @@ Im Rahmen der Arbeit wird die Zusammensetzung des Operationsmix dabei immer zwis
 Die Operationen werden dabei getrennt voneinander gemessen, um die während der \textit{Request}-Phase erzeilte Ressourcenauslastung immer einer bestimmten Operationsart zuordnen zu können. 
 
 \section{Operationen}
-In diesem Abschnitt wird auf die verschiedenen Operationen eingegangen deren Performance im Rahmen der Analyse dieser Arbeit eine Rolle spielen. Außerdem wird auf die Begrenzung der Ergebnismenge bei der \texttt{getLinkList}-Operation eingegangen. Schließlich wird dieses Limit bei einigen Messungen variiert, wodurch es zu einem Messparameter wird, den es bei der Auswertung der Ergebnisse zu beachten gilt. 
+In diesem Abschnitt wird auf die verschiedenen Operationen eingegangen deren Performance im Rahmen der Analyse dieser Arbeit eine Rolle spielen. 
 
 Bei den im Rahmen der Performance-Analyse gebenchmarkten Operationen handelt es sich um dieselben Operationen, die auch in \cite{sigmod_tian} untersucht werden. Dabei gilt es allerdings zu beachten, dass obwohl die Namen der Operationen gleich lauten, nicht bekannt ist, ob die Queries, die von ihnen an die Datenbanksysteme gesendet werden, identisch sind. Daher sollten aus den gleichen Namen keine falschen Schlüsse gezogen werden. 
 
@@ -116,12 +116,15 @@ Wobei es allerdings anzumerken gilt, dass bei den Messungen mit Bezug zu real-ve
     \item \texttt{getLinkList(10.000)} und
     \item \texttt{getLinkList(100.000)}.
 \end{itemize}
-Die eingeklammerten Zahlen bei \texttt{getLinkList} repräsentieren hierbei die obere Grenze der Ergebnismenge der Operation.
+Die eingeklammerten Zahlen bei \texttt{getLinkList} repräsentieren hierbei die obere Grenze der Ergebnismenge der Operation. Die Rolle und der Einsatz der Begrenzung der Ergebnismenge wird dabei im nächsten Abschnitt \autoref{analyse:ergebnismenge} im Detail erläutert. 
 
-\subsection{Begrenzung der Ergebnismenge}
-Bei der Begrenzung der Ergebnismenge handelt es sich um eine Workload-Konfiguration, die lediglich die \texttt{getLinkList}-Operation betrifft. Durch sie wird eine obere Grenze für die Ergebnismenge in für die Query der \texttt{getLinkList}-Operation gesetzt. 
+\ection{Begrenzung der Ergebnismenge}
+\label{analyse:ergebnismenge}
+In diesem Abschnitt wird auf die Rolle der Begrenzung der Ergebnismenge bei der \texttt{getLinkList}-Operation genauer eingegangen. Diese spielt hierbei im Kontext der Performance-Analyse eine wichtige Rolle, da sie bei einigen Messungen eine wichtige Stellung als Messparameter einnimmt, welches es bei der Auswertung der Ergebnisse zu beachten gilt. 
 
-Sie wurde dabei im Rahmen dieser Arbeit in den Benchmark eingeführt, um dadurch die Performance der verschiedenen Datenbanksysteme bei größeren oder kleineren Ergebnismengen untersuchen zu können. 
+Bei der Begrenzung der Ergebnismenge handelt es sich um eine Workload-Konfiguration, die lediglich die \texttt{getLinkList}-Operation betrifft. Durch sie wird eine obere Grenze für die Anzahl an Elementen einer Ergebnismenge in der Query der \texttt{getLinkList}-Operation gesetzt. Wird die Grenze beispielsweise auf 10 gesetzt, so übermitteln abgefragten die Datenbanksysteme als Antwort auf die \texttt{getLinkList}-Queries maximal eine Menge mit zehn Links (Kanten) an den Benchmark. 
+
+Die Begrenzung der Ergebnismenge wurde dabei im Rahmen dieser Arbeit in den Benchmark eingeführt, um dadurch die Performance der verschiedenen Datenbanksysteme bei größeren oder kleineren Ergebnismengen untersuchen zu können. 
 
 Bei den im Rahmen dieser Arbeit durchgeführten Messungen nimmt die Grenze der Ergebnismenge die folgenden Werte an:
 \begin{itemize}
@@ -130,50 +133,25 @@ Bei den im Rahmen dieser Arbeit durchgeführten Messungen nimmt die Grenze der E
     \item 10.000 und
     \item 100.000. 
 \end{itemize}
-Diese wurden dabei ausgewählt, da der Faktor zehn Unterschied zwischen den Werten für eine Differenz sorgt, von der angenommen wurde, dass sie ausreicht, um unterschiedliche Messergebnisse für die \texttt{getLinkList}-Operation zu erzielen. 
+Diese wurden dabei ausgewählt, da der Faktor-zehn-Unterschied zwischen den Werten für eine Differenz sorgt, von der angenommen wurde, dass sie ausreicht, um unterschiedliche Messergebnisse für die \texttt{getLinkList}-Operation zu erzielen. 
 
-100.000 wurde darüber hinaus hierbei als größte Menge gewählt, da eine Grenze von 1.000.000 den Messzeitraum der \texttt{Request}-Phase von 3 Stunden bei einigen Datenbanksystemen um ein Vielfaches überschritten hätte.
+100.000 wurde darüber hinaus als größte Menge gewählt, da eine Grenze von 1.000.000 den Messzeitraum der \texttt{Request}-Phase von 3 Stunden bei einigen Datenbanksystemen um ein Vielfaches überschritten hätte.
 
-Wie bereits zuvor erwähnt spielt die Variation der Begrenzung der Ergebnismenge lediglich bei den Messungen mit Bezug real-verteilten Datensätzen eine Rolle. Dies hängt damit zusammen, dass bei konstant-verteilten Datensätzen im Rahmen dieser Arbeit immer eine sogenannte 10er-Verteilung vorherrscht. Dies bedeutet, dass die Ergebnismenge für die \texttt{getLinkList}-Operation maximal 10 Elemente beinhalten kann, egal ob jetzt die obere Grenze für die Größe der Ergebnismenge 100 oder 100.000 beträgt. Somit erübrigt sich die Variation der Begrenzung der Ergebnismenge bei diesen Messungen. 
+Wie bereits zuvor erwähnt, spielt die Variation der Begrenzung der Ergebnismenge lediglich bei den Messungen mit Bezug real-verteilten Datensätzen eine Rolle. Dies hängt damit zusammen, dass bei konstant-verteilten Datensätzen im Rahmen dieser Arbeit immer eine sogenannte 10er-Verteilung vorherrscht. Dies bedeutet, dass die Ergebnismenge für die \texttt{getLinkList}-Operation maximal 10 Elemente beinhalten kann, egal ob jetzt die obere Grenze für die Größe der Ergebnismenge 100 oder 100.000 beträgt. Somit erübrigt sich die Variation der Begrenzung der Ergebnismenge bei diesen Messungen. 
 
 \section{Queries}
-Im Rahmen dieses Abschnitts wird auf die Queries eingegangen die bei der Performance-Analyse eine wichtige Rolle spielen. Dabei wird kurz darauf eingegangen in welchen Abfragesprachen die Queries formuliert werden müssen. Anschließend wird dann erläutert, in welche zwei verschiedene Kategorien von Queries im Rahmen dieser Arbeit eine Rolle spielen. Darüber hinaus wird auch im Rahmen dieses Abschnitts auf auf den Aspekt der Begrenzung der Ergebnismenge für der \texttt{getLinkList}-Queries eingegangen, welcher bei den Messungen mit Bezug zu real-verteilten Datensätzen eine signifikante Rolle als Konfigurationsparameter für die gleichnamige Operation darstellt. 
+Dieser Abschnitt setzt sich mit den Gremlin- und Cypher-Queries auseinander die für die Umsetzung der Messungen herangezogen wurden. Darüber hinaus wird auch auf den Unterschied zwischen den regulären Queries und ID-Queries eingegangen. Der Schwerpunkt dieses Abschnitts liegt dabei allerdings auf den sogenannten regulären Gremlin- und Cypher-Queries, da die ID-Queries im Rahmen dieser Arbeit lediglich eine Nebenrolle spielen. 
 
-Bevor im Rahmen des 
-
-
-
-In diesem Abschnitt wird auf die verschiedenen Queries eingegangen, die den Kern der unterschiedlichen Operationen darstellen, die während einer \textit{Request}-Phase durchgeführt werden. Hierbei handelt es sich um die Anfragen, die eigentlich mit dem jeweiligen Datenbanksystem interagieren. Es handelt sich hierbei um einen für die Messungen relevanten Aspekt, der allerdings ein Stück weit dem Kapitel \nameref{implementierung} vorgreift. 
-
-Da die Queries allerdings auch einen wichtigen Aspekt für die Einordnung der Messergebnisse darstellen und darüber hinaus die Art der Queries während den Messungen auch die Rolle eines Parameters einnimmt, werden sie bereits als Abschnitt dieses Kapitels aufgeführt. 
-
-Die Queries können hierbei im Rahmen dieser Arbeit in zwei verschiedene Kategorien eingeteilt werden:
-\begin{itemize}
-    \item reguläre Queries und
-    \item ID-Queries.
-\end{itemize}
-Die beiden Kategorien unterschieden sich hierbei hauptsächlich bezüglich der Art der Formulierung der Gremlin-Queries. Es gibt dabei allerdings auch kleinere Unterschiede zwischen der Logik der \texttt{getLink}-Queries, welche dazu führen, das sich auch die Cypher-Queries der beiden Kategorien unterscheiden. 
-
-
-Beide dieser Query-Kategorien verfügen dabei über Cypher- und Gremlin-Queries für die Durchführung der vier gebenchmarkten Operationen:
-\begin{itemize}
-    \item \texttt{getNode},
-    \item \texttt{getLink},
-    \item \texttt{countLink} und
-    \item \texttt{getLinkList} durch. 
-\end{itemize}
+Es gilt dabei darauf hinzuweisen, dass die in diesem Abschnitt dargestellten Queries in gewissem Ausmaß der Implementierung der Adapter in \autoref{implementierung} vorgreift. Allerdings nehmen die Queries eine signifikante Rolle bei den Messungen ein. Schließlich handelt es sich bei ihnen um die Anfragen, die bei der Durchführung einer Operation während des Benchmarks zur Interaktion mit den Datenbanksystemen herangezogen wird. Daher werden sie in diesem Abschnitt des Kapitels \autoref{vorgehen} näher beschrieben.
 
 \subsection{Reguläre Queries}
-Die Queries, die Teil dieser Kategorie sind, werden hierbei während nahezu allen Messreihen herangezogen. 
+Bei den regulären Queries handelt es sich um die Queries die allen bis auf einer Messreihe für die Messungen herangezogen werden. 
 
-
+\section{Datensatz}
 
 \subsection{Konstant-verteilte Datensätze}
-Für die 
 
 \subsection{Real-verteilte Datensätze}
-
-
 
 \section{Operationen}
 \label{analyse:operationen}

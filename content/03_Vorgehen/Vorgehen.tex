@@ -1,6 +1,10 @@
 \chapter{Vorgehen}
 \label{vorgehen}
-Dieses Kapitel befasst sich mit der Methode und dem Aufbau, der Performance-Analyse von Db2 Graph und Neo4j. Darüber hinaus wird auch darauf eingegangen welche Maßnahmen ergriffen wurden, um die von Db2 Graph erzeilte Performance einordnen zu können. 
+Im Rahmen dieses Kapitels wird auf das Vorgehen beziehungsweise die Umsetzung der Performance-Analyse der Db2 Graph und Neo4j Datenbanksysteme eingegangen. 
+
+Zuerst wird dabei darauf erörtert, warum sich die Ergebnisse aus \cite{sigmod_tian} im Rahmen dieser Arbeit nicht reproduzieren lassen. Anschließend wird ein neues Ziel für diese Arbeit formuliert, da sich das eigentliche Ziel der Arbeit nicht mehr erfüllen lässt. 
+
+In den darauf folgenden Abschnitten werden einzelne Aspekte der Messungen genauer beschrieben, die für das Verständnis der in \autoref{analyse:messreihen} beschrieben Messreihen notwendig sind.
 
 \section{Reproduktion}
 Wie in der \nameref{einleitung} beschrieben, war es das eigentliche Ziel dieser Arbeit, die in \cite{sigmod_tian} erzielten Werte für Db2 Graph zu reproduzieren und mit neuen Werten für Neo4j zu vergleichen. 
@@ -42,9 +46,6 @@ Eine weitere neue Aufgabe, die aufgrund des neuen Ziels Teil der Arbeit wird, st
 Sollten jedoch keine der für die Messungen benötigten Adapter-Implementierung verfügbar sein, müssen diese auch im Rahmen der Arbeit selbst implementiert werden. 
 
 Abschließend gilt es darauf hinzuweisen, dass auch wenn beim neuen Ziel einige Elemente aus \cite{sigmod_tian} übernommen werden, die im Rahmen dieser Arbeit und die in \cite{sigmod_tian} erzielten Ergebnisse nicht vergleichbar sind.
-
-\section{Begriffe oder Messungen}
-\todo{Beschreiben, was Messung, was Messreihe, was Ergebnis evtl. Metrik inkludieren.}
 
 \section{Linkbench}
 Auch wenn sich das Ziel der Arbeit geändert hat, so wird Linkbench weiterhin als Benchmark zur Performance-Analyse herangezogen. Daher wird eine Implementierung für Linkbench benötigt sowie Adapter für Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j. Die Wahl der Linkbench und Adapter Implementierung sowie ihre Umsetzungen werden allerdings in \autoref{implementierung} beschrieben. 
@@ -215,7 +216,7 @@ RETURN n1.id AS ID1, n2.id AS ID2,
 LIMIT $limit
 \end{lstlisting}
 
-\subsubsection{ID-Queries}
+\subsection{ID-Queries}
 Bei den ID-Queries handelt es sich um eine Abwandlung der regulären Queries. Ihr Hauptunterschied zu den regulären Queries besteht dabei darin, dass sie sich in der Art der Formulierung der Gremlin-Queries von den regulären Queries unterscheiden. Allerdings gibt es auch einen kleinen Unterschied bezüglich der Abfragelogik von \texttt{getLink}, weshalb bei dieser Operation weder die Gremlin- noch die Cypher-ID-Queries äquivalent zu ihren regulären Pendants sind.
 
 Die ID-Queries spielen dabei im Rahmen der Arbeit lediglich eine untergeordnete Rolle. Sie wurden dabei anfänglich als Messparameter in die Performance-Analyse mit einbezogen, da erste Testmessungen darauf hindeuteten, dass sich ihr Einsatz positiv auf die Performance von Db2 Graph Beta 3 auswirkt. Im Verlauf der Performance-Analyse ließ sich dies allerdings nicht bestätigen. Daher werden die ID-Queries lediglich in einer Messreihe bei der Performance-Analyse herangezogen. 
@@ -484,9 +485,9 @@ ON (l.link_type);
 
 \section{Messreihen}
 \label{analyse:messreihen}
-Um das neue Ziel der Arbeit zu erfüllen, werden in diesem Kapitel verschiedene Messreihen spezifiziert. In einer solchen Messreihe werden dabei die verschiedenen Datenbanksysteme mit einer vergleichbaren Konfiguration gemessen.
+Um das neue Ziel der Arbeit zu erfüllen, werden in diesem Kapitel verschiedene Messreihen spezifiziert. Eine Messreihe stellt hierbei eine Art Messszenario für die Datenbanksysteme dar. So können die jeweiligen Ergebnisse eines Datenbanksystems immer direkt mit den Ergebnissen der anderen Datenbanksysteme verglichen werden. Schließlich werden die Ergebnisse im Rahmen einer Messreihe immer unter den gleichen oder vergleichbaren Bedingungen erzielt. 
 
-Bevor damit allerdings begonnen werden kann, werden hier nochmals kurz die Parameter und Konfigurationen zusammengefasst, die über alle Messreihen hinweg konstant bleiben:
+Bevor damit allerdings auf die Unterschiede beziehungsweise die variierenden Parameter der Messreihe eingegangen werden kann, werden hier nochmals kurz die Parameter und Konfigurationen zusammengefasst, die über alle Messreihen hinweg konstant bleiben:
 \begin{itemize}
     \item \textit{Umgebung}\\
     In der in \autoref{analyse:umgebung} beschrieben Umgebung, werden alle Messreihen durchgeführt. 
@@ -500,7 +501,7 @@ Bevor damit allerdings begonnen werden kann, werden hier nochmals kurz die Param
     Die in Konfiguration von Neo4j und das bei den Messungen eingesetzte Datenbankschema \autoref{src:neo4j_schema} bleiben über die Messreihen hinweg unverändert. 
 \end{itemize}
 
-In den folgenden Unterabschnitten werden nun die verschiedenen Messreihen genauer erläutert. Der Name einer Reihe setzt sich dabei aus dem Namen des Benchmarks (Linkbench), der Abkürzung für die gewählte Verteilung (Const oder Real) des Datensatzes und der Größe des Datensatzes (10M oder 100M) zusammen. Falls bei einer Messreihe ID-Queries statt den regulären Queries zum Einsatz kommen, wird abschließend noch ID angehängt.
+In den folgenden Unterabschnitten wird nun der Aufbau der  verschiedenen Messreihen genauer erläutert. Der jeweilige Name einer Reihe setzt sich dabei aus dem Namen des Benchmarks (Linkbench), der Abkürzung für die gewählte Verteilung (Const oder Real) des Datensatzes und der Größe des Datensatzes (10M oder 100M) zusammen. Falls bei einer Messreihe ID-Queries statt den regulären Queries zum Einsatz kommen, wird abschließend noch ID angehängt.
 
 \subsection{Linkbench-Const-10M}
 Im Rahmen dieser Messreihe werden Messungen mit den Datenbanksystemen:
@@ -587,7 +588,9 @@ Außerdem finden allen Messungen im Kontext der Messreihe auf der Basis der folg
 Die Messreihe ähnelt hier im Aufbau der Linkbench-Real-10M Reihe stark. So werden bei dieser ebenfalls reguläre Queries eingesetzt, die Request-Anzahl beträgt 50.000, es werden mehrere Messungen für die \texttt{getLinkList}-Operation durchgeführt und der Datensatz auf dem die Messungen basieren ist auch real verteilt. Allerdings umfasst der hierbei verwendete Datensatz 100 Millionen Knoten und ca. 530 Millionen Kanten, statt den 10 Millionen Knoten und ca. 53 Millionen Kanten bei der Messreihe Linkbench-Real-10M.
 
 \subsection{Übersicht}
-In diesen Abschnitt werden alle Messreihen und ihre Parameter nochmals übersichtlich in den beiden Tabellen \autoref{tab:uebersicht_messreihen_datensatz} und \autoref{tab:uebersicht_messreihen_parameter} zusammengefasst. In \autoref{tab:uebersicht_messreihen_datensatz} werden dabei die Datensatz-spezifischen Parameter der Messreihen aufgeführt. Die Parameter Messumfang, Ergebnismenge und der Query-Stil werden hingegen in \autoref{tab:uebersicht_messreihen_parameter} aufgelistet.
+In diesen Abschnitt werden alle Messreihen und ihre Parameter nochmals übersichtlich in den beiden Tabellen \autoref{tab:uebersicht_messreihen_datensatz} und \autoref{tab:uebersicht_messreihen_parameter} zusammengefasst. In \autoref{tab:uebersicht_messreihen_datensatz} werden dabei die Datensatz-spezifischen Parameter der Messreihen aufgeführt, wie Größe und Verteilung. Die Parameter Messumfang, Anzahl gebenchmarkter Operationen und sowie Art der Queries werden hingegen in \autoref{tab:uebersicht_messreihen_parameter} aufgelistet.
+
+Der Parameter Messumfang beschreibt hierbei, wie viele Operationen insgesamt während einer \textit{Request}-Phase an von den Linkbench-Threads durchgeführt werden. Also im Rahmen dieser Arbeit immer das 50-fache der Request-Anzahl. Da wie bereits zuvor beschrieben während allen Messungen 50 Linkbench-Threads zum Einsatz kommen. 
 
 \begin{table}[h]
     \centering
@@ -609,15 +612,15 @@ In diesen Abschnitt werden alle Messreihen und ihre Parameter nochmals übersich
 
 \begin{table}[h]
     \centering
-    \begin{tabular}{l|r|c|l}
+    \begin{tabular}{l|r|c|c}
     \hline
     \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}{\color[HTML]{333333} }} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}} & \cellcolor[HTML]{EFEFEF} & \multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}} \\
-    \multicolumn{1}{c|}{\multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}{\color[HTML]{333333} \textbf{Messreihe}}}} & \multicolumn{1}{l|}{\multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}\textbf{Messumfang}}} & \multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}\textbf{\begin{tabular}[c]{@{}c@{}}Variation der \\ Ergebnismenge\end{tabular}}} & \multicolumn{1}{c}{\multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}\textbf{Queries}}} \\ \hline
-    Linkbench-Const-10M & 25.000.000 & - & regulär \\
-    Linkbench-Const-10M-ID & 25.000.000 & - & ID \\
-    Linkbench-Const-100M & 25.000.000 & - & regulär \\
-    Linkbench-Real-10M & 2.500.000 & x & regulär \\
-    Linkbench-Real-100M & 2.500.000 & x & regulär \\ \hline
+    \multicolumn{1}{c|}{\multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}{\color[HTML]{333333} \textbf{Messreihe}}}} & \multicolumn{1}{l|}{\multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}\textbf{Messumfang}}} & \multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}\textbf{\begin{tabular}[c]{@{}c@{}}Gebenchmarkte \\ Operationen\end{tabular}}} & \multicolumn{1}{c}{\multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}\textbf{Queries}}} \\ \hline
+    Linkbench-Const-10M & 25.000.000 & 4 & regulär \\
+    Linkbench-Const-10M-ID & 25.000.000 & 4 & ID \\
+    Linkbench-Const-100M & 25.000.000 & 4 & regulär \\
+    Linkbench-Real-10M & 2.500.000 & 7 & regulär \\
+    Linkbench-Real-100M & 2.500.000 & 7 & regulär \\ \hline
     \end{tabular}
     \caption{Übersicht Parameter der Messreihen}
     \label{tab:uebersicht_messreihen_parameter}
@@ -626,8 +629,10 @@ In diesen Abschnitt werden alle Messreihen und ihre Parameter nochmals übersich
 \section{Ablauf der Messungen}
 Im Rahmen dieses Abschnitts wird darauf eingegangen, wie die Messungen der Datenbanksysteme als Teil der in \autoref{analyse:messreihen} beschriebenen Messreihen durchgeführt werden. 
 
-Um die Performance eines Datenbanksystems zu messen, werden mehrere Benchmark-Durchläufe durchgeführt. Dabei wird für jede gebenchmarkte Operation ein eigener Benchmark-Durchlauf ausgeführt. So macht eine Operation immer 100 \% des Operationsmix während eines Durchlaufs aus. 
+Die Durchführung der Messreihen läuft hierbei so ab, dass für jeweils eines der zwei bis drei Datenbanksysteme alle der in \autoref{analyse:operationen} beschrieben und benötigten Operationen in einer separaten Messung gebenchmarkt werden. 
 
-Je nachdem als Teil welcher Messreihe die Performance eines Datenbanksystems gemessen wird, werden dabei die vier oder die sieben in \autoref{analyse:operationen} aufgeführten Operationen gebenchmarkt. 
+Nach dem alle vier bis sieben Operationen, die gebenchmarkt werden müssen, gebenchmarkt wurden, kann mit dem nächsten Datenbanksystem weitergemacht werden. 
 
-Bei diesen Benchmark-Durchläufen wird die gebenchmarkte Operation von 50 Threads jeweils 50.000 oder 500.000 Mal ausgeführt und gemessen. Wie häufig eine Operation von den Threads durchgeführt wird, hängt dabei von der Konfiguration des Parameters Messumfang ab. Beträgt dieser 2.500.000 so führen die Threads ihn jeweils 50.000 Mal durch. Nimmt er den Wert 25.000.000 an, wird die Operation 500.000 Mal von einem Thread verrichtet. 
+Wurden alle Operationen für die Datenbanksysteme, die in einer Messreihe eine Rolle spielen durchgeführt, so kann mit der Durchführung der nächsten Messreihe begonnen werden. 
+
+\todo{Hier ein Tikz Bild einfügen.}

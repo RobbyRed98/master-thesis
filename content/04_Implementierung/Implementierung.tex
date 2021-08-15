@@ -103,3 +103,21 @@ Um trotzdem mit Linkbench einen erzeugten Datensatz in Neo4j laden zu können wu
 Auch wenn die Anpassung dafür eingeführt wurde, um Linkbench-Messungen für Neo4j durchzuführen, so ist es auch möglich den Ablauf der \textit{Load}-Phase in Zusammenhang mit den anderen Datenbanksystemen wie Db2 Graph beziehungsweise Db2 zu invertieren. Dies bietet allerdings keinen besonderen Mehrwert, aber führt hingegen auch zu keinen Fehlern oder Problemen.  
 
 \subsection{Range-Limit-Konfiguration}
+Hierbei handelt es sich um eine Konfiguration, die es ermöglicht eine obere Grenze für die Ergebnismenge der \texttt{getLinkList}-Query und -Operation zu setzen. Die neue Konfiguration spielt dabei auch bei allen Messungen mit Bezug zu real-verteilten Datensätzen eine zentrale Rolle. Weshalb die Konfiguration eingeführt wurde, wird allerdings bereits in  \compref{analyse:ergebnismenge} genauer beschrieben. 
+
+Bei der Range-Limit-Konfiguration handelt es sich hierbei allerdings nicht, wie bei der \textit{Load}-Phase Änderung, um eine Anpassung die direkt im Kern des Benchmarks umgesetzt wurde. Stattdessen handelt es sich um eine Konfiguration die sich gleichermaßen durch den \texttt{Neo4j}- und \texttt{Db2Graph}-Adapter zieht. 
+
+Sie wird dabei trotzdem in diesem Abschnitt beschrieben, obwohl sich dieser eigentlich mit Anpassungen am Benchmark selbst befasst. Schließlich handelt es sich hierbei um eine Änderung, die sich auf mehrere im Rahmen der Arbeit implementierten Adapter bezieht. Die Konfiguration wurde dabei auch in beiden Adapter nahezu gleich implementiert. 
+
+Die Anpassung sorgt dabei bei dem \texttt{Neo4j}- und \texttt{Db2Graph}-Adapter dafür, dass aus der Workload-Konfiguration ein sogenannter Wert \texttt{range\_limit} ausgelesen wird. Bei diesem muss es sich um einen Integer handeln. Dieser Integer-Wert dann im Rahmen der \texttt{getLinkList}-Operationen für die Platzhalter \texttt{<LIMIT>} und \texttt{\$limit} bei den jeweiligen Queries eingesetzt (\autoref{src:cypher_queries} oder \autoref{src:gremlin_queries}). Dadurch wird dann die Ergebnismenge Datenbank-seitig nach oben beschränkt. 
+
+\section{Zusammenfassung}
+Als Code-Basis für die Linkbench-Implementierung die im Rahmen dieser Arbeit herangezogen wird, wurde das \texttt{mdcallag/linkbench}-Repository unter \cite{mc_linkbench_github} ausgewählt.
+
+Im Rahmen der Arbeit mussten die Adapter für alle drei zu untersuchenden Datenbanksysteme implementiert werden, da keine aktuellen Adapter-Implementierungen für Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j frei verfügbar sind.
+
+Der \texttt{Db2Graph}- und \texttt{Db2GraphOld}-Adapter wurden im Rahmen der Arbeit entwickelt um Db2 Graph V11.5.6.0 und Beta 3 an Linkbench anzubinden. Die Adapter bauen dabei auf einem \texttt{Db2}-Adapter auf, der ebenfalls im Rahmen der Arbeit implementiert wurde. Für Neo4j wurde ein Cypher-basierter Adapter entwickelt. 
+
+Im Rahmen der Arbeit wurden die Range-Limit-Konfiguration eingeführt, die es ermöglicht die Ergebnismenge auf eine bestimmte obere Grenze festzulegen. 
+
+Die Logik des Benchmarks bezüglich des Ablaufs der \textit{Load}-Phase wurde hierbei für Neo4j angepasst. Diese Anpassung war dabei für das Erreichen der neuen Ziele der Performance-Analyse notwendig, da es ohne sie nicht möglich wäre von Linkbench generierte Datensätze, vor den Messungen in Neo4j zu laden. 

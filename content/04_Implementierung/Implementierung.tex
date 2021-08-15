@@ -4,10 +4,10 @@ In diesem Kapitel der Arbeit wird auf die Implementierung der Datenbanksystem-sp
 
 Bevor allerdings auf die Implementierung dieser Adapter eingegangen werden kann, muss zuerst auf das Linkbench-Repository eingegangen werden, die für die Implementierung dieser Adapter als Ausgangspunkt dient. Außerdem muss auch ermittelt werden, ob bereits frei verfügbare Db2-Graph- oder Neo4j-spezifische Adapter für Linkbench existieren und ob deren Einsatz bei der Performance-Analyse möglich und sinnvoll ist.
 
-Darüber hinaus wird in diesem Kapitel auch auf kleiner Anpassungen an Linkbench selbst eingegangen. Bei diesen Anpassungen handelt es sich um Änderungen am Benchmark, die außerhalb der Datenbank-spezifischen Adapter durchgeführt werden müssen.
+Darüber hinaus wird in diesem Kapitel auch auf kleinere Anpassungen an Linkbench selbst eingegangen. Bei diesen Anpassungen handelt es sich um Änderungen am Benchmark, die außerhalb der Datenbank-spezifischen Adapter durchgeführt werden mussten.
 
 \section{Code-Basis}
-Bei den Recherchen nach einer Linkbench Code-Basis die als Ausgangspunkt für die Implementierung eigener oder Anbindung bereits existieren Datenbank-Adapter an den Benchmark dienen sollte, konnten die beiden folgenden Repositories auf Github identifiziert werden:
+Bei den Recherchen nach einer Linkbench-Code-Basis die als Ausgangspunkt für die Implementierung eigener oder Anbindung bereits existieren Datenbank-Adapter an den Benchmark dienen sollte, konnten die beiden folgenden Repositories auf Github identifiziert werden:
 \begin{itemize}
     \item \texttt{mdcallag/linkbench} \cite{mc_linkbench_github} und 
     \item \texttt{facebookarchive/linkbench} \cite{fb_linkbench_github}.
@@ -22,19 +22,19 @@ Die Implementierung von Linkbench aus dem \texttt{mdcallag/linkbench}-Repository
     \item MongoDB und
     \item PostgreSQL.
 \end{itemize}
-Anstatt ausschließlich des MySQL-Adapters über den das \texttt{facebookarchive/\break linkbench}-Repository verfügt \cite{mc_linkbench_github}. Darüber hinaus enthält das Repository auch einen generischen-SQL-Adapter \cite{mc_linkbench_github}. Dieser kann dabei als Basis für die Implementierung eines Adapters für relationale Datenbanksysteme herangezogen \cite{mc_linkbench_github}. Schließlich implementiert er bereits die meisten Operationen für Datenbanksysteme, die JDBC (Java Database Connectivity) als Schnittstelle unterstützen \cite{mc_linkbench_github}. So könnte der Adapter Implementierungs-Aufwand für Db2 Graph Adapter sparen, da er bereits einige schreibende Operation implementiert, die von Db2 Graph übernommen werden müssen.
+Anstatt ausschließlich des MySQL-Adapters über den das \texttt{facebookarchive/\break linkbench}-Repository verfügt \cite{mc_linkbench_github}. Darüber hinaus enthält das Repository auch einen generischen-SQL-Adapter \cite{mc_linkbench_github}. Dieser kann als Basis für die Implementierung eines Adapters für relationale Datenbanksysteme herangezogen \cite{mc_linkbench_github}. Schließlich implementiert er bereits die meisten Operationen für Datenbanksysteme, die JDBC (Java Database Connectivity) als Schnittstelle unterstützen \cite{mc_linkbench_github}. So könnte der Adapter Implementierungs-Aufwand für Db2 Graph Adapter sparen, da er bereits einige schreibende Operation implementiert, die von Db2 Graph übernommen werden müssen.
 
-Außerdem wurde bei der Implementierung in \texttt{mdcallag/linkbench}-Repository einige Anpassungen vorgenommen, die eine detailliertere Aufschlüsselung der gemessenen Latenzwerte ermöglichen und die Fehlerbehandlung verbessern.
+Außerdem wurde bei der Implementierung in \texttt{mdcallag/linkbench}-Repository einige Anpassungen vorgenommen, die eine detailliertere Aufschlüsselung der gemessenen Latenzwerte ermöglichen und die Fehlerbehandlung verbessern \cite{mc_linkbench_github}.
 
 \section{Evaluation existierender Adapter}
 \label{implementierung:evaluation}
 Im Rahmen dieses Unterabschnitts werden bereits existierende Linkbench-Adapter für Db2 Graph und Neo4j aufgeführt und evaluiert. Bei dieser Evaluation wird untersucht, ob die Adapter für die Performance-Analyse der Datenbanksysteme dieser Arbeit herangezogen werden können oder ein neuer Adapter implementiert werden muss. 
 
 \subsection{Db2 Graph}
-Bei dem Datenbanksystem Db2 Graph ist bekannt, dass hierfür bereits eine Adapter-Implementierung für Linkbench existieren muss. Schließlich werden in \cite{sigmod_tian} Db2 Graph Ergebnisse für den Linkbench Benchmark präsentiert. Dabei gilt es allerdings zu beachten, dass der darin eingesetzte Adapter für eine ältere Version von Db2 Graph konzipiert wurde, die unter Umständen nicht mit Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 kompatibel ist. Außerdem wurde der Adapter nie veröffentlicht. Daher kann der Adapter nicht im Rahmen der Performance-Analyse genutzt werden, weshalb eigene Adapter für die Db2 Graph Versionen implementiert werden müssen. 
+Bei dem Datenbanksystem Db2 Graph ist bekannt, dass hierfür bereits eine Adapter-Implementierung für Linkbench existieren muss. Schließlich werden in \cite{sigmod_tian} Db2 Graph Ergebnisse für den Linkbench Benchmark präsentiert. Dabei gilt es allerdings zu beachten, dass der darin eingesetzte Adapter für eine ältere Version von Db2 Graph konzipiert wurde, die unter Umständen nicht mit Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 kompatibel ist. Außerdem wurde der Adapter, wie bereits in \compref{analyse:reproduktion} aufgeführt, nie veröffentlicht. Daher kann der Adapter nicht im Rahmen der Performance-Analyse genutzt werden. Aus diesem Grund müssen eigene Adapter für die Db2 Graph Versionen implementiert werden. 
 
 \subsection{Neo4j}
-Auch ein Adapter für Neo4j muss im Rahmen dieser Arbeit neu implementiert werden. Dies rührt daher, dass der einzig frei verfügbare Neo4j-Adapter aus \cite{neo_linkbench_github} auf dem technischen Stand von 2013 ist. Aufgrund dessen ist der Adapter nicht dazu in der Lage, die Fähigkeiten neuer Neo4j-Versionen auszuschöpfen. So setzt der Adapter aus \cite{neo_linkbench_github} zur Interaktion mit Neo4j eine veraltete Java-basierte Traversal-API eingesetzt, obwohl inzwischen die Abfragesprache Cypher die bevorzugte Form der Interaktion mit Neo4j ist \cite{gdbms}.
+Auch ein Adapter für Neo4j muss im Rahmen dieser Arbeit neu implementiert werden. Dies rührt daher, dass der einzig frei verfügbare Neo4j-Adapter aus \cite{neo_linkbench_github} auf dem technischen Stand von 2013 ist. Aufgrund dessen ist der Adapter nicht dazu in der Lage, die Fähigkeiten neuer Neo4j-Versionen auszuschöpfen. So setzt der Adapter aus \cite{neo_linkbench_github} zur Interaktion mit Neo4j eine veraltete Java-basierte Traversal-API ein, obwohl inzwischen die Abfragesprache Cypher die bevorzugte Form der Interaktion mit Neo4j ist \cite{gdbms}.
 
 \section{Adapter}
 \label{implementierung:adapter}
@@ -47,6 +47,59 @@ Da sich die bereits existierenden Adapter für Db2 Graph und Neo4j, wie \autoref
 \end{itemize}
 Die Entwicklung von zwei verschiedener Adaptern für Beta 3 und V11.5.6.0 ist hierbei notwendig, da sich die beiden an einigen Stellen erheblich unterscheiden. So läuft der Verbindungsaufbau und das Session-Management bei beiden Versionen anders ab, wie bereits in \autoref{db2graph:versionen} erläutert. 
 
-\todo{Das darunter neu schreiben.}
+\subsection{Db2-Adapter}
+Bei dem Db2-Adapter handelt es sich um eine Implementierung, die auf Basis des generischen-SQL-Adapters implementiert wurde \cite{mc_linkbench_github}. Sie wurde mit dem Ziel implementiert sämtliche Linkbench-Operationen für das Benchmarking einer Db2-Instanz zu implementieren, sodass als Basis für die Implementierung der neuen Db2-Graph-spezifischen herangezogen werden kann.
 
-Bevor mit der Implementierung der Db2Graph-Linkbench-Adapter begonnen werden, kann wird im Rahmen dieser Arbeit allerdings ein Db2-Linkbench-Adapter entwickelt. Dieser dient dabei als Basis für die Db2Graph-Linkbench-Adapter. So müssen bei der Implementierung der Db2Graph-Linkbench-Adapter hauptsächlich die lesenden Operationen des Adapters überschrieben werden. Bei den schreibenden Operationen die beiden Db2 Graph Versionen nicht beherrschen, können die jeweiligen Adapter dann auf die Operationen des Db2-Linkbench-Adapters zurückgreifen, um diese direkt in Db2 Graph umzusetzen.
+Die Queries, welche eines Benchmarks im Rahmen der verschiedenen Operationen an die Db2-Instanz übermittelt werden, wurden dabei im Db2-spezifischen SQL-Dialekt formuliert. Die Kommunikation zwischen einer Db2-Instanz und Linkbench erfolgt dabei über eine JDBC-Verbindung. 
+
+Mit dem Db2-Adapter selbst werden im Rahmen dieser Arbeit keinerlei Messungen direkt durchgeführt. Schließlich ist es nicht das Ziel der Arbeit die Performance einer einfachen Db2-Instanz zu messen. 
+
+Der Adapter spielt allerdings als Basis für die Adapter der Db2 Graph Versionen eine essenzielle Rolle. So setzen der \texttt{Db2Graph}- und \texttt{Db2GraphOld}-Adapter auf dem \texttt{Db2}-Adapter auf. Beide erweitern dabei den Adapter um einen Verbindungsaufbau zu Db2 Graph und überschreiben die mittels Db2 Graph abwickelbaren lesenden Operationen.
+
+So wird der Code des \texttt{Db2}-Adapters beispielsweise bei den Vorbereitungen für die Messungen von den anderen beiden Adaptern genutzt um den von Linkbench generierten Datensatz in die Db2-Datenbank der Db2-Instanz zuschreiben. Schließlich können die Daten nicht mittels Db2 Graph in die Datenbank geschrieben werden, da die Graph-Erweiterung lediglich lesenden Operation unterstützt.
+
+Bei der Ausführung der im Rahmen dieser Arbeit bei den Messungen gebenchmarkten Operationen \texttt{getNode}, \texttt{getLink}, \texttt{countLink} und \texttt{getLinkList} spielt der Code des Db2-Adapters keine Rolle. An dieser Stelle wird bei den Messungen immer die jeweilige Implementierung der Operationen der Db2-Graph-Adapter herangezogen.
+
+\subsection{Db2GraphOld-Adapter}
+Bei dem \texttt{Db2GraphOld}-Adapter handelt es sich um die Implementierung eines Adapters für Db2 Graph Beta 3. Der Adapter spielt hierbei eine wichtige Rolle bei der im Rahmen dieser Arbeit durchgeführten Performance-Analyse. So wird er dabei dazu eingesetzt Messergebnisse für Db2 Graph Beta 3 zu erzielen. 
+
+Ein Teil der Implementierung des \texttt{Db2GraphOld}-Adapters leitet sich dabei vom bereits zuvor beschriebenen \texttt{Db2}-Adapter ab. So übernimmt der Adapter die Implementierung der schreibenden Operationen sowie den Verbindungsaufbau zu einer Db2-Instanz vom \texttt{Db2}-Adapter. Allerdings erweitert der \texttt{Db2GraphOld}-Adapter die Implementierung dahingehend, dass neben einer JDBC-Verbindung auch eine Gremlin-Verbindung zu einer Db2-Graph-Beta-3-Instanz aufgebaut wird. Darüber hinaus werden lesenden Operationen des Adapters so überschrieben, dass dort die in \autoref{src:gremlin_queries} und \autoref{src:gremlin_id_queries} aufgeführten Queries über die Gremlin-Verbindung an Db2 Graph übermittelt werden. 
+
+Bei der Nutzung und Konfiguration des Adapters gilt es hierbei zu beachten, dass der Adapter mittels JDBC eine Verbindung zur selben Db2-Instanz aufbaut, an die auch die Db2-Graph-Instanz angebunden ist, zu welcher der Adapter  eine Gremlin-Verbindung etabliert.
+
+\todo{Hier Bild zum Verständnis einfügen.}
+
+\subsection{Db2Graph-Adapter}
+Der Db2Graph-Adapter stellt eine Implementierung eines Adapters dar, der es ermöglicht Db2 Graph V11.5.6.0 an Linkbench anzubinden. Der Adapter wird dabei für alle Messungen mit Bezug zu Db2 Graph V11.5.6.0 eingesetzt. 
+
+Ähnlich wie der \texttt{Db2GraphOld-Adapter} setzt der Adapter für V11.5.6.0 ebenfalls auf dem \texttt{Db2}-Adapter auf. Er erbt von diesem die Logik zum Verbindungsaufbau zu einer Db2-Instanz und der Durchführung der schreibenden Operationen, die nicht über Db2 Graph abgewickelt werden können. 
+
+Des Weiteren überschreibt er ebenfalls die lesenden Operationen, sodass sie mittels der in \autoref{src:gremlin_queries} und \autoref{src:gremlin_id_queries} formulierten Queries mit der Db2-Graph-V11.5.6.0-Instanz interagieren. Dafür baut der Adapter ähnlich wie der \texttt{Db2GraphOld}-Adapter eine Gremlin-Verbindung auf. Der Verbindungsaufbau erfordert hier allerdings aufgrund des in Db2 Graph V11.5.6.0 neu eingeführten Verbindungs- und Session-Managements weitaus mehr Logik als beim \texttt{Db2GraphOld}-Adapter.
+
+\subsection{Neo4j-Adapter}
+Bei dem \texttt{Neo4j}-Adapters für Linkbench handelt es sich um einen Adapter für Linkbench, der mittels der Abfragesprache Cypher mit einer Neo4j-Instanz interagiert. Dabei wird der Adapter im Rahmen dieser Arbeit zur Durchführung aller Neo4j-spezifischen Messungen genutzt. 
+
+Anders als die Adapter für Db2 Graph und der \texttt{Db2}-Adapter musste dieser Adapter von Grund auf neu implementiert werden. Schließlich konnten sie weder auf dem \texttt{Db2}-Adapter noch auf dem generische-SQL-Adapter aufbauen. 
+
+So implementiert der Adapter alle Operationen die von Linkbench unterstützt werden, egal ob lesend oder schreibend. Bei den Messungen, die im Rahmen dieser Arbeit durchgeführt werden spielen allerdings lediglich die lesenden Operationen und ihre in \autoref{src:cypher_queries} und \autoref{src:cypher_id_queries} beschriebenen Queries eine Rolle.
+
+Nicht desto trotzt werden die schreibenden Operationen eingesetzt, um vor den Messungen den von Linkbench erzeugten Datensatz in Neo4j zu laden.
+
+Es gilt hierbei allerdings anzumerken, dass für die Anbindung von Neo4j an Linkbench nicht nur die Implementierung des hier beschrieben Adapters erforderlich war. Darüber hinaus musste eine Anpassung am Benchmark selbst vorgenommen werden, die es ermöglicht, dass das Erzeugen und Laden eines Datensatz während der \textit{Load}-Phase so abläuft, dass dies auch in Neo4j funktioniert. Dies wird allerdings in \todo{Hier Referenz Anpassung Knoten und Kanten laden.} genauer beschrieben.
+
+\section{Anpassungen}
+Im Rahmen dieses Abschnitts wird auf die Anpassungen eingegangen, die an Linkbench selbst durchgeführt wurden. Dazu gehört die Anpassung der \textit{Load}-Phase und die Einführung der \texttt{range\_limit}-Konfiguration.
+
+\subsection{Load-Phase}
+Um das Laden eines Datensatzes in eine Neo4j-Instanz zu unterstützen, musste im  Benchmark selbst eine Anpassung am Ablauf der \textit{Load}-Phase des Benchmarks vorgenommen werden. Dies ist notwendig da die Erzeugung und das Laden eines Datensatz bei Linkbench ohne die angesprochene Anpassung wie folgt ablaufen:
+\begin{enumerate}
+    \item Die Links (Kanten) des Datensatzes werden von Linkbench erzeugt und in eine Datenbank geladen. 
+    \item Linkbench erzeugt die Knoten des Datensatzes und lädt sie in eine Datenbank. 
+\end{enumerate}
+Dieser Ablauf funktioniert dabei bei relationalen Datenbanksystemen, bei den Knoten und Kanten in verschiedenen Tabellen gehalten werden. Bei Graphdatenbanksystemen wie Neo4j ist es allerdings nicht möglich, die Kanten vor den Knoten in eine Datenbank zu laden. Schließlich ist es nicht möglich Kanten in einem Graph abzubilden, ohne das zu diesem Zeitpunkt bereits die jeweiligen Start- und Zielknoten existieren. Dies widerspricht dem Graphmodell.
+
+Um trotzdem mit Linkbench einen erzeugten Datensatz in Neo4j laden zu können wurde daher eine Konfiguration namens \texttt{generate\_nodes\_first} eingeführt, die es ermöglicht den klassischen Ablauf der \textit{Load}-Phase umzukehren. Wird die Konfiguration auf \texttt{true} gesetzt, so werden dann zuerst die Knoten erzeugt und in eine Datenbank geladen und erst danach die Links (Kanten). Dadurch wird dafür gesorgt, dass die Start- und Ziel-Knoten bereits in den Graphdatenbank vorhanden sind, wenn die Kanten geladen werden. 
+
+Auch wenn die Anpassung dafür eingeführt wurde, um Linkbench-Messungen für Neo4j durchzuführen, so ist es auch möglich den Ablauf der \textit{Load}-Phase in Zusammenhang mit den anderen Datenbanksystemen wie Db2 Graph beziehungsweise Db2 zu invertieren. Dies bietet allerdings keinen besonderen Mehrwert, aber führt hingegen auch zu keinen Fehlern oder Problemen.  
+
+\subsection{Range-Limit-Konfiguration}

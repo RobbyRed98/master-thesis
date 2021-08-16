@@ -26,7 +26,7 @@ Von diesen sieben Voraussetzungen können im Rahmen der Arbeit jedoch lediglich 
 
 Bezüglich der anderen Punkte werden im Rahmen von \cite{sigmod_tian} keinerlei Informationen bereitgestellt. So ist beispielsweise nicht bekannt, mit welcher Version von Db2 Graph die Messungen durchgeführt wurden. Es ist allerdings wahrscheinlich, dass es sich weder um die Version Beta 3 noch V11.5.6.0 handelt, die über den Zeitraum der Arbeit verfügbar waren. Schließlich wurden beide Versionen mehrere Monate nach der Arbeit veröffentlicht. 
 
-Über die Benchmark-Konfiguration und die Implementierung des für den Benchmark benötigten Db2-Graph-Benchmark-Adapter ist ebenfalls nichts bekannt. Genau so werden in \cite{sigmod_tian} keine Informationen bezüglich der  Konfiguration der Db2 Instanz und Db2 Graph angegeben, obwohl diese für die Reproduktion der Ergebnisse eine wichtige Rolle spielen. 
+Über die Benchmark-Konfiguration und die Implementierung des für den Benchmark benötigten Db2-Graph-Benchmark-Adapter ist ebenfalls nichts bekannt. Genau so werden in \cite{sigmod_tian} keine Informationen bezüglich der  Konfiguration der Db2-Instanz und Db2 Graph angegeben, obwohl diese für die Reproduktion der Ergebnisse eine wichtige Rolle spielen. 
 
 Bezüglich des Datensatzes werden hingegen ein paar Eigenschaften in \cite{sigmod_tian} aufgeführt. Wie und ob der dort verwendet Datensatz durch den Daten-Generator des Benchmarks erzeugt werden kann, ist jedoch weiterhin unklar.
 
@@ -99,7 +99,7 @@ In diesem Abschnitt wird auf die verschiedenen Operationen eingegangen deren Per
 
 Bei den im Rahmen der Performance-Analyse gebenchmarkten Operationen handelt es sich um dieselben Operationen, die auch in \cite{sigmod_tian} untersucht werden. Dabei gilt es allerdings zu beachten, dass obwohl die Namen der Operationen gleich lauten, nicht bekannt ist, ob die Queries, die von ihnen an die Datenbanksysteme gesendet werden, identisch sind. Daher sollten aus den gleichen Namen keine falschen Schlüsse gezogen werden. 
 
-Des Weiteren ist es auch nicht möglich, die untersuchten Operationen im Vergleich zu \cite{sigmod_tian} auszuweiten. Schließlich handelt es sich lediglich bei diesen um lesende Operationen, die dadurch auch von Db2 Graph als eine Art Readonly-Datenbanksystem unterstützt werden. Alle weiteren Operationen, die von Linkbench unterstützt werden (\autoref{linkbench:operationen}), sind hingegen von schreibender Natur. 
+Des Weiteren ist es auch nicht möglich, die untersuchten Operationen im Vergleich zu \cite{sigmod_tian} auszuweiten. Schließlich handelt es sich lediglich bei diesen um lesende Operationen, die dadurch auch von Db2 Graph als eine Art Read-Only-Datenbanksystem unterstützt werden. Alle weiteren Operationen, die von Linkbench unterstützt werden (\autoref{linkbench:operationen}), sind hingegen von schreibender Natur. 
 
 Bei den im Rahmen der Performance-Analyse gebenchmarkten Operationen handelt es sich hierbei um:
 \begin{itemize}
@@ -342,11 +342,11 @@ Im Rahmen der Performance-Analyse werden Messungen mit den folgenden Datenbanksy
 In den folgenden Unterabschnitten werden dabei die wichtige Anwendungs- be\-zieh\-ungs\-wei\-se System-Konfigurationen beschrieben. 
 
 \subsection{Db2}
-Die beiden Db2 Graph Versionen verwenden im Rahmen der Performance-Analyse bei allen Messungen dieselbe Db2 Instanz. Dadurch wird gewährleistet, dass beide auf ein relationales Datenbankmanagementsystem zugreifen, das sich nicht in der Konfiguration zwischen den Db2 Graph Versionen unterscheidet. Außerdem können somit beide Db2 Graph Versionen auf Basis eines identischen Datensatzes operieren. Auf diese Weise kann eine Verzerrung der Messergebnisse vermieden werden und beide Versionen von Db2 Graph arbeiten während des Benchmarking unter denselben Voraussetzungen.
+Die beiden Db2 Graph Versionen verwenden im Rahmen der Performance-Analyse bei allen Messungen dieselbe Db2-Instanz. Dadurch wird gewährleistet, dass beide auf ein relationales Datenbankmanagementsystem zugreifen, das sich nicht in der Konfiguration zwischen den Db2 Graph Versionen unterscheidet. Außerdem können somit beide Db2 Graph Versionen auf Basis eines identischen Datensatzes operieren. Auf diese Weise kann eine Verzerrung der Messergebnisse vermieden werden und beide Versionen von Db2 Graph arbeiten während des Benchmarking unter denselben Voraussetzungen.
 
-Bei der Db2 Instanz, die von beiden Db2 Graph Versionen genutzt wird, handelt es sich um die Db2 Advanced Edition in Version v11.5.5.1. Per Konfiguration wurden ihr 180 GB an Arbeitsspeicher zugewiesen. Darüber hinaus verfügt sie über die für Linkbench benötigte Datenbank \texttt{linkdb0}. Diese weist im Kontext aller Messungen das in \autoref{src:linkdb0_schema} beschrieben Datenbankschema auf:
+Bei der Db2-Instanz, die von beiden Db2 Graph Versionen genutzt wird, handelt es sich um die Db2 Advanced Edition in Version v11.5.5.1. Per Konfiguration wurden ihr 180 GB an Arbeitsspeicher zugewiesen. Darüber hinaus verfügt sie über die für Linkbench benötigte Datenbank \texttt{linkdb0}. Diese weist im Kontext aller Messungen das in \autoref{src:linkdb0_schema} beschrieben Datenbankschema auf:
 
-\begin{lstlisting}[label=src:linkdb0_schema,caption={Db2 Instanz Datenbankschema für linkdb0},language=SQL]
+\begin{lstlisting}[label=src:linkdb0_schema,caption={Db2-Instanz Datenbankschema für linkdb0},language=SQL]
 CREATE TABLE linkdb0.nodetable
 (
     id      bigint NOT NULL GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
@@ -494,7 +494,7 @@ Bevor damit allerdings auf die Unterschiede beziehungsweise die variierenden Par
     In der in \autoref{analyse:umgebung} beschrieben Umgebung, werden alle Messreihen durchgeführt. 
     \item \textit{Linkbench-Threads}\\
     Linkbench arbeitet in der Request-Phase immer mit 50 Threads die gleichzeitig Anfragen an ein Datenbanksystem schicken.
-    \item \textit{Db2 Datenbankschema}\\
+    \item \textit{Db2-Datenbankschema}\\
     Das Db2-Datenbankschema von \texttt{linkdb0} aus \autoref{src:linkdb0_schema} wird zwischen den Messreihen nicht verändert oder angepasst. 
     \item \textit{Konfiguration Db2 Graph Beta 3 \& V11.5.6.0}\\
     Die Graph-Overlay-Konfiguration in \autoref{src:db2graph_mapping} und die Gremlin-Server-Konfiguration der Db2 Graph Versionen bleiben über alle Messungen hinweg unverändert.

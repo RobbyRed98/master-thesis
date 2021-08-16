@@ -1,13 +1,12 @@
 \section{Linkbench}
 \label{linkbench}
-
-Wird der Benchmark Linkbench genauer beschrieben. Schließlich spielt der Benchmark im Rahmen dieser Arbeit eine wichtige Rolle bezüglich der Performance Ermittlung für die Datenbanksysteme Neo4j und Db2 Graph. Er wird dabei auch im Rahmen dieser Arbeit um entsprechende Adapter für jene Datenbanksysteme erweitert. Dazu allerdings mehr in \todo{Referen Implementierung}. Dieser Abschnitt fokussiert sich dabei auf die Theorie hinter dem Benchmark. 
+In diesem Abschnitt wird der Benchmark Linkbench genauer beschrieben. Schließlich spielt der Benchmark im Rahmen dieser Arbeit eine wichtige Rolle bezüglich der Performance-Analyse für die Datenbanksysteme Neo4j und Db2 Graph. Er wird dabei auch im Rahmen dieser Arbeit um entsprechende Adapter für jene Datenbanksysteme erweitert. Dazu allerdings mehr in \compref{implementierung}. Dieser Abschnitt fokussiert sich dabei auf die Theorie hinter dem Benchmark. 
 
 \subsection{Motivation}
 Der Benchmark Linkbench wurde von Facebook entwickelt \cite{linkbench_paper}. Die Motivation hinter der Entwicklung des Benchmarks war es, einen Benchmark zu schaffen, der reale Datenbankarbeitslasten in sozialen Netzwerken beziehungsweise Anwendungen reflektiert \cite{linkbench_paper}. Ein weiteres Ziel dabei war es, anhand des Benchmarks, die Performance von Datenbanksystemen bei solchen Workloads messen und einordnen zu können \cite{linkbench_paper}.
 
-\subsection{Datenstruktur \& Schema}
-Aufgrund dessen arbeitet der Benchmark mit einer Datenstruktur die sich am Facebook-Social-Graph orientiert \cite{linkbench_paper}. Das Linkbench-Github-Repository \cite{fb_linkbench_github} von Facebook führt ein Beispiel-Schema für das relationale Datenbanksystem MySQL auf. Die darin beschriebene Datenbankstruktur sieht dabei wie folgt auf \autoref{src:linkbench_mysql} \cite{fb_linkbench_github}. 
+\subsection{Datenstruktur und Schema}
+Der Benchmark arbeitet auf der Basis einer Datenstruktur, die sich am Facebook-Social-Graph orientiert \cite{linkbench_paper}. Das Linkbench-Github-Repository \cite{fb_linkbench_github} von Facebook führt ein Beispiel-Schema für das relationale Datenbanksystem MySQL auf. Die darin beschriebene Datenbankstruktur sieht dabei wie \autoref{src:linkbench_mysql} in beschrieben aus \cite{fb_linkbench_github}. 
 
 \begin{lstlisting}[caption={Linkbench MySQL-Schema},language=SQL,label=src:linkbench_mysql]
 CREATE TABLE `linktable` (
@@ -40,13 +39,13 @@ CREATE TABLE `nodetable` (
     PRIMARY KEY(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 \end{lstlisting}
-Die \texttt{nodetable} repräsentiert dabei alle Knoten in einem Social-Graph. Die Kanten werden hingegen von \texttt{linktable} verkörpert. Zugleich gibt es noch eine dritte Tabelle, welche eingeführt wurde, um die Performance für die \texttt{CountLinks}-Operation zu verbessern.
+Die \texttt{nodetable} repräsentiert dabei alle Knoten in einem Social-Graph. Die Kanten werden hingegen von \texttt{linktable} verkörpert. Zugleich gibt es noch eine dritte Tabelle, welche eingeführt wurde, um die Performance für die \texttt{countLink}-Operation zu verbessern.
 
 \subsection{Operationen}
 \label{linkbench:operationen}
-Bei den Operationen, die während des Benchmarks gemessen werden, handelt es sich um klassische CRUD-Operationen für Einträge, welche die Knoten und Kanten eines Graphen repräsentieren \cite{linkbench_paper}. 
+Bei den Operationen, die während des Benchmarks gemessen werden, handelt es sich um klassische OLTP-Operationen bei denen einzelne oder mehrere  Knoten und Kanten eines Graphen abgefragt werden \cite{snb_paper}. 
 
-Im folgenden werden alle Knoten-spezifischen Benchmark-Operationen aufgeführt:
+Im Folgenden werden alle Knoten-spezifischen Benchmark-Operationen aufgeführt:
 \begin{itemize}
     \item \texttt{addNode}\\
     Fügt einen Knoten hinzu \cite{fb_linkbench_github}.
@@ -73,39 +72,36 @@ Hier werden alle Kanten- beziehungsweise Link-spezifischen Operationen kurz erl�
     \item \texttt{getLinkList}\\
     Fragt Links ab, die mit einem bestimmten Knoten verbunden sind \cite{fb_linkbench_github}.
 \end{itemize}
-\todo{Etwas bezüglich OLTP-Lastigkeit schreiben!}
 
 \subsection{Phasen}
 Der Benchmark kennt zwei Phasen während eines Durchlaufs: 
 \begin{itemize}
     \item \textit{Load}\\
-    Während dieser Phase wird ein Datensatz für die spätere Request-Phase generiert und in die jeweilige Datenbank geschrieben \cite{fb_linkbench_github}.
+    Während dieser Phase wird ein Datensatz für die spätere \textit{Request}-Phase generiert und in die jeweilige Datenbank geschrieben \cite{fb_linkbench_github}.
     \item \textit{Request}\\
-    In der Request-Phase findet das eigentliche Benchmarking statt. Hierbei werden die verschiedenen Operationen durchgeführt und deren Zeiten gemessen. Am Ende werden basierend darauf Benchmark-Statistiken erstellt \cite{fb_linkbench_github}. 
+    In der \textit{Request}-Phase findet das eigentliche Benchmarking statt. Hierbei werden die verschiedenen Operationen durchgeführt und deren Zeiten gemessen. Am Ende werden basierend darauf Benchmark-Statistiken erstellt \cite{fb_linkbench_github}. 
 \end{itemize}
-Diese können zusammen oder getrennt durchgeführt werden \cite{fb_linkbench_github}.
+Die beiden Phasen können hierbei zusammen oder getrennt durchgeführt werden \cite{fb_linkbench_github}.
 
 \subsection{Erweiterbarkeit}
-Der Linkbench-Benchmark wurde so entworfen, das verschiedene Datenbanksysteme ohne großen Aufwand an den Benchmark angebunden werden können \cite{linkbench_paper}. Um ein Datenbanksystem an den Benchmark anzubinden, muss ein entsprechender Adapter entwickelt werden. Ein solcher Adapter muss dabei die in \autoref{linkbench:operationen} beschrieben Operationen implementieren. Darüber hinaus muss er auch über den Code bezüglich des Verbindungsaufbaus zum Datenbanksystem verfügen. 
+Der Benchmark Linkbench wurde so entworfen, das verschiedene Datenbanksysteme ohne großen Aufwand an den Benchmark angebunden werden können \cite{linkbench_paper}. Um ein Datenbanksystem an den Benchmark anzubinden, muss ein entsprechender Adapter entwickelt werden. Ein solcher Adapter muss dabei die in \autoref{linkbench:operationen} beschrieben Operationen implementieren. Darüber hinaus muss er auch über den Code bezüglich des Verbindungsaufbaus zum Datenbanksystem verfügen. 
 
 Des Weiteren gilt es bezüglich der Erweiterbarkeit von Linkbench noch zu erwähnen, dass das gesamte Projekt als Open-Source unter der Apache-2.0-Lizenz frei verfügbar ist.
 
 \subsection{Konfiguration}
 Der Linkbench Benchmark kann an verschiedenen Stellen konfiguriert werden \cite{linkbench_paper,fb_linkbench_github}. Dabei wird zwischen einer Adapter- und Workload-Konfiguration unterschieden \cite{fb_linkbench_github}. 
 
-In der Adapter-Konfiguration werden dabei Werte festgelegt, die für die Konfiguration der Datenbank-Adapter benötigt werden \cite{fb_linkbench_github}. So werden darin beispielsweise Informationen angegeben die für den Verbindungsaufbau und die Authentifizierung an einer Datenbank benötigt werden \cite{fb_linkbench_github}. Unter anderem wird darin auch bestimmt, welche Workload-Konfiguration während eines Benchmark-Durchlaufs herangezogen wird \cite{fb_linkbench_github}. 
+In der Adapter-Konfiguration werden dabei Werte festgelegt, die für die Konfiguration der Datenbank-Adapter benötigt werden \cite{fb_linkbench_github}. So werden darin beispielsweise Informationen angegeben, die für den Verbindungsaufbau und die Authentifizierung an einer Datenbank benötigt werden \cite{fb_linkbench_github}. Unter anderem wird darin auch bestimmt, welche Workload-Konfiguration während der \textit{Request}-Phase herangezogen wird \cite{fb_linkbench_github}. 
 
-Die Workload-Konfiguration regelt hingegen, die Zusammensetzung des Workloads während eines Benchmark-Durchlaufs \cite{fb_linkbench_github}. Darüber hinaus werden in dieser Konfiguration wichtige Details für den Datengenerator des Benchmarks festgelegt \cite{fb_linkbench_github}. So bestimmt die Konfiguration in der Load-Phase, welche Daten in eine Datenbank geschrieben werden \cite{fb_linkbench_github}. Zugleich wird von der Workload-Konfiguration bestimmt, wie sich der Operations-Mix während der Request-Phase zusammen setzt \cite{fb_linkbench_github}.
+Die Workload-Konfiguration regelt hingegen die Zusammensetzung des Workloads während einer \textit{Request}-Phase \cite{fb_linkbench_github}. Darüber hinaus werden in dieser Konfiguration wichtige Details für den Datengenerator des Benchmarks festgelegt \cite{fb_linkbench_github}. So bestimmt die Konfiguration in der \textit{Load}-Phase, welche Daten in eine Datenbank geschrieben werden \cite{fb_linkbench_github}. Zugleich wird von der Workload-Konfiguration bestimmt, wie sich der Operationsmix während der \textit{Request}-Phase zusammen setzt \cite{fb_linkbench_github}.
 
 \subsection{Zusammenfassung}
 Bei Linkbench handelt es sich um einen Benchmark für Datenbanksysteme. Er legt seinen Fokus auf das Messen der Performance von Graph-Operationen. Die Struktur der Daten spiegelt dabei einen Social-Graph wider. 
 
-Bei den Graph-Operationen die in Linkbench gebenchmarkt werden handelt es sich um klassische CRUD-Operationen für Knoten und Kanten (Links). Aus diesem Muster sticht lediglich die \texttt{countLink}-Operation heraus. Sie ist die einzige Operation, bei der es zu einer Aggregation kommen kann, je nach Adapter-Implementierung. 
+Bei den Graph-Operationen die in Linkbench gebenchmarkt werden handelt es sich um OLTP-Operationen für die Knoten und Kanten (Links) des Social-Graphs.
 
-Der Linkbench-Benchmark kann bei in zwei verschiedenen Phasen operieren. Während der Load-Phase werden hierbei Daten generiert und in eine Datenbank geschrieben. In der Request-Phase findet das eigentliche Benchmarking statt. In ihr wird die Performance der Graph-Operationen ermittelt und abschließend eine Statistik erzeugt. Die Messungen in der Request-Phase setzen dabei einen in der Load-Phase erzeugten Datensatz voraus. 
+Der Linkbench-Benchmark kann in zwei verschiedenen Phasen operieren. Während der \textit{Load}-Phase werden Daten generiert und in eine Datenbank geschrieben. In der \textit{Request}-Phase findet das eigentliche Benchmarking statt. In ihr wird die Performance der Graph-Operationen ermittelt und abschließend eine Statistik erzeugt. Die Messungen in der \textit{Request}-Phase setzen dabei einen in der \textit{Load}-Phase erzeugten Datensatz voraus. 
 
 Linkbench ist als Open-Source-Projekt unter der Apache-2.0-Lizenz auf Github verfügbar. Die Anbindung neuer Datenbanksysteme an den Benchmark setzt die Implementierung eines Datenbanksystem-spezifischen Adapters voraus. 
 
-Der Adapter verfügt über viele Konfiguration-Möglichkeiten. Einerseits liegen Adapter-Konfigurationen vor, welche Datenbanksystem-spezifische Einstellungen verwalten. Darüber hinaus gibt es Workload-Konfigurationen, sie organisieren  die Steuerung der Load- oder Request-Phase. 
-
-\todo{Hier sollte man noch erwähnen, dass der Benchmark OLTP-lastig ist.}
+Der Adapter verfügt über viele Konfiguration-Möglichkeiten. Einerseits liegen Adapter-Konfigurationen vor, welche Datenbanksystem-spezifische Einstellungen verwalten. Darüber hinaus gibt es Workload-Konfigurationen, die die Steuerung der \textit{Load}- oder \textit{Request}-Phase organisieren. 

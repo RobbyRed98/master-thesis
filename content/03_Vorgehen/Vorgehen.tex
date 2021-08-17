@@ -22,7 +22,7 @@ Eine Reproduktion der Ergebnisse der Performance-Analyse aus \cite{sigmod_tian} 
     \item derselbe Datensatz und 
     \item dieselbe Umgebung (OS, Ressourcen, etc.) wie in \cite{sigmod_tian}.
 \end{itemize}
-Von diesen sieben Voraussetzungen können im Rahmen der Arbeit jedoch lediglich zwei teilweise erfüllt werden. Bei diesen zwei Voraussetzungen, die sich teilweise erfüllen lassen, handelt es sich um den Benchmark und die Ressourcen. Die Ressourcen werden hierbei in \cite{sigmod_tian}  genau beschrieben. Darüber hinaus wird in \cite{sigmod_tian} auch aufgeführt, dass Linkbench als Benchmark für die Messungen herangezogen wird. Allerdings wird keine Auskunft darüber gegeben, welche Version beziehungsweise Implementierung von Linkbench für die Messungen genutzt wird.
+Von diesen sieben Voraussetzungen können im Rahmen der Arbeit jedoch lediglich zwei in einem gewissen Umfang erfüllt werden. Bei diesen zwei Voraussetzungen, die sich teilweise erfüllen lassen, handelt es sich um den Benchmark und die Ressourcen. Die Ressourcen werden hierbei in \cite{sigmod_tian}  genau beschrieben. Darüber hinaus wird in \cite{sigmod_tian} auch aufgeführt, dass Linkbench als Benchmark für die Messungen herangezogen wird. Allerdings wird keine Auskunft darüber gegeben, welche Version beziehungsweise Implementierung von Linkbench für die Messungen genutzt wird.
 
 Bezüglich der anderen Punkte werden im Rahmen von \cite{sigmod_tian} keinerlei Informationen bereitgestellt. So ist beispielsweise nicht bekannt, mit welcher Version von Db2 Graph die Messungen durchgeführt wurden. Es ist allerdings wahrscheinlich, dass es sich weder um die Version Beta 3 noch V11.5.6.0 handelt, die über den Zeitraum der Arbeit verfügbar waren. Schließlich wurden beide Versionen mehrere Monate nach der Arbeit veröffentlicht. 
 
@@ -49,7 +49,7 @@ Sollte jedoch keine der für die Messungen benötigten Adapter-Implementierung v
 Abschließend gilt es darauf hinzuweisen, dass obwohl beim neuen Ziel einige Elemente von \cite{sigmod_tian} übernommen werden, die hier erzielten Ergebnisse nicht mit den aus \cite{sigmod_tian} vergleichbar sein werden.
 
 \section{Linkbench}
-Auch wenn sich das Ziel der Arbeit geändert hat, so wird Linkbench weiterhin als Benchmark zur Performance-Analyse herangezogen. Daher wird eine Implementierung für Linkbench sowie Adapter für Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j benötigt. Die Wahl der Linkbench und Adapter Implementierung sowie ihre Umsetzungen werden allerdings in \autoref{implementierung} beschrieben. 
+Auch wenn sich das Ziel der Arbeit geändert hat, so wird Linkbench weiterhin als Benchmark zur Performance-Analyse herangezogen. Daher wird eine Implementierung für Linkbench sowie Adapter für Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j benötigt. Die Wahl der Linkbench- und Adapter-Implementierung sowie gegebenenfalls ihre Umsetzungen werden allerdings in \autoref{implementierung} beschrieben. 
 
 In diesem Abschnitt als Teil des Kapitels \nameref{vorgehen} wird auf die Begriffe: 
 \begin{itemize}
@@ -57,7 +57,7 @@ In diesem Abschnitt als Teil des Kapitels \nameref{vorgehen} wird auf die Begrif
     \item Request-Anzahl und
     \item Operationsmix eingegangen.
 \end{itemize}
-Hierbei handelt es sich um wichtige Konfigurationen von Linkbench. Diese spielen während der \textit{Request}-Phase des Benchmarks eine Rolle. Darüber hinaus stellen sie auch relevante Parameter für die im Rahmen der Performance-Analyse durchgeführten Messungen dar. 
+Hierbei handelt es sich um wichtige Konfigurationen von Linkbench. Diese spielen während der \textit{Request}-Phase des Benchmarks eine signifikante Rolle. Darüber hinaus stellen sie auch relevante Parameter für die im Rahmen der Performance-Analyse durchgeführten Messungen dar. 
 
 \subsection{Linkbench-Threads}
 \label{analyse:linkbench:threads}

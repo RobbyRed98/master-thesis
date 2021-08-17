@@ -13,7 +13,7 @@ Zum Schluss findet eine umfassende Auswertung der Ergebnisse statt, wobei die Er
 
 \section{Linkbench-10M-Const}
 \label{ergebnisse:10m_const}
-In den folgenden Tabellen werden die Latenzwerte aufgeführt, die im Rahmen dieser Messreihe für die Operationen der jeweiligen Datenbanksysteme erzielt wurden. 
+Dieser Abschnitt führt Latenz- und Durchsatzwerte auf, die im Rahmen dieser Messreihe für die Operationen der jeweiligen Datenbanksysteme Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j erzielt wurden. Die Ergebnisse, die dieser Abschnitt umfasst, wurden hierbei auf Basis eines kleineren konstant-verteilten Datensatzes erzielt. 
 
 Die \autoref{tab:latenz_10m_const:beta3} stellt dabei die Ergebnisse dar, die für Db2 Graph Beta 3 mit dem \texttt{Db2GraphOld}-Adapter gemessen wurden. In \autoref{tab:latenz_10m_const:ga} werden hingegen die gemessen Latenzen für Db2 Graph V11.5.6.0 beschrieben. In \autoref{tab:latenz_10m_const:ga} werden die Latenzergebnisse für Db2 Graph V11.5.6.0 aufgeführt, die bei den Messungen dieser Messreihe erzielt wurden. Die Latenzen die für Neo4j in dieser Messreihe erzielt wurden, werden in \autoref{tab:latenz_10m_const:neo4j} aufbereitet dargelegt. 
 
@@ -100,7 +100,7 @@ Bei genauerer Betrachtung der durchschnittlichen Latenzergebnisse fällt darübe
 \end{enumerate}
 Bei Db2 Graph Beta 3 scheint dies interessanterweise nicht der Fall zu sein. Dort weisen zwar \texttt{getNode} und \texttt{getLinkList} dieselben Positionen im Ranking auf, allerdings verfügt hier \texttt{getLink} über eine geringere Performance als \texttt{countLink}.
 
-Die Ergebnisse für durchschnittlichen Durchsatz zeigen ein ähnliches Bild, wie die Latenzwerte der Datenbanksysteme. So ist auch in \autoref{} erkennbar, dass Neo4j mit Abstand den höchsten Durchsatz aufweist, gefolgt von Db2 Graph Beta 3 und dann mit etwas größerem Abstand Db2 Graph V11.5.6.0.
+Die Ergebnisse für durchschnittlichen Durchsatz zeigen ein ähnliches Bild wie die Latenzwerte der Datenbanksysteme. So ist auch in \autoref{} erkennbar, dass Neo4j mit Abstand den höchsten Durchsatz aufweist, gefolgt von Db2 Graph Beta 3 und dann mit etwas größerem Abstand Db2 Graph V11.5.6.0.
 
 \todo{Hier Diagramm für Durchsatz einfügen.}
 \todo{Auf Ressourcen Auslastung verweisen.}
@@ -109,7 +109,7 @@ Die Ergebnisse für durchschnittlichen Durchsatz zeigen ein ähnliches Bild, wie
 \label{ergebnisse:10m_const_id}
 In diesem Abschnitt wird auf die Messergebnisse für die Datenbanksysteme Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j eingegangen. Dafür werden die Latenz- und Durchsatzergebnisse im Folgenden dargestellt und interpretiert. 
 
-Die Ergebnisse dieser Messreihe spielen, als einzige Ergebnisse die unter Nutzung der ID-Queries statt der regulären Queries erzielt wurden, eine besondere Rolle. So wird hier am Ende auch ein kurzer Vergleich zu den Ergebnissen der Messreihe \nameref{ergebnisse:10m_const} gezogen, da diese bis auf die Queries dasselbe Szenario abbildet.
+Die Ergebnisse dieser Messreihe spielen als einzige Ergebnisse, die unter Nutzung der ID-Queries statt der regulären Queries erzielt wurden, eine besondere Rolle. So wird hier am Ende auch ein kurzer Vergleich zu den Ergebnissen der Messreihe \nameref{ergebnisse:10m_const} gezogen, da diese bis auf die Queries dasselbe Szenario abbildet.
 
 Bei der Analyse der Latenzergebnisse aus dieser Messreihe für Db2 Graph Beta 3 (\autoref{tab:latenz_10m_const_id:beta3}), Db2 Graph V11.5.6.0 (\autoref{tab:latenz_10m_const_id:ga}) und Neo4j (\autoref{tab:latenz_10m_const_id:neo4j}) fällt auf, dass auch hier Neo4j mit großem Abstand zu den beiden Db2 Graph Versionen die geringste Latenz aufweist. Dabei bewegen sich die Resultate und Performance-Unterschiede der Datenbanksysteme bei den gebenchmarkten Operationen in einer vergleichbaren Größenordnung wie bei der Messreihe \nameref{ergebnisse:10m_const} mit den regulären Queries. 
 
@@ -269,7 +269,7 @@ getLinkList & 2,93ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {
 \label{tab:latenz_100m_const:neo4j}
 \end{table}
 
-Beim Vergleich der in diesem Abschnitt aufgeführten Latenzergebnisse mit denen aus \nameref{ergebnisse:10m_const} die auf Basis eines kleineren Datensatzes erzielt wurden, fällt auf, dass die durchschnittliche Latenz bei allen Datenbanksystemen geringfügig höher ausfallen, als bei \nameref{ergebnisse:10m_const}. 
+Beim Vergleich der in diesem Abschnitt aufgeführten Latenzergebnisse, mit denen aus \nameref{ergebnisse:10m_const} die auf Basis eines kleineren Datensatzes erzielt wurden, fällt auf, dass die durchschnittliche Latenz bei allen Datenbanksystemen geringfügig höher ausfallen, als bei \nameref{ergebnisse:10m_const}. 
 
 Dieses Verhalten entspricht dabei allerdings den Erwartungen, da normalerweise immer davon ausgegangen werden sollte, dass die Beantwortung der Queries auf Basis eines größeren Datensatzes mehr Zeit benötigt als bei einem kleinen Datensatz. Schließlich steigt hierbei der Verarbeitungsaufwand für die Datenbanksysteme. 
 
@@ -277,6 +277,209 @@ Der Unterschied zwischen den Messreihen fällt hier sogar kleiner aus als erwart
 
 \section{Linkbench-10M-Real}
 \label{ergebnisse:10m_real}
+In diesem Abschnitt werden die Ergebnisse für die Messreihe \nameref{ergebnisse:10m_real} dargestellt und untersucht. Hierbei handelt es sich um die ersten Messergebnisse die für einen (kleinen) real-verteilten Datensatz erzielt wurden. So beinhalten die hier aufgeführten Messergebnisse sowohl Latenz- als auch Durchsatzwerte für die \texttt{getLinkList}-Operation mit jeweils verschieden hohen Ergebnismenge. Das Datenbanksystem Db2 Graph Beta 3 spielt in den Messungen hingehen keine Rolle.
+
+Bei der Analyse der Latenzwerte von Db2 Graph V11.5.6.0 (\autoref{tab:latenz_10m_real:ga} und \autoref{tab:latenz_10m_real:ga:gll}) und Neo4j (\autoref{tab:latenz_10m_real:neo4j} und \autoref{tab:latenz_10m_real:neo4j:gll}) bietet sich ein ähnlicher Anblick, wie bei den konstant-verteilten Datensätzen. Neo4j weist weitaus geringere Latenzergebnisse auf als Db2 Graph V11.5.6.0. 
+
+Dabei fällt allerdings auf, dass die durchschnittlichen Latenzen bei Db2 Graph V11.5.6.0 vergleichbar hoch sind wie in \autoref{tab:latenz_10m_const:ga} bei der Messreihe \nameref{ergebnisse:10m_const} mit dem kleineren konstant-verteilten Datensatz. Dies ist außergewöhnlich, da sich die Datensätze nicht nur bezüglich der Verteilung, sondern auch was die Größe beziehungsweise die Kantenanzahl betrifft, erheblich unterscheiden.
+
+\begin{table}[!h]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{l|r|r|r|r|r|r|r}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Operation}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Mean}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p25}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p50}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p75}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p95}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p99}} &
+\multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Max.}} \\ \hline
+getNode & 17,88ms & {[}4,5{]}ms & {[}13,14{]}ms & {[}29,30{]}ms & {[}42,43{]}ms & {[}49,50{]}ms & 293,64ms \\
+getLink & 20,47ms & {[}6,7{]}ms & {[}14,15{]}ms & {[}33,34{]}ms & {[}49,50{]}ms & {[}57,58{]}ms & 356,93ms \\
+countLink & 18,32ms & {[}5,6{]}ms & {[}12,13{]}ms & {[}30,31{]}ms & {[}44,45{]}ms & {[}51,52{]}ms & 277,05ms \\ \hline
+\end{tabular}
+}
+\caption{Latenz Linkbench-10M-Real Db2 Graph V11.5.6.0}
+\label{tab:latenz_10m_real:ga}
+\end{table}    
+
+\begin{table}[!h]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{r|r|r|r|r|r|r|r}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Mean}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p25}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p50}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p75}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p95}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p99}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Max.}} &
+\multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Limit}} \\ \hline
+19,64ms & {[}5,6{]}ms & {[}13,14{]}ms & {[}32,33{]}ms & {[}47,48{]}ms & {[}55,56{]}ms & 401,99ms & 100\\
+20,12ms & {[}5,6{]}ms & {[}14,15{]}ms & {[}32,33{]}ms & {[}48,49{]}ms & {[}57,58{]}ms & 442,84ms & 1.000\\
+22,37ms & {[}5,6{]}ms & {[}15,16{]}ms & {[}35,36{]}ms & {[}53,54{]}ms & {[}68,69{]}ms & 776,83ms & 10.000\\
+34,00ms & {[}6,7{]}ms & {[}20,21{]}ms & {[}44,45{]}ms & {[}82,83{]}ms & {[}100,200{]}ms & 3.125,17ms & 100.000\\ \hline
+\end{tabular}
+}
+\caption{Latenz Linkbench-10M-Real Db2 Graph V11.5.6.0 GetLinkList}
+\label{tab:latenz_10m_real:ga:gll}
+\end{table}
+
+\begin{table}[!h]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{l|r|r|r|r|r|r|r}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Operation}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Mean}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p25}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p50}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p75}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p95}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p99}} &
+\multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Max.}} \\ \hline
+getNode & 2,89ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}3,4{]}ms & {[}5,6{]}ms & 1.073,54ms \\
+getLink & 3,30ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}5,6{]}ms & {[}9,10{]}ms & 2.433,82ms \\
+countLink & 3,05ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & 1.381,42ms \\ \hline
+\end{tabular}
+}
+\caption{Latenz Linkbench-10M-Real Neo4j}
+\label{tab:latenz_10m_real:neo4j}
+\end{table}
+
+\begin{table}[!h]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{l|r|r|r|r|r|r|r}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Operation}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Mean}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p25}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p50}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p75}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p95}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p99}} &
+\multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Max.}} \\ \hline
+getLinkList & 3,08ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & 1.021,83ms \\
+getLinkList & 3,42ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}6,7{]}ms & {[}11,12{]}ms & 982,84ms \\
+getLinkList & 4,38ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & {[}16,17{]}ms & 1.041,73ms \\
+getLinkList & 5,46ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & {[}21,22{]}ms & 1.855,68ms \\ \hline
+\end{tabular}
+}
+\caption{Latenz Linkbench-10M-Real Neo4j GetLinkList}
+\label{tab:latenz_10m_real:neo4j:gll}
+\end{table}
+
+In Bezug zu den Latenzwerten für die \texttt{getLinkList}-Operation mit jeweils unterschiedlichen Grenzen für die Ergebnismenge fällt auf, dass die ursprünglichen Durchschnittslatenzen von Db2 Graph V11.5.6.0 und Neo4j zwischen den Messungen mit einer maximalen Ergebnismenge von 100 und 100.000 nahezu verdoppeln.
 
 \section{Linkbench-100M-Real}
 \label{ergebnisse:100m_real}
+Im Rahmen dieses Abschnitts werden die Latenz- und Durchsatzergebnisse für Db2 Graph V11.5.6.0 und Neo4j aufgeführt. Alle Messungen deren Ergebnisse hier zur Schau gestellt werden, wurden auf Basis eines größeren real-verteilten Datensatzes erzielt. So umfasst der Datensatz dieser Messreihe (\nameref{ergebnisse:100m_real}) die zehnfache Anzahl an Knoten und Kanten wie der Datensatz der Messreihe \nameref{ergebnisse:10m_real}. Im Kontext dieser Ergebnisse spielt Db2 Graph Beta 3 wie bereits bei \autoref{ergebnisse:10m_real} keine Rolle. Darüber hinaus existieren  ebenfalls mehrere Messergebnisse für die \texttt{getLinkList}-Operation mit einer variierenden Beschränkung der Ergebnismenge.
+
+Bei der Untersuchung der Latenzwerte von Db2 Graph V11.5.6.0 (\autoref{tab:latenz_100m_real:ga} und \autoref{tab:latenz_100m_real:ga:gll}) und Neo4j (\autoref{tab:latenz_100m_real:neo4j} und \autoref{tab:latenz_100m_real:neo4j:gll}) fällt auf, dass Neo4j wieder deutlich niedrigere Durchschnittslatenzen aufweist als Db2 Graph V11.5.6.0. 
+
+Die Messergebnisse für die Latenzen beider Datenbanksysteme ähneln dabei denen des kleineren real-verteilten Datensatzes aus \nameref{ergebnisse:10m_real}. Dieses Verhalten könnte sich wie bereits bei den konstant-verteilten Datensätzen basierten Messreihen damit erklären, dass Db2 und Neo4j beiden um einen Bufferpool und Page-Cache verfügen, in alle Datensätze vollständig geladen werden können, egal ob Linkbench-10M oder Linkbench-100M.
+
+Des Weiteren fällt auch beim Vergleich der Werte von \autoref{tab:latenz_100m_const:ga} mit \autoref{tab:latenz_100m_real:ga} und \autoref{tab:latenz_100m_real:ga:gll} auf, dass sich die durchschnittlichen Latenzen überraschend ähneln, obwohl sich die Größe und Verteilung der Datensätze erheblich unterscheidet.
+
+Bei der Analyse der durchschnittlichen Latenzen der \texttt{getLinkList}-Operationen mit variierender Ergebnismenge kann hierbei identifiziert werden, dass die Db2 Graph V11.5.6.0  (\autoref{tab:latenz_10m_real:ga}) und Neo4j Werte beide bei der steigenden Beschränkung der Ergebnismenge deutlich erhöhen. Bei Neo4j verdoppelt sich hierbei die durchschnittliche Latenz sogar, während dies bei Db2 Graph V11.5.6.0 nicht der Fall ist. 
+\begin{table}[!h]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{l|r|r|r|r|r|r|r}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Operation}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Mean}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p25}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p50}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p75}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p95}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p99}} &
+\multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Max.}} \\ \hline
+getNode & 17,91ms & {[}5,6{]}ms & {[}13,14{]}ms & {[}29,30{]}ms & {[}42,43{]}ms & {[}49,50{]}ms & 520,53ms \\
+getLink & 20,91ms & {[}7,8{]}ms & {[}14,15{]}ms & {[}33,34{]}ms & {[}49,50{]}ms & {[}57,58{]}ms & 811,52ms \\
+countLink & 18,88ms & {[}5,6{]}ms & {[}13,14{]}ms & {[}30,31{]}ms & {[}45,46{]}ms & {[}52,53{]}ms & 661,18ms \\ \hline
+\end{tabular}
+}
+\caption{Latenz Linkbench-100-Real Db2 Graph V11.5.6.0}
+\label{tab:latenz_100m_real:ga}
+\end{table}
+
+\begin{table}[!h]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{r|r|r|r|r|r|r|r}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Mean}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p25}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p50}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p75}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p95}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p99}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Max.}} &
+\multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Limit}} \\ \hline
+20,06ms & {[}6,7{]}ms & {[}14,15{]}ms & {[}32,33{]}ms & {[}47,48{]}ms & {[}54,55{]}ms & 502,66ms & 100\\
+20,78ms & {[}6,7{]}ms & {[}14,15{]}ms & {[}33,34{]}ms & {[}49,50{]}ms & {[}58,59{]}ms & 2.003,24ms & 1.000\\
+22,56ms & {[}6,7{]}ms & {[}15,16{]}ms & {[}35,36{]}ms & {[}53,54{]}ms & {[}67,68{]}ms & 2.553,64ms & 10.000\\
+36,62ms & {[}7,8{]}ms & {[}21,22{]}ms & {[}46,47{]}ms & {[}89,90{]}ms & {[}100,200{]}ms & 4.351,98ms & 100.000\\ \hline
+\end{tabular}
+}
+\caption{Latenz Linkbench-100M-Real Db2 Graph V11.5.6.0 GetLinkList}
+\label{tab:latenz_100m_real:ga:gll}
+\end{table}
+
+\begin{table}[h]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{l|r|r|r|r|r|r|r}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Operation}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Mean}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p25}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p50}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p75}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p95}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p99}} &
+\multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Max.}} \\ \hline
+getNode & 2,86ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}3,4{]}ms & {[}5,6{]}ms & 786,65ms \\
+getLink & 3,26ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}5,6{]}ms & {[}9,10{]}ms & 2.387,52ms \\
+countLink & 3,05ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & 1.510,54ms \\ \hline
+\end{tabular}
+}
+\caption{Latenz Linkbench-100M-Real Neo4j}
+\label{tab:latenz_100m_real:neo4j}
+\end{table}
+
+\begin{table}[!h]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabular}{r|r|r|r|r|r|r|r}
+\hline
+\rowcolor[HTML]{EFEFEF} 
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Mean}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p25}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p50}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p75}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p95}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p99}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Max.}} &
+\multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Limit}} \\ \hline
+3,09ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & 927,23ms & 100\\
+3,39ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}6,7{]}ms & {[}11,12{]}ms & 1.056,44ms & 1.000\\
+4,37ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & {[}16,17{]}ms & 1.157,71ms & 10.000\\
+6,53ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}10,11{]}ms & {[}29,30{]}ms & 2.037,55ms & 100.000\\ \hline
+\end{tabular}
+}
+\caption{Latenz Linkbench-100M-Real Neo4j GetLinkList}
+\label{tab:latenz_100m_real:neo4j:gll}
+\end{table}

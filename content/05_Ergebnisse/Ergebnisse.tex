@@ -15,6 +15,8 @@ Zum Schluss findet eine umfassende Auswertung der Ergebnisse statt, wobei die Er
 \label{ergebnisse:10m_const}
 Dieser Abschnitt führt Latenz- und Durchsatzwerte auf, die im Rahmen dieser Messreihe für die Operationen der jeweiligen Datenbanksysteme Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j erzielt wurden. Die Ergebnisse, die dieser Abschnitt umfasst, wurden hierbei auf Basis eines kleineren konstant-verteilten Datensatzes erzielt. 
 
+\subsection{Latenz}
+
 Die \autoref{tab:latenz_10m_const:beta3} stellt dabei die Ergebnisse dar, die für Db2 Graph Beta 3 mit dem \texttt{Db2GraphOld}-Adapter gemessen wurden. In \autoref{tab:latenz_10m_const:ga} werden hingegen die gemessen Latenzen für Db2 Graph V11.5.6.0 beschrieben. In \autoref{tab:latenz_10m_const:ga} werden die Latenzergebnisse für Db2 Graph V11.5.6.0 aufgeführt, die bei den Messungen dieser Messreihe erzielt wurden. Die Latenzen die für Neo4j in dieser Messreihe erzielt wurden, werden in \autoref{tab:latenz_10m_const:neo4j} aufbereitet dargelegt. 
 
 \begin{table}[!h]
@@ -100,10 +102,15 @@ Bei genauerer Betrachtung der durchschnittlichen Latenzergebnisse fällt darübe
 \end{enumerate}
 Bei Db2 Graph Beta 3 scheint dies interessanterweise nicht der Fall zu sein. Dort weisen zwar \texttt{getNode} und \texttt{getLinkList} dieselben Positionen im Ranking auf, allerdings verfügt hier \texttt{getLink} über eine geringere Performance als \texttt{countLink}.
 
-Die Ergebnisse für durchschnittlichen Durchsatz zeigen ein ähnliches Bild wie die Latenzwerte der Datenbanksysteme. So ist auch in \autoref{} erkennbar, dass Neo4j mit Abstand den höchsten Durchsatz aufweist, gefolgt von Db2 Graph Beta 3 und dann mit etwas größerem Abstand Db2 Graph V11.5.6.0.
+\subsection{Durchsatz}
+Die Ergebnisse für durchschnittlichen Durchsatz zeigen ein ähnliches Bild wie die Latenzwerte der Datenbanksysteme. So ist auch in \autoref{fig:durchsatz:linkbench_10m_const} erkennbar, dass Neo4j mit Abstand den höchsten Durchsatz aufweist, gefolgt von Db2 Graph Beta 3 und dann mit etwas größerem Abstand Db2 Graph V11.5.6.0. Dabei gilt es zu beachten, dass -- anders als bei der Latenz -- beim Durchsatz ein hoher Wert auf eine hohe Performance eines Datenbanksystems hindeutet. Schließlich bedeutet ein hoher Latenzwert, dass ein Datenbanksystem dazu in der Lage ist viele Operationen pro Sekunde zu verarbeiten.  
 
-\todo{Hier Diagramm für Durchsatz einfügen.}
-\todo{Auf Ressourcen Auslastung verweisen.}
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/diagramme/linkbench_10m_const_durchsatz.pdf}
+    \caption{Ergebnisse Durchsatz Linkbench-10M-Const}
+    \label{fig:durchsatz:linkbench_10m_const}
+\end{figure}
 
 \section{Linkbench-10M-Const-ID}
 \label{ergebnisse:10m_const_id}
@@ -111,6 +118,7 @@ In diesem Abschnitt wird auf die Messergebnisse für die Datenbanksysteme Db2 Gr
 
 Die Ergebnisse dieser Messreihe spielen als einzige Ergebnisse, die unter Nutzung der ID-Queries statt der regulären Queries erzielt wurden, eine besondere Rolle. So wird hier am Ende auch ein kurzer Vergleich zu den Ergebnissen der Messreihe \nameref{ergebnisse:10m_const} gezogen, da diese bis auf die Queries dasselbe Szenario abbildet.
 
+\subsection{Latenz}
 Bei der Analyse der Latenzergebnisse aus dieser Messreihe für Db2 Graph Beta 3 (\autoref{tab:latenz_10m_const_id:beta3}), Db2 Graph V11.5.6.0 (\autoref{tab:latenz_10m_const_id:ga}) und Neo4j (\autoref{tab:latenz_10m_const_id:neo4j}) fällt auf, dass auch hier Neo4j mit großem Abstand zu den beiden Db2 Graph Versionen die geringste Latenz aufweist. Dabei bewegen sich die Resultate und Performance-Unterschiede der Datenbanksysteme bei den gebenchmarkten Operationen in einer vergleichbaren Größenordnung wie bei der Messreihe \nameref{ergebnisse:10m_const} mit den regulären Queries. 
 
 Die um ca. 3 - 4 Millisekunden verbesserten durchschnittlichen Latenzwerte für die Operationen \texttt{countLink} und \texttt{getLinkList} bei Db2 Graph Beta 3 stechen dabei allerdings etwas heraus. Leicht auffällig ist auch, dass sich die in \autoref{tab:latenz_10m_const_id:ga} abgebildeten Durchschnittswerte für \texttt{getLink}, \texttt{countLink} und \texttt{getLinkList} alle um ca. 1 - 2 Millisekunden im Vergleich zu \autoref{tab:latenz_10m_const_id:beta3} verbessert haben. 
@@ -191,10 +199,23 @@ getLinkList & 2,86ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}3,4{]}ms & {
 \label{tab:latenz_10m_const_id:neo4j}
 \end{table}
 
+\subsection{Durchsatz}
+Die in \autoref{fig:durchsatz:linkbench_10m_const_id} abgebildeten Werte unterstreichen hierbei, dass bereits bei den Latenzwerten beschriebene Verhalten der Datenbanksysteme. Auch hier schneidet Neo4j durch die höchsten Durchsatzwerte am besten ab. Es weist dabei den höchsten Durchsatz aller Datenbanksysteme auf, gefolgt von Db2 Graph Beta 3 und V11.5.6.0. 
+
+Beim Vergleich der Durchsatzergebnisse in \autoref{fig:durchsatz:linkbench_10m_const_id} mit denen aus \autoref{fig:durchsatz:linkbench_10m_const}, die auf Basis der regulären Queries erzielt wurden, lässt ebenfalls eine Tendenz zu etwas besseren Werten bei den ID-Queries erkennen.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/diagramme/linkbench_10m_const_id_durchsatz.pdf}
+    \caption{Ergebnisse Durchsatz Linkbench-10M-Const-ID}
+    \label{fig:durchsatz:linkbench_10m_const_id}
+\end{figure}
+
 \section{Linkbench-100M-Const}
 \label{ergebnisse:100m_const}
 Im Rahmen dieses Abschnitts werden die Latenz- und Durchsatzergebnisse der Messreihe \nameref{ergebnisse:100m_const} aufgeführt und mit den Ergebnissen der Messreihe \nameref{ergebnisse:10m_const} verglichen. Schließlich handelt es sich hierbei um zwei Messreihen die sich lediglich in der Größe des Datensatzes unterscheiden. Diese Messreihe verfügt hierbei um einen Datensatz, der um den Faktor-10 größer ist als der, der im Rahmen der Reihe \nameref{ergebnisse:10m_const} herangezogen wird. 
 
+\subsection{Latenz}
 Werden die in \autoref{tab:latenz_100m_const:beta3}, \autoref{tab:latenz_100m_const:ga} und \autoref{tab:latenz_100m_const:neo4j} aufgeführten Werte, die die Latenzergebnisse für Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j beinhalten, miteinander verglichen, so ergibt sich einmal mehr das Bild, dass Neo4j die geringste Latenz aller drei gebenchmarkten Datenbanksysteme aufweist. Auf Platz zwei der Datenbanksysteme mit der geringsten Latenz für die Operationen folgt dabei wieder Db2 Graph Beta 3. Es weist hierbei im Durchschnitt eine halb bis ein Drittel so hohen Latenzwert wie Db2 Graph V11.5.6.0 auf.
 
 \begin{table}[!h]
@@ -273,12 +294,23 @@ Beim Vergleich der in diesem Abschnitt aufgeführten Latenzergebnisse, mit denen
 
 Dieses Verhalten entspricht dabei allerdings den Erwartungen, da normalerweise immer davon ausgegangen werden sollte, dass die Beantwortung der Queries auf Basis eines größeren Datensatzes mehr Zeit benötigt als bei einem kleinen Datensatz. Schließlich steigt hierbei der Verarbeitungsaufwand für die Datenbanksysteme. 
 
-Der Unterschied zwischen den Messreihen fällt hier sogar kleiner aus als erwartet, was vermutlich auf den großen Bufferpool oder Page-Cache der gebenchmarkten Datenbanksysteme zurückgeführt werden kann. So sollten sowohl der Linkbench-10M als auch der Linkbench-100M Datensatz komplett in den Bufferpool oder den Page-Cache von Db2 und Neo4j passen. 
+Der Unterschied zwischen den Messreihen fällt hier sogar kleiner aus als erwartet, was vermutlich auf den großen Bufferpool oder Page-Cache der gebenchmarkten Datenbanksysteme zurückgeführt werden kann. So sollten sowohl der Linkbench-10M als auch der Linkbench-100M Datensatz komplett in den Bufferpool oder den Page-Cache von Db2 und Neo4j passen.
+
+\subsection{Durchsatz}
+Die im Rahmen dieser Messreihe erzielten Durchsatzwerte (\autoref{fig:durchsatz:linkbench_100m_const}) unterstreichen auch bei dieser Messreihe die bei den Latenzwerten beobachteten Sachverhalte. Auch hier weist Db2 Graph V11.5.6.0 den schlechtesten beziehungsweise geringsten Wert auf und Neo4j den besten (höchsten). Auch bleiben die Durchsatzwerte alle geringfügig unterhalb der Durchsatzergebnisse aus \autoref{fig:durchsatz:linkbench_10m_const}, die auf Basis des kleineren  Datensatzes aber gleich verteilten Datensatzes ermittelt wurden. 
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/diagramme/linkbench_100m_const_durchsatz.pdf}
+    \caption{Ergebnisse Durchsatz Linkbench-100M-Const}
+    \label{fig:durchsatz:linkbench_100m_const}
+\end{figure}
 
 \section{Linkbench-10M-Real}
 \label{ergebnisse:10m_real}
 In diesem Abschnitt werden die Ergebnisse für die Messreihe \nameref{ergebnisse:10m_real} dargestellt und untersucht. Hierbei handelt es sich um die ersten Messergebnisse die für einen (kleinen) real-verteilten Datensatz erzielt wurden. So beinhalten die hier aufgeführten Messergebnisse sowohl Latenz- als auch Durchsatzwerte für die \texttt{getLinkList}-Operation mit jeweils verschieden hohen Ergebnismenge. Das Datenbanksystem Db2 Graph Beta 3 spielt in den Messungen hingehen keine Rolle.
 
+\subsection{Latenz}
 Bei der Analyse der Latenzwerte von Db2 Graph V11.5.6.0 (\autoref{tab:latenz_10m_real:ga} und \autoref{tab:latenz_10m_real:ga:gll}) und Neo4j (\autoref{tab:latenz_10m_real:neo4j} und \autoref{tab:latenz_10m_real:neo4j:gll}) bietet sich ein ähnlicher Anblick, wie bei den konstant-verteilten Datensätzen. Neo4j weist weitaus geringere Latenzergebnisse auf als Db2 Graph V11.5.6.0. 
 
 Dabei fällt allerdings auf, dass die durchschnittlichen Latenzen bei Db2 Graph V11.5.6.0 vergleichbar hoch sind wie in \autoref{tab:latenz_10m_const:ga} bei der Messreihe \nameref{ergebnisse:10m_const} mit dem kleineren konstant-verteilten Datensatz. Dies ist außergewöhnlich, da sich die Datensätze nicht nur bezüglich der Verteilung, sondern auch was die Größe beziehungsweise die Kantenanzahl betrifft, erheblich unterscheiden.
@@ -326,7 +358,7 @@ countLink & 18,32ms & {[}5,6{]}ms & {[}12,13{]}ms & {[}30,31{]}ms & {[}44,45{]}m
 34,00ms & {[}6,7{]}ms & {[}20,21{]}ms & {[}44,45{]}ms & {[}82,83{]}ms & {[}100,200{]}ms & 3.125,17ms & 100.000\\ \hline
 \end{tabular}
 }
-\caption{Latenz Linkbench-10M-Real Db2 Graph V11.5.6.0 GetLinkList}
+\caption{Latenz Linkbench-10M-Real Db2 Graph V11.5.6.0 getLinkList}
 \label{tab:latenz_10m_real:ga:gll}
 \end{table}
 
@@ -373,24 +405,49 @@ getLinkList & 4,38ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & {
 getLinkList & 5,46ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & {[}21,22{]}ms & 1.855,68ms \\ \hline
 \end{tabular}
 }
-\caption{Latenz Linkbench-10M-Real Neo4j GetLinkList}
+\caption{Latenz Linkbench-10M-Real Neo4j getLinkList}
 \label{tab:latenz_10m_real:neo4j:gll}
 \end{table}
 
 In Bezug zu den Latenzwerten für die \texttt{getLinkList}-Operation mit jeweils unterschiedlichen Grenzen für die Ergebnismenge fällt auf, dass die ursprünglichen Durchschnittslatenzen von Db2 Graph V11.5.6.0 und Neo4j zwischen den Messungen mit einer maximalen Ergebnismenge von 100 und 100.000 nahezu verdoppeln.
 
+\subsection{Durchsatz}
+Die im Kontext dieser Messreihe ermittelten Durchsatzwerte (\autoref{fig:durchsatz:linkbench_10m_real} und \autoref{fig:durchsatz:linkbench_10m_real:rl}) bestätigen die bereits bei den Latenzen entdeckten Phänomene. So weist Neo4j durch den höheren Durchsatz bei allen gebenchmarkten Operationen eine bessere Performance als Db2 Graph V11.5.6.0 auf. 
+
+Des Weiteren scheinen auch hier die Werte für Db2 Graph V11.5.6.0 in \autoref{fig:durchsatz:linkbench_10m_real} überraschenderweise denen aus \autoref{fig:durchsatz:linkbench_10m_const} zu ähneln, trotz eines unterschiedlichen Datensatzes.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/diagramme/linkbench_10m_real_durchsatz.pdf}
+    \caption{Ergebnisse Durchsatz Linkbench-10M-Real}
+    \label{fig:durchsatz:linkbench_10m_real}
+    \vspace{1em}
+    \textit{Die bei getLinkList abgebildeten Werte repräsentieren die Ergebnisse, die mit einer Begrenzung der Ergebnismenge auf maximal 100 Elemente erzielt wurden.}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/diagramme/limit_absolute_durchsatz_real_10m.pdf}
+    \caption{Ergebnisse Durchsatz Linkbench-10M-Real getLinkList}
+    \label{fig:durchsatz:linkbench_10m_real:rl}
+\end{figure}
+
+Analog zu den Latenzwerten halbieren sich auch die Durchsatzergebnisse der \texttt{getLinkList}-Operation zwischen den Messungen mit einem Range-Limit von 100 und 100.000 bei beiden Datenbanksystemen.
+
 \section{Linkbench-100M-Real}
 \label{ergebnisse:100m_real}
-Im Rahmen dieses Abschnitts werden die Latenz- und Durchsatzergebnisse für Db2 Graph V11.5.6.0 und Neo4j aufgeführt. Alle Messungen deren Ergebnisse hier zur Schau gestellt werden, wurden auf Basis eines größeren real-verteilten Datensatzes erzielt. So umfasst der Datensatz dieser Messreihe (\nameref{ergebnisse:100m_real}) die zehnfache Anzahl an Knoten und Kanten wie der Datensatz der Messreihe \nameref{ergebnisse:10m_real}. Im Kontext dieser Ergebnisse spielt Db2 Graph Beta 3 wie bereits bei \autoref{ergebnisse:10m_real} keine Rolle. Darüber hinaus existieren  ebenfalls mehrere Messergebnisse für die \texttt{getLinkList}-Operation mit einer variierenden Beschränkung der Ergebnismenge.
+Im Rahmen dieses Abschnitts werden die Latenz- und Durchsatzergebnisse für Db2 Graph V11.5.6.0 und Neo4j aufgeführt. Alle Messungen deren Ergebnisse hier zur Schau gestellt werden, wurden auf Basis eines größeren real-verteilten Datensatzes erzielt. So umfasst der Datensatz dieser Messreihe (\nameref{ergebnisse:100m_real}) die zehnfache Anzahl an Knoten und Kanten wie der Datensatz der Messreihe \nameref{ergebnisse:10m_real}. Im Kontext dieser Ergebnisse spielt Db2 Graph Beta 3 wie bereits bei \nameref{ergebnisse:10m_real} keine Rolle. Darüber hinaus existieren  ebenfalls mehrere Messergebnisse für die \texttt{getLinkList}-Operation mit einer variierenden Beschränkung der Ergebnismenge.
 
+\subsection{Latenz}
 Bei der Untersuchung der Latenzwerte von Db2 Graph V11.5.6.0 (\autoref{tab:latenz_100m_real:ga} und \autoref{tab:latenz_100m_real:ga:gll}) und Neo4j (\autoref{tab:latenz_100m_real:neo4j} und \autoref{tab:latenz_100m_real:neo4j:gll}) fällt auf, dass Neo4j wieder deutlich niedrigere Durchschnittslatenzen aufweist als Db2 Graph V11.5.6.0. 
 
 Die Messergebnisse für die Latenzen beider Datenbanksysteme ähneln dabei denen des kleineren real-verteilten Datensatzes aus \nameref{ergebnisse:10m_real}. Dieses Verhalten könnte sich wie bereits bei den konstant-verteilten Datensätzen basierten Messreihen damit erklären, dass Db2 und Neo4j beiden um einen Bufferpool und Page-Cache verfügen, in alle Datensätze vollständig geladen werden können, egal ob Linkbench-10M oder Linkbench-100M.
 
-Des Weiteren fällt auch beim Vergleich der Werte von \autoref{tab:latenz_100m_const:ga} mit \autoref{tab:latenz_100m_real:ga} und \autoref{tab:latenz_100m_real:ga:gll} auf, dass sich die durchschnittlichen Latenzen überraschend ähneln, obwohl sich die Größe und Verteilung der Datensätze erheblich unterscheidet.
+Des Weiteren fällt auch beim Vergleich der Werte von \autoref{tab:latenz_100m_const:ga} mit \autoref{tab:latenz_100m_real:ga} und \autoref{tab:latenz_100m_real:ga:gll} auf, dass sich die durchschnittlichen Latenzen überraschend ähneln, obwohl sich die Größe und Verteilung der Datensätze bei \nameref{ergebnisse:100m_const} und dieser Messreihe erheblich unterscheiden.
 
-Bei der Analyse der durchschnittlichen Latenzen der \texttt{getLinkList}-Operationen mit variierender Ergebnismenge kann hierbei identifiziert werden, dass die Db2 Graph V11.5.6.0  (\autoref{tab:latenz_10m_real:ga}) und Neo4j Werte beide bei der steigenden Beschränkung der Ergebnismenge deutlich erhöhen. Bei Neo4j verdoppelt sich hierbei die durchschnittliche Latenz sogar, während dies bei Db2 Graph V11.5.6.0 nicht der Fall ist. 
-\begin{table}[!h]
+Bei der Analyse der durchschnittlichen Latenzen der \texttt{getLinkList}-Operationen mit variierender Ergebnismenge kann hierbei identifiziert werden, dass die Db2 Graph V11.5.6.0  (\autoref{tab:latenz_10m_real:ga}) und Neo4j Werte beide bei der steigenden Beschränkung der Ergebnismenge deutlich erhöhen. Bei Neo4j verdoppelt sich hierbei die durchschnittliche Latenz sogar, während dies bei Db2 Graph V11.5.6.0 nicht der Fall ist.
+
+\begin{table}[!ht]
 \centering
 \resizebox{\textwidth}{!}{
 \begin{tabular}{l|r|r|r|r|r|r|r}
@@ -413,7 +470,7 @@ countLink & 18,88ms & {[}5,6{]}ms & {[}13,14{]}ms & {[}30,31{]}ms & {[}45,46{]}m
 \label{tab:latenz_100m_real:ga}
 \end{table}
 
-\begin{table}[!h]
+\begin{table}[!ht]
 \centering
 \resizebox{\textwidth}{!}{
 \begin{tabular}{r|r|r|r|r|r|r|r}
@@ -433,11 +490,11 @@ countLink & 18,88ms & {[}5,6{]}ms & {[}13,14{]}ms & {[}30,31{]}ms & {[}45,46{]}m
 36,62ms & {[}7,8{]}ms & {[}21,22{]}ms & {[}46,47{]}ms & {[}89,90{]}ms & {[}100,200{]}ms & 4.351,98ms & 100.000\\ \hline
 \end{tabular}
 }
-\caption{Latenz Linkbench-100M-Real Db2 Graph V11.5.6.0 GetLinkList}
+\caption{Latenz Linkbench-100M-Real Db2 Graph V11.5.6.0 getLinkList}
 \label{tab:latenz_100m_real:ga:gll}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[!ht]
 \centering
 \resizebox{\textwidth}{!}{
 \begin{tabular}{l|r|r|r|r|r|r|r}
@@ -460,7 +517,7 @@ countLink & 3,05ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}
 \label{tab:latenz_100m_real:neo4j}
 \end{table}
 
-\begin{table}[!h]
+\begin{table}[!ht]
 \centering
 \resizebox{\textwidth}{!}{
 \begin{tabular}{r|r|r|r|r|r|r|r}
@@ -480,6 +537,36 @@ countLink & 3,05ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}
 6,53ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}10,11{]}ms & {[}29,30{]}ms & 2.037,55ms & 100.000\\ \hline
 \end{tabular}
 }
-\caption{Latenz Linkbench-100M-Real Neo4j GetLinkList}
+\caption{Latenz Linkbench-100M-Real Neo4j getLinkList}
 \label{tab:latenz_100m_real:neo4j:gll}
 \end{table}
+
+\subsection{Durchsatz}
+Die in \autoref{fig:durchsatz:linkbench_100m_real} und \autoref{fig:durchsatz:linkbench_100m_real:rl} aufgeführten Durchsatzwerte verifizieren die Beobachtungen, die bereits bei den Latenzen gemacht wurden. So weist Neo4j wieder einen höheren Durchsatz als Db2 Graph V11.5.6.0 auf.
+
+Darüber hinaus ähneln auch die im Rahmen dieser Messreihe erzielten Durchsatzergebnisse (\autoref{fig:durchsatz:linkbench_100m_real}) denen des kleineren real-verteilten Datensatzes (\autoref{fig:durchsatz:linkbench_10m_real}). 
+
+Auch scheinen die Durchsatzergebnisse für Db2 Graph V11.5.6.0 hier (\autoref{fig:durchsatz:linkbench_100m_real}) und in \nameref{fig:durchsatz:linkbench_100m_const} (\autoref{fig:durchsatz:linkbench_100m_const}) überraschend nah bei einander zu liegen, obwohl sich die Datensätze bei den Messungen signifikant in ihrer Größe und Verteilung unterscheiden. 
+
+Des Weiteren halbiert sich auch hier ungefähr der Durchsatz beim Anstieg des Range-Limits von 100 auf 100.000, passend zur Verdoppelung bei den Latenzwerten.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/diagramme/linkbench_100m_real_durchsatz.pdf}
+    \caption{Ergebnisse Durchsatz Linkbench-10M-Real}
+    \label{fig:durchsatz:linkbench_100m_real}
+    \vspace{1em}
+    \textit{Die bei getLinkList abgebildeten Werte repräsentieren die Ergebnisse, die mit einer Begrenzung der Ergebnismenge auf maximal 100 Elemente erzielt wurden.}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/diagramme/limit_absolute_durchsatz_real_100m.pdf}
+    \caption{Ergebnisse Durchsatz Linkbench-10M-Real getLinkList}
+    \label{fig:durchsatz:linkbench_100m_real:rl}
+\end{figure}
+
+\todo{Db2graph -> Db2 Graph in den Bild-Beschriftungen}
+\todo{Auf Ressourcenauslastung verweisen.}
+
+\listoftodos

@@ -127,6 +127,8 @@ In diesem Abschnitt wird auf die Rolle der Begrenzung der Ergebnismenge bei der 
 
 Bei der Begrenzung der Ergebnismenge handelt es sich um eine Workload-Konfiguration, die lediglich die \texttt{getLinkList}-Operation betrifft. Durch sie wird eine obere Grenze für die Anzahl an Elementen einer Ergebnismenge in der Query der \texttt{getLinkList}-Operation gesetzt. Wird die Grenze beispielsweise auf 10 gesetzt, so übermitteln die abgefragten Datenbanksysteme als Antwort auf die \texttt{getLinkList}-Queries maximal eine Menge mit zehn Links (Kanten) an den Benchmark. 
 
+Die Begrenzung der Ergebnismenge wird dabei im Rahmen dieser Arbeit auch kurz als Range-Limit bezeichnet, da der Key \texttt{range\_limit} in der Workload-Konfiguration für die Steuerung der Begrenzung der Ergebnismenge verantwortlich ist.
+
 Die Begrenzung der Ergebnismenge wurde dabei im Rahmen dieser Arbeit in den Benchmark eingeführt, um dadurch die Performance der verschiedenen Datenbanksysteme bei größeren oder kleineren Ergebnismengen untersuchen zu können. 
 
 Bei den im Rahmen dieser Arbeit durchgeführten Messungen nimmt die Grenze der Ergebnismenge die folgenden Werte an:

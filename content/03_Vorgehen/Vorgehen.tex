@@ -146,7 +146,7 @@ Wie bereits zuvor erwähnt, spielt die Variation der Begrenzung der Ergebnismeng
 
 \section{Queries}
 \label{analyse:queries}
-Dieser Abschnitt setzt sich mit den Gremlin- und Cypher-Queries auseinander, die für die Umsetzung der Messungen herangezogen wurden. Darüber hinaus wird auch auf den Unterschied zwischen den regulären Queries und ID-Queries eingegangen. Der Schwerpunkt dieses Abschnitts liegt dabei allerdings auf den sogenannten regulären Gremlin- und Cypher-Queries, da die ID-Queries im Rahmen dieser Arbeit lediglich eine Nebenrolle spielen. 
+Dieser Abschnitt setzt sich mit den Gremlin- und Cypher-Queries auseinander, die für die Umsetzung der Messungen herangezogen werden. Darüber hinaus wird auch auf den Unterschied zwischen den regulären Queries und ID-Queries eingegangen. Der Schwerpunkt dieses Abschnitts liegt dabei allerdings auf den sogenannten regulären Gremlin- und Cypher-Queries, da die ID-Queries im Rahmen dieser Arbeit lediglich eine Nebenrolle spielen. 
 
 Es gilt dabei darauf hinzuweisen, dass die in diesem Abschnitt dargestellten Queries in gewissem Ausmaß der Implementierung der Adapter in \autoref{implementierung} vorgreift. Allerdings nehmen die Queries eine signifikante Rolle bei den Messungen ein. Schließlich handelt es sich bei ihnen um die Anfragen, die bei der Durchführung einer Operation während des Benchmarks zur Interaktion mit den Datenbanksystemen herangezogen wird. Daher werden sie in diesem Abschnitt des Kapitels \nameref{vorgehen} näher beschrieben.
 
@@ -222,7 +222,7 @@ LIMIT $limit
 \subsection{ID-Queries}
 Bei den ID-Queries handelt es sich um eine Abwandlung der regulären Queries. Ihr Hauptunterschied zu den regulären Queries besteht in der Art der Formulierung der Gremlin-Queries. Allerdings gibt es auch einen kleinen Unterschied bezüglich der Abfragelogik von \texttt{getLink}, weshalb bei dieser Operation weder die Gremlin- noch die Cypher-ID-Queries äquivalent zu ihren regulären Pendants sind.
 
-Die ID-Queries spielen dabei im Rahmen der Arbeit lediglich eine untergeordnete Rolle. Sie wurden dabei anfänglich als Messparameter in die Performance-Analyse mit einbezogen, da erste Testmessungen darauf hindeuteten, dass sich ihr Einsatz positiv auf die Performance von Db2 Graph Beta 3 auswirkt. Im Verlauf der Performance-Analyse ließ sich dies allerdings nicht bestätigen. Daher werden die ID-Queries lediglich in einer Messreihe bei der Performance-Analyse herangezogen. 
+Die ID-Queries spielen dabei im Rahmen der Arbeit lediglich eine untergeordnete Rolle. Sie werden dabei anfänglich als Messparameter in die Performance-Analyse mit einbezogen, da erste Testmessungen darauf hindeuteten, dass sich ihr Einsatz positiv auf die Performance von Db2 Graph Beta 3 auswirkt. Im Verlauf der Performance-Analyse ließ sich dies allerdings nicht bestätigen. Daher werden die ID-Queries lediglich in einer Messreihe bei der Performance-Analyse herangezogen. 
 \todo{Bessere ausrede schreiben.}
 
 Beim Vergleich der in \autoref{src:gremlin_id_queries} dargestellten Gremlin-ID-Queries mit den regulären Queries aus \autoref{src:gremlin_queries} fällt auf, dass bei den Gremlin-ID-Queries ein parametrisierte Form der Steps \texttt{V()} und \texttt{E()} einsetzt wird. Während bei den regulären Queries stattdessen mit den Filter-Steps wie \texttt{hasLabel} oder \texttt{has} gearbeitet wird.

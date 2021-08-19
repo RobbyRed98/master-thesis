@@ -4,7 +4,7 @@ Im Rahmen dieses Kapitels wird auf das Vorgehen beziehungsweise die Umsetzung de
 
 Zuerst wird dabei erörtert, warum sich die Ergebnisse aus \cite{sigmod_tian} im Rahmen dieser Arbeit nicht reproduzieren lassen. Anschließend wird ein neues Ziel für diese Arbeit formuliert, da sich das eigentliche Ziel der Arbeit nicht mehr erfüllen lässt. 
 
-In den darauf folgenden Abschnitten werden einzelne Aspekte der Messungen genauer eingegangen, die für das Verständnis der in diesem Kapitel  beschrieben Messreihen notwendig sind.
+In den darauf folgenden Abschnitten werden einzelne Aspekte der Messungen genauer eingegangen, die für das Verständnis der in diesem Kapitel beschrieben Messreihen notwendig sind.
 
 \section{Reproduktion}
 \label{analyse:reproduktion}
@@ -22,9 +22,9 @@ Eine Reproduktion der Ergebnisse der Performance-Analyse aus \cite{sigmod_tian} 
     \item derselbe Datensatz und 
     \item dieselbe Umgebung (OS, Ressourcen, etc.) wie in \cite{sigmod_tian}.
 \end{itemize}
-Von diesen sieben Voraussetzungen können im Rahmen der Arbeit jedoch lediglich zwei in einem gewissen Umfang erfüllt werden. Bei diesen zwei Voraussetzungen, die sich teilweise erfüllen lassen, handelt es sich um den Benchmark und die Ressourcen. Die Ressourcen werden hierbei in \cite{sigmod_tian}  genau beschrieben. Darüber hinaus wird in \cite{sigmod_tian} auch aufgeführt, dass Linkbench als Benchmark für die Messungen herangezogen wird. Allerdings wird keine Auskunft darüber gegeben, welche Version beziehungsweise Implementierung von Linkbench für die Messungen genutzt wird.
+Von diesen sieben Voraussetzungen können im Rahmen der Arbeit jedoch lediglich zwei in einem gewissen Umfang erfüllt werden. Bei diesen zwei Voraussetzungen, die sich teilweise erfüllen lassen, handelt es sich um den Benchmark und die Ressourcen. Die Ressourcen werden hierbei in \cite{sigmod_tian} genau beschrieben. Darüber hinaus wird in \cite{sigmod_tian} auch aufgeführt, dass Linkbench als Benchmark für die Messungen herangezogen wird. Allerdings wird keine Auskunft darüber gegeben, welche Version beziehungsweise Implementierung von Linkbench für die Messungen genutzt wird.
 
-Bezüglich der anderen Punkte werden im Rahmen von \cite{sigmod_tian} keinerlei Informationen bereitgestellt. So ist beispielsweise nicht bekannt, mit welcher Version von Db2 Graph die Messungen durchgeführt wurden. Es ist allerdings wahrscheinlich, dass es sich weder um die Version Beta 3 noch V11.5.6.0 handelt, die über den Zeitraum der Arbeit verfügbar waren. Schließlich wurden beide Versionen mehrere Monate nach der Arbeit veröffentlicht. 
+Bezüglich der anderen Punkte werden im Rahmen von \cite{sigmod_tian} keinerlei Informationen bereitgestellt. So ist beispielsweise nicht bekannt, mit welcher Version von Db2 Graph die Messungen durchgeführt wurden. Es ist allerdings wahrscheinlich, dass es sich weder um die Version Beta 3 noch V11.5.6.0 handelt, die über den Zeitraum der Arbeit verfügbar sind. Schließlich wurden beide Versionen mehrere Monate nach der Arbeit veröffentlicht. 
 
 Über die Benchmark-Konfiguration und die Implementierung des für den Benchmark benötigten Db2-Graph-Benchmark-Adapter ist ebenfalls nichts bekannt. Genau so werden in \cite{sigmod_tian} keine Informationen bezüglich der Konfiguration der Db2-Instanz und Db2 Graph angegeben, obwohl diese für die Reproduktion der Ergebnisse eine wichtige Rolle spielen. 
 
@@ -46,7 +46,7 @@ Eine weitere Aufgabe, die aufgrund des neuen Ziels Teil der Arbeit wird, stellt 
 
 Sollte jedoch keine der für die Messungen benötigten Adapter-Implementierung verfügbar sein, wird deren Implementierung somit ebenfalls zum Teil der Arbeit. 
 
-Abschließend gilt es darauf hinzuweisen, dass obwohl beim neuen Ziel einige Elemente von \cite{sigmod_tian} übernommen werden, die hier erzielten Ergebnisse nicht mit den aus \cite{sigmod_tian} vergleichbar sein werden.
+Abschließend gilt es darauf hinzuweisen, dass obwohl beim neuen Ziel einige Elemente von \cite{sigmod_tian} übernommen werden, die hier erzielten Ergebnisse nicht mit den aus \cite{sigmod_tian} vergleichbar sind.
 
 \section{Linkbench}
 Auch wenn sich das Ziel der Arbeit geändert hat, so wird Linkbench weiterhin als Benchmark zur Performance-Analyse herangezogen. Daher wird eine Implementierung für Linkbench sowie Adapter für Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j benötigt. Die Wahl der Linkbench- und Adapter-Implementierung sowie gegebenenfalls ihre Umsetzungen werden allerdings in \autoref{implementierung} beschrieben. 
@@ -57,7 +57,7 @@ In diesem Abschnitt als Teil des Kapitels \nameref{vorgehen} wird auf die Begrif
     \item Request-Anzahl und
     \item Operationsmix eingegangen.
 \end{itemize}
-Hierbei handelt es sich um wichtige Konfigurationen von Linkbench. Diese spielen während der \textit{Request}-Phase des Benchmarks eine signifikante Rolle. Darüber hinaus stellen sie auch relevante Parameter für die im Rahmen der Performance-Analyse durchgeführten Messungen dar. 
+Hierbei handelt es sich um wichtige Konfigurationen von Linkbench. Diese spielen während der \textit{Request}-Phase des Benchmarks eine signifikante Rolle. Darüber hinaus stellen sie auch wichtige Parameter für die im Rahmen der Performance-Analyse durchgeführten Messungen dar. 
 
 \subsection{Linkbench-Threads}
 \label{analyse:linkbench:threads}
@@ -70,18 +70,18 @@ Es handelt sich hierbei somit um eine Einstellung, die einen erheblichen Einflus
 Bei den Linkbench-Threads handelt es sich darüber hinaus um einen Parameter, der über alle Messreihen der Arbeit hinweg konstant den Wert 50 aufweist. So kann sichergestellt werden, dass während den Messungen alle Datenbanksysteme zumindest in dieser Hinsicht derselben Last ausgesetzt sind. 
 
 \subsection{Request-Anzahl}
-\label{Request-Anzahl}
+\label{analyse:request_anzahl}
 Bei der Request-Anzahl handelt es sich ebenfalls wie bei den Linkbench-Threads um eine Einstellung, die in der Adapter-Konfiguration von Linkbench vorgenommen wird. Um sie festzulegen, muss ein Wert für \texttt{requests} angegeben werden. 
 
 Zum besseren Verständnis wird die Konfiguration allerdings im weiteren Verlauf als Request-Anzahl bezeichnet. Die Request-Anzahl regelt dabei, wie viele Graph-Queries von jeweils einem der Linkbench-Threads an das zu benchmarkende Datenbanksystem gesendet werden, bevor eine \textit{Request}-Phase endet und eine Statistik aufgestellt wird. 
 
 Der Faktor wirkt sich dadurch signifikant darauf aus, wie lange eine \textit{Request-Phase} andauert, bevor Linkbench die Ergebnisse für das untersuchte Datenbanksystem in Form einer Statistik bereitstellt. Zugleich bietet er einen Anhaltspunkt für die Qualität der durchgeführten Messungen. Denn Linkbench erhält ein umso detaillierteres Bild von der Performance der Datenbanksysteme, desto mehr Requests beziehungsweise Graph-Queries Teil des Benchmark-Durchlaufs sind. Darüber hinaus fallen bei einer höheren Anzahl an Messungen auch Anomalien weniger ins Gewicht, welche die Messergebnisse gegebenenfalls verzerren könnten.
 
-Im Rahmen der in der Arbeit durchgeführten Messreihen musste hierbei ein Kompromiss zwischen der Qualität und der Dauer einer \textit{Request}-Phase von Linkbench gefunden werden. 
+Im Rahmen der in der Arbeit durchgeführten Messreihen müssen hierbei ein Kompromiss zwischen der Qualität und der Dauer einer \textit{Request}-Phase von Linkbench gefunden werden. 
 
-So wird bei allen Messungen, die auf Basis eines konstant-verteilten Datensatzes durchgeführt werden, die Request-Anzahl von 500.000 eingesetzt. Diese Anzahl wurde hierbei gewählt, da sie ein detailliertes Bild von der Performance eines Datenbanksystems zeichnet und sich die \textit{Request}-Phase für alle drei Datenbanksysteme unterhalb eines Zeitraums von drei Stunden befindet -- sollte es zu keinen Anomalien kommen. 
+So wird bei allen Messungen, die auf Basis eines konstant-verteilten Datensatzes durchgeführt werden, die Request-Anzahl von 500.000 eingesetzt. Diese Anzahl wird hierbei gewählt, da sie ein detailliertes Bild von der Performance eines Datenbanksystems zeichnet und sich die \textit{Request}-Phase für alle drei Datenbanksysteme unterhalb eines Zeitraums von drei Stunden befindet -- sollte es zu keinen Anomalien kommen. 
 
-Für die Messungen, die auf Basis eines real-verteilten Datensatzes erfolgen, wird lediglich eine Request-Anzahl von 50.000 herangezogen. Dies hängt damit zusammen, dass hierbei deutlich umfangreichere Ergebnismengen möglich sind. So kann es je nach Variation der \texttt{getLinkList}-Operation, zu einer Ergebnismenge von bis zu 100.000 Links (Kanten) kommen. Eine solch große Ergebnismenge hat hierbei einen signifikanten Einfluss auf die Performance der Datenbanksysteme während des Benchmarks. Dies kann zur Folge haben, dass die Performance eines Datenbanksystems nachweisbar einbricht, besonders im Vergleich zu Messungen auf Basis eines konstant zehn verteilten Datensatzes. Um weiterhin eine Performance von unter drei Stunden für eine Request-Phase gewährleisten zu können, wurde die Request-Anzahl daher reduziert. Auch wenn dadurch nicht dieselbe Qualität der Ergebnisse erreicht werden kann, wie bei den Messungen mit einem konstant verteilten Datensatz.
+Für die Messungen, die auf Basis eines real-verteilten Datensatzes erfolgen, wird lediglich eine Request-Anzahl von 50.000 herangezogen. Dies hängt damit zusammen, dass hierbei deutlich umfangreichere Ergebnismengen möglich sind. So kann es je nach Variation der \texttt{getLinkList}-Operation, zu einer Ergebnismenge von bis zu 100.000 Links (Kanten) kommen. Eine solch große Ergebnismenge hat hierbei einen signifikanten Einfluss auf die Performance der Datenbanksysteme während des Benchmarks. Dies kann zur Folge haben, dass die Performance eines Datenbanksystems nachweisbar einbricht. Um weiterhin eine Performance von unter drei Stunden für eine Request-Phase gewährleisten zu können, wird die Request-Anzahl daher reduziert. Auch wenn dadurch nicht dieselbe Qualität der Ergebnisse erreicht werden kann, wie bei den Messungen mit einem konstant verteilten Datensatz.
 
 Die unterschiedliche Request-Anzahl bei den verschiedenen Messreihen stellt einen wichtigen Punkt dar, der später beim Vergleich der Ergebnisse miteinander beachtet werden muss. Schließlich fällt beispielsweise bei Messungen mit einer geringeren Request-Anzahl die Anfangsphase, in der die Datenbanksysteme oft erst warmlaufen, stärker ins Gewicht als bei Messungen mit einer höheren Request-Anzahl.
 
@@ -99,7 +99,7 @@ In diesem Abschnitt wird auf die verschiedenen Operationen eingegangen, deren Pe
 
 Bei den im Rahmen der Performance-Analyse gebenchmarkten Operationen handelt es sich um dieselben Operationen, die auch in \cite{sigmod_tian} untersucht werden. Dabei gilt es allerdings zu beachten, dass obwohl die Namen der Operationen gleich lauten, nicht bekannt ist, ob die Queries, die von ihnen an die Datenbanksysteme gesendet werden, identisch sind. Daher sollten aus den gleichen Namen keine falschen Schlüsse gezogen werden. 
 
-Des Weiteren ist es auch nicht möglich, die untersuchten Operationen im Vergleich zu \cite{sigmod_tian} auszuweiten. Schließlich handelt es sich  bei diesen um lesende Operationen, die dadurch auch von Db2 Graph als eine Art Read-Only-Datenbanksystem unterstützt werden. Alle weiteren Operationen, die von Linkbench bereitgestellt werden (\autoref{linkbench:operationen}), sind hingegen von schreibender Natur. 
+Des Weiteren ist es auch nicht möglich, die untersuchten Operationen im Vergleich zu \cite{sigmod_tian} auszuweiten. Schließlich handelt es sich bei diesen um lesende Operationen, die dadurch auch von Db2 Graph als eine Art Read-Only-Datenbanksystem unterstützt werden. Alle weiteren Operationen, die von Linkbench bereitgestellt werden (\autoref{linkbench:operationen}), sind hingegen von schreibender Natur. 
 
 Bei den im Rahmen der Performance-Analyse gebenchmarkten Operationen handelt es sich hierbei um:
 \begin{itemize}
@@ -129,18 +129,18 @@ Bei der Begrenzung der Ergebnismenge handelt es sich um eine Workload-Konfigurat
 
 Die Begrenzung der Ergebnismenge wird dabei im Rahmen dieser Arbeit auch kurz als Range-Limit bezeichnet, da der Key \texttt{range\_limit} in der Workload-Konfiguration für die Steuerung der Begrenzung der Ergebnismenge verantwortlich ist.
 
-Die Begrenzung der Ergebnismenge wurde dabei im Rahmen dieser Arbeit in den Benchmark eingeführt, um dadurch die Performance der verschiedenen Datenbanksysteme bei größeren oder kleineren Ergebnismengen untersuchen zu können. 
+Sie wird dabei mit der Motivation neu in den Benchmark eingeführt, dadurch die Performance der verschiedenen Datenbanksysteme bei größeren oder kleineren Ergebnismengen untersuchen zu können. 
 
-Bei den im Rahmen dieser Arbeit durchgeführten Messungen nimmt die Grenze der Ergebnismenge die folgenden Werte an:
+Bei den Messungen, die im Rahmen dieser Arbeit durchgeführt werden, nimmt die obere Grenze der Ergebnismenge die folgenden Werte an:
 \begin{itemize}
     \item 100,
     \item 1.000,
     \item 10.000 und
     \item 100.000. 
 \end{itemize}
-Diese wurden dabei ausgewählt, da der Faktor-10-Unterschied zwischen den Werten für eine Differenz sorgt, von der angenommen wurde, dass sie ausreicht, um unterschiedliche Messergebnisse für die \texttt{getLinkList}-Operation zu erzielen. 
+Diese werden dabei ausgewählt, da der Faktor-10-Unterschied zwischen den Werten für eine Differenz sorgt, von der angenommen wird, dass sie ausreicht, um aussagekräftige Messergebnisse für die \texttt{getLinkList}-Operation zu erzielen. 
 
-100.000 wurde darüber hinaus als größte Menge gewählt, da eine Grenze von 1.000.000 den Messzeitraum der \texttt{Request}-Phase von 3 Stunden bei einigen Datenbanksystemen um ein Vielfaches überschritten hätte.
+100.000 wird darüber hinaus als größte Menge gewählt, da eine Grenze von 1.000.000 zur Folge hätte, das der Messzeitraum der \texttt{Request}-Phase von 3 Stunden bei einigen Messungen um ein Vielfaches überschritten worden wäre.
 
 Wie bereits zuvor erwähnt, spielt die Variation der Begrenzung der Ergebnismenge lediglich bei den Messungen mit Bezug zu real-verteilten Datensätzen eine Rolle. Dies hängt damit zusammen, dass bei konstant-verteilten Datensätzen im Rahmen dieser Arbeit immer eine sogenannte 10er-Verteilung vorherrscht. Dies bedeutet, dass die Ergebnismenge für die \texttt{getLinkList}-Operation maximal 10 Elemente beinhalten kann, egal ob die obere Grenze für die Größe der Ergebnismenge 100 oder 100.000 beträgt. Somit erübrigt sich die Variation der Begrenzung der Ergebnismenge bei diesen Messungen. 
 
@@ -151,7 +151,7 @@ Dieser Abschnitt setzt sich mit den Gremlin- und Cypher-Queries auseinander, die
 Es gilt dabei darauf hinzuweisen, dass die in diesem Abschnitt dargestellten Queries in gewissem Ausmaß der Implementierung der Adapter in \autoref{implementierung} vorgreift. Allerdings nehmen die Queries eine signifikante Rolle bei den Messungen ein. Schließlich handelt es sich bei ihnen um die Anfragen, die bei der Durchführung einer Operation während des Benchmarks zur Interaktion mit den Datenbanksystemen herangezogen wird. Daher werden sie in diesem Abschnitt des Kapitels \nameref{vorgehen} näher beschrieben.
 
 \subsection{Reguläre Queries}
-Bei den regulären Queries handelt es sich um die Queries, die bei allen bis auf einer Messreihe für die Messungen herangezogen werden. Die entsprechenden Queries die in der Abfragesprache Gremlin formuliert wurden, werden dabei in \autoref{src:gremlin_queries} aufgeführt. Die jeweiligen Queries, die in der Abfragesprache Cypher umgesetzt wurden, werden hingegen in \autoref{src:cypher_queries} abgebildet. Im Zuge dessen gilt es darauf hinzuweisen, dass in \autoref{src:gremlin_queries} Platzhalter innerhalb der Queries von \texttt{<} und \texttt{>} umschlossen werden. Bei \autoref{src:cypher_queries} werden sie hingegen mittels eines anführenden \texttt{\$} gekennzeichnet.
+Bei den regulären Queries handelt es sich um die Queries, die bei allen bis auf einer Messreihe für die Messungen herangezogen werden. Die in der Abfragesprache Gremlin formulierten Queries werden dabei in \autoref{src:gremlin_queries} aufgeführt, während \autoref{src:cypher_queries} die in Cypher umgesetzten Queries abgebildet. Im Zuge dessen gilt es darauf hinzuweisen, dass in \autoref{src:gremlin_queries} Platzhalter innerhalb der Queries von \texttt{<} und \texttt{>} umschlossen werden. Bei \autoref{src:cypher_queries} werden sie hingegen mittels eines anführenden \texttt{\$} gekennzeichnet.
 
 Die Gremlin- und Cypher-Queries, welche im \autoref{src:gremlin_queries} und \autoref{src:cypher_queries} aufgeführt werden verfügen darüber hinaus über dieselbe Abfragelogik. Damit ist gemeint, dass beide dieselben Daten abfragen, wodurch sie äquivalent zueinander sind. Die Gremlin-Queries werden dabei zur Abfrage von Db2 Graph Beta 3 und V11.5.6.0 genutzt, während die Cypher-Queries für Neo4j zum Einsatz kommen. 
 
@@ -223,6 +223,7 @@ LIMIT $limit
 Bei den ID-Queries handelt es sich um eine Abwandlung der regulären Queries. Ihr Hauptunterschied zu den regulären Queries besteht in der Art der Formulierung der Gremlin-Queries. Allerdings gibt es auch einen kleinen Unterschied bezüglich der Abfragelogik von \texttt{getLink}, weshalb bei dieser Operation weder die Gremlin- noch die Cypher-ID-Queries äquivalent zu ihren regulären Pendants sind.
 
 Die ID-Queries spielen dabei im Rahmen der Arbeit lediglich eine untergeordnete Rolle. Sie wurden dabei anfänglich als Messparameter in die Performance-Analyse mit einbezogen, da erste Testmessungen darauf hindeuteten, dass sich ihr Einsatz positiv auf die Performance von Db2 Graph Beta 3 auswirkt. Im Verlauf der Performance-Analyse ließ sich dies allerdings nicht bestätigen. Daher werden die ID-Queries lediglich in einer Messreihe bei der Performance-Analyse herangezogen. 
+\todo{Bessere ausrede schreiben.}
 
 Beim Vergleich der in \autoref{src:gremlin_id_queries} dargestellten Gremlin-ID-Queries mit den regulären Queries aus \autoref{src:gremlin_queries} fällt auf, dass bei den Gremlin-ID-Queries ein parametrisierte Form der Steps \texttt{V()} und \texttt{E()} einsetzt wird. Während bei den regulären Queries stattdessen mit den Filter-Steps wie \texttt{hasLabel} oder \texttt{has} gearbeitet wird.
 
@@ -260,6 +261,7 @@ RETURN n1.id AS ID1, n2.id AS ID2,
 \end{lstlisting}
 
 \section{Datensatz}
+\label{analyse:datensatz}
 Die Zusammensetzung des Datensatzes und ihre Verteilung spielen infolge der neuen Zielsetzung der Arbeit eine zentrale Rolle für die Performance-Analyse der Dateisysteme.
 
 In diesem Abschnitt wird daher zuerst auf die beiden Arten der Verteilung der Datensätze eingegangen. Im Anschluss daran wird der Aspekt der Größe eines Datensatzes genauer beleuchtet.
@@ -268,26 +270,26 @@ In diesem Abschnitt wird daher zuerst auf die beiden Arten der Verteilung der Da
 Im Rahmen der Arbeit wird zwischen den beiden folgenden Arten der Verteilung unterschieden:
 \begin{itemize}
     \item \textit{konstante Verteilung}\\
-    Hierbei besitzt jeder Knoten im Datensatz exakt dieselbe Anzahl an Kanten (Links) wie jeder andere Knoten. Im Rahmen dieser Arbeit wurde bei allen Messungen immer eine konstante 10er-Verteilung gewählt. Dies bedeutet, dass jeder Knoten genau 10 Kanten aufweist. 
+    Hierbei besitzt jeder Knoten im Datensatz exakt dieselbe Anzahl an Kanten (Links) wie jeder andere Knoten. Im Rahmen dieser Arbeit wird bei allen Messungen immer eine konstante 10er-Verteilung gewählt. Dies bedeutet, dass jeder Knoten genau 10 Kanten aufweist. 
     \item \textit{reale Verteilung}\\
     Dabei ist die Verteilung von Kanten (Links) auf Knoten einer realen Verteilung eines Social-Graphs nachempfunden. Die Anzahl der Kanten, über die ein Knoten verfügt, bewegt sich hierfür bei allen Messungen, die in dieser Arbeit durchgeführt werden, zwischen 2 und ca. 5.000.000. Dabei existieren allerdings viele Knoten mit einer kleinen Anzahl an ausgehenden Kanten, während dem lediglich eine überschaubare Menge an Knoten über mehr als 1.000.000 Kanten verfügt.
 \end{itemize}
 Die real-Verteilung wird hierbei im Zuge der Performance-Analyse untersucht, da sie die realitätsnahe Zusammensetzung eines Social-Graphs aufweist. Somit geben die Messergebnisse einen Einblick, wie sich die Datenbanksysteme bei solchen Workloads in der Praxis verhalten könnten.
 
-Die konstante Verteilung wurde entgegen der real-Verteilung nicht aufgrund ihrer Praxisnähe für die Messungen herangezogen. Sie wurde stattdessen eingeführt, da Db2 Graph Beta 3 bei ersten Messungen Schwierigkeiten mit einer hohen Kantenzahl in real-verteilten Datensätzen aufwies. Das Benchmarking der \texttt{getLinkList}-Operation verursachte hierbei früher oder später einen beinahe Stillstand des Benchmark-Durchlaufs. 
+Die konstante Verteilung wird entgegen der real-Verteilung nicht aufgrund ihrer Praxisnähe für die Messungen herangezogen. Sie wird stattdessen eingeführt, da Db2 Graph Beta 3 bei ersten Messungen Schwierigkeiten mit einer hohen Kantenzahl in real-verteilten Datensätzen aufwies. Das Benchmarking der \texttt{getLinkList}-Operation verursachte hierbei früher oder später einen beinahe Stillstand des Benchmark-Durchlaufs. 
 
 Dieses Verhalten kann dadurch begründet werden, dass sich Db2 Graph Beta 3 damit schwertut, mit großen Ergebnismengen von über 100.000 Kanten je Knoten zu arbeiten. Darüber hinaus kann dieses Problem von Db2 Graph Beta 3 mit real-verteilten Datensätzen auch nicht durch die Begrenzung der Ergebnismenge im Rahmen der Gremlin-Query gelöst werden. Schließlich beherrscht Db2 Graph Beta 3 die Optimierungstechnik \textit{Limit Pushdown} nicht, siehe \autoref{db2graph:optimierung}. 
 
-Aufgrund dessen und da es -- nachvollziehbarerweise -- nicht zielführend wäre, die maximale Kanten auf Knoten Verteilung eines real-verteilten Datensatzes zu verändern, wurde auch entschieden, konstant-verteilte Datensätze als Teil der Messungen mit aufzunehmen. Schließlich ergibt sich dadurch die Möglichkeit, Messergebnisse für Db2 Graph Beta 3 zu erzielen und diese mit V11.5.6.0 und Neo4j zu vergleichen. Allerdings nur unter der Voraussetzung, dass eine kleine konstante Verteilung, wie die konstante 10er-Verteilung, gewählt wird. 
+Aufgrund dessen und da es -- nachvollziehbarerweise -- nicht zielführend wäre, die maximale Kanten auf Knoten Verteilung eines real-verteilten Datensatzes zu verändern, werden die auch Szenarien mit konstant-verteilten Datensätzen in die Arbeit aufgenommen. Schließlich ergibt sich dadurch die Möglichkeit, Messergebnisse für Db2 Graph Beta 3 zu erzielen und diese mit V11.5.6.0 und Neo4j zu vergleichen. Allerdings nur unter der Voraussetzung, dass eine kleine konstante Verteilung, wie die konstante 10er-Verteilung, gewählt wird. 
 
 Aufgrund des zuvor angesprochenen Problems von Db2 Graph Beta 3 mit real-verteilten Datensätzen spielt Beta 3 auch bei den Messungen, die auf real-verteilten Datensätzen aufbauen, im Kontext dieser Arbeit keine Rolle. Dies bedeutet, dass bei diesen keinerlei Messungen mit Beta 3 durchgeführt werden, lediglich mit Db2 Graph V11.5.6.0 und Neo4j. 
 
 \subsection{Größe}
-Die Größe eines Datensatzes stellt neben dessen Verteilung einen großen Unterschied zwischen den im Rahmen der Performance-Analyse durchzuführenden Messungen dar. Dabei wird hier unter der neuen Zielsetzung der Arbeit ebenfalls mit den aus \cite{sigmod_tian} bekannten Begriffen Linkbench-10M und Linkbench-100M gearbeitet. Die Begriffe beschreiben dabei grob eine Datensatzgröße. So stehen die 10M und 100M jeweils dafür, dass ein Datensatz jeweils 10 oder 100 Millionen Knoten beinhaltet. So stellen die Linkbench-10M Datensätze die kleineren Datensätze im Rahmen der Performance-Analyse dar, während die Linkbench-100M Datensätze die Rolle des größeren Datensatzes einnehmen. 
+Die Größe eines Datensatzes stellt neben dessen Verteilung einen großen Unterschied zwischen den im Rahmen der Performance-Analyse durchzuführenden Messungen dar. Dabei wird hier unter der neuen Zielsetzung der Arbeit ebenfalls mit den aus \cite{sigmod_tian} bekannten Begriffen Linkbench-10M und Linkbench-100M gearbeitet. Die Begriffe beschreiben dabei grob eine Datensatzgröße. So stehen die 10M und 100M jeweils dafür, dass ein Datensatz jeweils 10 oder 100 Millionen Knoten beinhaltet. Die Linkbench-10M Datensätze stellen dadurch die kleineren Datensätze im Rahmen der Performance-Analyse dar, während die Linkbench-100M Datensätze die Rolle des größeren Datensatzes einnehmen. 
 
 Die Variation der Datensatzgröße über die im Rahmen der Performance-Analyse durchgeführten Messungen stellt hierbei einen interessanten Untersuchungsaspekt dar. Schließlich gilt es bei der Beurteilung von Datenbanksystemen immer zu beachten, wie diese mit kleineren oder größeren Datenmengen umgehen.
 
-Bei den Begriffen Linkbench-10M und Linkbench-100M muss allerdings darauf aufmerksam gemacht werden, dass sich die Datensätze je nach Verteilung weiterhin in ihrer Größe unterscheiden können. So verfügen ein real-verteilter und ein konstant-verteilter Linkbench-10M Datensatz im Rahmen der Arbeit immer über unterschiedliche Größen. Dies hängt damit zusammen, dass sie durch die Verteilung über eine unterschiedliche Anzahl an Kanten verfügt, auch wenn sie gleich viele Knoten besitzen. So weisen die konstant-verteilten Datensätze aus \autoref{tab:kanten_anzahl} fast die doppelte Anzahl an Kanten auf, wie die real-verteilten Datensätze. 
+Bei den Begriffen Linkbench-10M und Linkbench-100M muss allerdings darauf aufmerksam gemacht werden, dass sich die Datensätze je nach Verteilung weiterhin in ihrer Größe unterscheiden können. So verfügen ein real-verteilter und ein konstant-verteilter Linkbench-10M Datensatz im Rahmen der Arbeit immer über unterschiedliche Größen. Dies hängt damit zusammen, dass sie aufgrund der Verteilung eine unterschiedliche Anzahl an Kanten beinhalten, auch wenn sie gleich viele Knoten besitzen. So weisen die konstant-verteilten Datensätze aus \autoref{tab:kanten_anzahl} fast die doppelte Anzahl an Kanten auf, wie die real-verteilten Datensätze. 
 
 \begin{table}[ht]
     \centering
@@ -302,7 +304,7 @@ Bei den Begriffen Linkbench-10M und Linkbench-100M muss allerdings darauf aufmer
     \label{tab:kanten_anzahl}
 \end{table}
 
-Aufgrund dessen sollte auch später vom Vergleich der Messergebnisse zwischen den unterschiedlich verteilten Datensätzen bei Linkbench-10M und Linkbench-100M abgesehen werden.
+Aufgrund dessen sollte auch später vom Vergleich der Messergebnisse zwischen den unterschiedlich verteilten Datensätzen bei Linkbench-10M und Linkbench-100M abgesehen oder aufgepasst werden.
 
 \section{Metriken}
 \label{analyse:metriken}
@@ -312,7 +314,7 @@ Der Begriff Latenz bezeichnet dabei den Zeitraum zwischen dem Abschicken einer A
 
 Unter der Metrik Durchsatz wird während der Performance-Analyse erfasst, wie viele Operationen pro Sekunde durchschnittlich während einer Messung durchgeführt werden konnten. 
 
-Darüber hinaus werden während allen Messungen  Betriebssystemstatistiken erfasst. Die Betriebssystemstatistiken werden dabei durch das Werkzeug NMON erstellt. Dieses zeichnet einmal pro Minute während einer Messung einen Datenpunkt auf. Diese Statistiken geben einem dabei einen Einblick darüber, wie groß der Ressourcenverbrauch der Datenbanksysteme während der Messungen ist.
+Darüber hinaus werden während allen Messungen Betriebssystemstatistiken erfasst. Die Betriebssystemstatistiken werden dabei durch das Werkzeug NMON erstellt. Dieses zeichnet einmal pro Minute während einer Messung einen Datenpunkt auf. Diese Statistiken einem dabei einen Einblick darüber, wie groß der Ressourcenverbrauch der Datenbanksysteme während der Messungen ist.
 
 \section{Umgebung}
 \label{analyse:umgebung}
@@ -341,12 +343,12 @@ Im Rahmen der Performance-Analyse werden Messungen mit den folgenden Datenbanksy
     \item Db2 Graph V11.5.6.0 (+ Db2) und
     \item Neo4j.
 \end{itemize}
-In den folgenden Unterabschnitten werden dabei die wichtige Anwendungs- be\-zieh\-ungs\-wei\-se System-Konfigurationen beschrieben. 
+In den folgenden Unterabschnitten werden dabei die wichtige Anwendungs- beziehungsweise System-Konfigurationen beschrieben. 
 
 \subsection{Db2}
 Die beiden Db2 Graph Versionen verwenden bei allen Messungen Performance-Analyse dieselbe Db2-Instanz. Dadurch wird gewährleistet, dass beide auf ein relationales Datenbankmanagementsystem zugreifen, das sich nicht in der Konfiguration zwischen den Db2 Graph Versionen unterscheidet. Außerdem können somit beide Db2 Graph Versionen auf Basis eines identischen Datensatzes operieren. Auf diese Weise kann eine Verzerrung der Messergebnisse vermieden werden und beide Versionen von Db2 Graph arbeiten während des Benchmarkings unter denselben Voraussetzungen.
 
-Bei der Db2-Instanz, die von beiden Db2 Graph Versionen genutzt wird, handelt es sich um die Db2 Advanced Edition in Version v11.5.5.1. Per Konfiguration wurden ihr 180 GB an Arbeitsspeicher zugewiesen. Darüber hinaus verfügt sie über die für Linkbench benötigte Datenbank \texttt{linkdb0}. Diese weist im Kontext aller Messungen das in \autoref{src:linkdb0_schema} beschrieben Datenbankschema auf:
+Bei der Db2-Instanz, die von beiden Db2 Graph Versionen genutzt wird, handelt es sich um die Db2 Advanced Edition in Version v11.5.5.1. Per Konfiguration wird ihr hierbei 180 GB an Arbeitsspeicher zugewiesen. Darüber hinaus verfügt sie über die für Linkbench benötigte Datenbank \texttt{linkdb0}. Diese weist im Kontext aller Messungen das in \autoref{src:linkdb0_schema} beschrieben Datenbankschema auf:
 
 \begin{lstlisting}[label=src:linkdb0_schema,caption={Db2-Instanz Datenbankschema für linkdb0},language=SQL]
 CREATE TABLE linkdb0.nodetable
@@ -388,20 +390,22 @@ An dem in \autoref{src:linkdb0_schema} beschriebenen Schema kann dabei abgelesen
 Neben dem Datenbankschema von \texttt{linkdb0} muss auch noch darauf hingewiesen werden, dass die Datenbank einen Bufferpool (\texttt{IBMDEFAULTBP}) der Größe 163,920 GB nutzt. Der Bufferpool besteht dabei aus exakt 40.000.000 Seiten, mit einer Seitengröße (\texttt{PAGESIZE}) von 4096 Byte.
 
 \subsection{Db2 Graph}
-Die Version Beta 3 und V11.5.6.0 von Db2 Graph verfügen im Rahmen der Performance-Analyse eine vergleichbare Konfiguration. Lediglich die in V11.5.6.0 neu eingeführte \texttt{db2graph-server.yaml} und \texttt{db2graph-internal.yaml} sorgen dafür, dass es Konfigurationsunterschiede zwischen beiden Versionen gibt. Auf diese beiden Konfigurationen wird allerdings nicht näher eingegangen. Schließlich wurden die beiden Konfigurationen nicht für die Messungen angepasst. Somit wird für die Performance-Analyse die mit Db2 Graph V11.5.6.0 ausgelieferte Standard-Konfiguration von \texttt{db2graph-server.yaml} und \texttt{db2graph-internal.yaml} her\-angezogen.
+Die Version Beta 3 und V11.5.6.0 von Db2 Graph verfügen im Rahmen der Performance-Analyse über eine vergleichbare Konfiguration. Lediglich die in V11.5.6.0 neu eingeführte \texttt{db2graph-server.yaml} und \texttt{db2graph-internal.yaml} sorgen dafür, dass es Konfigurationsunterschiede zwischen beiden Versionen gibt. Auf diese beiden Konfigurationen wird allerdings nicht näher eingegangen. Schließlich werden die beiden Konfigurationen nicht für die Messungen angepasst. Somit zieht Db2 Graph V11.5.6.0 während der Performance-Analyse 
 
-Für die Messungen wurden die Konfiguration \texttt{gremlin-server.yaml} sowie die Ressourcenparameter des Gremlin-Servers beider Versionen gleichermaßen angepasst. Unter diese Anpassungen fallen:
+Somit zieht Db2 Graph V11.5.6.0 bei der Performance-Analyse die Standard-Konfiguration von \texttt{db2graph-server.yaml} und \texttt{db2graph-internal.yaml}, die mit dem jeweiligen Container-Image ausgeliefert wird.
+
+Für die Messungen werden die Konfiguration \texttt{gremlin-server.yaml} sowie die Ressourcenparameter des Gremlin-Servers beider Versionen gleichermaßen angepasst. Bei diesen Anpassungen handelt es sich um:
 \begin{itemize}
     \item \textit{Gremlin-Memory}\\
-    Dieser Ressourcenparameter legt fest, wie viel Memory der Gremlin-Server des TinkerPop-Stacks im Maximalfall nutzen kann. Der Standard-Wert beträgt bei beiden Db2 Graph Versionen normalerweise 4 GB. Um eine möglichst hohe Performance mit beiden Db2 Graph Versionen zu erzielen, wurde das Memory-Limit für den Gremlin-Server im Rahmen der Messungen allerdings auf 64 GB angehoben. 
+    Dieser Ressourcenparameter legt fest, wie viel Memory der Gremlin-Server des TinkerPop-Stacks im Maximalfall nutzen kann. Der Standard-Wert beträgt bei beiden Db2 Graph Versionen normalerweise 4 GB. Um eine möglichst hohe Performance mit beiden Db2 Graph Versionen zu erzielen, wird das Memory-Limit für den Gremlin-Server im Rahmen der Messungen allerdings auf 64 GB angehoben. 
     \item \textit{Thread-Pool-Worker}\\
     Der Wert für Thread-Pool-Worker regelt, wie viele Threads für die Verarbeitung von nicht-blockenden Operationen im Gremlin-Server bereitstehen \cite{tinkerpop_2020}. Der Wert ist dabei normalerweise auf 0 gesetzt, was zur Folge hat, dass die Anzahl von verfügbaren Prozessoren herangezogen wird \cite{tinkerpop_2020}. Dies hätte im Kontext der Messumgebung zur Folge, dass die Thread-Pool-Worker standardmäßig auf 32 gesetzt werden würden. 
     
-    Um eine möglichst hohe Performance für die Db2 Graph Versionen bei den Messungen zu gewährleisten, wurde der Wert allerdings auf 128 erhöht. Da es dadurch den Gremlin-Server dahingehend unterstützt, große Lasten besser zu verarbeiten. So ist es dem Gremlin-Server dadurch möglich, 50 oder 100 Anfragen, die von den entsprechenden Linkbench-Threads während des Benchmarkings gesendet werden, auf einmal zu bearbeiten. 
+    Um eine möglichst hohe Performance für die Db2 Graph Versionen bei den Messungen zu gewährleisten, wird der Wert allerdings auf 128 erhöht. Dadurch unterstützt es den Gremlin-Server dahingehend, große Lasten besser zu verarbeiten. So ist es ihm dadurch möglich, 50 oder 100 Anfragen, die von den entsprechenden Linkbench-Threads während des Benchmarkings gesendet werden, auf einmal zu bearbeiten. 
     \item \textit{Gremlin-Pool}\\
-    Der Wert für den Gremlin-Pool spezifiziert, wie viele Threads dem Gremlin-Server für die Verarbeitung von blockenden Operationen zur Verfügung stehen \cite{tinkerpop_2020}. Ähnlich wie Thread-Pool-Worker zieht er in der Standard-Konfiguration die verfügbare Prozessoranzahl (32) heran \cite{tinkerpop_2020}. Um eine höhere Performance zu erreichen, wurde er allerdings ebenfalls auf 128 erhöht. 
+    Der Wert für den Gremlin-Pool spezifiziert, wie viele Threads dem Gremlin-Server für die Verarbeitung von blockenden Operationen zur Verfügung stehen \cite{tinkerpop_2020}. Ähnlich wie Thread-Pool-Worker zieht er in der Standard-Konfiguration die verfügbare Prozessoranzahl (32) heran \cite{tinkerpop_2020}. Um eine höhere Performance zu erreichen, wird er allerdings ebenfalls auf 128 erhöht. 
     
-    Die Erhöhung wurde hierbei allerdings als eine Art Vorsichtsmaßnahme durchgeführt. Schließlich unterstützt Db2 Graph ausschließlich lesende Queries. Dies hat zur Folge, dass der Gremlin-Server eigentlich nicht auf blockende Operationen zurückgreifen sollte. Allerdings ist nicht bekannt, ob Db2 Graph in der Praxis wirklich nur auf nicht-blockende Operationen zurückgreift. Daher wurde der Wert des Gremlin-Pools analog zu Thread-Pool-Worker angehoben. 
+    Die Erhöhung wird hierbei allerdings als eine Art Vorsichtsmaßnahme durchgeführt. Schließlich unterstützt Db2 Graph ausschließlich lesende Queries. Dies hat zur Folge, dass der Gremlin-Server eigentlich nicht auf blockende Operationen zurückgreifen sollte. Allerdings ist nicht bekannt, ob Db2 Graph in der Praxis wirklich nur auf nicht-blockende Operationen zurückgreift. Daher wird der Wert des Gremlin-Pools analog zu Thread-Pool-Worker angehoben. 
 \end{itemize}
 
 Beide Versionen von Db2 Graph nutzen darüber hinaus die in \autoref{src:db2graph_mapping} dargestellte Graph-Overlay-Konfiguration, zum Mapping der in \autoref{src:linkdb0_schema} beschrieben Tabellen auf eine Graphstruktur. Hierbei wird die \texttt{linkdb0.nodetable} aus \autoref{src:linkdb0_schema} als Vertex-Tabelle in \autoref{src:db2graph_mapping} herangezogen, während die \texttt{linkdb0.linktable} die Rolle einer Edge-Tabelle übernimmt. 
@@ -471,9 +475,9 @@ Alle Messungen, die im Rahmen der Performance-Analyse durchgeführt werden, nutz
     \item 160 GB Page Cache und
     \item maximaler JVM Heap 64 GB.
 \end{itemize}
-Der Page Cache kann dabei als das Neo4j-Pendant zum Bufferpool von Db2 betrachtet werden. Daher wurde mit ca. 164 GB und 160 GB auch eine vergleichbare Konfiguration für beide gewählt. Der JVM Heap in Neo4j und der Gremlin-Memory von Db2 Graph werden hierbei aufgrund ihrer ähnlichen Funktion ebenfalls als vergleichbar angesehen, weshalb beide auf 64 GB gesetzt wurden.
+Der Page Cache kann dabei als das Neo4j-Pendant zum Bufferpool von Db2 betrachtet werden. Daher wird mit ca. 164 GB und 160 GB auch eine vergleichbare Konfiguration für beide gewählt. Der JVM Heap in Neo4j und der Gremlin-Memory von Db2 Graph werden hierbei aufgrund ihrer ähnlichen Funktion ebenfalls als vergleichbar angesehen, weshalb beide auf 64 GB gesetzt werden.
 
-Bei Neo4j handelt es sich um eine native Graphdatenbank, die auf dem in \autoref{datenmodelle} beschrieben Graphmodell basiert. Dadurch unterstützt Neo4j ein flexibles Datenbankschema, wie in \autoref{datenmodelle:structure} bereits beschrieben. Neo4j unterstützt allerdings trotz des flexiblen Schemas die Definition von Constraints. Ein solcher Constraint und ein Index werden dabei in den Graphdatenbank eingerichtet, um einen fairen Vergleich zwischen den Db2graph Versionen (+ Db2) und Neo4j zu ermöglichen. Der in \autoref{src:neo4j_schema} beschriebene Constraint und Index werden hierbei eingeführt, um dafür zu sorgen, dass ähnliche Indexe wie in Db2 auch in Neo4j existieren. Schließlich werden in Db2 beim Anlegen eines Primärschlüssels automatisch Indexe für dessen Bestandteile erzeugt. Zum Ausgleich werden daher die \autoref{src:neo4j_schema} spezifizierten Konstrukte angelegt. Der Constraint die in \autoref{src:neo4j_schema} sorgt dabei dafür, dass keine Knoten mit dem Label \texttt{node}, dieselbe ID aufweisen können. Zugleich wird im Zuge dessen auch ein Index auf die ID von \texttt{node}-gelabelten Knoten erstellt.
+Bei Neo4j handelt es sich um eine native Graphdatenbank, die auf dem in \autoref{datenmodelle} beschrieben Graphmodell basiert. Dadurch unterstützt Neo4j ein flexibles Datenbankschema, wie in \autoref{datenmodelle:structure} bereits beschrieben. Neo4j unterstützt allerdings trotz des flexiblen Schemas die Definition von Constraints. Ein solcher Constraint und ein Index werden dabei in den Graphdatenbank eingerichtet, um einen fairen Vergleich zwischen den Db2graph Versionen (+ Db2) und Neo4j zu ermöglichen. Der in \autoref{src:neo4j_schema} beschriebene Constraint und Index werden hierbei eingeführt, um dafür zu sorgen, dass ähnliche Indexe wie in Db2 auch in Neo4j existieren. Schließlich werden in Db2 beim Anlegen eines Primärschlüssels automatisch Indexe für dessen Bestandteile erzeugt. Zum Ausgleich werden daher die \autoref{src:neo4j_schema} spezifizierten Konstrukte angelegt. Der Constraint in \autoref{src:neo4j_schema} sorgt dabei dafür, dass Knoten mit dem Label \texttt{node}, nicht dieselbe ID aufweisen können. Zugleich wird im Zuge dessen auch ein Index auf die ID von \texttt{node}-gelabelten Knoten erstellt.
 
 \begin{lstlisting}[label=src:neo4j_schema,caption={Neo4j Instanz Datenbankschema},language=CQL]
 // Constraint aehnlich einem Primaerschluessel fuer Knoten
@@ -493,7 +497,7 @@ Um das neue Ziel der Arbeit zu erfüllen, werden in diesem Kapitel verschiedene 
 Bevor damit allerdings auf die Unterschiede beziehungsweise die variierenden Parameter der Messreihe eingegangen werden kann, werden hier nochmals kurz die Parameter und Konfigurationen zusammengefasst, die über alle Messreihen hinweg konstant bleiben:
 \begin{itemize}
     \item \textit{Umgebung}\\
-    In der in \autoref{analyse:umgebung} beschriebenen Umgebung, werden alle Messreihen durchgeführt. 
+    In der in \autoref{analyse:umgebung} beschriebenen Umgebung werden alle Messreihen durchgeführt. 
     \item \textit{Linkbench-Threads}\\
     Linkbench arbeitet in der \textit{Request}-Phase immer mit 50 Threads, die gleichzeitig Anfragen an ein Datenbanksystem schicken.
     \item \textit{Db2-Datenbankschema}\\
@@ -537,9 +541,7 @@ Zugleich finden allen Messungen im Rahmen der Messreihe auf der Basis der folgen
     \item konstante Verteilung (Datensatz) und
     \item Linkbench-10M (Datensatzgröße).
 \end{itemize}
-Die Messreihe ähnelt in ihrer Beschaffenheit der Messreihe Linkbench-Const-10M. Der Datensatz bei den Messungen weist eine konstante 10er-Verteilung auf und setzt sich aus 10 Millionen Knoten und 100 Millionen Kanten zusammen. Darüber hinaus wurde hier auch eine Request-Anzahl von 500.000 (pro Thread) herangezogen.
-
-Der einzige Unterschied zu der Linkbench-Const-10M Messung stellt hierbei der Einsatz der ID-Queries statt der regulären Queries dar.
+Die Messreihe ähnelt in ihrer Beschaffenheit der Messreihe Linkbench-Const-10M. Der Datensatz bei den Messungen weist eine konstante 10er-Verteilung auf und setzt sich aus 10 Millionen Knoten und 100 Millionen Kanten zusammen. Darüber hinaus wird hier auch eine Request-Anzahl von 500.000 (pro Thread) herangezogen. Der einzige Unterschied zu der Linkbench-Const-10M Messung stellt der Einsatz der ID-Queries statt der regulären Queries dar.
 
 \subsection{Linkbench-Const-100M}
 Im Kontext dieser Reihe erfolgen Messungen mit den Datenbanksystemen:
@@ -572,7 +574,7 @@ Die Messungen im Rahmen dieser Messreihe werden dabei mit folgenden Parametern d
     \item reale Verteilung (Datensatz) und 
     \item Linkbench-10M (Datensatzgröße).
 \end{itemize}
-Bei den im Kontext der Reihe durchgeführten Messungen werden die regulären Queries eingesetzt. Außerdem wird, bevor die Messungen vorgenommen werden können, ein Datensatz mit einer realen Verteilung erzeugt. Der Datensatz setzt sich dabei aus 10 Millionen Knoten und ca. 53 Millionen Kanten zusammen. Als Request-Anzahl pro Thread wurde hier 50.000 gewählt. 
+Bei den im Kontext der Reihe durchgeführten Messungen werden die regulären Queries eingesetzt. Außerdem wird, bevor die Messungen vorgenommen werden können, ein Datensatz mit einer realen Verteilung erzeugt. Der Datensatz setzt sich dabei aus 10 Millionen Knoten und ca. 53 Millionen Kanten zusammen. Als Request-Anzahl pro Thread wird hier 50.000 gewählt. 
 
 \subsection{Linkbench-Real-100M}
 Teil dieser Reihe sind Messungen mit den Datenbanksystemen:
@@ -636,6 +638,6 @@ Die Durchführung der Messreihen läuft hierbei so ab, dass für jeweils eines d
 
 Nach dem alle vier bis sieben Operationen gebenchmarkt wurden, kann mit dem nächsten Datenbanksystem weitergemacht werden. 
 
-Wurden alle Operationen für die Datenbanksysteme, die in einer Messreihe eine Rolle spielen durchgeführt, so kann mit der Durchführung der nächsten Messreihe begonnen werden. 
+Wurden alle Operationen für die Datenbanksysteme, die in einer Messreihe eine Rolle spielen gebenchmarkt, so kann mit der Durchführung der nächsten Messreihe begonnen werden. 
 
 \todo{Hier ein Tikz Bild einfügen.}

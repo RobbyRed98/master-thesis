@@ -69,7 +69,31 @@ Schlussendlich kann basierend auf \autoref{fig:einbruch:durchsatz:10m} und \auto
 
 \section{Einfluss der Datensatzgröße}
 \label{auswertung:groesse}
-Im Rahmen dieses Abschnitts wird genauer untersucht, wie groß d
+Im Rahmen dieses Abschnitts wird genauer untersucht, welchen Einfluss die Größe eines Datensatzes auf konstant- oder real-verteilten Datensätze hat. Um dies bei den Datenbanksystemen zu identifizieren, wird der relative Unterschied zwischen den Durchsatzergebnisse zwischen den Linkbench-10M und Linkbench-100M Datensätzen ermittelt. Die jeweiligen Durchsatzergebnisse die mit Linkbench-10M Datensätzen erzielt werden, werden dabei als 100 \% betrachtet. An diesen 100 \% wird im nächsten Schritt der Durchsatz bei den Linkbench-100M Datensätzen gemessen. Die prozentuale Abweichungen zwischen den Datensätzen werden dabei in \autoref{fig:durchsatz:10m_vs_100m:const} und \autoref{fig:durchsatz:10m_vs_100m:real} dargestellt.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/diagramme/difference_durchsatz_const_10m_vs_100m.pdf}
+    \caption{Unterschied Durchsatz Linkbench-10M vs. Linkbench-100M (Const)}
+    \label{fig:durchsatz:10m_vs_100m:const}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/diagramme/difference_durchsatz_real_10m_vs_100m.pdf}
+    \caption{Unterschied Durchsatz Linkbench-10M vs. Linkbench-100M (Real)}
+    \label{fig:durchsatz:10m_vs_100m:real}
+    \vspace{1em}
+    \textit{Bei den hier abgebildeten Werten für getLinkList, handelt es sich um Werte, die mit einem Range-Limit von 100 erzielt werden.}
+\end{figure}
+
+So gilt es den in \autoref{fig:durchsatz:10m_vs_100m:const} bei \texttt{getNode} für Db2 Graph Beta 3 angegebenen Wert von 2,91 \% so zu verstehen, dass der Durchsatz bei Linkbench-100M um diesen Prozentsatz geringer ausfällt als bei derselben Messung mit dem Linkbench-10M. Db2 Graph Beta 3 erreicht also bei der Messreihe \nameref{ergebnisse:100m_const} lediglich 97,09 \% des Durchsatzes von der Messreihe \nameref{ergebnisse:10m_const}, wodurch sich der Unterschied von 2,91 \% bei \texttt{getNode} ergibt.
+
+Die in \autoref{fig:durchsatz:10m_vs_100m:const} für konstant-verteilte Datensätze dargestellten Ergebnisse zeigen hier einen konstantes Bild über alle Datenbanksysteme hinweg. So weisen alle Messergebnisse, egal welches Datenbanksystem oder welche Operation, eine positive prozentuale Abnahme auf. Dies bedeutet, dass sich wie bei größeren Datensätzen erwartet, alle Durchsatzergebnisse bei \nameref{ergebnisse:100m_const} im Verhältnis zu \nameref{ergebnisse:10m_const} niedriger ausgefallen sind. Neo4j weist dabei mit 1,31 \% bis 2,12 \% den geringsten Performance-Einbruch auf. Neo4j und Db2 Graph V11.5.6.0 hingegen weisen deutlich höhere Performance-Einbrüche bei dem größeren Datensatz auf mit jeweils 4,60 \% (\texttt{getNode}) und 5,23 \% (\texttt{getLink}). 
+
+Die in \autoref{fig:durchsatz:10m_vs_100m:real} abgebildeten Ergebnisse überraschen hingegen. Die Ergebnisse für Neo4j bewegen sich hier bei \texttt{getNode} und \texttt{getLink} im negativen Bereich. Dies bedeutet, dass für Neo4j bei diesen Operationen in \nameref{ergebnisse:100m_real} ein höherer Durchsatz erzielt werden konnte, als beim kleineren Datensatz in \nameref{ergebnisse:10m_real}, was der bereits zuvor geäußerten These, dass größere Datensätze einen geringeren Durchsatz beziehungsweise eine geringere Performance aufweisen widerspricht. Auch gibt es bei den Messungen keinerlei Anhaltspunkte, warum dieses Phänomen bei Neo4j auftritt. Alle anderen Wert von Neo4j und Db2 Graph V11.5.6.0 weisen hingegen positive Performance-Einbrüche auf.
+
+Bezüglich der Höhe der Abweichungen kann aus \autoref{fig:durchsatz:10m_vs_100m:real} abgeleitet werden, dass Db2 Graph mit Abweichungen zwischen 2,3 \% und 3,48 \% eine höhere Abweichung aufweist als Neo4j, das sich im Bereich von 0,09 \% bis (-)1,64 \% bewegt. 
 
 \section{Vergleich zwischen den Verteilungen}
 \label{auswertung:verteilung}

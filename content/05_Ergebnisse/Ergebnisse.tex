@@ -567,7 +567,7 @@ Des Weiteren halbiert sich auch hier ungefähr der Durchsatz beim Anstieg des Ra
 \end{figure}
 
 \section{Auswertung}
-Im Rahmen dieses Abschnitts werden die verschiedenen Phänomene und Aspekte, die bereits bei der Betrachtung und Interpretation der Ergebnisse der Messreihe angesprochen werden, nochmals aufgegriffen und isoliert betrachtet.
+Im Rahmen dieses Abschnitts werden die verschiedenen Phänomene und Aspekte, die bereits bei der Betrachtung und Interpretation der Ergebnisse der Messreihe angesprochen werden, nochmals aufgegriffen und isoliert betrachtet. Dabei werden hauptsächlich die Durchsatzergebnisse herangezogen, da der Fokus bei der Besprechung der Messreihen in \autoref{ergebnisse} bereits hauptsächlich auf die Latenzwerte gelegt wird. So werden auch die Durchsatzangaben nochmals genauer aufgegriffen. Außerdem wird in \autoref{ergebnisse} bereits die Beobachtung gemacht, dass Latenz- und Durchsatzwerte beide ähnliche Ergebnisse aufweisen, bei welcher Messung der Durchsatz hoch ist bei der ist auch die Latenz niedrig und umgekehrt.
 
 \subsection{Einordnung der Performance}
 Bei der Beurteilung der Performance der Datenbanksysteme handelt es sich bei den im Rahmen der Arbeit erzielten Messergebnissen um eine einfache Aufgabe. So weist bei jeder Messreihe Neo4j den niedrigsten Latenz- und Durchsatzwert auf, gefolgt von Db2 Graph Beta 3 -- sollte es Teil der Messreihe sein -- und Db2 Graph V11.5.6.0. 
@@ -606,7 +606,7 @@ Eine interessante Gegebenheit, die in der \autoref{fig:faktor:durchsatz:const} b
 Dabei gilt es hingegen zu beachten, dass Db2 Graph Beta 3 aufgrund der höheren Performance bei den Messreihen mit konstant-verteilten Datensätzen nicht als allgemein performantere Version von Db2 Graph einzustufen ist. Schließlich spielt sie bei den Messreihen mit real-verteilten Datensätzen keine Rolle, da sie für den Einsatz dort aufgrund fehlender Optimierungstechniken derart ungeeignet war, dass das Erzielen von Ergebnissen im Rahmen des üblichen Zeitraums nicht möglich war.
 
 \subsection{Umgang mit Ergebnismengen}
-Bei der Untersuchung der Ergebnismenge bei den Messreihen mit real-verteilten Datensätzen wird bereits in \autoref{ergebnisse:10m_real} und \autoref{ergebnisse:100m_real} ein kurzer Überblick über das jeweilige Verhalten bezüglich beim Durchsatzes gegeben. Wie große der Einbruch des Durchsatzes und entsprechend auch der Performance dabei ist, lässt sich an den Abbildungen, die absolute Zahlen präsentieren, nicht ablesen. Schließlich bewegen sich die Datenbanksysteme mit beispielsweise 15.742 und 2.466 Operationen pro Sekunde in \autoref{ergebnisse:10m_real} in anderen Größenordnung, werden aber in derselben Grafik abgebildet. 
+Bei der Untersuchung der Ergebnismenge bei den Messreihen mit real-verteilten Datensätzen wird bereits in \autoref{ergebnisse:10m_real} und \autoref{ergebnisse:100m_real} ein kurzer Überblick über das jeweilige Verhalten bezüglich beim Durchsatzes gegeben. Wie große der verhältnismäßige Einbruch des Durchsatzes und entsprechend auch der Performance, bei einer variierenden oberen Grenze für die Anzahl an Elementen in einer Ergebnismenge ist, lässt sich an den Abbildungen, die absolute Zahlen präsentieren, nicht ablesen. Schließlich bewegen sich die Datenbanksysteme mit beispielsweise 15.742 und 2.466 Operationen pro Sekunde in \autoref{ergebnisse:10m_real} in anderen Größenordnung, werden aber in derselben Grafik abgebildet. 
 
 Um nun der Frage auf den Grund zugehen: \textit{Welches Datenbanksystem bei einem steigenden Range-Limit den verhältnismäßig größeren Performance-Einbruch aufweist?}, wird in \autoref{fig:einbruch:durchsatz:10m} und \autoref{fig:einbruch:durchsatz:100m} dargestellt, wie viele Prozent des Durchsatzes bei einem steigenden Range-Limit noch erreicht werden können. Der Wert für \texttt{getLinkList} mit einem Range-Limit von 100 repräsentiert dabei jeweils 100 \% des Durchsatzes von Neo4j oder Db2 Graph. So sinkt beispielsweise der Durchsatz bei Neo4j in \autoref{fig:einbruch:durchsatz:10m} bei einem Range-Limit von 10.000 auf lediglich 69,74 \% des bei einem Range-Limit von 100 erzielten Durchsatzes. 
 
@@ -614,25 +614,26 @@ Bei der Betrachtung des Kurvenverlaufs in \autoref{fig:einbruch:durchsatz:10m} u
 
 Des Weiteren ist erkennbar, dass der Performance-Einbruch bei Db2 Graph V11.5.6.0 bei einem steigenden Range-Limit immer geringer zu sein scheint, als bei Neo4j. So weist V11.5.6.0 bei einem Range-Limit von 100.000 noch 54,18 \% des Durchsatzes auf den es bei einem Range-Limit von 100 erreicht hat. Neo4j hingegen erlangt bei 100.000 lediglich 43,29 \% des Durchsatzes den es erreicht hat, als die obere Grenze für die Ergebnismenge auf 100 Elemente begrenzt war. 
 
-
-
-
+So beträgt der Unterschied zwischen Db2 Graph und Neo4j bei einem Range-Limit von 100.000 ca. 11 \% zueinander in \autoref{fig:einbruch:durchsatz:10m}, während es bei 10.000 sogar ca. 18 \% sind. Bei einem Range-Limit von 1.000 sind es jedoch lediglich ca. 8 \% Unterschied zueinander. Wobei es bei hier anzumerken gilt, dass Db2 Graph mit 97,58 \% ein außergewöhnlich hohes Ergebnis erreicht. Die in \autoref{fig:einbruch:durchsatz:100m} dargestellten Werte bestätigen dabei grob die Beobachtungen aus \autoref{fig:einbruch:durchsatz:10m}. So weichen die Werte in den beiden Abbildungen (\autoref{fig:einbruch:durchsatz:10m} und \autoref{fig:einbruch:durchsatz:100m}) höchstens um bis zu 2 \% voneinander ab. 
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/diagramme/limit_relative_durchsatz_real_10m.pdf}
-    \caption{Linkbench-10M-Real Performance-Einbruch getLinkList}
+    \caption{Linkbench-10M-Real Durchsatz gemessen an getLinkList(100)}
     \label{fig:einbruch:durchsatz:10m}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/diagramme/limit_relative_durchsatz_real_100m.pdf}
-    \caption{Linkbench-100M-Real Performance-Einbruch getLinkList}
+    \caption{Linkbench-100M-Real Performance gemessen an getLinkList(100)}
     \label{fig:einbruch:durchsatz:100m}
 \end{figure}
 
+Schlussendlich kann basierend auf \autoref{fig:einbruch:durchsatz:10m} und \autoref{fig:einbruch:durchsatz:100m} geschlussfolgert werden, dass der Performance Einbruch beim Umgang mit größeren Ergebnismengen nicht nur absolut bei Neo4j größer ausfällt, sondern auch verhältnismäßig.
+
 \subsection{Einfluss der Datensatzgröße}
+Im Rahmen dieses Abschnitts wird genauer untersucht, wie groß d
 
 \subsection{Vergleich zwischen den Verteilungen}
 

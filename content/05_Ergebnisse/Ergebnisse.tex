@@ -9,11 +9,11 @@ Beim Durchsatz wird allein der durchschnittliche Durchsatz abgebildet und für d
 
 \section{Linkbench-10M-Const}
 \label{ergebnisse:10m_const}
-Dieser Abschnitt führt Latenz- und Durchsatzwerte auf, die im Rahmen dieser Messreihe für die Operationen der jeweiligen Datenbanksysteme Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j erzielt wurden. Die Ergebnisse, die dieser Abschnitt umfasst, wurden hierbei auf Basis eines kleineren konstant-verteilten Datensatzes erzielt. 
+Dieser Abschnitt führt Latenz- und Durchsatzwerte auf, die im Rahmen dieser Messreihe für die Operationen der jeweiligen Datenbanksysteme Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j erzielt werden. Dabei wird auf Basis eines kleinen konstant verteilten Datensatzes gearbeitet.
 
 \subsection{Latenz}
 
-Die \autoref{tab:latenz_10m_const:beta3} stellt dabei die Ergebnisse dar, die für Db2 Graph Beta 3 mit dem \texttt{Db2GraphOld}-Adapter gemessen wurden. In \autoref{tab:latenz_10m_const:ga} werden hingegen die gemessen Latenzen für Db2 Graph V11.5.6.0 beschrieben. In \autoref{tab:latenz_10m_const:ga} werden die Latenzergebnisse für Db2 Graph V11.5.6.0 aufgeführt, die bei den Messungen dieser Messreihe erzielt wurden. Die Latenzen die für Neo4j in dieser Messreihe erzielt wurden, werden in \autoref{tab:latenz_10m_const:neo4j} aufbereitet dargelegt. 
+Die \autoref{tab:latenz_10m_const:beta3} stellt hier die für Db2 Graph Beta 3 gemessen Ergebnisse dar, während in \autoref{tab:latenz_10m_const:ga} die für Db2 Graph V11.5.6.0 ermittelten Latenz aufgeführt werden. Neo4j Latenzwerte für diese Messreihe werden hingegen in \autoref{tab:latennz_10m_const:neo4j} abgebildet.
 
 \begin{table}[!h]
 \centering
@@ -119,7 +119,7 @@ Bei der Analyse der Latenzergebnisse aus dieser Messreihe für Db2 Graph Beta 3 
 
 Die um ca. 3 - 4 Millisekunden verbesserten durchschnittlichen Latenzwerte für die Operationen \texttt{countLink} und \texttt{getLinkList} bei Db2 Graph Beta 3 stechen dabei allerdings etwas heraus. Leicht auffällig ist auch, dass sich die in \autoref{tab:latenz_10m_const_id:ga} abgebildeten Durchschnittswerte für \texttt{getLink}, \texttt{countLink} und \texttt{getLinkList} alle um ca. 1 - 2 Millisekunden im Vergleich zu \autoref{tab:latenz_10m_const_id:beta3} verbessert haben. 
 
-So scheinen die Ergebnisse mit den ID-Queries tendenziell eine geringere Latenz aufzuweisen wie die Ergebnisse, die beim Einsatz der regulären Queries erzielt wurden. Allerdings werden die Unterschiede bei beiden Db2 Graph Versionen nicht als groß genug eingestuft, um diese Tendenz zu bestätigen. 
+So scheinen die Ergebnisse mit den ID-Queries tendenziell eine geringere Latenz aufzuweisen wie die Ergebnisse, die beim Einsatz der regulären Queries erzielt werden. Allerdings werden die Unterschiede bei beiden Db2 Graph Versionen nicht als groß genug eingestuft, um diese Tendenz zu bestätigen. 
 
 Die Ergebnisse von Neo4j werden hierbei nicht beachtet, weil diese vom Hauptunterschied zwischen den Queries -- der Formulierung der Gremlin-Queries -- nicht direkt betroffen sind.
 
@@ -293,7 +293,7 @@ Dieses Verhalten entspricht dabei allerdings den Erwartungen, da normalerweise i
 Der Unterschied zwischen den Messreihen fällt hier sogar kleiner aus als erwartet. Dies lässt sich vermutlich auf den großen Bufferpool oder Page-Cache der gebenchmarkten Datenbanksysteme zurückführen. So sollten sowohl der Linkbench-10M als auch der Linkbench-100M Datensatz komplett in den Bufferpool oder den Page-Cache von Db2 und Neo4j passen.
 
 \subsection{Durchsatz}
-Die im Rahmen dieser Messreihe erzielten Durchsatzwerte (\autoref{fig:durchsatz:linkbench_100m_const}) unterstreichen auch bei dieser Messreihe die bei den Latenzwerten beobachteten Sachverhalte. Auch hier weist Db2 Graph V11.5.6.0 den geringsten Wert auf, Neo4j hingegen wieder einmal den höchsten. Auch bleiben die Durchsatzwerte alle geringfügig unterhalb der Werte aus \autoref{fig:durchsatz:linkbench_10m_const}, die auf Basis des kleineren Datensatzes aber gleich verteilten Datensatzes ermittelt wurden. 
+Die im Rahmen dieser Messreihe erzielten Durchsatzwerte (\autoref{fig:durchsatz:linkbench_100m_const}) unterstreichen auch bei dieser Messreihe die bei den Latenzwerten beobachteten Sachverhalte. Auch hier weist Db2 Graph V11.5.6.0 den geringsten Wert auf, Neo4j hingegen wieder einmal den höchsten. Auch bleiben die Durchsatzwerte alle geringfügig unterhalb der Werte aus \autoref{fig:durchsatz:linkbench_10m_const}, die auf Basis des kleineren Datensatzes aber gleich verteilten Datensatzes ermittelt werden. 
 
 \begin{figure}[!ht]
     \centering
@@ -304,7 +304,7 @@ Die im Rahmen dieser Messreihe erzielten Durchsatzwerte (\autoref{fig:durchsatz:
 
 \section{Linkbench-10M-Real}
 \label{ergebnisse:10m_real}
-In diesem Abschnitt werden die Ergebnisse für die Messreihe \nameref{ergebnisse:10m_real} dargestellt und untersucht. Hierbei handelt es sich um die ersten Messergebnisse die für einen (kleinen) real-verteilten Datensatz erzielt wurden. So beinhalten die hier aufgeführten Messergebnisse sowohl Latenz- als auch Durchsatzwerte für die \texttt{getLinkList}-Operation mit jeweils verschieden hohen Ergebnismenge. Das Datenbanksystem Db2 Graph Beta 3 spielt in den Messungen hingehen keine Rolle.
+In diesem Abschnitt werden die Ergebnisse für die Messreihe \nameref{ergebnisse:10m_real} dargestellt und untersucht. Hierbei handelt es sich um die ersten Messergebnisse die für einen (kleinen) real-verteilten Datensatz erzielt werden. So beinhalten die hier aufgeführten Messergebnisse sowohl Latenz- als auch Durchsatzwerte für die \texttt{getLinkList}-Operation mit jeweils verschieden hohen Ergebnismenge. Das Datenbanksystem Db2 Graph Beta 3 spielt in den Messungen hingehen keine Rolle.
 
 \subsection{Latenz}
 Bei der Analyse der Latenzwerte von Db2 Graph V11.5.6.0 (\autoref{tab:latenz_10m_real:ga} und \autoref{tab:latenz_10m_real:ga:gll}) und Neo4j (\autoref{tab:latenz_10m_real:neo4j} und \autoref{tab:latenz_10m_real:neo4j:gll}) bietet sich ein ähnlicher Anblick, wie bei den konstant-verteilten Datensätzen. Neo4j weist weitaus geringere Latenzergebnisse auf als Db2 Graph V11.5.6.0. 
@@ -418,7 +418,7 @@ Des Weiteren scheinen auch hier die Werte für Db2 Graph V11.5.6.0 in \autoref{f
     \caption{Ergebnisse Durchsatz Linkbench-10M-Real}
     \label{fig:durchsatz:linkbench_10m_real}
     \vspace{1em}
-    \textit{Die bei getLinkList abgebildeten Werte repräsentieren die Ergebnisse, die mit einer Begrenzung der Ergebnismenge auf maximal 100 Elemente erzielt wurden.}
+    \textit{Die bei getLinkList abgebildeten Werte repräsentieren die Ergebnisse, die mit einer Begrenzung der Ergebnismenge auf maximal 100 Elemente erzielt werden.}
 \end{figure}
 
 \begin{figure}[!ht]
@@ -432,7 +432,7 @@ Analog zu der Verdoppelung der Latenzwerte halbieren sich auch bei beiden Datenb
 
 \section{Linkbench-100M-Real}
 \label{ergebnisse:100m_real}
-Im Rahmen dieses Abschnitts werden die Latenz- und Durchsatzergebnisse für Db2 Graph V11.5.6.0 und Neo4j aufgeführt. Alle Messungen deren Ergebnisse hier zur Schau gestellt werden, werden alle auf Basis eines größeren real-verteilten Datensatzes erzielt. So umfasst der Datensatz dieser Messreihe (\nameref{ergebnisse:100m_real}) die zehnfache Anzahl an Knoten und Kanten wie der Datensatz der Messreihe \nameref{ergebnisse:10m_real}. Wie bereits bei \nameref{ergebnisse:10m_real} spielt Db2 Graph Beta 3 auch im Kontext dieses Abschnitts keine Rolle, da wie in bereits in \autoref{an}. Darüber hinaus existieren  ebenfalls mehrere Messergebnisse für die \texttt{getLinkList}-Operation mit einer variierenden Beschränkung der Ergebnismenge.
+Im Rahmen dieses Abschnitts werden die Latenz- und Durchsatzergebnisse für Db2 Graph V11.5.6.0 und Neo4j aufgeführt. Alle Messungen deren Ergebnisse hier zur Schau gestellt werden, werden alle auf Basis eines größeren real-verteilten Datensatzes erzielt. So umfasst der Datensatz dieser Messreihe (\nameref{ergebnisse:100m_real}) die zehnfache Anzahl an Knoten und Kanten wie der Datensatz der Messreihe \nameref{ergebnisse:10m_real}. Wie bereits bei \nameref{ergebnisse:10m_real} spielt Db2 Graph Beta 3 auch im Kontext dieses Abschnitts keine Rolle. Darüber hinaus existieren ebenfalls mehrere Messergebnisse für die \texttt{getLinkList}-Operation mit einer variierenden Beschränkung der Ergebnismenge.
 
 \subsection{Latenz}
 Bei der Untersuchung der Latenzwerte von Db2 Graph V11.5.6.0 (\autoref{tab:latenz_100m_real:ga} und \autoref{tab:latenz_100m_real:ga:gll}) und Neo4j (\autoref{tab:latenz_100m_real:neo4j} und \autoref{tab:latenz_100m_real:neo4j:gll}) fällt auf, dass Neo4j wieder deutlich niedrigere Durchschnittslatenzen aufweist als Db2 Graph V11.5.6.0. 
@@ -538,7 +538,7 @@ countLink & 3,05ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}
 \end{table}
 
 \subsection{Durchsatz}
-Die in \autoref{fig:durchsatz:linkbench_100m_real} und \autoref{fig:durchsatz:linkbench_100m_real:rl} aufgeführten Durchsatzwerte verifizieren die Beobachtungen, die bereits bei den Latenzen gemacht wurden. So weist Neo4j wieder einen höheren Durchsatz als Db2 Graph V11.5.6.0 auf.
+Die in \autoref{fig:durchsatz:linkbench_100m_real} und \autoref{fig:durchsatz:linkbench_100m_real:rl} aufgeführten Durchsatzwerte verifizieren die Beobachtungen, die bereits bei den Latenzen gemacht werden. So weist Neo4j wieder einen höheren Durchsatz als Db2 Graph V11.5.6.0 auf.
 
 Darüber hinaus ähneln auch die im Rahmen dieser Messreihe erzielten Durchsatzergebnisse (\autoref{fig:durchsatz:linkbench_100m_real}) denen des kleineren real-verteilten Datensatzes (\autoref{fig:durchsatz:linkbench_10m_real}). 
 
@@ -552,7 +552,7 @@ Des Weiteren halbiert sich auch hier ungefähr der Durchsatz beim Anstieg des Ra
     \caption{Ergebnisse Durchsatz Linkbench-10M-Real}
     \label{fig:durchsatz:linkbench_100m_real}
     \vspace{1em}
-    \textit{Die bei getLinkList abgebildeten Werte repräsentieren die Ergebnisse, die mit einer Begrenzung der Ergebnismenge auf maximal 100 Elemente erzielt wurden.}
+    \textit{Die bei getLinkList abgebildeten Werte repräsentieren die Ergebnisse, die mit einer Begrenzung der Ergebnismenge auf maximal 100 Elemente erzielt werden.}
 \end{figure}
 
 \begin{figure}[!ht]

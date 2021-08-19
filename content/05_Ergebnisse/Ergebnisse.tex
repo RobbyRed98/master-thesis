@@ -597,16 +597,40 @@ Der gemeinsame Durchschnittswert für den Durchsatz wird dabei einmal für jedes
     \label{fig:faktor:durchsatz:real}
 \end{figure}
 
-Bei der Analyse der in \autoref{fig:faktor:durchsatz:const} und \autoref{fig:faktor:durchsatz:real} dargestellten Faktoren fällt auf, dass Neo4j immer 6- bis 7-Mal so viele Operationen pro Sekunde bearbeitet wie Db2 Graph bei den jeweiligen Messreihen, was einen gewaltigen Performance-Unterschied zwischen Db2 Graph V11.5.6.0 offenbart. 
+Bei der Analyse der in \autoref{fig:faktor:durchsatz:const} und \autoref{fig:faktor:durchsatz:real} dargestellten Faktoren fällt auf, dass Neo4j immer 6- bis 7-Mal so viele Operationen pro Sekunde bearbeitet wie Db2 Graph bei den jeweiligen Messreihen, was einen gewaltigen Performance-Unterschied zwischen Db2 Graph V11.5.6.0 offenbart. Der Performance-Unterschied zwischen Db2 Graph Beta 3 und Neo4j um ein zwei- bis dreifaches bei den Faktoren in \autoref{fig:faktor:durchsatz:const} ist hier etwas geringer.
 
-So war anfänglich nicht davon auszugehen das Db2 Graph als Graph-Erweiterung in Kombination mit Db2 Neo4j als natives Graphdatenbanksystem übertrifft. Schließlich verursacht die Kommunikation zwischen Db2 Graph und Db2, die für die Beantwortung einer Anfrage nötig ist, einen Aufwand den Neo4j nicht betreiben muss. Einen Performance-Unterschied um mindestens den Faktor 6 galt es jedoch nicht zu erwarten. 
+So war anfänglich nicht davon auszugehen das Db2 Graph als Grapherweiterung in Kombination mit Db2 Neo4j als natives Graphdatenbanksystem übertrifft. Schließlich verursacht die Kommunikation zwischen Db2 Graph und Db2, die für die Beantwortung einer Anfrage nötig ist, einen Aufwand den Neo4j nicht betreiben muss. Einen Performance-Unterschied um mindestens den Faktor 6 galt es jedoch nicht zu erwarten. 
 
 Eine interessante Gegebenheit, die in der \autoref{fig:faktor:durchsatz:const} beobachtet werden, kann stellt der Fakt dar, dass Db2 Graph Beta 3 als ältere Version von Db2 Graph 2 bis 2,5 Mal mehr Operationen pro Sekunde bewältigen kann, als Db2 Graph V11.5.6.0 (der erste GA Release). Zu Beginn wäre hier eigentlich die Vermutung nahe gelegen, dass V11.5.6.0 als neuere Version, die über mehr Optimierungstechniken verfügt als Beta 3, eine höhere Performance aufweist. Dies scheint allerdings nicht der Fall zu sein. 
 
 Dabei gilt es hingegen zu beachten, dass Db2 Graph Beta 3 aufgrund der höheren Performance bei den Messreihen mit konstant-verteilten Datensätzen nicht als allgemein performantere Version von Db2 Graph einzustufen ist. Schließlich spielt sie bei den Messreihen mit real-verteilten Datensätzen keine Rolle, da sie für den Einsatz dort aufgrund fehlender Optimierungstechniken derart ungeeignet war, dass das Erzielen von Ergebnissen im Rahmen des üblichen Zeitraums nicht möglich war.
 
 \subsection{Umgang mit Ergebnismengen}
+Bei der Untersuchung der Ergebnismenge bei den Messreihen mit real-verteilten Datensätzen wird bereits in \autoref{ergebnisse:10m_real} und \autoref{ergebnisse:100m_real} ein kurzer Überblick über das jeweilige Verhalten bezüglich beim Durchsatzes gegeben. Wie große der Einbruch des Durchsatzes und entsprechend auch der Performance dabei ist, lässt sich an den Abbildungen, die absolute Zahlen präsentieren, nicht ablesen. Schließlich bewegen sich die Datenbanksysteme mit beispielsweise 15.742 und 2.466 Operationen pro Sekunde in \autoref{ergebnisse:10m_real} in anderen Größenordnung, werden aber in derselben Grafik abgebildet. 
 
+Um nun der Frage auf den Grund zugehen: \textit{Welches Datenbanksystem bei einem steigenden Range-Limit den verhältnismäßig größeren Performance-Einbruch aufweist?}, wird in \autoref{fig:einbruch:durchsatz:10m} und \autoref{fig:einbruch:durchsatz:100m} dargestellt, wie viele Prozent des Durchsatzes bei einem steigenden Range-Limit noch erreicht werden können. Der Wert für \texttt{getLinkList} mit einem Range-Limit von 100 repräsentiert dabei jeweils 100 \% des Durchsatzes von Neo4j oder Db2 Graph. So sinkt beispielsweise der Durchsatz bei Neo4j in \autoref{fig:einbruch:durchsatz:10m} bei einem Range-Limit von 10.000 auf lediglich 69,74 \% des bei einem Range-Limit von 100 erzielten Durchsatzes. 
+
+Bei der Betrachtung des Kurvenverlaufs in \autoref{fig:einbruch:durchsatz:10m} und \autoref{fig:einbruch:durchsatz:100m} fällt auf das der Durchsatz bei Neo4j eher linear aussieht, während Db2 Graph bei einem Range-Limit von 10.000 jeweils einen Knick aufweist. 
+
+Des Weiteren ist erkennbar, dass der Performance-Einbruch bei Db2 Graph V11.5.6.0 bei einem steigenden Range-Limit immer geringer zu sein scheint, als bei Neo4j. So weist V11.5.6.0 bei einem Range-Limit von 100.000 noch 54,18 \% des Durchsatzes auf den es bei einem Range-Limit von 100 erreicht hat. Neo4j hingegen erlangt bei 100.000 lediglich 43,29 \% des Durchsatzes den es erreicht hat, als die obere Grenze für die Ergebnismenge auf 100 Elemente begrenzt war. 
+
+
+
+
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/diagramme/limit_relative_durchsatz_real_10m.pdf}
+    \caption{Linkbench-10M-Real Performance-Einbruch getLinkList}
+    \label{fig:einbruch:durchsatz:10m}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/diagramme/limit_relative_durchsatz_real_100m.pdf}
+    \caption{Linkbench-100M-Real Performance-Einbruch getLinkList}
+    \label{fig:einbruch:durchsatz:100m}
+\end{figure}
 
 \subsection{Einfluss der Datensatzgröße}
 

@@ -56,7 +56,7 @@ Mit dem Db2-Adapter selbst werden im Rahmen dieser Arbeit keinerlei Messungen di
 
 Der Adapter spielt allerdings als Basis für die Adapter der Db2 Graph Versionen eine essenzielle Rolle. So setzen der \texttt{Db2Graph}- und \texttt{Db2GraphOld}-Adapter auf dem \texttt{Db2}-Adapter auf. Beide erweitern dabei den Adapter um einen Verbindungsaufbau zu Db2 Graph und überschreiben die mittels Db2 Graph abwickelbaren lesenden Operationen.
 
-So wird der Code des \texttt{Db2}-Adapters beispielsweise bei den Vorbereitungen für die Messungen von den anderen beiden Adaptern genutzt um den von Linkbench generierten Datensatz in die Db2-Datenbank der Db2-Instanz zuschreiben. Schließlich können die Daten nicht mittels Db2 Graph in die Datenbank geschrieben werden, da die Graph-Erweiterung lediglich lesenden Operation unterstützt.
+So wird der Code des \texttt{Db2}-Adapters beispielsweise bei den Vorbereitungen für die Messungen von den anderen beiden Adaptern genutzt um den von Linkbench generierten Datensatz in die Db2-Datenbank der Db2-Instanz zuschreiben. Schließlich können die Daten nicht mittels Db2 Graph in die Datenbank geschrieben werden, da die Grapherweiterung lediglich lesenden Operation unterstützt.
 
 Bei der Ausführung der im Rahmen dieser Arbeit bei den Messungen gebenchmarkten Operationen \texttt{getNode}, \texttt{getLink}, \texttt{countLink} und \texttt{getLinkList} spielt der Code des Db2-Adapters keine Rolle. An dieser Stelle wird bei den Messungen immer die jeweilige Implementierung der Operationen der Db2-Graph-Adapter herangezogen.
 

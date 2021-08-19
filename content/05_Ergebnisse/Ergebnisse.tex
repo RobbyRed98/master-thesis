@@ -566,7 +566,54 @@ Des Weiteren halbiert sich auch hier ungefähr der Durchsatz beim Anstieg des Ra
     \label{fig:durchsatz:linkbench_100m_real:rl}
 \end{figure}
 
-\todo{Db2graph -> Db2 Graph in den Bild-Beschriftungen}
+\section{Auswertung}
+Im Rahmen dieses Abschnitts werden die verschiedenen Phänomene und Aspekte, die bereits bei der Betrachtung und Interpretation der Ergebnisse der Messreihe angesprochen werden, nochmals aufgegriffen und isoliert betrachtet.
+
+\subsection{Einordnung der Performance}
+Bei der Beurteilung der Performance der Datenbanksysteme handelt es sich bei den im Rahmen der Arbeit erzielten Messergebnissen um eine einfache Aufgabe. So weist bei jeder Messreihe Neo4j den niedrigsten Latenz- und Durchsatzwert auf, gefolgt von Db2 Graph Beta 3 -- sollte es Teil der Messreihe sein -- und Db2 Graph V11.5.6.0. 
+
+Bei der Betrachtung der in der Messreihe beschriebenen Ergebnisse fällt zugleich auf, dass es sich hierbei nicht um einen kleinen Unterschied zwischen den jeweiligen Datenbanksystemen handelt. So scheinen sich die Datenbanksysteme sowohl bei der durchschnittlichen Latenz als auch beim Durchsatz um einen ähnlichen Faktor zu unterscheiden. Um die Datenbanksysteme bezüglich ihrer Performance einordnen zu können, wäre ein solcher Performance-Faktor von großen 
+
+Um eine dementsprechende Kennzahl zur Einordnung der Datenbanksysteme bezüglich ihrer Performance bereitstellen zu können, wird daher ein gemeinsamer Durchschnittswert für den Durchsatz der Operationen:
+\begin{itemize}
+    \item \texttt{getNode}
+    \item \texttt{getLink}
+    \item \texttt{countLink} und 
+    \item \texttt{getLinkList} (Range-Limit 100) ermittelt.
+\end{itemize}
+Der gemeinsame Durchschnittswert für den Durchsatz wird dabei einmal für jedes Datenbanksystem im Kontext einer Messreihe ermittelt. Anschließend wird der niedrigste Wert einer Messreihe herangezogen -- immer Db2 Graph V11.5.6.0 -- und als Faktor eins festgelegt. Im nächsten Schritt werden basierend auf diesem Faktor eins und seinem Durchschnittswert die jeweiligen Faktoren für Neo4j und gegebenenfalls Db2 Graph Beta 3 errechnet. Die dabei erhaltenen Performance-Faktoren -- basierend auf dem Durchsatz -- werden für die Messreihen mit einem konstant-verteilten Datensatz in \autoref{fig:faktor:durchsatz:const} dargelegt, während die mit real-verteilten Datensätzen in \autoref{fig:faktor:durchsatz:real} abgebildet werden.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/diagramme/faktor_durchschittlicher_durchsatz_const.pdf}
+    \caption{Performance-Faktor bei Messreihen mit konstant-verteilten Datensätzen}
+    \label{fig:faktor:durchsatz:const}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/diagramme/faktor_durchschittlicher_durchsatz_real.pdf}
+    \caption{Performance-Faktor bei Messreihen mit real-verteilten Datensätzen}
+    \label{fig:faktor:durchsatz:real}
+\end{figure}
+
+Bei der Analyse der in \autoref{fig:faktor:durchsatz:const} und \autoref{fig:faktor:durchsatz:real} dargestellten Faktoren fällt auf, dass Neo4j immer 6- bis 7-Mal so viele Operationen pro Sekunde bearbeitet wie Db2 Graph bei den jeweiligen Messreihen, was einen gewaltigen Performance-Unterschied zwischen Db2 Graph V11.5.6.0 offenbart. 
+
+So war anfänglich nicht davon auszugehen das Db2 Graph als Graph-Erweiterung in Kombination mit Db2 Neo4j als natives Graphdatenbanksystem übertrifft. Schließlich verursacht die Kommunikation zwischen Db2 Graph und Db2, die für die Beantwortung einer Anfrage nötig ist, einen Aufwand den Neo4j nicht betreiben muss. Einen Performance-Unterschied um mindestens den Faktor 6 galt es jedoch nicht zu erwarten. 
+
+Eine interessante Gegebenheit, die in der \autoref{fig:faktor:durchsatz:const} beobachtet werden, kann stellt der Fakt dar, dass Db2 Graph Beta 3 als ältere Version von Db2 Graph 2 bis 2,5 Mal mehr Operationen pro Sekunde bewältigen kann, als Db2 Graph V11.5.6.0 (der erste GA Release). Zu Beginn wäre hier eigentlich die Vermutung nahe gelegen, dass V11.5.6.0 als neuere Version, die über mehr Optimierungstechniken verfügt als Beta 3, eine höhere Performance aufweist. Dies scheint allerdings nicht der Fall zu sein. 
+
+Dabei gilt es hingegen zu beachten, dass Db2 Graph Beta 3 aufgrund der höheren Performance bei den Messreihen mit konstant-verteilten Datensätzen nicht als allgemein performantere Version von Db2 Graph einzustufen ist. Schließlich spielt sie bei den Messreihen mit real-verteilten Datensätzen keine Rolle, da sie für den Einsatz dort aufgrund fehlender Optimierungstechniken derart ungeeignet war, dass das Erzielen von Ergebnissen im Rahmen des üblichen Zeitraums nicht möglich war.
+
+\subsection{Umgang mit Ergebnismengen}
+
+
+\subsection{Einfluss der Datensatzgröße}
+
+\subsection{Vergleich zwischen den Verteilungen}
+
+\subsection{Ressourcenauslastung}
+
 \todo{Auf Ressourcenauslastung verweisen.}
 
 \listoftodos

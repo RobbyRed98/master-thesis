@@ -182,8 +182,8 @@ Db2 Graph verfügt über die folgenden Fähigkeiten und Einschränkungen:
     Von Db2 Graph werden nur Datentypen unterstützt, die auch in Db2 vorhanden sind \cite{ibm_docs_limitiations}. Das bedeutet, das nur diese Datentypen als Property-Type eines Knotens oder einer Kante eingesetzt werden können \cite{ibm_docs_limitiations}. Somit ist es auch nicht möglich, verschachtelte Datentypen -- wie z.B. in Neo4j -- als Property-Type zu nutzen. Schließlich werden diese nicht von Db2 Graph unterstützt.
     \item \textit{Festes Schema}\\
     Daten, die von Db2 Graph abgefragt werden können, verfügen über ein festes Schema. Diese ergibt sich daraus, dass die Daten in einer Db2-Instanz (relational) gehalten und gespeichert werden \cite{sigmod_tian,vldb_tian,yt_tian}.
-    \item \textit{Gremlin-Graph-API}\\
-    Die Gremlin-Graph-Computer-API wird von Db2 Graph nicht unterstützt \cite{ibm_docs_limitiations}. \todo{Hier weiter ausführen.}
+    \item \textit{GraphCoumputer}\\
+    Der Gremlin-GraphComputer wird von Db2 Graph nicht unterstützt \cite{ibm_docs_limitiations}. Dadurch kann Db2 Graph diese Schnittstelle für komplexe Graph-Algorithmen, im Kontext \cite{tinkerpop_2020} von auch \textit{VertexPrograms} genannt, nicht nutzen. Somit entgeht Db2 Graph die Fähigkeit auf die beim GraphComputer vordefinierten Algorithmen \textit{PageRank}, \textit{PeerPressure} und \textit{ShortestPath} zuzugreifen.
 \end{itemize}
 
 \subsection{Optimierung}

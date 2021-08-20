@@ -35,3 +35,4 @@
 *.vrb
 !images/*.pdf
 !images/diagramme/*.pdf
+!images/stats/*.pdf

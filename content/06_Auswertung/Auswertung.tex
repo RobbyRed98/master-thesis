@@ -98,44 +98,73 @@ Bezüglich der Höhe der Abweichungen kann aus \autoref{fig:durchsatz:10m_vs_100
 \section{Ressourcenauslastung}
 \label{auswertung:ressourcenauslastung}
 
-Im Rahmen dieses Kapitels werden einige NMON-Statistiken zur Ressourcenauslastung ausgewertet. Dabei wird die CPU- und IO-Auslastung genauer untersucht und die darin erkennbaren Trends und Unterschiede zwischen den Datenbanksystemen angesprochen. 
+Im Rahmen dieses Kapitels werden einige NMON-Statistiken zur Ressourcenauslastung ausgewertet. Dabei wird die CPU- und IO-Aus\-last\-ung genauer untersucht und die darin erkennbaren Trends und Unterschiede zwischen den Datenbanksystemen angesprochen. 
 
 Ziel dieses Abschnitts ist es dabei die Ressourcenauslastung der Datenbanksysteme miteinander zu Vergleichen und möglicherweise einen Hinweis darauf zu finden, warum der Performance-Unterschied zwischen Db2 Graph Beta 3 und V11.5.6.0 mit einem Unterschied des Faktors 2,25 derart signifikant ausfällt. 
 
 Für den Vergleich der Datenbanksysteme wird dabei exemplarisch deren Ressourcenauslastung bei der Operation \texttt{getNode} in den Messreihen \autoref{ergebnisse:10m_const} und \autoref{ergebnisse:10m_real} herangezogen. Denn die Abbildung und Auswertung aller 64 Statistiken, die bei der Performance-Analyse durch das Werkzeug NMON aufgezeichnet werden, wäre hier aufgrund des Umfangs nicht zielführend. Alle Statistiken die im Rahmen der Arbeit aufgezeichnet werden, werden allerdings als NMON-Dateien dem digitalen Anhang der Arbeit beigelegt, sodass alle erzielten Statistiken einsehbar sind.
 
-Bei der Auswertung der Statistiken gilt es dabei allerdings zu beachten, dass die CPU-Auslastung und Anzahl an IO-Operationen (Disk xfers) pro Sekunde, die von den Abbildungen dieses Abschnitts aufgeführt werden, immer die Auslastung der ganzen Maschine, in der die Messungen stattfinden, wiedergeben. So gilt es dabei auch immer im Auge zu behalten, dass beispielsweise das Betriebssystem selbst und andere kleinere Server-Prozesse ebenfalls geringfügig etwas zur CPU- und IO-Auslastung beitragen.  
+Bei der Auswertung der Statistiken gilt es dabei allerdings zu beachten, dass die CPU-Auslastung und Anzahl an IO-Ope\-ra\-ti\-on\-en (Disk xfers) pro Sekunde, die von den Abbildungen dieses Abschnitts aufgeführt werden, immer die Auslastung der ganzen Maschine, in der die Messungen stattfinden, wiedergeben. So gilt es dabei auch immer im Auge zu behalten, dass beispielsweise das Betriebssystem selbst und andere kleinere Server-Prozesse ebenfalls geringfügig etwas zur CPU- und IO-Aus\-last\-ung beitragen.  
 
 \subsection{Linkbench-10M-Const}
-Bei der Auswertung der Ressourcenstatistiken bei dieser Messreihe kann mit Hinblick auf die Statistiken identifiziert werden, dass die CPU-Auslastung bei Neo4j (\autoref{fig:nmon:10m:neo4j}) am höchsten ist, gefolgt von Db2 Graph Beta 3 (\autoref{fig:nmon:10m:beta3}) und mit größerem Abstand Db2 Graph V11.5.6.0 (\autoref{fig:nmon:10m:ga}). 
+\label{auswertung:ressourcenauslastung:const}
+Bei der Auswertung der Ressourcenstatistiken bei dieser Messreihe kann mit Hinblick auf die Statistiken identifiziert werden, dass die CPU-Auslastung bei Neo4j (\autoref{fig:nmon:10m:const:neo4j}) am höchsten ist, gefolgt von Db2 Graph Beta 3 (\autoref{fig:nmon:10m:const:beta3}) und mit größerem Abstand Db2 Graph V11.5.6.0 (\autoref{fig:nmon:10m:const:ga}). 
 
-Dabei fällt auf das der Unterschied bei der CPU-Auslastung zwischen Neo4j und Db2 Graph Beta 3 mit ca. 5 - 7 \% eher geringer ausfällt, während der Unterschied zwischen Beta 3 und V11.5.6.0 ca. 30 \% umfasst. Dies scheint allerdings ungefähr zu den Beobachtungen in \nameref{auswertung:einordnung} zu passen, wo Beta 3 die 2,25 Performance von V11.5.6.0 aufweist. Schließlich weist Beta 3 in (\autoref{fig:nmon:10m:beta3}) mit ca. 69 \% gegenüber der rund 39 \% grob auch die doppelte Ressourcenauslastung auf.
+Dabei fällt auf, dass der Unterschied bei der CPU-Auslastung zwischen Neo4j und Db2 Graph Beta 3 mit ca. 5 - 7 \% eher geringer ausfällt, während der Unterschied zwischen Beta 3 und V11.5.6.0 ca. 30 \% umfasst. Dies scheint allerdings ungefähr zu den Beobachtungen in \nameref{auswertung:einordnung} zu passen, wo Beta 3 die 2,25 Performance von V11.5.6.0 aufweist. Schließlich weist Beta 3 in (\autoref{fig:nmon:10m:const:beta3}) mit ca. 69 \% gegenüber der rund 39 \% grob auch beinahe eine doppelte Ressourcenauslastung auf.
 
+Allgemein kann angemerkt werden, dass alle Statistiken eine konstante CPU-Auslastung über den jeweiligen Messzeitraum aufweisen. So zeigt beispielsweise die Aufzeichnung für Neo4j (\autoref{fig:nmon:10m:const:neo4j}) eine andauernde CPU-Auslastung von ca. 76 \% über den Messzeitraum an, bis auf den Beginn und das Ende der Aufzeichnung. Db2 Graph Beta 3 und V11.5.6.0 weisen in ihren jeweiligen Statistiken ein ähnlich konstantes Niveau der CPU-Auslastung auf. 
+
+Wird statt der CPU-Auslastung die Anzahl an IO-Ope\-ra\-ti\-on\-en pro Sekunde in den Ressourcenstatistiken der Datenbanksysteme untersucht, so fällt hierbei auf, dass sich die Skalen und Werte der IO-Aus\-last\-ung (Disk xfers) in \autoref{fig:nmon:10m:const:beta3},\autoref{fig:nmon:10m:const:ga} und \autoref{fig:nmon:10m:const:neo4j} erheblich unterscheiden. Während bei Db2 Graph V11.5.6.0 ca. 7.500 Read- oder Write-Ope\-ra\-ti\-on\-en pro Sekunde auf den Festplattenspeicher durchgeführt werden, sind es bei Neo4j lediglich 2,5 bis 5. 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/stats/linkbench-10m-const_beta3.pdf}
     \caption{Linkbench-10M-Const Auslastung Db2 Graph Beta 3 (getNode)}
-    \label{fig:nmon:10m:beta3}
+    \label{fig:nmon:10m:const:beta3}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/stats/linkbench-10m-const_ga.pdf}
     \caption{Linkbench-10M-Const Auslastung Db2 Graph V11.5.6.0 (getNode)}
-    \label{fig:nmon:10m:ga}
+    \label{fig:nmon:10m:const:ga}
 \end{figure}
+
+Db2 Graph Beta 3 bewegt sich hingegen mit durchschnittlich ca. 900 IO-Ope\-ra\-ti\-on\-en pro Sekunde im Mittelfeld. Damit liegt Beta 3 zwar unterhalb von V11.5.6.0, weist allerdings immer noch mehr als das 100-fache der IO-Ope\-ra\-ti\-on\-en pro Sekunde auf wie Neo4j im Schnitt. Die signifikant geringere IO-Aus\-last\-ung könnte sich dabei damit erklären lassen, dass Neo4j scheinbar eine erheblich aggressiveres Caching betreibt als Db2, auf das sich die beiden Db2 Graph Versionen verlassen. 
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/stats/linkbench-10m-const_neo4j.pdf}
     \caption{Linkbench-10M-Const Auslastung Neo4j (getNode)}
-    \label{fig:nmon:10m:neo4j}
+    \label{fig:nmon:10m:const:neo4j}
 \end{figure}
 
 \subsection{Linkbench-10M-Real}
+\label{auswertung:ressourcenauslastung:real}
+Bei den beiden im Rahmen dieser Messreihe aufgezeichneten Ressourcenstatistiken fällt bereits bei der ersten Begutachtung auf, dass die Statistiken für Db2 Graph V11.5.6.0 und besonders Neo4j über weitaus weniger Datenpunkte verfügen als die Abbildungen aus dem vorausgegangen \autoref{auswertung:ressourcenauslastung:const}. Dies ist dabei auf den Umstand zurückzuführen, dass die Messreihe, die auf Basis eines real-verteilten Datensatzes operieren, eine niedrigere Request-Anzahl pro Messung aufweisen als bei Messreihen mit konstanten-verteilten Datensätzen. Dies hat zur Folge, dass Neo4j und Db2 Graph V11.5.6.0 weniger Zeit für die Durchführung der Messungen benötigen. Der kleinere Messzeitraum sorgt dabei wiederum dafür, dass NMON weniger Datenpunkte für die Ressourcenstatistiken sammelt. Schließlich legt NMON während allen Messungen lediglich einen Datenpunkt pro Minute an. 
 
+Bei der Analyse der CPU-Auslastung fällt auf, dass Neo4j \autoref{fig:nmon:10m:real:neo4j} und Db2 Graph V11.5.6.0 \autoref{fig:nmon:10m:real:ga} mit ca. durchschnittlich 76 \% und 39 \% ähnliche Werte wie im vorausgegangen \autoref{auswertung:ressourcenauslastung:const} darlegen. So verursacht Neo4j über seinen Messzeitraum eine höhere CPU-Auslastung als V11.5.6.0 bei seiner.   
 
+Des Weiteren weisen beide Datenbanksysteme auch über den gesamten Verlauf der Messung ein Niveau auf, dass sie bis auf die erste Messung konstant halten. Wobei es hierbei zu beachten gilt, dass für diese Erhebung bei Neo4j lediglich vier Datenpunkte herangezogen werden.
 
+Bei der IO-Auslastung hingegen kann bei Db2 Graph (\autoref{fig:nmon:10m:real:ga}) zu Beginn der Messung eine signifikante Spitze um 14:47 identifiziert werden. An diesem Punkt steigt die Anzahl an IO-Operationen (Disk xfers) kurzzeitig auf mehr als 7.000 pro Sekunde. Anschließend flacht die IO-Auslastung wieder auf die aus \autoref{auswertung:ressourcenauslastung:const} bekannten ca. 3.900 IO-Operationen pro Sekunde ab und hält diese bis zum Ende der Messung.
+
+Die IO-Auslastung ist laut \autoref{fig:nmon:10m:real:neo4j} auch im Kontext dieser Messreihe mit im Maximalfall ca. 16 IO-Operationen pro Sekunde außergewöhnlich niedrig. Schließlich gilt es dabei zu beachten, dass auch die Read- und Write-Operationen auf den Festplattenspeicher von anderen Anwendung und System-Prozessen in der Statistik miterfasst werden. Die geringe IO-Auslastung bei Neo4j unterstützt dabei die in \autoref{auswertung:ressourcenauslastung:const} aufgestellte Hypothese, dass Neo4j scheinbar weitaus aggressiveres Caching als die Db2 Graph Versionen betreibt. 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/stats/linkbench-10m-real_ga.pdf}
+    \caption{Linkbench-10M-Const Auslastung Db2 Graph V11.5.6.0 (getNode)}
+    \label{fig:nmon:10m:real:ga}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=\textwidth]{images/stats/linkbench-10m-real_neo4j.pdf}
+    \caption{Linkbench-10M-Const Auslastung Neo4j (getNode)}
+    \label{fig:nmon:10m:real:neo4j}
+\end{figure}
+
+\section{SQL-Anweisungen}
+In diesem Abschnitt werden die von Db2 Graph Beta 3 und V11.5.6.0 generierten und an Db2 gesendeten SQL-Anweisungen miteinander verglichen und analysiert. Dieser Schritt wird hierbei durchgeführt, da der in \autoref{auswertung:einordnung} beschriebene signifikante Performance-Unterschied von Db2 Graph Beta 3 (der älteren weniger optimierten Version)  
 
 \todo{Anhang einfügen}
 

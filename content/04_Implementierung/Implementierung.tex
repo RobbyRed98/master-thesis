@@ -50,6 +50,35 @@ Da sich die bereits existierenden Adapter für Db2 Graph und Neo4j, wie \autoref
 \end{itemize}
 Die Entwicklung von zwei verschiedener Adaptern für Beta 3 und V11.5.6.0 ist hierbei notwendig, da sich die beiden an einigen Stellen erheblich unterscheiden. So läuft der Verbindungsaufbau und das Session-Management bei beiden Versionen anders ab, wie bereits in \autoref{db2graph:versionen} erläutert. 
 
+Um einen kurzen anfänglichen Überblick darüber zu bieten, wie die Adapter aufgebaut sind, werden sie in \autoref{fig:adapter_uebersicht} skizziert.
+
+\begin{figure}[!ht]
+    \centering
+	\usetikzlibrary{arrows, arrows.meta}
+	\begin{tikzpicture}[
+		nodestyle/.style={draw, minimum height=10mm, minimum width=25mm},
+		implements/.style={{angle 45}-, very thick, densely dashed},
+		extends/.style={{Triangle[open]}-, very thick},
+		linetext/.style={fill=white, inner sep=1pt}
+	]
+		\node[nodestyle] (interface) at (0, 0) {Adapter Schnittstelle};
+		\node[nodestyle] (sql) at (-3, -3) {generischer-SQL-Adapter};
+		\node[nodestyle] (neo4j) at (3, -3) {Neo4j-Adapter};
+		\node[nodestyle] (db2) at (-3, -6) {Db2-Adapter};
+		\node[nodestyle] (graphold) at (-6, -9) {Db2GraphOld-Adapter};
+		\node[nodestyle] (graph) at (0, -9) {Db2Graph-Adapter};
+		
+		\draw[implements] (interface.-120) -- node[linetext] {implements} (sql.north);
+		\draw[implements] (interface.-60) -- node[linetext] {implements} (neo4j.north);
+		\draw[extends] (sql.south) -- node[linetext] {extends} (db2.north);
+		\draw[extends] (db2.-120) -- node[linetext] {extends} (graphold.north);
+		\draw[extends] (db2.-60) -- node[linetext] {extends} (graph.north);
+	\end{tikzpicture}
+    \caption{Adapter Übersicht}
+    \label{fig:adapter_uebersicht}
+\end{figure}
+
+
 \subsection{Db2-Adapter}
 \label{implementierung:adapter:db2}
 Bei dem Db2-Adapter handelt es sich um eine Implementierung, die auf Basis des generischen-SQL-Adapters implementiert wird \cite{mc_linkbench_github}. Sie dabei mit dem Ziel entwickelt sämtliche Linkbench-Operationen für das Benchmarking einer Db2-Instanz zu implementieren, sodass sie als Basis für die Implementierung der neuen Db2-Graph-spezifischen Adpater herangezogen werden kann.
@@ -70,9 +99,25 @@ Bei dem \texttt{Db2GraphOld}-Adapter handelt es sich um die Implementierung eine
 
 Ein Teil der Implementierung des \texttt{Db2GraphOld}-Adapters leitet sich dabei vom bereits zuvor beschriebenen \texttt{Db2}-Adapter ab. So übernimmt der Adapter die Implementierung der schreibenden Operationen sowie den Verbindungsaufbau zu einer Db2-Instanz vom \texttt{Db2}-Adapter. Allerdings erweitert der \texttt{Db2GraphOld}-Adapter die Implementierung dahingehend, dass neben einer JDBC-Verbindung auch eine Gremlin-Verbindung zu einer Db2-Graph-Beta-3-Instanz aufgebaut wird. Darüber hinaus werden lesenden Operationen des Adapters so überschrieben, dass dort die in \autoref{src:gremlin_queries} und \autoref{src:gremlin_id_queries} aufgeführten Queries über die Gremlin-Verbindung an Db2 Graph übermittelt werden. 
 
-Bei der Nutzung und Konfiguration des Adapters gilt es hierbei zu beachten, dass der Adapter mittels JDBC eine Verbindung zur selben Db2-Instanz aufbaut, an die auch die Db2-Graph-Instanz angebunden ist, zu welcher der Adapter  eine Gremlin-Verbindung etabliert.
+Bei der Nutzung und Konfiguration des Adapters gilt es hierbei zu beachten, dass der Adapter mittels JDBC eine Verbindung zur selben Db2-Instanz aufbaut, an die auch die Db2-Graph-Instanz angebunden ist, zu welcher der Adapter eine Gremlin-Verbindung etabliert. Um einen Überblick über die vom \texttt{Db2GraphOld}-Adapter gehaltenen Verbindungen zu geben, werden diese in \autoref{fig:adapter_verbindungen} in einem Modell dargestellt. Auch wenn in \autoref{fig:adapter_verbindungen} ein \texttt{Db2Graph}-Adapter abgebildet wird, so ist die Darstellung auch für den \texttt{Db2GraphOld}-Adapter gültig.
 
-\todo{Hier Bild zum Verständnis einfügen.}
+\begin{figure}[!ht]
+    \centering
+	\begin{tikzpicture}[
+		nodestyle/.style={draw, minimum height=10mm, minimum width=25mm},
+		databasenode/.style={cylinder, draw, thick, shape border rotate=90, shape aspect=.5, minimum height=15mm, minimum width=25mm, align=center, outer sep=-0.5\pgflinewidth}
+	]
+		\node[nodestyle] (adapter) at (0, 0) {Db2Graph-Adapter};
+		\node[nodestyle] (graph) at (8, 0) {DB2 Graph};
+		\node[databasenode] (db2) at (8, -3) {Db2};
+		
+		\draw[latex-latex, very thick] (adapter.east) -- node[above] {Gremlin-Verbindung} (graph.west);
+		\draw[latex-latex, very thick] (adapter.south) -- node[below, rotate=-21] {JDBC-Verbindung} (db2.west);
+		\draw[latex-latex, very thick, dashed] (graph.south) -- (db2.north);
+	\end{tikzpicture}
+    \caption{Verbindungen Db2Graph-Adapter}
+    \label{fig:adapter_verbindungen}
+\end{figure}
 
 \subsection{Db2Graph-Adapter}
 \label{implementierung:adapter:db2graph:ga}
@@ -80,11 +125,11 @@ Der Db2Graph-Adapter stellt eine Implementierung eines Adapters dar, der es erm�
 
 Ähnlich wie der \texttt{Db2GraphOld-Adapter} setzt der Adapter für V11.5.6.0 ebenfalls auf dem \texttt{Db2}-Adapter auf. Er erbt von diesem die Logik zum Verbindungsaufbau zu einer Db2-Instanz und der Durchführung der schreibenden Operationen, die nicht über Db2 Graph abgewickelt werden können. 
 
-Des Weiteren überschreibt er ebenfalls die lesenden Operationen, sodass sie mittels der in \autoref{src:gremlin_queries} und \autoref{src:gremlin_id_queries} formulierten Queries mit der Db2-Graph-V11.5.6.0-Instanz interagieren. Dafür baut der Adapter ähnlich wie der \texttt{Db2GraphOld}-Adapter eine Gremlin-Verbindung auf. Der Verbindungsaufbau erfordert hier allerdings aufgrund des in Db2 Graph V11.5.6.0 neu eingeführten Verbindungs- und Session-Managements weitaus mehr Logik als beim \texttt{Db2GraphOld}-Adapter.
+Des Weiteren überschreibt er ebenfalls die lesenden Operationen, sodass sie mittels der in \autoref{src:gremlin_queries} und \autoref{src:gremlin_id_queries} formulierten Queries mit der Db2-Graph-V11.5.6.0-Instanz interagieren. Dafür baut der Adapter ähnlich wie der \texttt{Db2Graph\allowbreak Old}-Adapter eine Gremlin-Verbindung auf. Der Verbindungsaufbau erfordert hier allerdings aufgrund des in Db2 Graph V11.5.6.0 neu eingeführten Verbindungs- und Session-Managements weitaus mehr Logik als beim \texttt{Db2GraphOld}-Adapter. Eine Übersicht über die vom \texttt{Db2Graph}-Adapter aufgebauten kann dabei \autoref{fig:adapter_verbindungen} entnommen werden.
 
 \subsection{Neo4j-Adapter}
 \label{implementierung:adapter:neo4j}
-Bei dem \texttt{Neo4j}-Adapters für Linkbench handelt es sich um einen Adapter für Linkbench, der mittels der Abfragesprache Cypher mit einer Neo4j-Instanz interagiert. Dabei wird der Adapter im Rahmen dieser Arbeit zur Durchführung aller Neo4j-spezifischen Messungen genutzt. 
+Bei dem \texttt{Neo4j}-Adapter für Linkbench handelt es sich um einen Adapter für Linkbench, der mittels der Abfragesprache Cypher mit einer Neo4j-Instanz interagiert. Dabei wird der Adapter im Rahmen dieser Arbeit zur Durchführung aller Neo4j-spezifischen Messungen genutzt. 
 
 Anders als die Adapter für Db2 Graph und der \texttt{Db2}-Adapter musste dieser Adapter von Grund auf neu implementiert werden. Schließlich konnten sie weder auf dem \texttt{Db2}-Adapter noch auf dem generische-SQL-Adapter aufbauen. 
 

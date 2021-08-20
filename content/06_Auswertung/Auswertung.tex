@@ -95,13 +95,22 @@ Die in \autoref{fig:durchsatz:10m_vs_100m:real} abgebildeten Ergebnisse überras
 
 Bezüglich der Höhe der Abweichungen kann aus \autoref{fig:durchsatz:10m_vs_100m:real} abgeleitet werden, dass Db2 Graph mit Abweichungen zwischen 2,3 \% und 3,48 \% eine höhere Abweichung aufweist als Neo4j, das sich im Bereich von 0,09 \% bis (-)1,64 \% bewegt. 
 
-\section{Vergleich zwischen den Verteilungen}
-\label{auswertung:verteilung}
-\todo{Vergleich von Ergebnisse purgen da eigentlich nicht gut.}
-
 \section{Ressourcenauslastung}
 \label{auswertung:ressourcenauslastung}
 
-\todo{Auf Ressourcenauslastung verweisen.}
+Im Rahmen dieses Kapitels werden einige NMON-Statistiken zur Ressourcenauslastung ausgewertet. Dabei wird die CPU- und IO-Auslastung genauer untersucht und die darin erkennbaren Trends und Unterschiede zwischen den Datenbanksystemen angesprochen. 
+
+Ziel dieses Abschnitts ist es dabei die Ressourcenauslastung der Datenbanksysteme miteinander zu Vergleichen und möglicherweise einen Hinweis darauf zu finden, warum der Performance-Unterschied zwischen Db2 Graph Beta 3 und V11.5.6.0 mit einem Unterschied des Faktors 2,25 derart signifikant ausfällt. 
+
+Für den Vergleich der Datenbanksysteme wird dabei exemplarisch deren Ressourcenauslastung bei der Operation \texttt{getNode} in den Messreihen \autoref{ergebnisse:10m_const} und \autoref{ergebnisse:10m_real} herangezogen. Denn die Abbildung und Auswertung aller 64 Statistiken, die bei der Performance-Analyse durch das Werkzeug NMON aufgezeichnet werden, wäre hier aufgrund des Umfangs nicht zielführend. Alle Statistiken die im Rahmen der Arbeit aufgezeichnet werden, werden allerdings als NMON-Dateien dem digitalen Anhang der Arbeit beigelegt, sodass alle erzielten Statistiken einsehbar sind.
+
+\subsection{Linkbench-10M-Const}
+Bei der Auswertung der in \todo{Anhang Referenz} aufgeführten Ressourcenstatistiken kann mit Hinblick auf die Performance identifiziert werden, dass die CPU-Auslastung bei Neo4j am höchsten ist, gefolgt von Db2 Graph Beta 3 und mit größerem Abstand Db2 Graph V11.5.6.0. 
+
+\subsection{Linkbench-10M-Const}
+
+
+
+\todo{Anhang einfügen}
 
 \listoftodos

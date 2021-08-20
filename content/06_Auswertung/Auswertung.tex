@@ -146,9 +146,6 @@ Bei der Analyse der CPU-Auslastung fällt auf, dass Db2 Graph V11.5.6.0 \autoref
 
 Des Weiteren weisen beide Datenbanksysteme auch über den gesamten Verlauf der Messung ein Niveau auf, dass sie bis auf die erste Messung konstant halten. Wobei es hierbei zu beachten gilt, dass für diese Erhebung bei Neo4j lediglich vier Datenpunkte herangezogen werden.
 
-Bei der IO-Auslastung hingegen kann bei Db2 Graph (\autoref{fig:nmon:10m:real:ga}) zu Beginn der Messung eine signifikante Spitze um 14:47 identifiziert werden. An diesem Punkt steigt die Anzahl an IO-Operationen (Disk xfers) kurzzeitig auf mehr als 7.000 pro Sekunde. Anschließend flacht die IO-Auslastung wieder auf die aus \autoref{auswertung:ressourcenauslastung:const} bekannten ca. 3.900 IO-Operationen pro Sekunde ab und hält diese bis zum Ende der Messung.
-
-Die IO-Auslastung ist laut \autoref{fig:nmon:10m:real:neo4j} auch im Kontext dieser Messreihe mit im Maximalfall ca. 16 IO-Operationen pro Sekunde außergewöhnlich niedrig. Schließlich gilt es dabei zu beachten, dass auch die Read- und Write-Operationen auf den Festplattenspeicher von anderen Anwendung und System-Prozessen in der Statistik miterfasst werden. Die geringe IO-Auslastung bei Neo4j unterstützt dabei die in \autoref{auswertung:ressourcenauslastung:const} aufgestellte Hypothese, dass Neo4j scheinbar weitaus aggressiveres Caching als die Db2 Graph Versionen betreibt. 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/stats/linkbench-10m-real_ga.pdf}
@@ -162,6 +159,10 @@ Die IO-Auslastung ist laut \autoref{fig:nmon:10m:real:neo4j} auch im Kontext die
     \caption{Linkbench-10M-Real Auslastung Neo4j (getNode)}
     \label{fig:nmon:10m:real:neo4j}
 \end{figure}
+
+Bei der IO-Auslastung hingegen kann bei Db2 Graph (\autoref{fig:nmon:10m:real:ga}) zu Beginn der Messung eine signifikante Spitze um 14:47 identifiziert werden. An diesem Punkt steigt die Anzahl an IO-Operationen (Disk xfers) kurzzeitig auf mehr als 7.000 pro Sekunde. Anschließend flacht die IO-Auslastung wieder auf die aus \autoref{auswertung:ressourcenauslastung:const} bekannten ca. 3.900 IO-Operationen pro Sekunde ab und hält diese bis zum Ende der Messung.
+
+Die IO-Auslastung ist laut \autoref{fig:nmon:10m:real:neo4j} auch im Kontext dieser Messreihe mit im Maximalfall ca. 16 IO-Operationen pro Sekunde außergewöhnlich niedrig. Schließlich gilt es dabei zu beachten, dass auch die Read- und Write-Operationen auf den Festplattenspeicher von anderen Anwendung und System-Prozessen in der Statistik miterfasst werden. Die geringe IO-Auslastung bei Neo4j unterstützt dabei die in \autoref{auswertung:ressourcenauslastung:const} aufgestellte Hypothese, dass Neo4j scheinbar weitaus aggressiveres Caching als die Db2 Graph Versionen betreibt.
 
 \section{SQL-Anweisungen}
 In diesem Abschnitt werden die von Db2 Graph Beta 3 und V11.5.6.0 generierten und an Db2 gesendeten SQL-Anweisungen miteinander verglichen und analysiert. Dieser Schritt wird hierbei durchgeführt, da der in \autoref{auswertung:einordnung} beschriebene signifikante Performance-Unterschied von Db2 Graph Beta 3 (der älteren weniger optimierten Version)  

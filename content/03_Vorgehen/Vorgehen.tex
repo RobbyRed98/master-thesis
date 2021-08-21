@@ -40,13 +40,16 @@ So setzt sich die Arbeit nun zum Ziel, weiterhin eine Performance-Analyse für D
     \item Arbeit mit den Datensatz Größen 10 Millionen und 100 Millionen Knoten (Linkbench-10 und Linkbench-100) und
     \item Arbeit mit den Metriken Latenz und Durchsatz.  
 \end{itemize}
-Allerdings beschreitet die Performance-Analyse dieser Arbeit nun neue Wege, da sie ihren Schwerpunkt nun auf die Messung der Performance der Datenbanksysteme bei real- und konstant-verteilten Datensätzen legt. 
+Allerdings ist es nun auch das Ziel der Performance-Analyse in dieser Arbeit die Aspekte beziehungsweise den Einfluss der Messparameter:
+\begin{itemize}
+    \item Ergebnismenge und
+    \item Datensatzgröße zu beachten. 
+\end{itemize}
+Dafür werden bei der Performance-Analyse sowohl Messungen auf der Basis von real- und konstant-verteilten Datensätzen durchgeführt. 
 
-Eine weitere Aufgabe, die aufgrund des neuen Ziels Teil der Arbeit wird, stellt dabei die Suche nach bereits existierenden Linkbench-Adapter-Implementierungen für Db2 Graph und Neo4j dar. 
+Eine weitere Aufgabe, die aufgrund des neuen Ziels Teil der Arbeit wird, stellt dabei die Suche nach bereits existierenden Linkbench-Adapter-Implementierungen für Db2 Graph und Neo4j dar. Sollte jedoch keine der für die Messungen benötigten Adapter-Implementierung verfügbar sein, wird deren Implementierung somit ebenfalls zum Teil der Arbeit. 
 
-Sollte jedoch keine der für die Messungen benötigten Adapter-Implementierung verfügbar sein, wird deren Implementierung somit ebenfalls zum Teil der Arbeit. 
-
-Abschließend gilt es darauf hinzuweisen, dass obwohl beim neuen Ziel einige Elemente von \cite{sigmod_tian} übernommen werden, die hier erzielten Ergebnisse nicht mit den aus \cite{sigmod_tian} vergleichbar sind.
+Abschließend gilt es darauf hinzuweisen, dass obwohl beim neuen Ziel einige Elemente von \cite{sigmod_tian} übernommen werden, die hier erzielten Ergebnisse nicht mit den aus \cite{sigmod_tian} vergleichbar sind. Schließlich sind die Bedingungen bei den Messungen nicht vergleichbar.
 
 \section{Linkbench}
 Auch wenn sich das Ziel der Arbeit geändert hat, so wird Linkbench weiterhin als Benchmark zur Performance-Analyse herangezogen. Daher wird eine Implementierung für Linkbench sowie Adapter für Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j benötigt. Die Wahl der Linkbench- und Adapter-Implementierung sowie gegebenenfalls ihre Umsetzungen werden allerdings in \autoref{implementierung} beschrieben. 

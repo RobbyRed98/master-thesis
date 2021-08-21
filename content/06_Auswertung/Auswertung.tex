@@ -165,6 +165,102 @@ Bei der IO-Auslastung hingegen kann bei Db2 Graph (\autoref{fig:nmon:10m:real:ga
 Die IO-Auslastung ist laut \autoref{fig:nmon:10m:real:neo4j} auch im Kontext dieser Messreihe mit im Maximalfall ca. 16 IO-Operationen pro Sekunde außergewöhnlich niedrig. Schließlich gilt es dabei zu beachten, dass auch die Read- und Write-Operationen auf den Festplattenspeicher von anderen Anwendung und System-Prozessen in der Statistik miterfasst werden. Die geringe IO-Auslastung bei Neo4j unterstützt dabei die in \autoref{auswertung:ressourcenauslastung:const} aufgestellte Hypothese, dass Neo4j scheinbar weitaus aggressiveres Caching als die Db2 Graph Versionen betreibt.
 
 \section{SQL-Anweisungen}
-In diesem Abschnitt werden die von Db2 Graph Beta 3 und V11.5.6.0 generierten und an Db2 gesendeten SQL-Anweisungen miteinander verglichen und analysiert. Dieser Schritt wird hierbei durchgeführt, da der in \autoref{auswertung:einordnung} beschriebene signifikante Performance-Unterschied von Db2 Graph Beta 3 (der älteren weniger optimierten Version)
+\label{sql}
+In diesem Abschnitt werden die von Db2 Graph Beta 3 und V11.5.6.0 generierten und an Db2 gesendeten SQL-Anweisungen miteinander verglichen und analysiert. Dieser Schritt wird hierbei mit der Absicht durchgeführt, eine Erklärung für den in \autoref{auswertung:einordnung} beschriebenen Performance-Unterschied zwischen den beiden Db2 Graph Versionen zu finden. Schließlich ist die Performance von V11.5.6.0  deutlich geringer als bei Beta 3, bei der es sich eigentlich um die ältere und weniger optimiertere Version von Db2 Graph handelt. Dafür wird in diesem Abschnitt zuerst die Struktur der SQL-Anweisungen verglichen und anschließend kurz die Performance. 
+
+\subsection{Struktur}
+\label{sql:struktur}
+Um die SQL-Anweisungen die von der jeweiligen Db2 Graph Version generiert und von Db2 verarbeitet werden zu erhalten, wird Db2 so konfiguriert, dass bei alle SQL-Anweisungen, die sich auf die \texttt{linkdb0} Datenbank beziehen, aufgezeichnet werden. So ist es möglich, über die Gremlin-Console der beiden Db2 Graph Versionen jeweils Gremlin-Anfragen an diese Systeme zustellen und die im Zuge dessen erhaltenen SQL-Anweisungen zu protokollieren. Die protokollierten SQL-Anweisungen und ihre entsprechende Gremlin-Query werden dabei in \autoref{src:sql_getnode} (\texttt{getNode}), \autoref{src:sql_getlink} (\texttt{getLink}), \autoref{src:sql_countlink} (\texttt{countLink}) und \autoref{src:sql_getlinklist} (\texttt{getLinkList}) dargestellt.
+
+Werden die bei \texttt{getNode} (\autoref{src:sql_getnode}) und \texttt{getLink} (\autoref{src:sql_getlink}) erzeugten SQL-Anweisungen miteinander verglichen,  stechen dort lediglich kleinere Unterschiede zwischen Beta 3 und V11.5.6.0 heraus. So nutzt die von Beta 3 erzeugte SQL-Anweisung eine mit \texttt{*} eine Wildcard, statt einer expliziten Spezifikation der abgefragten Spalten wie bei V11.5.6.0. Dies dürfte allerdings -- wenn überhaupt -- einen vernachlässigbaren Einfluss auf die Verarbeitungszeit der Anfrage haben.
+
+\begin{lstlisting}[caption={Generierter SQL-Code getNode},label=src:sql_getnode,language=SQL]
+/* Gremlin-Query */
+g.V()
+ .hasLabel("NODETABLE")
+ .has("ID", <NODE_ID>);
+
+-- Db2 Graph Beta 3
+SELECT * FROM "LINKDB0"."NODETABLE" WHERE "ID" = <NODE_ID>;
+
+-- Db2 Graph V11.5.6.0
+SELECT "ID", "VERSION", "TIME", "ID", "DATA", "TYPE" FROM "LINKDB0"."NODETABLE" WHERE "ID" = <NODE_ID>;
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Generierter SQL-Code getLink},label=src:sql_getlink,language=SQL]
+/* Gremlin-Query */
+g.E()
+ .hasLabel("LINKTABLE")
+ .has("LINK_TYPE", <LINK_TYPE>)
+ .has("ID1", <NODE_ID1>)
+ .has("ID2", P.within(<NODE_ID2s>))
+
+-- Db2 Graph Beta 3
+SELECT * FROM "LINKDB0"."LINKTABLE" WHERE "LINK_TYPE" = <LINK_TYPE> AND "ID1" = <NODE_ID1> AND "ID2" IN (VALUES <NODE_ID2_0>, <NODE_ID2_1>, <...>);
+
+-- Db2 Graph V11.5.6.0
+SELECT "ID1", "ID2", "LINK_TYPE", "ID1", "ID2", "VISIBILITY","LINK_TYPE", "DATA", "ID2", "ID1", "VERSION", "TIME" FROM "LINKDB0"."LINKTABLE" WHERE "LINK_TYPE" = <LINK_TYPE> AND "ID1" = <NODE_ID1> AND "ID2" IN (VALUES <NODE_ID2_0>, <NODE_ID2_1>, <...>);
+\end{lstlisting}
+
+Bei der Untersuchung der für \texttt{countLink} und \texttt{getLinkList} sind allerdings größere Unterschiede erkennbar. So verfügt, wie in \autoref{db2graph:optimierung} erläutert wird, Beta 3 nicht über die Optimierungstechniken \textit{Join Pushdown} und \textit{Limit Pushdown}, was sich im Kontext von \autoref{src:sql_countlink} (countLink) und \autoref{src:sql_getlinklist} (getLinkList) bemerkbar macht. Beta 3 erzeugt und sendet dabei den Aufzeichnungen zu Folge zwei SQL-Anweisungen an Db2, während V11.5.6.0 dazu in der Lage ist, die Logik der Gremlin-Query durch einen (impliziten) Join in eine SQL-Anweisung zu packen. Dies sollte sich auf die Performance der Queries auswirken, allerdings entgegen der in \autoref{ergebnisse} aufgeführten Messergebnisse zum Vorteil von V11.5.6.0 nicht Beta 3. 
+
+Des Weiteren reflektiert die von Beta 3 erzeugte Anweisung auch nicht die Existenz des Limit-Steps in SQL, da es die Optimierungstechnik \textit{Limit Pushdown} nicht beherrscht. Dies dürfte sich allerdings, wie in \autoref{analyse:datensatz} erläutert wird, nicht auf die Performance bei konstant-verteilten Datensätzen auswirken. Da, wie \autoref{analyse:datensatz} ebenfalls beschrieben wird, aufgrund dieser fehlenden Optimierung auch keine Messungen mit Beta 3 und real-verteilten Datensätzen durchgeführt werden, sollte dieser Aspekt eigentlich vernachlässigbar sein. 
+\begin{lstlisting}[caption={Generierter SQL-Code countLink},label=src:sql_countlink,language=SQL]
+/* Gremlin-Query */
+g.V()
+ .hasLabel("NODETABLE")
+ .has("ID", <NODE_ID>)
+ .outE("LINKTABLE")
+ .has("LINK_TYPE", <LINK_TYPE>)
+ .count()
+
+-- Db2 Graph Beta 3
+SELECT * FROM "LINKDB0"."NODETABLE" WHERE "ID" = <NODE_ID>;
+SELECT * FROM "LINKDB0"."LINKTABLE" WHERE ("ID1") IN (VALUES (<NODE_ID>)) AND "LINK_TYPE" = <LINK_TYPE>;
+
+-- Db2 Graph V11.5.6.0
+SELECT COUNT(*) FROM "LINKDB0"."NODETABLE" AS VT0, "LINKDB0"."LINKTABLE" AS ET1 WHERE VT0."ID" = <NODE_ID> AND ET1."LINK_TYPE" = <LINK_TYPE> AND VT0.ID = ET1.ID1
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Generierter SQL-Code getLinkList},label=src:sql_getlinklist,language=SQL]
+/* Gremlin-Query */
+g.V()
+ .hasLabel("NODETABLE")
+ .has("ID", <NODE_ID1>)
+ .outE("LINKTABLE")
+ .has("LINK_TYPE", <LINK_TYPE>)
+ .limit(<LIMIT>);
+
+-- Db2 Graph Beta 3
+SELECT * FROM "LINKDB0"."NODETABLE" WHERE "ID" = <NODE_ID>;
+SELECT * FROM "LINKDB0"."LINKTABLE" WHERE ("ID1") IN (VALUES (<NODE_ID>)) AND "LINK_TYPE" = <LINK_TYPE>;
+
+-- Db2 Graph V11.5.6.0
+SELECT ET1."ID1", ET1."ID2", ET1."LINK_TYPE", ET1."ID1", ET1."ID2", ET1."VISIBILITY", ET1."LINK_TYPE", ET1."DATA", ET1."ID2", ET1."ID1", ET1."VERSION", ET1."TIME" FROM "LINKDB0"."NODETABLE" AS VT0, "LINKDB0"."LINKTABLE" AS ET1 WHERE VT0."ID" = <NODE_ID> AND ET1."LINK_TYPE" = <LINK_TYPE> AND VT0.ID = ET1.ID1 FETCH FIRST <LIMIT> ROWS ONLY;
+\end{lstlisting}
+
+Abschließend kann zusammengefasst werden, dass auf Basis des hier durchgeführten strukturellen Vergleichs der von Db2 Graph Beta 3 und V11.5.6.0 erzeugten SQL-Anweisungen die folgenden beiden Hypothesen aufgestellt werden können:
+\begin{itemize}
+    \item \textit{Die SQL-Anweisungen bei getNode und getLink sollten -- wenn überhaupt -- in einem vernachlässigbaren Performance-Unterschied zwischen beiden Db2 Graph Versionen resultieren.}
+    \item  \textit{Die SQL-Anweisungen bei countLink und getLinkList sollten sich  positiv auf die Performance von V11.5.6.0 auswirken.}
+\end{itemize}
+
+\subsection{Performance}
+\label{sql:performance}
+Um die Performance der von Db2 Graph erzeugten SQL-Anweisungen zu überprüfen, werden diese mittels des Db2-Werkzeuges \texttt{db2batch} in einer kleinen Messung gebenchmarkt. Anschließend wird überprüft, ob die in \autoref{sql:struktur} aufgestellten Hypothesen in der Praxis zutreffen.
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{l|r|r}
+    \hline
+    \rowcolor[HTML]{EFEFEF} 
+    \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}{\color[HTML]{333333} \textbf{SQL-Anweisung}}} & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Db2 Graph Beta 3}} & \multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Db2 Graph V11.5.6.0}} \\ \hline
+    getNode & ms & ms \\
+    getLink & ms & ms \\
+    countLink & ms & ms \\
+    getLinkList & ms & ms \\ \hline
+    \end{tabular}
+    \caption{Ergebnisse Db2 Graph SQL-Anweisungen Benchmarking}
+\end{table}
 
 \listoftodos

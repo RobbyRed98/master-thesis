@@ -146,16 +146,13 @@ Wie bereits zuvor erwähnt, spielt die Variation der Begrenzung der Ergebnismeng
 
 \section{Queries}
 \label{analyse:queries}
-Dieser Abschnitt setzt sich mit den Gremlin- und Cypher-Queries auseinander, die für die Umsetzung der Messungen herangezogen werden. Darüber hinaus wird auch auf den Unterschied zwischen den regulären Queries und ID-Queries eingegangen. Der Schwerpunkt dieses Abschnitts liegt dabei allerdings auf den sogenannten regulären Gremlin- und Cypher-Queries, da die ID-Queries im Rahmen dieser Arbeit lediglich eine Nebenrolle spielen. 
+Dieser Abschnitt setzt sich mit den Gremlin- und Cypher-Queries auseinander, die für die Umsetzung der Messungen herangezogen werden. Es gilt dabei darauf hinzuweisen, dass die in diesem Abschnitt dargestellten Queries in gewissem Ausmaß der Implementierung der Adapter in \autoref{implementierung} vorgreift. Allerdings nehmen die Queries eine signifikante Rolle bei den Messungen ein. Schließlich handelt es sich bei ihnen um die Anfragen, die im Zuge der Durchführung einer Operation während des Benchmarks zur Interaktion mit den Datenbanksystemen herangezogen wird. Daher werden sie in diesem Abschnitt des Kapitels \nameref{vorgehen} näher beschrieben.
 
-Es gilt dabei darauf hinzuweisen, dass die in diesem Abschnitt dargestellten Queries in gewissem Ausmaß der Implementierung der Adapter in \autoref{implementierung} vorgreift. Allerdings nehmen die Queries eine signifikante Rolle bei den Messungen ein. Schließlich handelt es sich bei ihnen um die Anfragen, die bei der Durchführung einer Operation während des Benchmarks zur Interaktion mit den Datenbanksystemen herangezogen wird. Daher werden sie in diesem Abschnitt des Kapitels \nameref{vorgehen} näher beschrieben.
-
-\subsection{Reguläre Queries}
-Bei den regulären Queries handelt es sich um die Queries, die bei allen bis auf einer Messreihe für die Messungen herangezogen werden. Die in der Abfragesprache Gremlin formulierten Queries werden dabei in \autoref{src:gremlin_queries} aufgeführt, während \autoref{src:cypher_queries} die in Cypher umgesetzten Queries abgebildet. Im Zuge dessen gilt es darauf hinzuweisen, dass in \autoref{src:gremlin_queries} Platzhalter innerhalb der Queries von \texttt{<} und \texttt{>} umschlossen werden. Bei \autoref{src:cypher_queries} werden sie hingegen mittels eines anführenden \texttt{\$} gekennzeichnet.
+Wie bereits zuvor erwähnt, kann bei diesen Anfragen zwischen Gremlin- und Cypher-Queries unterschieden werden. Die in der Abfragesprache Gremlin formulierten Queries werden dabei in \autoref{src:gremlin_queries} aufgeführt, während \autoref{src:cypher_queries} die in Cypher umgesetzten Queries abgebildet. Im Zuge dessen gilt es darauf hinzuweisen, dass in \autoref{src:gremlin_queries} Platzhalter innerhalb der Queries von \texttt{<} und \texttt{>} umschlossen werden. Bei \autoref{src:cypher_queries} werden sie hingegen mittels eines anführenden \texttt{\$} gekennzeichnet.
 
 Die Gremlin- und Cypher-Queries, welche im \autoref{src:gremlin_queries} und \autoref{src:cypher_queries} aufgeführt werden verfügen darüber hinaus über dieselbe Abfragelogik. Damit ist gemeint, dass beide dieselben Daten abfragen, wodurch sie äquivalent zueinander sind. Die Gremlin-Queries werden dabei zur Abfrage von Db2 Graph Beta 3 und V11.5.6.0 genutzt, während die Cypher-Queries für Neo4j zum Einsatz kommen. 
 
-\begin{lstlisting}[label=src:gremlin_queries,caption={ Gremlin Queries (regulär)},language=Java]
+\begin{lstlisting}[label=src:gremlin_queries,caption={Gremlin-Queries},language=Java]
 /* getNode */
 g.V()
  .hasLabel("NODETABLE")
@@ -168,7 +165,7 @@ g.E()
  .has("ID1", <NODE_ID1>)
  .has("ID2", P.within(<NODE_ID2s>))
 
-/* countLinks */
+/* countLink */
 g.V()
  .hasLabel("NODETABLE")
  .has("ID", <NODE_ID>)
@@ -185,7 +182,7 @@ g.V()
  .limit(<LIMIT>);
 \end{lstlisting}
 
-\begin{lstlisting}[label=src:cypher_queries,caption={Cypher Queries (regulär)},language=CQL]
+\begin{lstlisting}[label=src:cypher_queries,caption={Cypher-Queries},language=CQL]
 /* getNode */
 MATCH (n:node{id: $id}) 
 RETURN n.id AS ID, n.type AS TYPE, 
@@ -201,7 +198,7 @@ RETURN n1.id AS ID1, n2.id AS ID2,
     l.data AS DATA, l.time AS TIME, 
     l.version AS VERSION
 
-/* countLinks */
+/* countLink */
 MATCH (:node{id: $id1})-
     [l:link{link_type: $link_type}]->
     (:node) 
@@ -217,48 +214,6 @@ RETURN n1.id AS ID1, n2.id AS ID2,
     l.data AS DATA, l.time AS TIME, 
     l.version AS VERSION 
 LIMIT $limit
-\end{lstlisting}
-
-\subsection{ID-Queries}
-Bei den ID-Queries handelt es sich um eine Abwandlung der regulären Queries. Ihr Hauptunterschied zu den regulären Queries besteht in der Art der Formulierung der Gremlin-Queries. Allerdings gibt es auch einen kleinen Unterschied bezüglich der Abfragelogik von \texttt{getLink}, weshalb bei dieser Operation weder die Gremlin- noch die Cypher-ID-Queries äquivalent zu ihren regulären Pendants sind.
-
-Die ID-Queries spielen dabei im Rahmen der Arbeit lediglich eine untergeordnete Rolle. Zu Beginn der Arbeit wurden sie als Messparameter in die Performance-Analyse mit einbezogen, da erste Testmessungen darauf hindeuteten, dass sich ihr Einsatz positiv auf die Performance von Db2 Graph Beta 3 auswirkt. 
-
-Allerdings scheint der Abfragestil der regulären Queries in der Praxis weiter verbreitet zu sein. So enthalten alle Code-Beispiele aus dem Container von Db2 Graph V11.5.6.0 Queries welche dem Abfragestil der Gremlin-Queries entsprechen. Darüber hinaus werden auch in \cite{tinkerpop_2020} hauptsächlich solche Queries aufgeführt. Daher nehmen die ID-Queries in dieser Arbeit lediglich eine Nebenrolle ein, um den Rahmen der Arbeit nicht zu überschreiten. Aufgrund dessen wird lediglich eine Messreihe mit diesen Queries konzipiert. So können die in ihr erzielten Ergebnisse herangezogen werden, um einen Hinweis für andere Arbeiten zu geben, ob es sich lohnt diesen Sachverhalt zu untersuchen, ohne das diese Arbeit zu umfangreich wird. Schließlich hätte eine detaillierte Untersuchung der Abfragestil die Verdoppelung aller Messungen bedeutet, was einen zu großen Aufwand zur Folge hätte. 
-
-Beim Vergleich der in \autoref{src:gremlin_id_queries} dargestellten Gremlin-ID-Queries mit den regulären Queries aus \autoref{src:gremlin_queries} fällt auf, dass bei den Gremlin-ID-Queries ein parametrisierte Form der Steps \texttt{V()} und \texttt{E()} einsetzt wird. Während bei den regulären Queries stattdessen mit den Filter-Steps wie \texttt{hasLabel} oder \texttt{has} gearbeitet wird.
-
-Des Weiteren unterscheidet sich die Logik der \texttt{getLink}-Queries zwischen ID-Queries und regulären Queries. Bei den ID-Queries wird lediglich auf eine ID für den Endknoten des Links geprüft (\texttt{<NODE\_ID2>} \autoref{src:gremlin_id_queries} und \texttt{\$id2} \autoref{src:cypher_id_queries}). Bei den regulären Queries wird auf eine Menge an IDs für den Endknoten geprüft (\texttt{<NODE\_ID2s>} \autoref{src:gremlin_queries} und \texttt{\$id2s} \autoref{src:cypher_queries}). 
-
-In \autoref{src:cypher_id_queries} wird dabei lediglich die \texttt{getLink}-Query aufgeführt, da es sich bei dieser um die einzige Cypher-Queries handelt die sich zwischen den regulär Cypher- und Cypher-ID-Queries unterscheidet.
-
-\begin{lstlisting}[label=src:gremlin_id_queries,caption={Gremlin ID-Queries},language=Java]
-/* getNode */
-g.V(["NODETABLE",<NODE_ID>]);
-
-/* getLink */
-g.E(["LINKTABLE", <NODE_ID1>, <NODE_ID2>, <LINK_TYPE>])
-
-/* countLinks */
-g.V(["NODETABLE",<NODE_ID1>])
-    .outE("LINKTABLE")
-    .has("LINK_TYPE", <LINK_TYPE>)
-
-/* getLinkList */
-g.V(["NODETABLE",<NODE_ID1>])
-    .outE("LINKTABLE")
-    .has("LINK_TYPE",  <LINK_TYPE>)
-    .limit(<LIMIT>)
-\end{lstlisting}
-
-\begin{lstlisting}[label=src:cypher_id_queries,caption={Cypher ID-Queries},language=CQL]
-/* getLink */
-MATCH (n1:node{id: $id1})-[l:link{link_type: $link_type}]->(n2:node{id: $id2}) 
-RETURN n1.id AS ID1, n2.id AS ID2, 
-    l.link_type AS LINK_TYPE, 
-    l.visibility AS VISIBILITY, 
-    l.data AS DATA, l.time AS TIME, 
-    l.version AS VERSION
 \end{lstlisting}
 
 \section{Datensatz}
@@ -315,7 +270,7 @@ Der Begriff Latenz bezeichnet dabei den Zeitraum zwischen dem Abschicken einer A
 
 Unter der Metrik Durchsatz wird während der Performance-Analyse erfasst, wie viele Operationen pro Sekunde durchschnittlich während einer Messung durchgeführt werden konnten. 
 
-Darüber hinaus werden während allen Messungen Betriebssystemstatistiken erfasst. Die Betriebssystemstatistiken werden dabei durch das Werkzeug NMON erstellt. Dieses zeichnet einmal pro Minute während einer Messung einen Datenpunkt auf. Diese Statistiken einem dabei einen Einblick darüber, wie groß der Ressourcenverbrauch der Datenbanksysteme während der Messungen ist.
+Darüber hinaus werden während allen Messungen Ressourcenstatistiken erfasst. Diese Statistiken werden dabei vom Werkzeug NMON erstellt. Dieses zeichnet einmal pro Minute während einer Messung einen Datenpunkt auf. Diese Statistiken geben einem dabei einen Einblick darüber, wie groß der Ressourcenverbrauch der Datenbanksysteme während der Messungen ist.
 
 \section{Umgebung}
 \label{analyse:umgebung}
@@ -493,9 +448,11 @@ ON (l.link_type);
 
 \section{Messreihen}
 \label{analyse:messreihen}
-Um das neue Ziel der Arbeit zu erfüllen, werden in diesem Kapitel verschiedene Messreihen spezifiziert. Eine Messreihe stellt hierbei eine Art Messszenario für die Datenbanksysteme dar. So können die jeweiligen Ergebnisse eines Datenbanksystems immer direkt mit den Ergebnissen der anderen Datenbanksysteme verglichen werden. Schließlich werden die Ergebnisse im Rahmen einer Messreihe immer unter den gleichen oder vergleichbaren Bedingungen erzielt. 
+Um das neue Ziel der Arbeit zu erfüllen, werden in diesem Kapitel verschiedene Messreihen spezifiziert. Bei diesen Messreihen handelt es sich um eine Reihe an Messungen, bei der alle Messungen einer vergleichbaren Arbeitslast ausgesetzt werden. Das bedeutet beispielsweise das alle Messungen auf Basis desselben Datensatzes, derselben Anzahl an Linkbench-Threads, Request-Anzahl, usw. erfolgen. So können die Ergebnisse der Datenbanksysteme einer Messreihe immer miteinander verglichen werden, da sie unter vergleichbaren Umständen erzielt wurden.
 
-Bevor damit allerdings auf die Unterschiede beziehungsweise die variierenden Parameter der Messreihe eingegangen werden kann, werden hier nochmals kurz die Parameter und Konfigurationen zusammengefasst, die über alle Messreihen hinweg konstant bleiben:
+Im weiteren Verlauf des Kapitels wird daher genauer auf die Messreihen und ihre jeweiligen Messparameter eingegangen. Dazu werden im Folgenden kurz erst die Parameter zusammengefasst, die über alle Messreihen konstant bleiben, bevor die Eigenheiten (variierenden Parameter) der einzelnen Messreihen im Detail erörtert werden.  
+
+Zu den Messparametern die über alle Messreihen hinweg konstant bleiben gehören:
 \begin{itemize}
     \item \textit{Umgebung}\\
     In der in \autoref{analyse:umgebung} beschriebenen Umgebung werden alle Messreihen durchgeführt. 
@@ -503,13 +460,15 @@ Bevor damit allerdings auf die Unterschiede beziehungsweise die variierenden Par
     Linkbench arbeitet in der \textit{Request}-Phase immer mit 50 Threads, die gleichzeitig Anfragen an ein Datenbanksystem schicken.
     \item \textit{Db2-Datenbankschema}\\
     Das Db2-Datenbankschema von \texttt{linkdb0} aus \autoref{src:linkdb0_schema} wird zwischen den Messreihen nicht verändert oder angepasst. 
+    \item \textit{Queries}\\
+    Im Kontext aller Messreihen werden immer die beiden in der Abfragelogik äquivalenten Gremlin- und Cypher-Queries aus \autoref{src:gremlin_queries} und \autoref{src:cypher_queries} für die Messungen herangezogen. 
     \item \textit{Konfiguration Db2 Graph Beta 3 \& V11.5.6.0}\\
     Die Graph-Overlay-Konfiguration in \autoref{src:db2graph_mapping} und die Gremlin-Server-Konfiguration der Db2 Graph Versionen bleiben über alle Messungen hinweg unverändert.
     \item \textit{Konfiguration \& Datenbankschema Neo4j}\\
     Die in Konfiguration von Neo4j und das bei den Messungen eingesetzte Datenbankschema (\autoref{src:neo4j_schema}) bleiben über die Messreihen hinweg unverändert. 
 \end{itemize}
 
-In den folgenden Unterabschnitten wird nun der Aufbau der verschiedenen Messreihen genauer erläutert. Der jeweilige Name einer Reihe setzt sich dabei aus dem Namen des Benchmarks (Linkbench), der Abkürzung für die gewählte Verteilung (Const oder Real) des Datensatzes und der Größe des Datensatzes (10M oder 100M) zusammen. Falls bei einer Messreihe ID-Queries statt den regulären Queries zum Einsatz kommen, wird abschließend noch ID angehängt.
+In den folgenden Unterabschnitten wird nun der Aufbau der verschiedenen Messreihen genauer erläutert. Der jeweilige Name einer Reihe setzt sich dabei aus dem Namen des Benchmarks (Linkbench), der Abkürzung für die gewählte Verteilung (Const oder Real) des Datensatzes und der Größe des Datensatzes (10M oder 100M) zusammen.
 
 \subsection{Linkbench-Const-10M}
 Im Rahmen dieser Messreihe werden Messungen mit den Datenbanksystemen:
@@ -520,29 +479,11 @@ Im Rahmen dieser Messreihe werden Messungen mit den Datenbanksystemen:
 \end{itemize}
 Die Messungen werden dabei auf Basis der folgenden Eigenschaften beziehungsweise Parameter durchgeführt:
 \begin{itemize}
-    \item reguläre Queries,
     \item Request-Anzahl (pro Thread) von 500.000, 
     \item konstante Verteilung (Datensatz) und
     \item Linkbench-10M (Datensatzgröße).
 \end{itemize}
-Wie bei den Parametern beschrieben, werden im Rahmen dieser Messreihe die regulären Queries herangezogen. Der für die Messungen erzeugte Datensatz besteht hingegen aus 10 Millionen Knoten und 100 Millionen Kanten. Darüber hinaus weist er eine konstante 10er-Verteilung auf. Das bedeutet, jeder Knoten verfügt über exakt 10 ausgehende Kanten. Als Request-Anzahl wird hierbei 500.000 (pro Thread) angewendet.
-
-\subsection{Linkbench-Const-10M-ID}
-Teil dieser Messreihe sind Messungen mit den Datenbanksystemen:
-\begin{itemize}
-    \item Db2 Graph Beta 3,
-    \item Db2 Graph V11.5.6.0 und 
-    \item Neo4j. 
-\end{itemize}
-
-Zugleich finden allen Messungen im Rahmen der Messreihe auf der Basis der folgenden Parameter statt:
-\begin{itemize}
-    \item Queries-ID,
-    \item Request-Anzahl (pro Thread) von 500.000, 
-    \item konstante Verteilung (Datensatz) und
-    \item Linkbench-10M (Datensatzgröße).
-\end{itemize}
-Die Messreihe ähnelt in ihrer Beschaffenheit der Messreihe Linkbench-Const-10M. Der Datensatz bei den Messungen weist eine konstante 10er-Verteilung auf und setzt sich aus 10 Millionen Knoten und 100 Millionen Kanten zusammen. Darüber hinaus wird hier auch eine Request-Anzahl von 500.000 (pro Thread) herangezogen. Der einzige Unterschied zu der Linkbench-Const-10M Messung stellt der Einsatz der ID-Queries statt der regulären Queries dar.
+Der für die Messungen herangezogene Datensatz besteht demnach aus 10 Millionen Knoten und 100 Millionen Kanten. Darüber hinaus weist er eine konstante 10er-Verteilung auf. Das bedeutet, jeder Knoten verfügt über exakt 10 ausgehende Kanten. Als Request-Anzahl wird hierbei 500.000 (pro Thread) angewendet.
 
 \subsection{Linkbench-Const-100M}
 Im Kontext dieser Reihe erfolgen Messungen mit den Datenbanksystemen:
@@ -554,12 +495,11 @@ Im Kontext dieser Reihe erfolgen Messungen mit den Datenbanksystemen:
 
 Hierbei werden folgende Parameter bei allen Messungen herangezogen:
 \begin{itemize}
-    \item reguläre Queries,
     \item Request-Anzahl (pro Thread) von 500.000, 
     \item konstante Verteilung (Datensatz) und
     \item Linkbench-100M (Datensatzgröße).
 \end{itemize}
-Bei allen Messungen, die Teil dieser Messreihe sind, wird ein konstant 10-verteilter Datensatz eingesetzt, welcher 100 Millionen Knoten und 1 Milliarde Kanten umfasst. Des Weiteren kommen bei diesen Messungen die regulären Queries zum Einsatz. Die Request-Anzahl pro Thread beträgt hier ebenfalls 500.000.
+Bei allen Messungen, die Teil dieser Messreihe sind, wird ein konstant 10-verteilter Datensatz eingesetzt, welcher 100 Millionen Knoten und 1 Milliarde Kanten umfasst. Die Request-Anzahl pro Thread beträgt hier ebenfalls 500.000.
 
 \subsection{Linkbench-Real-10M}
 Bei dieser Messreihe werden Messungen mit den Datenbanksystemen:
@@ -570,12 +510,11 @@ Bei dieser Messreihe werden Messungen mit den Datenbanksystemen:
 
 Die Messungen im Rahmen dieser Messreihe werden dabei mit folgenden Parametern durchgeführt:
 \begin{itemize}
-    \item reguläre Queries,
-    \item Request-Anzahl (pro Thread) von 50.000, 
+    \item Request-Anzahl (pro Thread) von 50.000
     \item reale Verteilung (Datensatz) und 
     \item Linkbench-10M (Datensatzgröße).
 \end{itemize}
-Bei den im Kontext der Reihe durchgeführten Messungen werden die regulären Queries eingesetzt. Außerdem wird, bevor die Messungen vorgenommen werden können, ein Datensatz mit einer realen Verteilung erzeugt. Der Datensatz setzt sich dabei aus 10 Millionen Knoten und ca. 53 Millionen Kanten zusammen. Als Request-Anzahl pro Thread wird hier 50.000 gewählt. 
+Bevor die also die Messungen vorgenommen werden können, wird ein Datensatz mit einer realen Verteilung erzeugt. Der Datensatz setzt sich dabei aus 10 Millionen Knoten und ca. 53 Millionen Kanten zusammen. Als Request-Anzahl pro Thread wird darüber hinaus bei dieser Messreihe 50.000 gewählt. 
 
 \subsection{Linkbench-Real-100M}
 Teil dieser Reihe sind Messungen mit den Datenbanksystemen:
@@ -586,19 +525,18 @@ Teil dieser Reihe sind Messungen mit den Datenbanksystemen:
 
 Außerdem finden allen Messungen im Kontext der Messreihe auf der Basis der folgenden Parameter statt:
 \begin{itemize}
-    \item reguläre Queries,
     \item Messumfang von 2.500.000,
     \item reale Verteilung (Datensatz) und
     \item Linkbench-100M (Datensatzgröße).
 \end{itemize}
-Die Messreihe ähnelt hier im Aufbau der Linkbench-Real-10M Reihe stark. So werden bei dieser ebenfalls reguläre Queries eingesetzt, die Request-Anzahl beträgt 50.000, es werden mehrere Messungen für die \texttt{getLinkList}-Operation durchgeführt und der Datensatz auf dem die Messungen basieren ist auch real verteilt. Allerdings umfasst der hierbei verwendete Datensatz 100 Millionen Knoten und ca. 530 Millionen Kanten, statt den 10 Millionen Knoten und ca. 53 Millionen Kanten bei der Messreihe Linkbench-Real-10M.
+Die Messreihe ähnelt hier im Aufbau der Linkbench-Real-10M Reihe stark. So beträgt auch hier die Request-Anzahl 50.000, es werden mehrere Messungen für die \texttt{getLinkList}-Operation durchgeführt und der Datensatz auf dem die Messungen basieren ist auch real-verteilt. Allerdings umfasst der hierbei verwendete Datensatz 100 Millionen Knoten und ca. 530 Millionen Kanten, statt den 10 Millionen Knoten und ca. 53 Millionen Kanten bei der Messreihe Linkbench-Real-10M.
 
 \subsection{Übersicht}
 In diesen Abschnitt werden alle Messreihen und ihre Parameter nochmals übersichtlich in den beiden Tabellen \autoref{tab:uebersicht_messreihen_datensatz} und \autoref{tab:uebersicht_messreihen_parameter} zusammengefasst. In \autoref{tab:uebersicht_messreihen_datensatz} werden dabei die Datensatz-spezifischen Parameter der Messreihen aufgeführt, wie Größe und Verteilung. Die Parameter Messumfang, Anzahl gebenchmarkter Operationen sowie Art der Queries werden hingegen in \autoref{tab:uebersicht_messreihen_parameter} aufgelistet.
 
 Der Parameter Messumfang beschreibt hierbei, wie viele Operationen insgesamt während einer \textit{Request}-Phase an von den Linkbench-Threads durchgeführt werden. Also im Rahmen dieser Arbeit immer das 50-fache der Request-Anzahl. Da wie bereits zuvor beschrieben, während allen Messungen 50 Linkbench-Threads zum Einsatz kommen. 
 
-\begin{table}[h]
+\begin{table}[!ht]
     \centering
     \begin{tabular}{l|r|r|c}
     \hline
@@ -607,7 +545,6 @@ Der Parameter Messumfang beschreibt hierbei, wie viele Operationen insgesamt wä
     \rowcolor[HTML]{EFEFEF} 
     \multicolumn{1}{c|}{\multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}{\color[HTML]{333333} \textbf{Messreihe}}}} & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Knoten}} & \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Kanten}} & \multicolumn{1}{l}{\cellcolor[HTML]{EFEFEF}\textbf{Verteilung}} \\ \hline
     Linkbench-Const-10M & 10.000.000 & 100.000.000 & konstant \\
-    Linkbench-Const-10M-ID & 10.000.000 & 100.000.000 & konstant \\
     Linkbench-Const-100M & 100.000.000 & 1.000.000.000 & konstant \\
     Linkbench-Real-10M & 10.000.000 & 100.000.000 & real \\
     Linkbench-Real-100M & 100.000.000 & 1.000.000.000 & real \\ \hline
@@ -616,19 +553,20 @@ Der Parameter Messumfang beschreibt hierbei, wie viele Operationen insgesamt wä
     \label{tab:uebersicht_messreihen_datensatz}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[!ht]
     \centering
-    \begin{tabular}{l|r|c|c}
+    \begin{tabular}{l|r|c}
     \hline
-    \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}{\color[HTML]{333333} }} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}} & \cellcolor[HTML]{EFEFEF} & \multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}} \\
-    \multicolumn{1}{c|}{\multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}{\color[HTML]{333333} \textbf{Messreihe}}}} & \multicolumn{1}{l|}{\multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}\textbf{Messumfang}}} & \multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}\textbf{\begin{tabular}[c]{@{}c@{}}Gebenchmarkte \\ Operationen\end{tabular}}} & \multicolumn{1}{c}{\multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}\textbf{Queries}}} \\ \hline
-    Linkbench-Const-10M & 25.000.000 & 4 & regulär \\
-    Linkbench-Const-10M-ID & 25.000.000 & 4 & ID \\
-    Linkbench-Const-100M & 25.000.000 & 4 & regulär \\
-    Linkbench-Real-10M & 2.500.000 & 7 & regulär \\
-    Linkbench-Real-100M & 2.500.000 & 7 & regulär \\ \hline
+    \rowcolor[HTML]{EFEFEF} 
+    \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Messreihe}} &
+        \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Messumfang}} &
+        \textbf{\begin{tabular}[c]{@{}c@{}}Gebenchmarkte\\ Operationen\end{tabular}} \\ \hline
+    Linkbench-Const-10M  & 25.000.000 & 4 \\
+    Linkbench-Const-100M & 25.000.000 & 4 \\
+    Linkbench-Real-10M   & 2.500.000  & 7 \\
+    Linkbench-Real-100M  & 2.500.000  & 7 \\ \hline
     \end{tabular}
-    \caption{Übersicht Parameter der Messreihen}
+    \caption{Übersicht weiterer Parameter der Messreihen}
     \label{tab:uebersicht_messreihen_parameter}
 \end{table}
 
@@ -638,6 +576,10 @@ Im Rahmen dieses Abschnitts wird darauf eingegangen, wie die Messungen der Daten
 Die Durchführung der Messreihen läuft hierbei so ab, dass für jeweils eines der zwei bis drei Datenbanksysteme alle der in \autoref{analyse:operationen} beschrieben und benötigten Operationen in einer separaten Messung gebenchmarkt werden. 
 
 Nach dem alle vier bis sieben Operationen gebenchmarkt wurden, kann mit dem nächsten Datenbanksystem weitergemacht werden. Wurden alle Operationen für die Datenbanksysteme, die in einer Messreihe eine Rolle spielen gebenchmarkt, so kann mit der Durchführung der nächsten Messreihe begonnen werden. 
+
+Die Gliederung der Messungen kann dabei \autoref{fig:gliederung_messungen} entnommen werden. Jede der dort links abgebildeten Operationen stellen hierbei eine eigene Messung -- Durchlauf der Linkbench \textit{Load}-Phase -- dar. 
+
+\autoref{fig:gliederung_messungen} bildet dabei nicht alle Messungen explizit ab, sondern deutet nur die Gliederung an. Schließlich wäre es nicht möglich, die Darstellung aller 52 Messungen basierend auf der Kombination der Messreihe, des Datenbanksystems und der Operation kompakt und übersichtlich in einer Abbildung dazustellen. 
 
 \begin{figure}[!ht]
 	\begin{tikzpicture}
@@ -691,5 +633,3 @@ Nach dem alle vier bis sieben Operationen gebenchmarkt wurden, kann mit dem näc
     \caption{Gliederung der Messungen}
     \label{fig:gliederung_messungen}
 \end{figure}
-
-Die Gliederung der Messungen kann dabei \autoref{fig:gliederung_messungen} entnommen werden. Jede der dort links abgebildeten Operationen stellen hierbei einen eigenen Linkbench-Durchlauf -- Ablauf einer \textit{Load}-Phase -- dar. 

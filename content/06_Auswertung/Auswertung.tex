@@ -279,14 +279,3 @@ Werden die von \autoref{tab:sql_benchmark} aufgeführten Werte genauer analysier
 Somit kann in diesem Abschnitt festgestellt werden, dass Db2 Graph V11.5.6.0 den performanteren SQL-Code der beiden Db2 Graph Versionen generiert, was interessanterweise den bei der Performance-Analyse erzielten Ergebnissen in \autoref{ergebnisse} klar widerspricht. Der erzeugte SQL-Code selbst scheint daher nicht der Grund für den großen Unterschied zwischen Beta 3 und V11.5.6.0 zu sein. Allerdings können die in diesem Abschnitt aufgeführten Beobachtungen als Beweis dafür betrachtet werden, dass der Grund für die geringere Performance von Db2 Graph V11.5.6.0 bei konstant-verteilten Datensätzen bei der Grapherweiterung selbst liegen muss und nicht bei Db2 als zugrunde liegendes Datenbanksystem. 
 
 Von weiteren Untersuchungen nach der Ursache für den Performance-Unterschied zwischen den Db2 Graph Versionen wird dabei an dieser Stelle allerdings abgesehen, da dies den Umfang der Arbeit und das Thema \textit{Performance-Analyse von Graphbatenbanksystem} überschreiten würde.
-
-\subsection{Zusammenfassung}
-Neo4j weist mit Abstand die beste Performance aller untersuchten Datenbanksysteme auf, gefolgt von Db2 Graph Beta 3 -- allerdings ausschließlich bei Messreihen mit real-verteilen Datensätzen -- und mit größerem Abstand Db2 Graph V11.5.6.0.
-
-Die Performance von Db2 Graph V11.5.6.0 und Neo4j bricht mit steigenden Ergebnismengen bei beiden erheblich ein. Wobei gemessen an der eigenen Leistung Neo4j etwas stärker einbricht als Db2 Graph V11.5.6.0.
-
-Die Datensatzgröße hat bei allen Datenbanksystemen eine relativ geringen Einfluss auf die Performance. So betragen die Abweichungen gemessen an der eigenen Leistung  gerade einmal 0,09 - 5,23 \% zwischen Linkbench-10M und Linkbench-100M Datensätzen.  
-
-Bei der Ressourcenauslastung gilt es anzumerken das Neo4j während der Messungen die höchste CPU-Auslastung gefolgt von Db2 Graph Beta 3 und mit größerem Abstand V11.5.6.0 aufweist. Bei der IO-Auslastung weist Db2 V11.5.6.0 die höchsten Werte auf, gefolgt von Db2 Graph und Neo4j. Neo4j hat dabei eine so geringe IO-Auslastung, dass die Vermutung naheliegt, dass dieses ein weitaus aggressiveres Caching betreibt als Db2, auf das die Db2 Graph Versionen zurückgreifen. 
-
-Db2 Graph V11.5.6.0 erzeugt auf Basis der während der Performance-Analyse gestellten Gremlin-Queries performanteren SQL-Code als Beta 3. Dies scheint somit nicht der Grund dafür zu sein, dass Db2 Graph Beta 3 in allen Messungen, die mit ihm durchgeführt werden, eine höhere Performance als Db2 Graph aufweist. 

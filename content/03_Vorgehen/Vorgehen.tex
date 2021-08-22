@@ -45,7 +45,7 @@ Allerdings ist es nun auch das Ziel der Performance-Analyse in dieser Arbeit die
     \item Ergebnismenge und
     \item Datensatzgröße zu beachten. 
 \end{itemize}
-Dafür werden bei der Performance-Analyse sowohl Messungen auf der Basis von real und konstant-verteilten Datensätzen durchgeführt. 
+Dafür werden bei der Performance-Analyse sowohl Messungen auf der Basis von real und konstant verteilten Datensätzen durchgeführt. 
 
 Eine weitere Aufgabe, die aufgrund des neuen Ziels Teil der Arbeit wird, stellt dabei die Suche nach bereits existierenden Linkbench-Adapter-Implementierungen für Db2 Graph und Neo4j dar. Sollte jedoch keine der für die Messungen benötigten Adapter-Implementierung verfügbar sein, wird deren Implementierung somit ebenfalls zum Teil der Arbeit. 
 
@@ -82,7 +82,7 @@ Der Faktor wirkt sich dadurch signifikant darauf aus, wie lange eine \textit{Req
 
 Im Rahmen der in der Arbeit durchgeführten Messreihen müssen hierbei ein Kompromiss zwischen der Qualität und der Dauer einer \textit{Request}-Phase von Linkbench gefunden werden. 
 
-So wird bei allen Messungen, die auf Basis eines konstant-verteilten Datensatzes durchgeführt werden, die Request-Anzahl von 500.000 eingesetzt. Diese Anzahl wird hierbei gewählt, da sie ein detailliertes Bild von der Performance eines Datenbanksystems zeichnet und sich die \textit{Request}-Phase für alle drei Datenbanksysteme unterhalb eines Zeitraums von drei Stunden befindet -- sollte es zu keinen Anomalien kommen. 
+So wird bei allen Messungen, die auf Basis eines konstant verteilten Datensatzes durchgeführt werden, die Request-Anzahl von 500.000 eingesetzt. Diese Anzahl wird hierbei gewählt, da sie ein detailliertes Bild von der Performance eines Datenbanksystems zeichnet und sich die \textit{Request}-Phase für alle drei Datenbanksysteme unterhalb eines Zeitraums von drei Stunden befindet -- sollte es zu keinen Anomalien kommen. 
 
 Für die Messungen, die auf Basis eines real verteilten Datensatzes erfolgen, wird lediglich eine Request-Anzahl von 50.000 herangezogen. Dies hängt damit zusammen, dass hierbei deutlich umfangreichere Ergebnismengen möglich sind. So kann es je nach Variation der \texttt{getLinkList}-Operation, zu einer Ergebnismenge von bis zu 100.000 Links (Kanten) kommen. Eine solch große Ergebnismenge hat hierbei einen signifikanten Einfluss auf die Performance der Datenbanksysteme während des Benchmarks. Dies kann zur Folge haben, dass die Performance eines Datenbanksystems nachweisbar einbricht. Um weiterhin eine Performance von unter drei Stunden für eine Request-Phase gewährleisten zu können, wird die Request-Anzahl daher reduziert. Auch wenn dadurch nicht dieselbe Qualität der Ergebnisse erreicht werden kann, wie bei den Messungen mit einem konstant verteilten Datensatz.
 
@@ -145,7 +145,7 @@ Diese werden dabei ausgewählt, da der Faktor-10-Unterschied zwischen den Werten
 
 100.000 wird darüber hinaus als größte Menge gewählt, da eine Grenze von 1.000.000 zur Folge hätte, das der Messzeitraum der \texttt{Request}-Phase von 3 Stunden bei einigen Messungen um ein Vielfaches überschritten worden wäre.
 
-Wie bereits zuvor erwähnt, spielt die Variation der Begrenzung der Ergebnismenge lediglich bei den Messungen mit Bezug zu real verteilten Datensätzen eine Rolle. Dies hängt damit zusammen, dass bei konstant-verteilten Datensätzen im Rahmen dieser Arbeit immer eine sogenannte 10er-Verteilung vorherrscht. Dies bedeutet, dass die Ergebnismenge für die \texttt{getLinkList}-Operation maximal 10 Elemente beinhalten kann, egal ob die obere Grenze für die Größe der Ergebnismenge 100 oder 100.000 beträgt. Somit erübrigt sich die Variation der Begrenzung der Ergebnismenge bei diesen Messungen. 
+Wie bereits zuvor erwähnt, spielt die Variation der Begrenzung der Ergebnismenge lediglich bei den Messungen mit Bezug zu real verteilten Datensätzen eine Rolle. Dies hängt damit zusammen, dass bei konstant verteilten Datensätzen im Rahmen dieser Arbeit immer eine sogenannte 10er-Verteilung vorherrscht. Dies bedeutet, dass die Ergebnismenge für die \texttt{getLinkList}-Operation maximal 10 Elemente beinhalten kann, egal ob die obere Grenze für die Größe der Ergebnismenge 100 oder 100.000 beträgt. Somit erübrigt sich die Variation der Begrenzung der Ergebnismenge bei diesen Messungen. 
 
 \section{Queries}
 \label{analyse:queries}
@@ -239,7 +239,7 @@ Die konstante Verteilung wird entgegen der real-Verteilung nicht aufgrund ihrer 
 
 Dieses Verhalten kann dadurch begründet werden, dass sich Db2 Graph Beta 3 damit schwertut, mit großen Ergebnismengen von über 100.000 Kanten je Knoten zu arbeiten. Darüber hinaus kann dieses Problem von Db2 Graph Beta 3 mit real verteilten Datensätzen auch nicht durch die Begrenzung der Ergebnismenge im Rahmen der Gremlin-Query gelöst werden. Schließlich beherrscht Db2 Graph Beta 3 die Optimierungstechnik \textit{Limit Pushdown} nicht, siehe \autoref{db2graph:optimierung}. 
 
-Aufgrund dessen und da es -- nachvollziehbarerweise -- nicht zielführend wäre, die maximale Kanten auf Knoten Verteilung eines real verteilten Datensatzes zu verändern, werden die auch Szenarien mit konstant-verteilten Datensätzen in die Arbeit aufgenommen. Schließlich ergibt sich dadurch die Möglichkeit, Messergebnisse für Db2 Graph Beta 3 zu erzielen und diese mit V11.5.6.0 und Neo4j zu vergleichen. Allerdings nur unter der Voraussetzung, dass eine kleine konstante Verteilung, wie die konstante 10er-Verteilung, gewählt wird. 
+Aufgrund dessen und da es -- nachvollziehbarerweise -- nicht zielführend wäre, die maximale Kanten auf Knoten Verteilung eines real verteilten Datensatzes zu verändern, werden die auch Szenarien mit konstant verteilten Datensätzen in die Arbeit aufgenommen. Schließlich ergibt sich dadurch die Möglichkeit, Messergebnisse für Db2 Graph Beta 3 zu erzielen und diese mit V11.5.6.0 und Neo4j zu vergleichen. Allerdings nur unter der Voraussetzung, dass eine kleine konstante Verteilung, wie die konstante 10er-Verteilung, gewählt wird. 
 
 Aufgrund des zuvor angesprochenen Problems von Db2 Graph Beta 3 mit real verteilten Datensätzen spielt Beta 3 auch bei den Messungen, die auf real verteilten Datensätzen aufbauen, im Kontext dieser Arbeit keine Rolle. Dies bedeutet, dass bei diesen keinerlei Messungen mit Beta 3 durchgeführt werden, lediglich mit Db2 Graph V11.5.6.0 und Neo4j. 
 
@@ -248,7 +248,7 @@ Die Größe eines Datensatzes stellt neben dessen Verteilung einen großen Unter
 
 Die Variation der Datensatzgröße über die im Rahmen der Performance-Analyse durchgeführten Messungen stellt hierbei einen interessanten Untersuchungsaspekt dar. Schließlich gilt es bei der Beurteilung von Datenbanksystemen immer zu beachten, wie diese mit kleineren oder größeren Datenmengen umgehen.
 
-Bei den Begriffen Linkbench-10M und Linkbench-100M muss allerdings darauf aufmerksam gemacht werden, dass sich die Datensätze je nach Verteilung weiterhin in ihrer Größe unterscheiden können. So verfügen ein real verteilter und ein konstant-verteilter Linkbench-10M Datensatz im Rahmen der Arbeit immer über unterschiedliche Größen. Dies hängt damit zusammen, dass sie aufgrund der Verteilung eine unterschiedliche Anzahl an Kanten beinhalten, auch wenn sie gleich viele Knoten besitzen. So weisen die konstant-verteilten Datensätze aus \autoref{tab:kanten_anzahl} fast die doppelte Anzahl an Kanten auf, wie die real verteilten Datensätze. 
+Bei den Begriffen Linkbench-10M und Linkbench-100M muss allerdings darauf aufmerksam gemacht werden, dass sich die Datensätze je nach Verteilung weiterhin in ihrer Größe unterscheiden können. So verfügen ein real verteilter und ein konstant verteilter Linkbench-10M Datensatz im Rahmen der Arbeit immer über unterschiedliche Größen. Dies hängt damit zusammen, dass sie aufgrund der Verteilung eine unterschiedliche Anzahl an Kanten beinhalten, auch wenn sie gleich viele Knoten besitzen. So weisen die konstant verteilten Datensätze aus \autoref{tab:kanten_anzahl} fast die doppelte Anzahl an Kanten auf, wie die real verteilten Datensätze. 
 
 \begin{table}[ht]
     \centering

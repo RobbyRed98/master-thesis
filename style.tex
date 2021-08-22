@@ -53,10 +53,68 @@
 	identifierstyle=
 }
 
+\lstdefinelanguage{json}{
+	otherkeywords={true, false},
+	string=[s]{"}{"},
+    literate=
+     *{:}{{{\color{black}{:}}}}{1}
+      {,}{{{\color{black}{,}}}}{1}
+      {\{}{{{\color{black}{\{}}}}{1}
+      {\}}{{{\color{black}{\}}}}}{1}
+      {[}{{{\color{black}{[}}}}{1}
+      {]}{{{\color{black}{]}}}}{1}, 
+}
+
+\lstdefinelanguage{CQL}{
+	keywords={},
+	otherkeywords={
+		-,->
+	},
+	keywords = [2]{MATCH, WHERE, RETURN, COUNT, LIMIT, IN, AS, AND, CREATE, INDEX, CONSTRAINT, FOR, ON, ASSERT, IS, UNIQUE},
+	keywordstyle=\color{red},
+	keywordstyle=[2]\color{blue},
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	stringstyle=\color{red}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+
+
 %----------------------------------------------------------
 % Define new words with hyphenation
 %----------------------------------------------------------
 
-\hyphenation{Back-slash}
-\hyphenation{Tool-um-ge-bung}
-\hyphenation{Tool-um-ge-bun-gen}
+\hyphenation{Graph-daten-bank-system}
+\hyphenation{Graph-daten-bank-systeme}
+\hyphenation{Graph-daten-bank-systems}
+\hyphenation{Graph-daten-bank-systemen}
+\hyphenation{be-zieh-ungs-wei-se}
+\hyphenation{heran-gezog-en}
+\hyphenation{Link-bench}
+\hyphenation{Da-ten-bank-mo-dell}
+\hyphenation{Da-ten-bank-mo-dells}
+\hyphenation{Da-ten-bank-mo-del-le}
+\hyphenation{Da-ten-bank-mo-del-len}
+\hyphenation{Mo-dell}
+\hyphenation{Mo-del-le}
+\hyphenation{Mo-del-ls}
+\hyphenation{Mo-del-len}
+\hyphenation{be-kannt}
+\hyphenation{be-kann-te}
+\hyphenation{be-kann-ten}
+\hyphenation{be-kann-ter}
+\hyphenation{be-kann-tes}
+\hyphenation{Graph-er-wei-ter-ung}
+\hyphenation{Graph-er-wei-ter-ung-en}
+\hyphenation{Graph-er-wei-ter-ungs}
+\hyphenation{Er-mitt-lung}
+\hyphenation{Er-mitt-lung-en}
+\hyphenation{über-ge-stülpt}
+\hyphenation{gleich-zei-tig}
+\hyphenation{Be-schränk-ung}
+
+% Manuell zu hyphenaten
+% IO-Operation
+% IO-Aus\-last\-ung
+% Gremlin-Queries

@@ -6,6 +6,8 @@ Zuerst wird dabei erörtert, warum sich die Ergebnisse aus \cite{sigmod_tian} im
 
 In den darauf folgenden Abschnitten werden einzelne Aspekte der Messungen genauer eingegangen, die für das Verständnis der in diesem Kapitel beschrieben Messreihen notwendig sind.
 
+Abschließend wird nochmals auf Ablauf und die Gliederung der Messungen und der Performance-Analyse eingegangen. \todo{Überarbeiten}
+
 \section{Reproduktion}
 \label{analyse:reproduktion}
 Wie in der \nameref{einleitung} aufgeführt, war es das eigentliche Ziel dieser Arbeit, die in \cite{sigmod_tian} erzielten Werte für Db2 Graph zu reproduzieren und mit neuen Werten für Neo4j zu vergleichen. 
@@ -28,28 +30,43 @@ Bezüglich der anderen Punkte werden im Rahmen von \cite{sigmod_tian} keinerlei 
 
 Über die Benchmark-Konfiguration und die Implementierung des für den Benchmark benötigten Db2-Graph-Benchmark-Adapter ist ebenfalls nichts bekannt. Genau so werden in \cite{sigmod_tian} keine Informationen bezüglich der Konfiguration der Db2-Instanz und Db2 Graph angegeben, obwohl diese für die Reproduktion der Ergebnisse eine wichtige Rolle spielen. 
 
-Bezüglich des Datensatzes werden hingegen ein paar Eigenschaften in \cite{sigmod_tian} aufgeführt. Wie und ob der dort verwendet Datensatz durch den Daten-Generator des Benchmarks erzeugt werden kann, ist jedoch weiterhin unklar.
+Bezüglich des Datensatzes werden hingegen ein paar Eigenschaften in \cite{sigmod_tian} aufgeführt. Wie und ob der dort verwendet Datensatz durch den Daten-Generator von Linkbench erzeugt werden kann, ist jedoch weiterhin unklar.
 
-\section{Neues Ziel}
-Da die Reproduktion der Messungen aus \cite{sigmod_tian} nicht möglich ist, muss ein neues Ziel für den Rahmen dieser Arbeit definiert werden. 
+\section{Neue Methode}
+Da die Reproduktion der Messungen aus \cite{sigmod_tian} nicht möglich ist, muss eine neue Methode für die Analyse der Performance von Db2 Graph und Neo4j definiert werden. Dies erfolgt in diesem Abschnitt. Dafür wird zuerst beschrieben, welche Elemente aus \cite{sigmod_tian} in diese Arbeit übernommen werden können. Anschließend wird auf die Änderungen und neuen Aspekte der Performance-Analyse eingegangen. Dabei wird auch begründet, weshalb bestimmte Änderungen vor- und Aspekte aufgenommen werden. Als Nächstes wird auf den Aufbau und den Ablauf der Performance-Analyse eingegangen. 
 
-So setzt sich die Arbeit nun zum Ziel, weiterhin eine Performance-Analyse für Db2 Graph durchzuführen und die dabei erzielten Ergebnisse mit denen von Neo4j zu vergleichen. Daher orientiert sich die Arbeit weiterhin bei den folgenden Aspekten an \cite{sigmod_tian}:
+\subsection{Übernommene Elemente}
+Auch wenn die Messungen aus \cite{sigmod_tian} nicht reproduziert werden können, so werden trotzdem einige Elemente der Messmethode übernommen, da diese als einzelnen Elemente als reproduzierbar und zielführend erachtet werden. Zu diesen Elementen gehören die folgenden Aspekte der Messmethode aus \cite{sigmod_tian}:
 \begin{itemize}
-    \item Linkbench als Benchmark zum Messen der Performance,
-    \item Db2 Graph als gebenchmarktes Datenbanksystem,
-    \item Arbeit mit den Datensatz Größen 10 Millionen und 100 Millionen Knoten (Linkbench-10 und Linkbench-100) und
-    \item Arbeit mit den Metriken Latenz und Durchsatz.  
+    \item Der Einsatz von Linkbench als Benchmark zur Ermittelung der Performance.
+    \item Arbeit mit den Datensatzgrößen 10 Millionen und 100 Millionen Knoten (Linkbench-10 und Linkbench-100).
+    \item Nutzung der Metriken Latenz und Durchsatz für die Bestimmung der Performance.  
 \end{itemize}
-Allerdings ist es nun auch das Ziel der Performance-Analyse in dieser Arbeit die Aspekte beziehungsweise den Einfluss der Messparameter:
+
+\subsection{Änderungen und neue Aspekte}
+Die folgenden Aspekte werden neue in Performance-Analyse mit aufgenommen:
 \begin{itemize}
-    \item Ergebnismenge und
-    \item Datensatzgröße zu beachten. 
+    \item \textit{Db2 Graph Versionen}\\
+    Statt, wie in \cite{sigmod_tian} lediglich eine Db2 Graph Version für die Analyse der Performance und den Vergleich mit anderen Graphdatenbanksystemen einzusetzen, werden in dieser Arbeit Beta 3 und V11.5.6.0 beide als Vertreter für Db2 Graph herangezogen. Die beiden Versionen werden dabei in der Performance-Analyse berücksichtigt, da es sich hierbei um die beiden Db2 Graph Versionen handelt, die zum Zeitpunkt des Verfassens der Arbeit verfügbar sind.
+    \item \textit{Ergebnismenge}\\
+    Im Rahmen der neuen Performance-Analyse soll auch der Einfluss der Größe einer Ergebnismenge einer Anfrage auf die Performance der jeweiligen Datenbanksysteme miteinbezogen werden. Dies wird dabei in die Performance-Analyse mit aufgenommen, da das Verhalten der Datenbanksysteme bei der Abfrage von großen Datenmengen im Kontext dieser Arbeit als relevant eingestuft wird. Wie der Aspekt im Rahmen der Messungen untersucht wird, wird in \autoref{analyse:ergebnismenge} im Detail aufgeführt.
+    \item \textit{Verteilung der Datensätze}\\
+    Im Rahmen der Performance-Analyse werden nun auch Messungen mit verschieden real und konstant verteilten Datensätzen gemacht. Die Performance der Datenbanksysteme wird dabei auf Basis von real verteilten Datensätzen ermittelt, um realitätsnahe Ergebnisse zu erlangen. Messungen mit konstant verteilten Datensätzen werden dabei allerdings auch durchgeführt, da es möglich ist, bei diesen auch Ergebnisse für Db2 Graph Beta 3 zu erzielen. Welche Implikationen und Einfluss die Verteilung der Datensätze auf die Messungen der Performance-Analyse hat, wird dabei allerdings in \autoref{analyse:datensatz} genauer erläutert. 
 \end{itemize}
-Dafür werden bei der Performance-Analyse sowohl Messungen auf der Basis von real und konstant verteilten Datensätzen durchgeführt. 
 
-Eine weitere Aufgabe, die aufgrund des neuen Ziels Teil der Arbeit wird, stellt dabei die Suche nach bereits existierenden Linkbench-Adapter-Implementierungen für Db2 Graph und Neo4j dar. Sollte jedoch keine der für die Messungen benötigten Adapter-Implementierung verfügbar sein, wird deren Implementierung somit ebenfalls zum Teil der Arbeit. 
+\subsection{Ablauf}
+Die Performance-Analyse von Db2 Graph und Neo4j die im Rahmen dieser Arbeit durchgeführt wird kann in die folgenden Bestandteile unterteilt werden: 
+\begin{itemize}
+    \item Messung,
+    \item Implementierung und 
+    \item Auswertung.
+\end{itemize}
+Die verschiedenen Aspekte, Parameter und Variablen, die bei der Messung eine Rolle spielen, werden dabei in den folgenden Abschnitten dieses Kapitels aufgeführt. Darüber hinaus wird hier auch der Aufbau und die Organisation der Messungen in die Messreihe genauer beschrieben.  
 
-Abschließend gilt es darauf hinzuweisen, dass obwohl beim neuen Ziel einige Elemente von \cite{sigmod_tian} übernommen werden, die hier erzielten Ergebnisse nicht mit den aus \cite{sigmod_tian} vergleichbar sind. Schließlich sind die Bedingungen bei den Messungen nicht vergleichbar.
+In 
+Alle Implementierungsarbeiten die an Linkbench vorgenommen werden müssen, um die in diesem Kapitel beschrieben Messungen durchzuführen werden dabei in \autoref{implementierung} aufgeführt.
+
+Die Auswertung und Präsentation der Ergebnisse erfolgen dann in \compref{ergebnisse} und \compref{auswertung}. In \compref{ergebnisse} wird dabei im Detail auf die Ergebnisse der Messreihen eingegangen, während in \compref{auswertung} eine weiterführende Analyse der Ergebnisse und der Vergleich von Db2 Graph mit Neo4j durchgeführt wird. Darüber hinaus wird in \compref{auswertung} auch versucht eine Erklärung für den Performance-Unterschied zwischen Db2 Graph Beta 3 und Neo4j zu finden. 
 
 \section{Linkbench}
 Auch wenn sich das Ziel der Arbeit geändert hat, so wird Linkbench weiterhin als Benchmark zur Performance-Analyse herangezogen. Daher wird eine Implementierung für Linkbench sowie Adapter für Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j benötigt. Die Wahl der Linkbench- und Adapter-Implementierung sowie gegebenenfalls ihre Umsetzungen werden allerdings in \autoref{implementierung} beschrieben. 
@@ -77,7 +94,7 @@ Bei den Linkbench-Threads handelt es sich darüber hinaus um einen Parameter, de
 Bei der Request-Anzahl handelt es sich ebenfalls wie bei den Linkbench-Threads um eine Einstellung, die in der Adapter-Konfiguration von Linkbench vorgenommen wird. Um sie festzulegen, muss ein Wert für \texttt{requests} angegeben werden. 
 
 Zum besseren Verständnis wird die Konfiguration allerdings im weiteren Verlauf als Request-Anzahl bezeichnet. Die Request-Anzahl regelt dabei, wie viele Graph-Queries von jeweils einem der Linkbench-Threads an das zu benchmarkende Datenbanksystem gesendet werden, bevor eine \textit{Request}-Phase endet und eine Statistik aufgestellt wird. 
-
+beschrieben
 Der Faktor wirkt sich dadurch signifikant darauf aus, wie lange eine \textit{Request-Phase} andauert, bevor Linkbench die Ergebnisse für das untersuchte Datenbanksystem in Form einer Statistik bereitstellt. Zugleich bietet er einen Anhaltspunkt für die Qualität der durchgeführten Messungen. Denn Linkbench erhält ein umso detaillierteres Bild von der Performance der Datenbanksysteme, desto mehr Requests beziehungsweise Graph-Queries Teil des Benchmark-Durchlaufs sind. Darüber hinaus fallen bei einer höheren Anzahl an Messungen auch Anomalien weniger ins Gewicht, welche die Messergebnisse gegebenenfalls verzerren könnten.
 
 Im Rahmen der in der Arbeit durchgeführten Messreihen müssen hierbei ein Kompromiss zwischen der Qualität und der Dauer einer \textit{Request}-Phase von Linkbench gefunden werden. 
@@ -576,9 +593,9 @@ Der Parameter Messumfang beschreibt hierbei, wie viele Operationen insgesamt wä
 \section{Ablauf der Messungen}
 Im Rahmen dieses Abschnitts wird darauf eingegangen, wie die Messungen der Datenbanksysteme als Teil der in \autoref{analyse:messreihen} beschriebenen Messreihen durchgeführt werden. 
 
-Die Durchführung der Messreihen läuft hierbei so ab, dass für jeweils eines der zwei bis drei Datenbanksysteme alle der in \autoref{analyse:operationen} beschrieben und benötigten Operationen in einer separaten Messung gebenchmarkt werden. 
+Die Durchführung der Messreihen läuft hierbei so ab, dass für jeweils eines der zwei bis drei Datenbanksysteme alle in \autoref{analyse:operationen} beschrieben und benötigten Operationen in einer separaten Messung gebenchmarkt werden. 
 
-Nach dem alle vier bis sieben Operationen gebenchmarkt wurden, kann mit dem nächsten Datenbanksystem weitergemacht werden. Wurden alle Operationen für die Datenbanksysteme, die in einer Messreihe eine Rolle spielen gebenchmarkt, so kann mit der Durchführung der nächsten Messreihe begonnen werden. 
+Nach dem alle vier bis sieben Operationen gebenchmarkt wurden, kann mit dem nächsten Datenbanksystem fortgefahren werden. Sind alle Operationen der Datenbanksysteme gebenchmarkt, die in einer Messreihe eine Rolle spielen, so kann mit der Durchführung der nächsten Messreihe begonnen werden. 
 
 Die Gliederung der Messungen kann dabei \autoref{fig:gliederung_messungen} entnommen werden. Jede der dort links abgebildeten Operationen stellen hierbei eine eigene Messung -- Durchlauf der Linkbench \textit{Load}-Phase -- dar. 
 

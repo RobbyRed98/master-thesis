@@ -108,8 +108,6 @@ Um das Mapping von relationalen Strukturen auf Graphstrukturen durchzuführen, w
     \item \textit{Edge-Tabelle}\\Die Zeilen dieser Tabelle werden als Kanten auf einen Graph gemappt \cite{sigmod_tian, yt_tian}.
 \end{itemize}
 
-% TODO Basti würde hier ein Schaubild gefallen
-
 Um Verbindungen zwischen Kanten und Knoten herzustellen verfügt eine Vertex-Tabelle über eine Vertex-ID (\texttt{vid}). Diese \texttt{vid} kann als eine Art Primärschlüssel betrachtet werden. Die \texttt{vid} setzt sich dabei aus einer oder mehreren Spalten einer relationalen Tabelle und einem Prefix zusammen \cite{sigmod_tian, yt_tian}, siehe \texttt{prefix} und \texttt{id\_cols} Zeile 5-6 in \autoref{src:mapping_example}. Ihr Zweck ist es dabei, immer einen einzigen bestimmten Knoten über den Wert den \texttt{vid} identifizieren zu können \cite{sigmod_tian, yt_tian}. 
 
 Auf Basis dieser \texttt{vid} -- Zeile 4 - 7 \autoref{src:mapping_example} -- setzt beim Mapping auch die Edge-Tabelle auf. So ist es notwendig den Quell- und Ziel-Knoten einer Kante in der Edge-Tabelle anzugeben. Dafür muss bei der Referenzierung eines Start-Knotens in der Graph-Overlay-Konfiguration die Tabellen-ID der Vertex-Tabelle angegeben werden, die den Start-Knoten enthält. Dies geschieht in \autoref{src:mapping_example} durch \texttt{table\_id} und \texttt{src\_v\_tables} Zeile 8 und 23. Zusätzlich dazu müssen auch die Spalten in der Edge-Tabelle spezifiziert werden, anhand derer eine Zeile der Vertex-Tabelle referenziert wird, wie bei den \texttt{src\_v\_cols} in Zeile 21 \autoref{src:mapping_example}. Die Referenzierung eines Ziel-Knotens funktioniert dabei ähnlich. Der einzige Unterschied stellt dabei die Verwendung der Felder \texttt{dst\_v\_cols} und \texttt{dst\_v\_tables} in Zeile 22 und 24 des \autoref{src:mapping_example} dar, statt \texttt{src\_v\_cols} und \texttt{src\_v\_tables}.
@@ -168,7 +166,7 @@ Wie im \autoref{src:mapping_example} erkennbar ist, lässt die Konfiguration auc
 
 Abschließend zum Thema Mapping sollte auch darauf hingewiesen werden, dass nicht alle Tabellen einer Datenbank oder eines bestimmten Schemas auf einen Graphen gemappt werden müssen. Es ist vollkommen legitim, Tabellen im relationalen Modell keine Rolle als Vertex-Tabelle oder Edge-Tabelle zuzuweisen. Besonders, wenn die Daten im Kontext des Graphen nicht benötigt werden. 
 
-\subsection{Fähigkeiten \& Einschränkungen}
+\subsection{Fähigkeiten und Einschränkungen}
 Im Rahmen dieses Kapitels werden die bekannten Fähigkeiten und Einschränkungen von Db2 Graph kurz zusammengefasst. Dies ist hier von besonderem Interesse, da es sich bei Db2 Graph in Kombination mit Db2 um eine Art hybrides Datenbankmanagementsystem handelt. Auf die besonderen Eigenschaften des Systems, die sich aus der Verbindung von relationalem und Graph-Datenbanksystem ergeben, wird hier ebenfalls eingegangen. 
 
 Db2 Graph verfügt über die folgenden Fähigkeiten und Einschränkungen:

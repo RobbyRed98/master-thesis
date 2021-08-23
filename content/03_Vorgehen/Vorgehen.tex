@@ -1,16 +1,10 @@
 \chapter{Vorgehen}
 \label{vorgehen}
-Im Rahmen dieses Kapitels wird auf das Vorgehen beziehungsweise die Umsetzung der Performance-Analyse der Db2 Graph und Neo4j Datenbanksysteme eingegangen. 
-
-Zuerst wird dabei erörtert, warum sich die Ergebnisse aus \cite{sigmod_tian} im Rahmen dieser Arbeit nicht reproduzieren lassen. Anschließend wird ein neues Ziel für diese Arbeit formuliert, da sich das eigentliche Ziel der Arbeit nicht mehr erfüllen lässt. 
-
-In den darauf folgenden Abschnitten werden einzelne Aspekte der Messungen genauer eingegangen, die für das Verständnis der in diesem Kapitel beschrieben Messreihen notwendig sind.
-
-Abschließend wird nochmals auf Ablauf und die Gliederung der Messungen und der Performance-Analyse eingegangen. \todo{Überarbeiten}
+Im Rahmen dieses Kapitels wird aufgeführt, wie die Performance-Analyse von Db2 Graph und Neo4j im Rahmen dieser Masterarbeit abläuft. Dafür wird zuerst dargelegt, warum es nicht möglich ist, die Messungen und Ergebnisse aus \cite{sigmod_tian} im Rahmen dieser Arbeit zu reproduzieren. Anschließend wird auf die neue Methode für die Performance-Analyse von Db2 Graph und Neo4j eingegangen. 
 
 \section{Reproduktion}
 \label{analyse:reproduktion}
-Wie in der \nameref{einleitung} aufgeführt, war es das eigentliche Ziel dieser Arbeit, die in \cite{sigmod_tian} erzielten Werte für Db2 Graph zu reproduzieren und mit neuen Werten für Neo4j zu vergleichen. 
+Wie in der \nameref{einleitung} aufgeführt, war es in dieser Arbeit vorgesehen, die in \cite{sigmod_tian} erzielten Werte für Db2 Graph zu reproduzieren und mit neuen Werten für Neo4j zu vergleichen. 
 
 Allerdings stellte sich nach einigen Recherchen heraus, dass sich die Werte aus \cite{sigmod_tian} im Rahmen dieser Arbeit nicht reproduzieren lassen. 
 
@@ -33,7 +27,7 @@ Bezüglich der anderen Punkte werden im Rahmen von \cite{sigmod_tian} keinerlei 
 Bezüglich des Datensatzes werden hingegen ein paar Eigenschaften in \cite{sigmod_tian} aufgeführt. Wie und ob der dort verwendet Datensatz durch den Daten-Generator von Linkbench erzeugt werden kann, ist jedoch weiterhin unklar.
 
 \section{Neue Methode}
-Da die Reproduktion der Messungen aus \cite{sigmod_tian} nicht möglich ist, muss eine neue Methode für die Analyse der Performance von Db2 Graph und Neo4j definiert werden. Dies erfolgt in diesem Abschnitt. Dafür wird zuerst beschrieben, welche Elemente aus \cite{sigmod_tian} in diese Arbeit übernommen werden können. Anschließend wird auf die Änderungen und neuen Aspekte der Performance-Analyse eingegangen. Dabei wird auch begründet, weshalb bestimmte Änderungen vor- und Aspekte aufgenommen werden. Als Nächstes wird auf den Aufbau und den Ablauf der Performance-Analyse eingegangen. 
+Da die Reproduktion der Messungen aus \cite{sigmod_tian} nicht möglich ist, muss ein neues Vorgehen für die Analyse der Performance von Db2 Graph und Neo4j definiert werden. Dies erfolgt in diesem Abschnitt. Dafür wird zuerst beschrieben, welche Elemente aus \cite{sigmod_tian} in diese Arbeit übernommen werden können. Anschließend wird auf die Änderungen und neuen Aspekte der Performance-Analyse eingegangen. Dabei wird auch begründet, weshalb bestimmte Änderungen vor- und Aspekte aufgenommen werden. Als Nächstes wird auf den Aufbau und den Ablauf der Performance-Analyse eingegangen. 
 
 \subsection{Übernommene Elemente}
 Auch wenn die Messungen aus \cite{sigmod_tian} nicht reproduziert werden können, so werden trotzdem einige Elemente der Messmethode übernommen, da diese als einzelnen Elemente als reproduzierbar und zielführend erachtet werden. Zu diesen Elementen gehören die folgenden Aspekte der Messmethode aus \cite{sigmod_tian}:
@@ -61,17 +55,20 @@ Die Performance-Analyse von Db2 Graph und Neo4j die im Rahmen dieser Arbeit durc
     \item Implementierung und 
     \item Auswertung.
 \end{itemize}
-Die verschiedenen Aspekte, Parameter und Variablen, die bei der Messung eine Rolle spielen, werden dabei in den folgenden Abschnitten dieses Kapitels aufgeführt. Darüber hinaus wird hier auch der Aufbau und die Organisation der Messungen in die Messreihe genauer beschrieben.  
+Die verschiedenen Aspekte, Parameter und Variablen, die bei der Messung eine Rolle spielen, werden dabei in dem nachfolgenden \autoref{messmethode} aufgeführt. Darüber hinaus wird hier auch der Aufbau und die Organisation der Messungen in die Messreihe genauer beschrieben. 
 
-In 
-Alle Implementierungsarbeiten die an Linkbench vorgenommen werden müssen, um die in diesem Kapitel beschrieben Messungen durchzuführen werden dabei in \autoref{implementierung} aufgeführt.
+Anschließend werden alle für die Durchführung der Performance-Analyse notwendigen Implementierungen in \autoref{implementierung} beschrieben. Dabei wird auf die Wahl der Linkbench-Code-Basis und Umsetzung der Adapter eingegangen. 
 
 Die Auswertung und Präsentation der Ergebnisse erfolgen dann in \compref{ergebnisse} und \compref{auswertung}. In \compref{ergebnisse} wird dabei im Detail auf die Ergebnisse der Messreihen eingegangen, während in \compref{auswertung} eine weiterführende Analyse der Ergebnisse und der Vergleich von Db2 Graph mit Neo4j durchgeführt wird. Darüber hinaus wird in \compref{auswertung} auch versucht eine Erklärung für den Performance-Unterschied zwischen Db2 Graph Beta 3 und Neo4j zu finden. 
 
-\section{Linkbench}
-Auch wenn sich das Ziel der Arbeit geändert hat, so wird Linkbench weiterhin als Benchmark zur Performance-Analyse herangezogen. Daher wird eine Implementierung für Linkbench sowie Adapter für Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j benötigt. Die Wahl der Linkbench- und Adapter-Implementierung sowie gegebenenfalls ihre Umsetzungen werden allerdings in \autoref{implementierung} beschrieben. 
+\chapter{Messmethode}
+\label{messmethode}
+In diesem Kapitel werden die Aspekte, Parameter und Variablen der Messungen eingegangen die im Rahmen der Performance-Analyse durchgeführt werden. Hier wird darüber hinaus auch die Konfiguration von Db2 Graph und Neo4j beschrieben, auf deren Basis die Messungen durchgeführt werden. Abschließend wird auf die Gruppierung der Messungen in Messreihen und den Ablauf der Messungen genauer eingegangen.  
 
-In diesem Abschnitt als Teil des Kapitels \nameref{vorgehen} wird auf die Begriffe: 
+\section{Linkbench}
+Als Werkzeug zum Messen der Performance wird in der Performance-Analyse der Benchmark Linkbench herangezogen. Aufgrund dessen werden Anpassungen an Linkbench  sowie Linkbench-Adapter für Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j benötigt. Die Wahl der Linkbench- und Adapter-Implementierung sowie gegebenenfalls ihre Umsetzungen werden allerdings in \autoref{implementierung} beschrieben. 
+
+In diesem Abschnitt als Teil des Kapitels \nameref{messmethode} wird auf die Begriffe: 
 \begin{itemize}
     \item Linkbench-Threads,
     \item Request-Anzahl und
@@ -93,9 +90,7 @@ Bei den Linkbench-Threads handelt es sich darüber hinaus um einen Parameter, de
 \label{analyse:request_anzahl}
 Bei der Request-Anzahl handelt es sich ebenfalls wie bei den Linkbench-Threads um eine Einstellung, die in der Adapter-Konfiguration von Linkbench vorgenommen wird. Um sie festzulegen, muss ein Wert für \texttt{requests} angegeben werden. 
 
-Zum besseren Verständnis wird die Konfiguration allerdings im weiteren Verlauf als Request-Anzahl bezeichnet. Die Request-Anzahl regelt dabei, wie viele Graph-Queries von jeweils einem der Linkbench-Threads an das zu benchmarkende Datenbanksystem gesendet werden, bevor eine \textit{Request}-Phase endet und eine Statistik aufgestellt wird. 
-beschrieben
-Der Faktor wirkt sich dadurch signifikant darauf aus, wie lange eine \textit{Request-Phase} andauert, bevor Linkbench die Ergebnisse für das untersuchte Datenbanksystem in Form einer Statistik bereitstellt. Zugleich bietet er einen Anhaltspunkt für die Qualität der durchgeführten Messungen. Denn Linkbench erhält ein umso detaillierteres Bild von der Performance der Datenbanksysteme, desto mehr Requests beziehungsweise Graph-Queries Teil des Benchmark-Durchlaufs sind. Darüber hinaus fallen bei einer höheren Anzahl an Messungen auch Anomalien weniger ins Gewicht, welche die Messergebnisse gegebenenfalls verzerren könnten.
+Zum besseren Verständnis wird die Konfiguration allerdings im weiteren Verlauf als Request-Anzahl bezeichnet. Die Request-Anzahl regelt dabei, wie viele Graph-Queries von jeweils einem der Linkbench-Threads an das zu benchmarkende Datenbanksystem gesendet werden, bevor eine \textit{Request}-Phase endet und die Ergebnisstatistik (eine CSV-Datei) erstellt. Der Faktor wirkt sich dadurch signifikant darauf aus, wie lange eine \textit{Request-Phase} andauert, bevor Linkbench die Ergebnisse für das untersuchte Datenbanksystem in Form einer Ergebnisstatistik bereitstellt. Zugleich bietet er einen Anhaltspunkt für die Qualität der durchgeführten Messungen. Denn Linkbench erhält ein umso detaillierteres Bild von der Performance der Datenbanksysteme, desto mehr Requests beziehungsweise Graph-Queries Teil des Benchmark-Durchlaufs sind. Darüber hinaus fallen bei einer höheren Anzahl an Messungen auch Anomalien weniger ins Gewicht, welche die Messergebnisse gegebenenfalls verzerren könnten.
 
 Im Rahmen der in der Arbeit durchgeführten Messreihen müssen hierbei ein Kompromiss zwischen der Qualität und der Dauer einer \textit{Request}-Phase von Linkbench gefunden werden. 
 
@@ -143,7 +138,7 @@ Die eingeklammerten Zahlen bei \texttt{getLinkList} repräsentieren hierbei die 
 
 \section{Begrenzung der Ergebnismenge}
 \label{analyse:ergebnismenge}
-In diesem Abschnitt wird auf die Rolle der Begrenzung der Ergebnismenge bei der \texttt{getLinkList}-Operation genauer eingegangen. Diese spielt hierbei im Kontext der Performance-Analyse eine wichtige Rolle, da sie bei einigen Messungen eine wichtige Stellung als Messparameter einnimmt, welches es bei der Auswertung der Ergebnisse zu beachten gilt. 
+In diesem Abschnitt wird auf die Rolle der Begrenzung der Ergebnismenge bei der \texttt{getLinkList}-Operation genauer eingegangen. Diese spielt hierbei im Kontext der Performance-Analyse eine wichtige Rolle, da sie bei einigen Messungen eine wichtige Stellung als Messparameter einnimmt, welche es bei der Auswertung der Ergebnisse zu beachten gilt. 
 
 Bei der Begrenzung der Ergebnismenge handelt es sich um eine Workload-Konfiguration, die lediglich die \texttt{getLinkList}-Operation betrifft. Durch sie wird eine obere Grenze für die Anzahl an Elementen einer Ergebnismenge in der Query der \texttt{getLinkList}-Operation gesetzt. Wird die Grenze beispielsweise auf 10 gesetzt, so übermitteln die abgefragten Datenbanksysteme als Antwort auf die \texttt{getLinkList}-Queries maximal eine Menge mit zehn Links (Kanten) an den Benchmark. 
 
@@ -166,7 +161,7 @@ Wie bereits zuvor erwähnt, spielt die Variation der Begrenzung der Ergebnismeng
 
 \section{Queries}
 \label{analyse:queries}
-Dieser Abschnitt setzt sich mit den Gremlin- und Cypher-Queries auseinander, die für die Umsetzung der Messungen herangezogen werden. Es gilt dabei darauf hinzuweisen, dass die in diesem Abschnitt dargestellten Queries in gewissem Ausmaß der Implementierung der Adapter in \autoref{implementierung} vorgreift. Allerdings nehmen die Queries eine signifikante Rolle bei den Messungen ein. Schließlich handelt es sich bei ihnen um die Anfragen, die im Zuge der Durchführung einer Operation während des Benchmarks zur Interaktion mit den Datenbanksystemen herangezogen wird. Daher werden sie in diesem Abschnitt des Kapitels \nameref{vorgehen} näher beschrieben.
+Dieser Abschnitt setzt sich mit den Gremlin- und Cypher-Queries auseinander, die für die Umsetzung der Messungen herangezogen werden. Es gilt dabei darauf hinzuweisen, dass die in diesem Abschnitt dargestellten Queries in gewissem Ausmaß der Implementierung der Adapter in \autoref{implementierung} vorgreift. Allerdings nehmen die Queries eine signifikante Rolle bei den Messungen ein. Schließlich handelt es sich bei ihnen um die Anfragen, die im Zuge der Durchführung einer Operation während des Benchmarks zur Interaktion mit den Datenbanksystemen herangezogen wird. Daher werden sie bereits in diesem Abschnitt näher beschrieben.
 
 Wie bereits zuvor erwähnt, kann bei diesen Anfragen zwischen Gremlin- und Cypher-Queries unterschieden werden. Die in der Abfragesprache Gremlin formulierten Queries werden dabei in \autoref{src:gremlin_queries} aufgeführt, während \autoref{src:cypher_queries} die in Cypher umgesetzten Queries abgebildet. Im Zuge dessen gilt es darauf hinzuweisen, dass in \autoref{src:gremlin_queries} Platzhalter innerhalb der Queries von \texttt{<} und \texttt{>} umschlossen werden. Bei \autoref{src:cypher_queries} werden sie hingegen mittels eines anführenden \texttt{\$} gekennzeichnet.
 

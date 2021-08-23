@@ -27,7 +27,9 @@ Bezüglich der anderen Punkte werden im Rahmen von \cite{sigmod_tian} keinerlei 
 Bezüglich des Datensatzes werden hingegen ein paar Eigenschaften in \cite{sigmod_tian} aufgeführt. Wie und ob der dort verwendet Datensatz durch den Daten-Generator von Linkbench erzeugt werden kann, ist jedoch weiterhin unklar.
 
 \section{Neue Methode}
-Da die Reproduktion der Messungen aus \cite{sigmod_tian} nicht möglich ist, muss ein neues Vorgehen für die Analyse der Performance von Db2 Graph und Neo4j definiert werden. Dies erfolgt in diesem Abschnitt. Dafür wird zuerst beschrieben, welche Elemente aus \cite{sigmod_tian} in diese Arbeit übernommen werden können. Anschließend wird auf die Änderungen und neuen Aspekte der Performance-Analyse eingegangen. Dabei wird auch begründet, weshalb bestimmte Änderungen vor- und Aspekte aufgenommen werden. Als Nächstes wird auf den Aufbau und den Ablauf der Performance-Analyse eingegangen. 
+Da die Reproduktion der Messungen aus \cite{sigmod_tian} nicht möglich ist, muss ein neues Vorgehen für die Analyse der Performance von Db2 Graph und Neo4j definiert werden. Dies erfolgt in diesem Kaptiel. 
+
+Dafür wird zuerst beschrieben, welche Elemente aus \cite{sigmod_tian} in diese Arbeit übernommen werden können. Anschließend wird auf die Änderungen und neuen Aspekte der Performance-Analyse eingegangen. Dabei wird auch begründet, weshalb bestimmte Änderungen vor- und neue Aspekte aufgenommen werden. Als Nächstes wird auf den Aufbau und den Ablauf der Performance-Analyse eingegangen. 
 
 \subsection{Übernommene Elemente}
 Auch wenn die Messungen aus \cite{sigmod_tian} nicht reproduziert werden können, so werden trotzdem einige Elemente der Messmethode übernommen, da diese als einzelnen Elemente als reproduzierbar und zielführend erachtet werden. Zu diesen Elementen gehören die folgenden Aspekte der Messmethode aus \cite{sigmod_tian}:
@@ -63,7 +65,7 @@ Die Auswertung und Präsentation der Ergebnisse erfolgen dann in \compref{ergebn
 
 \chapter{Messmethode}
 \label{messmethode}
-In diesem Kapitel werden die Aspekte, Parameter und Variablen der Messungen eingegangen die im Rahmen der Performance-Analyse durchgeführt werden. Hier wird darüber hinaus auch die Konfiguration von Db2 Graph und Neo4j beschrieben, auf deren Basis die Messungen durchgeführt werden. Abschließend wird auf die Gruppierung der Messungen in Messreihen und den Ablauf der Messungen genauer eingegangen.  
+In diesem Kapitel wird auf die Aspekte, Parameter und Variablen der Messungen eingegangen die bei Performance-Analyse eine Rolle spielen. Hier wird darüber hinaus auch die Konfiguration von Db2 Graph und Neo4j beschrieben, auf deren Basis die Messungen durchgeführt werden. Abschließend wird auf die Gruppierung der Messungen in Messreihen und den Ablauf der Messungen genauer eingegangen.  
 
 \section{Linkbench}
 Als Werkzeug zum Messen der Performance wird in der Performance-Analyse der Benchmark Linkbench herangezogen. Aufgrund dessen werden Anpassungen an Linkbench  sowie Linkbench-Adapter für Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j benötigt. Die Wahl der Linkbench- und Adapter-Implementierung sowie gegebenenfalls ihre Umsetzungen werden allerdings in \autoref{implementierung} beschrieben. 

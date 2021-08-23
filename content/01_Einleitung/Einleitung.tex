@@ -1,2 +1,12 @@
 \chapter{Einleitung}
 \label{einleitung}
+
+In den letzten Jahren haben Graphdatenbanksystemen einen großen Zuwachs an Popularität erfahren \cite{db_engines_ranking_july}. Dies hat auch bei den etablierten Herstellern von relationalen Datenbanksystemen das Interesse daran geweckt, ebenfalls Produkte basierend auf dem Graphmodell zu entwickeln und zu veröffentlichen. Bei einem dieser etablierten Hersteller handelt es sich hierbei um IBM. IBM hat anders als andere Datenbankhersteller wie Oracle allerdings nicht mit der Entwicklung einer eigenen Graphdatenbank begonnen. Stattdessen hat IBM mit Db2 Graph eine Art Erweiterung für sein relationale Datenbanksystem Db2 entwickelt, welches dazu in der Lage ist lesende Graphanfragen in SQL-Anweisungen umzuwandeln, die von Db2 verarbeitet werden können \cite{sigmod_tian}. 
+
+Über welche Performance Db2 Graph als Grapherweiterung verfügt, wurde dabei bereits in \cite{sigmod_tian} untersucht. Dabei wurde in \cite{sigmod_tian} die Performance von Db2 Graph gemessen und mit der von JanusGraph und einem weiteren anonymisierten nativen Graphdatenbanksystem verglichen. Wie sich die Performance von Db2 Graph im Vergleich zu anderen Branchengrößen wie Neo4j einordnet, ist jedoch bisher unerforscht. 
+
+Ziel dieser Arbeit ist es, eine Performance-Analyse für Db2 Graph und Neo4j durchzuführen und die erzielte Performance der beiden miteinander zu vergleichen. 
+
+Dafür sollen die Messungen mit dem Benchmark Linkbench in \cite{sigmod_tian} mit Db2 Graph und Neo4j reproduziert werden. Die dabei erzielten Ergebnisse sollen anschließend ausgewertet und miteinander verglichen werden, sodass die Performance von Db2 Graph gegenüber Neo4j eingeordnet werden kann. 
+
+Im Verlauf dieser Arbeit wird die Performance von Db2 Graph als eine Art hybrides Graphdatenbanksystem und Neo4j als natives Graphdatenbanksystem analysiert und miteinander verglichen. Zu Beginn werden dabei das Graphmodell, die für die Arbeit relevanten Abfragesprachen, die Funktionsweise von Db2 Graph und Linkbench genauer erläutert und beschrieben. Im Anschluss daran wird auf die Messmethode für die Performance der Datenbanksysteme eingegangen. Im nächsten Schritt werden die für die Performance-Analyse der Datenbanksysteme notwendigen Implementierungsarbeiten aufgeführt. Anschließend werden die bei den Messungen erzielten Ergebnisse präsentiert. Zum Schluss werden die Ergebnisse analysiert und die Performance von  Db2 Graph und Neo4j miteinander verglichen. 

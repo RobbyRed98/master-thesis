@@ -187,103 +187,28 @@ Db2 Graph verfügt über die folgenden Fähigkeiten und Einschränkungen:
 \subsection{Optimierung}
 \label{db2graph:optimierung}
 
-Im Kontext dieses Unterabschnitts wird eine Übersicht über die Optimierungsmechanismen von Db2 Graph geben. Hierfür stützt sich diese Arbeit auf, die in \cite{sigmod_tian} beschrieben Optimierungstechniken. Auch die Unterteilung der Mechanismen in die Kategorien Data-Independent Optimizations und Data-Dependent Optimizations werden dabei aus \cite{sigmod_tian} übernommen. Zum Schluss werden noch Optimierungsmechanismen angesprochen, die nach dem Paper \cite{sigmod_tian} hinzugekommen sind und in \cite{ibm_docs_optimize} beschrieben werden. Dabei handelt es sich auch um Optimierungen, die nicht von beiden im Rahmen dieser Arbeit untersuchten Db2 Graph Versionen unterstützt werden. 
+Im Kontext dieses Unterabschnitts werden die Optimierung angesprochen, über die Db2 Graph verfügt, um ausschließlich die benötigten Daten von Db2 abzufragen und möglichst nicht selbst die Aggregation oder das Filtern der Ergebnismenge durchzuführen. Bei den Optimierungen hierbei wird zwischen den Data-Independent und Data-Dependent Optimizations unterschieden. 
 
-Diese Optimierungen sind notwendig, da ohne sie:
+\subsubsection{Data-Independent}
+Bei Data-Independent Optimizations handelt es sich dabei um Optimierungstechniken, die Teil des Traversal-Strategy-Moduls sind \cite{sigmod_tian}. Sie werden eingesetzt, um einen logischen Query-Plan zu optimieren. Ihr Anwendung erfolgt dann, wenn bestimmte Muster erkannt werden. Optimierungen die in diese Kategorie fallen, können dem Schritt 4. in \autoref{fig:db2graph_intern_processing} zugeordnet werden. 
 
-\begin{itemize}
-    \item bei jeder Anfrage alle Vertex- oder Edge-Tabellen abgefragt werden würden, 
-    \item von Db2 Graph von Db2 obsolete Datenabfragen werden würden oder 
-    \item Db2 Graph selbst die Aggregation oder das Filtern von Ergebnismengen durchführen müsste.
-\end{itemize}
-
-\subsubsection{Data-Independent Optimizations}
-\label{subsubsec:data_independent_optimizations}
-Bei Data-Independent Optimizations handelt es sich um Optimierungstechniken, die Teil des Traversal-Strategy-Moduls sind \cite{sigmod_tian}. Sie werden eingesetzt, um einen logischen Query-Plan zu optimieren. Ihr Anwendung erfolgt dann, wenn bestimmte Muster erkannt werden. Optimierungen die in diese Kategorie fallen, können dem Schritt 4. in \autoref{fig:db2graph_intern_processing} zugeordnet werden. 
-
-In die Kategorie Data-Independent Optimizations fallen dabei die folgenden Techniken: 
-
-\begin{itemize}
-    \item \textit{Predicate Pushdown with Filter Steps}\\
-    Diese Optimierung wird angewendet, wenn ein Graph-Structure-Access-Step wie \texttt{g.V()} oder \texttt{g.E()} von einem oder mehreren Filter-Steps gefolgt wird \cite{sigmod_tian}. Dabei werden alle Filter-Steps in den Graph-Structure-Access-Step als Predicats eingebettet \cite{sigmod_tian}. Das Endprodukt der Optimierung stellt hierbei ein neuer Graph-Step dar, welcher auf Basis des Graph-Structure-Access-Steps und der Filter-Steps erstellt wurde \cite{sigmod_tian}. 
+Ein Beispiel für eine solche Optimierung stellt hierbei der \textit{Predicate Pushdown with Filter Steps}. Diese Optimierung wird angewendet, wenn ein Graph-Structure-Access-Step wie \texttt{g.V()} oder \texttt{g.E()} von einem oder mehreren Filter-Steps gefolgt wird \cite{sigmod_tian}. Dabei werden alle Filter-Steps in den Graph-Structure-Access-Step als Predicats eingebettet \cite{sigmod_tian}. Das Endprodukt der Optimierung stellt hierbei ein neuer Graph-Step dar, welcher auf Basis des Graph-Structure-Access-Steps und der Filter-Steps erstellt wurde \cite{sigmod_tian}. 
     
-    Um die Funktionsweise der Optimierung zu verdeutlichen, kann die Gremlin-Query \code{g.V().has(``id", 1).has(``type'', ``A'')} herangezogen werden. Bei der Optimierung des aus dieser Query resultierenden Query-Plans, werden der Graph-Structure-Access-Step und die Has-Steps in einen einzigen neuen Graph-Step umgewandelt. So wird bei der Ausführung dieses neuen Graph-Steps der SQL-Code \code{SELECT * FROM VertexTable WHERE id = 1 AND type = ``A''} erzeugt. An diesem lässt sich erkennen, dass die Has-Steps als Teil einer \code{WHERE}-Bedingung in die Abfrage eingebettet wurden.
-
-    Infolge dieser Optimierung erhält Db2 Graph von Db2 kleinere Ergebnismenge.
-
-    \item \textit{Projection Pushdown with Properties Steps}\\
-    Diese Optimierung greift, wenn Db2 Graph eine Gremlin-Query verarbeitet, in der bestimmte Properties von Knoten oder Kanten abgefragt werden \cite{sigmod_tian}. Dabei werden die abgefragten Properties in die Projektion eines vorausgegangenen Gremlin-Steps eingebettet. Auf diese Weise erhält Db2 Graph eine kleinere Ergebnismenge von Db2. Diese umfasst dabei lediglich die benötigten Informationen. Darüber hinaus gilt es zu beachten, dass neben den angegeben Properties, auch die \texttt{id\_cols} -- siehe Zeile 6 und 28 in \autoref{src:mapping_example} -- als Informationen von Db2 Graph benötigt werden. 
-
-    Ein gutes Beispiel dafür, wie die Optimierung durchgeführt wird, bietet die Gremlin-Query \code{g.V().values(``data'', ``time'')}. Die Projektion aus dem Values-Step wird dabei zusammen mit den \texttt{id\_cols} in den Graph-Structure-Access-Step integriert. So wird der neue optimierte Graph-Step später in die folgende SQL-Anweisungen übersetzt: \code{SELECT id, type,
-    data, time FROM VertexTable}.Ohne die Optimierung wäre der Graph-Step so übersetzt worden: \code{SELECT * FROM VertexTable}.
-
-    \item \textit{Aggregate Pushdown with Aggregation Steps}\\
-    Wenn ein Graph-Structure-Access-Step von einem Aggregations-Step, wie \texttt{count}, \texttt{mean}, \texttt{min}, \texttt{max} oder \texttt{sum} gefolgt wird, setzt die Optimierung ein \cite{sigmod_tian}. Bei dieser wird die Aggregation in den Graph-Structure-Access-Step eingebettet \cite{sigmod_tian}. Dadurch erhält Db2 Graph bei der Ausführung des neuen Graph-Steps ausschließlich die bereits von Db2 aggregierten Ergebnisse.
-    
-    Die Gremlin-Query \code{g.V().count()} würde dabei zu einem einzelnen Graph-Step optimiert \cite{sigmod_tian}. Dieser ließe sich dann später bei der Ausführung in den SQL-Code \code{SELECT COUNT(*) FROM VertexTable} übersetzen \cite{sigmod_tian}.
-
-    \item \textit{GraphStep::VertexStep Mutation}\\
-    Diese Optimierung wird angewandt, wenn ein Graph-Structure-Access-Step Vertexes abfragt und von einem Vertex-Step \cite{sigmod_tian}. Sie zielt dabei darauf ab, unnötige SQL-Abfragen zu vermeiden \cite{sigmod_tian}. 
-
-    Die Optimierung lässt sich dabei verständlich an der Gremlin-Query \code{g.V(ids\break).outE()} erklären \cite{sigmod_tian}. Bei den \texttt{ids} handelt es sich um ein Set an \texttt{vids}, wie in Zeile 4 \autoref{src:mapping_example}. Ohne diese Optimierung würden auf Basis der nicht optimierten Graph-Steps die zwei folgenden SQL-Anweisungen generieren: \texttt{SELECT * FROM VertexTable WHERE id IN (ids)} und \texttt{SELECT * FROM EdgeTable WHERE src\_v IN (ids)} \cite{sigmod_tian}. Bei genauerer Betrachtung des ersten SQL-Statements fällt auf, dass diese keinen relevanten Beitrag zur Beantwortung der Gremlin-Query leistet \cite{sigmod_tian}. An dieser Stelle setzt die Optimierung an \cite{sigmod_tian}. Sie mutiert den Vertex-Step in einen Graph-Step der Edges abfragt und die \texttt{ids} als Predicats übernimmt \cite{sigmod_tian}. Dadurch wird die obsolete Abfrage eliminiert und lediglich die SQL-Query \code{SELECT * FROM EdgeTable WHERE src\_v IN (ids)} generiert und an Db2 gesendet \cite{sigmod_tian}.
-
-    \item \textit{Combined Optimizations}\\
-    Alle vorausgegangenen Optimierungen können miteinander kombiniert werden, falls nötig \cite{sigmod_tian}. Dies sorgt dafür, dass die Gremlin-Query \code{g.V(ids).outE().has("link\_type", 123456789).count()} wie folgt übersetzt wird: \code{SELECT COUNT(*) FROM EdgeTable WHERE src\_v IN (ids)\break WHERE link\_type = 123456789}.
-\end{itemize}
+Um die Funktionsweise der Optimierung zu verdeutlichen, kann die Gremlin-Query \code{g.V().has(``id", 1).has(``type'', ``A'')} herangezogen werden. Bei der Optimierung des aus dieser Query resultierenden Query-Plans, werden der Graph-Structure-Access-Step und die Has-Steps in einen einzigen neuen Graph-Step umgewandelt. So wird bei der Ausführung dieses neuen Graph-Steps der SQL-Code \code{SELECT * FROM VertexTable WHERE id = 1 AND type = ``A''} erzeugt. An diesem lässt sich erkennen, dass die Has-Steps als Teil einer \code{WHERE}-Bedingung in die Abfrage eingebettet werden. Die Optimierung sorgt dadurch dafür, dass Db2 Graph von Db2 eine kleinere Ergebnismenge erhält, die bereits von Db2 gefiltert wurde.
 
 \subsubsection{Data-Dependent Optimizations}
-\label{subsubsec:data_dependent_optimizations}
+Die sogenannten Data-Dependent Optimizations beinhalten als Kategorie Optimierungen, die auf Basis von Topologie Informationen des Graphen Optimierungen vornehmen. Sie streben dabei an, die Menge an abgefragten Tabellen so klein wie möglich zu halten, um das unnötige Abfragen von Tabellen zu vermeiden.
+Im Gegensatz versuchen die Data-Dependent Optimizations die Menge, auf die eine Abfrage durchgeführt wird, so klein wie möglich zu halten. Um dies zu erreichen, werden Topologie Informationen aus \autoref{src:mapping_example} herangezogen. 
 
-Die sogenannten Data-Dependent Optimizations stellen Optimierungstechniken dar, die auf Basis von Topologie Informationen des Graphen Optimierungen vornehmen. Diese Optimierungen werden dabei im Rahmen des Graph-Structure-Moduls zur Laufzeit angewandt. Im vorigen Unterabschnitt \nameref{subsubsec:data_independent_optimizations} wurden hauptsächlich Optimierungen angesprochen, die dazu dienen:
-\begin{itemize}
-    \item unnötige Abfragen zu vermeiden, 
-    \item die Antwortmenge so gering wie nur möglich zu halten und 
-    \item das Processing, wenn möglich in Db2 statt Db2 Graph durchzuführen.  
-\end{itemize}
-Im Gegensatz versuchen die Data-Dependent Optimizations die Menge, auf die eine Abfrage durchgeführt wird, so klein wie möglich zu halten. Um dies zu erreichen, werden Topologie Informationen aus \autoref{src:mapping_example} herangezogen.
+Als Beispiel für diese Art von Optimierung kann die Optimierung \textit{Using Source/Destination Vertex Tables} herangezogen werden. Diese Optimierung setzt dabei an den Source- und Destination-Tabellen an (\texttt{src\_v\_tables} und \texttt{dst\_v\_tables} in Zeile 23 - 24 \autoref{src:mapping_example}). Diese werden zur Laufzeit eingesetzt, um das Abfragen von überflüssigen Tabellen ausschließen zu können \cite{sigmod_tian}.
 
-Die folgenden Optimierungstechniken werden dabei genutzt:
-\begin{itemize}
-    \item \textit{Using Source/Destination Vertex Tables}\\
-    Diese Optimierung setzt bei den Source- und Destination-Tabellen an, siehe \texttt{src\_v\_tables} und \texttt{dst\_v\_tables} in Zeile 23 - 24 \autoref{src:mapping_example}. Diese werden zur Laufzeit eingesetzt, um das Abfragen von überflüssigen Tabellen ausschließen zu können \cite{sigmod_tian}.
+Um die Funktionsweise der Optimierung zu verdeutlichen, kann die Abfrage eines beliebigen ausgehenden Knoten einer Kante herangezogen werden \cite{sigmod_tian}. Diese könnte als Gremlin-Query wie folgt aussehen \code{e.outV()} \cite{sigmod_tian}. Ohne die Anwendung der hier besprochenen Optimierung würde die Query in das folgende SQL-Statement übersetzt werden: \code{SELECT * FROM VertexTable WHERE dst\_v = e.dst\_v} \cite{sigmod_tian}. Dieses SQL-Statement würde dann einmal alle bekannten Vertex-Tabellen abfragen \cite{sigmod_tian}. Mit der Optimierung hingegen kann auf Basis der \texttt{dst\_v\_tables} aus der Topologie eine Untermenge an Vertex-Tabellen identifiziert werden, welche von einer solchen SQL-Query betroffen sein sollten \cite{sigmod_tian}. Somit lässt sich die Menge an die Vertex-Tabellen, die abgefragt werden müssen, auf eine kleine notwendige Untermenge beschränken \cite{sigmod_tian}. Vergleichbares ist auch im Zusammenhang mit Source-Tabellen möglich.
 
-    Um die Funktionsweise zu verdeutlichen, kann die Abfrage eines beliebigen ausgehenden Knoten einer Kante herangezogen werden \cite{sigmod_tian}. Diese könnte als Gremlin-Query wie folgt aussehen \code{e.outV()} \cite{sigmod_tian}. Ohne die Anwendung der hier besprochenen Optimierungstechniken würde die Query in das folgende SQL-Statements übersetzt werden \code{SELECT * FROM VertexTable WHERE dst\_v = e.dst\_v} \cite{sigmod_tian}. Dieses SQL-Statement müsste dann einmal alle bekannten Vertex-Tabellen abfragen \cite{sigmod_tian}. Mit der Optimierung hingegen kann auf Basis der \texttt{dst\_v\_tables} aus der Topologie eine Untermenge an Vertex-Tabellen identifiziert werden, welche von einer solchen SQL-Query betroffen sein müssen \cite{sigmod_tian}. Somit lässt sich die Menge an die Vertex-Tabellen, die abgefragt werden müssen, auf eine kleine notwendige Untermenge beschränken \cite{sigmod_tian}. Vergleichbares ist auch im Zusammenhang mit Source-Tabellen möglich.
-
-    \item \textit{Using Property Names in Pushdown Information}\\
-    Anstatt die Properties oder Prädikate einer Projektion zu nutzen, um damit das Volumen Ergebnismenge für eine SQL-Abfrage zu reduzieren wie in \autoref{subsubsec:data_independent_optimizations}, können diese Informationen auch genutzt werden, um überflüssiges Abfragen von Vertex- und Edge-Tabellen zu vermeiden \cite{sigmod_tian}. So basiert diese Optimierungstechnik auf dem Ansatz, dass eine Vertex- oder Edge-Tabelle nur dann abgefragt werden muss, wenn sie auch über die in der Projektion oder einem Prädikate beschriebene Property verfügt \cite{sigmod_tian}. Db2 Graph kann diese Optimierungstechnik dabei einsetzten, da Sie intern über alle Informationen bezüglich der Properties der im Mapping spezifizierten Vertex- oder Edge-Tabellen hält \cite{sigmod_tian}. So werden diese Topologie Informationen von Db2 Graph herangezogen, um die Menge an abgefragten Vertex- oder Edge-Tabellen auf eine möglichst kleine Anzahl zu reduzieren \cite{sigmod_tian}. Teil dieser neuen Untermenge sind am Ende ausschließlich die Tabellen, die über die Properties verfügen, die als Bestandteil einer Projektion oder eines Prädikats benötigt werden \cite{sigmod_tian}.
-
-    Um das Vorgehen zu verdeutlichen, kann die Gremlin-Query \code{g.V().has("ti\break me", 123456789)} herangezogen werden. Wird zusätzlich davon ausgegangen, dass in einem Mapping zwei Vertex-Tabellen spezifiziert wurden \texttt{A} und \texttt{B}, von denen aber ausschließen \texttt{A} über eine Spalte beziehungsweise Property \texttt{time} verfügt. So wird aufgrund der Optimierung lediglich ein SQL-Statement für die Vertex-Tabelle generiert und auch an diese gesendet. Ohne Einsatz der Optimierung wären sowohl Tabelle \texttt{A} und \texttt{B} abgefragt worden und das obwohl, \texttt{B} nicht über einen Knoten mit der gewünschten \texttt{time}-Property verfügen kann.
-
-    \item \textit{Using Label Values}\\
-    Auch die Nutzung der Label-Werte kann als Optimierungstechnik herangezogen werden, um so wenig Vertex- oder Edge-Tabellen wie nur möglich abzufragen \cite{sigmod_tian}. So sorgt diese Optimierungstechnik dafür, dass, wenn ein Label in einer Gremlin-Query spezifiziert wird, alle Vertex- oder Edge-Tabellen aus der Abfragemenge eliminiert werden, die dieses Label nicht aufweisen \cite{sigmod_tian}. 
-    
-    Diese Optimierungstechnik kann allerdings ausschließlich dann eingesetzt werden, wenn Vertex- oder Edge-Tabellen im Mapping über die Konfiguration \texttt{fixed\_label: true} verfügen, siehe Zeile 14 und 42 in \autoref{src:mapping_example} \cite{sigmod_tian}. Das hängt damit zusammen, dass der Wert \texttt{fixed\_label} festlegt, ob alle Zeilen einer Tabelle als Knoten oder Kanten mit einem bestimmten Label herangezogen werden können \cite{sigmod_tian}. Hierbei gilt es anzumerken, dass im Rahmen dieser Arbeit nie Gebrauch von einer \texttt{fixed\_label: false} Konfiguration gemacht wird. Folglich kann die Optimierungstechnik bei allen Untersuchungen und Messungen angewendet werden, die im Rahmen dieser Arbeit erfolgen. 
-
-    Die Funktionsweise dieser Optimierungstechnik kann an der Gremlin-Query \code{g.V().hasLabel(''A")} demonstriert werden. Wird davon ausgegangen, dass in der Mapping-Konfiguration die Tabellen \texttt{A} und \texttt{B} als Vertex-Tabellen spezifiziert wurden und beide die jeweiligen Labels \texttt{A} oder \texttt{B} besitzen, so wird in Folge der Optimierung ausschließlich die Tabelle \texttt{A} durch eine SQL-Anweisung abgefragt. Schließlich stimmt das Label der Tabelle \texttt{B} nicht mit dem in der Gremlin-Query spezifizierten Label überein.
-
-    \item \textit{Using Prefixed Id Values}\\
-    Diese Optimierungstechnik nutzt die Prefixed-IDs, um die Abfragemenge zu reduzieren \cite{sigmod_tian}. Diese sogenannten Prefixed-IDs lassen sich im Mapping spezifizieren, siehe Zeile 5 - 6 in \autoref{src:mapping_example}. Des Weiteren setzen sich die Prefixed-IDs aus einem einzigartigen Prefix und den \texttt{id\_cols} im Mapping zusammen \cite{sigmod_tian}. Wird hier \autoref{src:mapping_example} als Beispiel herangezogen, so wäre beispielsweise die Prefixed-ID \code{''LINKDB0.NODETABLE"::1} für die Vertex-Tabelle möglich. Die Optimierungstechnik setzt hierbei daran an, dass durch das Prefix, eine SQL-Abfrage nur an eine daran ableitbare Vertex-Tabelle gestellt werden muss \cite{sigmod_tian}.
-
-    \item \textit{Using Implicit Edge Id Values}\\
-    Dabei handelt es sich an eine Optimierungstechnik die an die implizite Edge-ID Konfiguration gebunden ist, siehe \autoref{src:mapping_example} Zeile 26. Ist dieses Feld entgegen der Situation im Quelltext auf \texttt{true} gesetzt, so setzt sich die Edge-ID automatisch aus der Kombination \texttt{src\_v::label::dst\_v} zusammen. Wird nun eine Kante anhand der Edge-ID abgefragt, so kann Db2 Graph durch die Optimierungstechnik auf Basis des Labels die Abfragemenge auf die Tabellen mit den übereinstimmenden Labels reduzieren. 
-
-    Im Rahmen dieser Arbeit wird kein Mapping eingesetzt, in dem eine Edge-ID als implizit spezifiziert wird. Daher kann die Optimierungstechnik weder bei den Messungen noch bei den Untersuchungen angewendet werden, die im Rahmen dieser Arbeit erfolgen. 
-\end{itemize}
-
-\subsubsection{Optimierungsunterschied zwischen den Db2 Graph Versionen}
-\label{subsubsec:optimierung:unterschied_versionen}
-Hier wird angesprochen, welche Unterschiede zwischen den Db2 Graph Versionen Beta 3 und V11.5.6.0 bezüglich der Optimierungen vorliegen.
-
-Die unter \nameref{subsubsec:data_independent_optimizations} und \nameref{subsubsec:data_dependent_optimizations} aufgeführten Optimierungstechniken stammen aus dem im Jahr 2020 veröffentlichten Paper \cite{sigmod_tian}. Das Paper beinhaltet daher lediglich eine Grundlage an Optimierungstechniken, über die Db2 Graph bereits im Juni 2020 verfügte. Beide Versionen Db2 Graph Beta 3 und Db2 Graph V11.5.6.0 sind mit ihrer Veröffentlichung am 30.10.2020 und 07.06.2021 weitaus jünger als das angesprochene Paper. Somit dürften beide Versionen über die im Paper angesprochenen Techniken verfügen, können allerdings auch neue Optimierungstechniken beherrschen. 
-
-Im weiteren Verlauf der Arbeit stachen dabei die folgenden zwei Unterschiede bei der Optimierung in Db2 Graph Beta 3 und V11.5.6.0 heraus:
+\subsubsection{Unterschiede}
+Im Rahmen der Arbeit wird festgestellt, dass zwischen den beiden Versionen von Db2 Graph Beta 3 und V11.5.6.0 Unterschiede bezüglich der unterstützen Optimierungen existieren. So verfügt V11.5.6.0 über einige Optimierungen, die Db2 Graph Beta 3 nicht beherrscht. Diese werden dabei in diesem Unterabschnitt kurz erläutert, da sie Einfluss auf das Vorgehen bei der Performance-Analyse haben. 
 \begin{itemize}
     \item \textit{Limit Pushown}\\
-    Bei dem \textit{Limit Pushdown} handelt es sich um eine Optimierungstechnik die ab Db2 Graph V11.5.6.0 eingesetzt wird \cite{ibm_docs_optimize}. Sie ermöglicht es Gremlin-Limit- oder Gremlin-Range-Steps direkt in von Db2 Graph generierten SQL-Code einzubetten  \cite{ibm_docs_optimize}. Db2 Graph Beta 3 beherrscht diese Art der Optimierung nicht. 
-
-    Vergleicht man die Optimierungstechnik mit denen in \nameref{subsubsec:data_independent_optimizations} aufgeführten Optimierungsmechanismen, so kann die Hypothese aufgestellt werden, dass die Limit-Optimierung auf Ebene des Traversal-Strategy-Moduls implementiert und eingesetzt wird. Schließlich weist diese Art von Optimierung eine große Ähnlichkeit zum \textit{Predicate Pushdown with Filter Steps} oder \textit{Aggregate Pushdown with Aggregation Steps} auf. Außerdem wird die Optimierungstechnik in \cite{ibm_docs_optimize} auch in der Nähe der beiden anderen Optimierungen aufgeführt. 
-    
-    Des Weiteren kann auch die Annahme gemacht werden, dass die Optimierungstechnik in die Kategorie Data-Independent Optimizations einzuordnen ist. Schließlich werden beim \textit{Limit Pushdown} keine Topologie Informationen verwertet. Somit lassen sich die Data-Dependent Optimizations ausschließen.
+    Bei dem \textit{Limit Pushdown} handelt es sich um eine Optimierung die ab Db2 Graph V11.5.6.0 eingesetzt wird \cite{ibm_docs_optimize}. Sie ermöglicht es Gremlin-Limit- oder Gremlin-Range-Steps direkt in von Db2 Graph generierten SQL-Code einzubetten \cite{ibm_docs_optimize}. Db2 Graph Beta 3 beherrscht diese Art der Optimierung nicht.
 
     Ein Beispiel für die neue Optimierungstechnik stellt der \autoref{src:nachweis_limit_pushdown} dar. Er zeigt, wie eine Gremlin-Query mit einem Limit-Step von Db2 Graph V11.5.6.0 und Beta 3 unterschiedlich übersetzt wird.
 
@@ -300,14 +225,12 @@ SELECT "ID", "VERSION", "TIME", "ID", "DATA", "TYPE" FROM "LINKDB0"."NODETABLE" 
 
     Im \autoref{src:nachweis_limit_pushdown} ist wie zuvor beschrieben erkennbar, dass der von Db2 Graph Beta 3 generierte SQL-Code den Gremlin-Limit-Step in keinerlei Form widerspiegelt. Der von V11.5.6.0 erstellte SQL-Code reflektiert hingegen den Gremlin-Limit-Step durch einen FETCH-FIRST-n-ROWS-Clause.
 
-    Durch den Einsatz der Optimierungstechnik kann es somit vermieden werden, den gesamten Inhalt einer oder mehrerer Vertex- beziehungsweise Edge-Tabellen abzufragen, wenn eigentlich nur 100 Einträge wie in \autoref{src:nachweis_limit_pushdown} benötigt werden. Daher dürfte diese Optimierung einen erheblichen Einfluss auf die Performance von Db2 Graph haben, besonders bei großen Tabellen.
+    Durch den Einsatz der Optimierung kann es somit vermieden werden, den gesamten Inhalt einer oder mehrerer Vertex- beziehungsweise Edge-Tabellen abzufragen, wenn eigentlich nur 100 Einträge wie in \autoref{src:nachweis_limit_pushdown} benötigt werden. Daher dürfte diese Optimierung einen erheblichen Einfluss auf die Performance von Db2 Graph haben, besonders bei großen Tabellen.
 
     \item \textit{Join Pushdown}\\
     Diese Optimierungstechnik ist dazu in der Lage, zusammenhängende Anfragen mittels eines Joins in einem SQL-Statement unterzubringen. Die Optimierung wird dabei ebenfalls ausschließlich von Db2 Graph V11.5.6.0 beherrscht -- nicht in Beta 3.
 
     Ein Beispiel für diese Optimierung stellt \autoref{src:join_pushdown} dar. Darin wird dargestellt wie eine Gremlin-Query von Db2 Graph Beta 3 und V11.5.6.0 unterschiedlich übersetzt wird. Die Übersetzung von Db2 Graph V11.5.6.0 weist dabei wie erwartet einen Join mit den beiden Tabellen auf.
-
-    Auch bei dieser Art der Optimierung liegt die Vermutung nahe, dass sie auf der Ebene des Traversal-Strategy-Moduls umgesetzt wird und in die Kategorie der Data-Independent Optimizations einzuordnen ist. Schließlich weist sie wie der Limit-Pushdown Ähnlichkeiten zu anderen Optimierungstechniken dieser Kategorie auf. Darüber hinaus wird sie ebenfalls in deren Nähe in \cite{ibm_docs_optimize} aufgeführt.
 
 \begin{lstlisting}[label=src:join_pushdown,caption={Beispiel Join Pushdown},language=SQL]
 /* Gremlin-Query */
@@ -324,19 +247,6 @@ SELECT * FROM "LINKDB0"."LINKTABLE" WHERE ("ID1") IN (VALUES (1)) AND "LINK_TYPE
 
 -- Von Db2 Graph V11.5.6.0 generiertes SQL-Statement
 SELECT COUNT(*) FROM "LINKDB0"."NODETABLE" AS VT0, "LINKDB0"."LINKTABLE" AS ET1 WHERE VT0."ID" = 1 AND ET1."LINK_TYPE" = 12345 AND VT0.ID = ET1.ID1
-\end{lstlisting}
-
-\begin{lstlisting}[label=src:nachweis_agg_pushdown,caption={Nachweis für Aggregation Pushdown in Db2 Graph Beta 3},language=SQL]
-/* Gremlin-Query */
-g.V(["NODETABLE", 1])
-.outE("LINKTABLE")
-.has("LINK_TYPE", 12345)
-
--- Von Db2 Graph Beta 3 generiertes SQL-Statement
-SELECT COUNT(*) FROM "LINKDB0"."LINKTABLE" WHERE ("ID1") IN (VALUES (1)) AND "LINK_TYPE" = 12345;
-
--- Von Db2 Graph V11.5.6.0 generiertes SQL-Statement
-SELECT COUNT(*) FROM "LINKDB0"."LINKTABLE" AS ET1 WHERE (ET1."ID1") IN (VALUES (1)) AND ET1."LINK_TYPE" = 12345;
 \end{lstlisting}
 \end{itemize}
 

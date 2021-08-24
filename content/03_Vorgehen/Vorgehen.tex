@@ -57,20 +57,20 @@ Die Performance-Analyse von Db2 Graph und Neo4j die im Rahmen dieser Arbeit durc
     \item Implementierung und 
     \item Auswertung.
 \end{itemize}
-Die verschiedenen Aspekte, Parameter und Variablen, die bei der Messung eine Rolle spielen, werden dabei in dem nachfolgenden \autoref{messmethode} aufgeführt. Darüber hinaus wird hier auch der Aufbau und die Organisation der Messungen in die Messreihe genauer beschrieben. 
+Die verschiedenen Aspekte, Parameter und Variablen, die bei der Messung eine Rolle spielen, werden dabei in dem nachfolgenden \autoref{messungen} aufgeführt. Darüber hinaus wird hier auch der Aufbau und die Organisation der Messungen in die Messreihe genauer beschrieben. 
 
 Anschließend werden alle für die Durchführung der Performance-Analyse notwendigen Implementierungen in \autoref{implementierung} beschrieben. Dabei wird auf die Wahl der Linkbench-Code-Basis und Umsetzung der Adapter eingegangen. 
 
 Die Auswertung und Präsentation der Ergebnisse erfolgen dann in \compref{ergebnisse} und \compref{auswertung}. In \compref{ergebnisse} wird dabei im Detail auf die Ergebnisse der Messreihen eingegangen, während in \compref{auswertung} eine weiterführende Analyse der Ergebnisse und der Vergleich von Db2 Graph mit Neo4j durchgeführt wird. Darüber hinaus wird in \compref{auswertung} auch versucht eine Erklärung für den Performance-Unterschied zwischen Db2 Graph Beta 3 und Neo4j zu finden. 
 
-\chapter{Messmethode}
-\label{messmethode}
+\chapter{Messungen}
+\label{messungen}
 In diesem Kapitel wird auf die Aspekte, Parameter und Variablen der Messungen eingegangen die bei Performance-Analyse eine Rolle spielen. Hier wird darüber hinaus auch die Konfiguration von Db2 Graph und Neo4j beschrieben, auf deren Basis die Messungen durchgeführt werden. Abschließend wird auf die Gruppierung der Messungen in Messreihen und den Ablauf der Messungen genauer eingegangen.  
 
 \section{Linkbench}
 Als Werkzeug zum Messen der Performance wird in der Performance-Analyse der Benchmark Linkbench herangezogen. Aufgrund dessen werden Anpassungen an Linkbench  sowie Linkbench-Adapter für Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j benötigt. Die Wahl der Linkbench- und Adapter-Implementierung sowie gegebenenfalls ihre Umsetzungen werden allerdings in \autoref{implementierung} beschrieben. 
 
-In diesem Abschnitt als Teil des Kapitels \nameref{messmethode} wird auf die Begriffe: 
+In diesem Abschnitt als Teil des Kapitels \nameref{messungen} wird auf die Begriffe: 
 \begin{itemize}
     \item Linkbench-Threads,
     \item Request-Anzahl und

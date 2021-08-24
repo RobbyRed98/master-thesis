@@ -190,7 +190,7 @@ Db2 Graph verfügt über die folgenden Fähigkeiten und Einschränkungen:
 Im Kontext dieses Unterabschnitts werden die Optimierung angesprochen, über die Db2 Graph verfügt, um ausschließlich die benötigten Daten von Db2 abzufragen und möglichst nicht selbst die Aggregation oder das Filtern der Ergebnismenge durchzuführen. Bei den Optimierungen hierbei wird zwischen den Data-Independent und Data-Dependent Optimizations unterschieden. 
 
 \subsubsection{Data-Independent}
-Bei Data-Independent Optimizations handelt es sich dabei um Optimierungstechniken, die Teil des Traversal-Strategy-Moduls sind \cite{sigmod_tian}. Sie werden eingesetzt, um einen logischen Query-Plan zu optimieren. Ihr Anwendung erfolgt dann, wenn bestimmte Muster erkannt werden. Optimierungen die in diese Kategorie fallen, können dem Schritt 4. in \autoref{fig:db2graph_intern_processing} zugeordnet werden. 
+Bei Data-Independent Optimizations handelt es sich dabei um Optimierungen, die Teil des Traversal-Strategy-Moduls sind \cite{sigmod_tian}. Sie werden eingesetzt, um einen logischen Query-Plan zu optimieren. Ihr Anwendung erfolgt dann, wenn bestimmte Muster erkannt werden. Optimierungen die in diese Kategorie fallen, können dem Schritt 4. in \autoref{fig:db2graph_intern_processing} zugeordnet werden. 
 
 Ein Beispiel für eine solche Optimierung stellt hierbei der \textit{Predicate Pushdown with Filter Steps}. Diese Optimierung wird angewendet, wenn ein Graph-Structure-Access-Step wie \texttt{g.V()} oder \texttt{g.E()} von einem oder mehreren Filter-Steps gefolgt wird \cite{sigmod_tian}. Dabei werden alle Filter-Steps in den Graph-Structure-Access-Step als Predicats eingebettet \cite{sigmod_tian}. Das Endprodukt der Optimierung stellt hierbei ein neuer Graph-Step dar, welcher auf Basis des Graph-Structure-Access-Steps und der Filter-Steps erstellt wurde \cite{sigmod_tian}. 
     
@@ -210,7 +210,7 @@ Im Rahmen der Arbeit wird festgestellt, dass zwischen den beiden Versionen von D
     \item \textit{Limit Pushown}\\
     Bei dem \textit{Limit Pushdown} handelt es sich um eine Optimierung die ab Db2 Graph V11.5.6.0 eingesetzt wird \cite{ibm_docs_optimize}. Sie ermöglicht es Gremlin-Limit- oder Gremlin-Range-Steps direkt in von Db2 Graph generierten SQL-Code einzubetten \cite{ibm_docs_optimize}. Db2 Graph Beta 3 beherrscht diese Art der Optimierung nicht.
 
-    Ein Beispiel für die neue Optimierungstechnik stellt der \autoref{src:nachweis_limit_pushdown} dar. Er zeigt, wie eine Gremlin-Query mit einem Limit-Step von Db2 Graph V11.5.6.0 und Beta 3 unterschiedlich übersetzt wird.
+    Ein Beispiel für diese neue Optimierung stellt der \autoref{src:nachweis_limit_pushdown} dar. Er zeigt, wie eine Gremlin-Query mit einem Limit-Step von Db2 Graph V11.5.6.0 und Beta 3 unterschiedlich übersetzt wird.
 
 \begin{lstlisting}[label=src:nachweis_limit_pushdown,caption={Nachweis Limit Pushdown Optimierung},language=SQL]
 /* Gremlin-Query */
@@ -228,7 +228,7 @@ SELECT "ID", "VERSION", "TIME", "ID", "DATA", "TYPE" FROM "LINKDB0"."NODETABLE" 
     Durch den Einsatz der Optimierung kann es somit vermieden werden, den gesamten Inhalt einer oder mehrerer Vertex- beziehungsweise Edge-Tabellen abzufragen, wenn eigentlich nur 100 Einträge wie in \autoref{src:nachweis_limit_pushdown} benötigt werden. Daher dürfte diese Optimierung einen erheblichen Einfluss auf die Performance von Db2 Graph haben, besonders bei großen Tabellen.
 
     \item \textit{Join Pushdown}\\
-    Diese Optimierungstechnik ist dazu in der Lage, zusammenhängende Anfragen mittels eines Joins in einem SQL-Statement unterzubringen. Die Optimierung wird dabei ebenfalls ausschließlich von Db2 Graph V11.5.6.0 beherrscht -- nicht in Beta 3.
+    Diese Optimierung ist dazu in der Lage, zusammenhängende Anfragen mittels eines Joins in einem SQL-Statement unterzubringen. Die Optimierung wird dabei ebenfalls ausschließlich von Db2 Graph V11.5.6.0 beherrscht -- nicht in Beta 3.
 
     Ein Beispiel für diese Optimierung stellt \autoref{src:join_pushdown} dar. Darin wird dargestellt wie eine Gremlin-Query von Db2 Graph Beta 3 und V11.5.6.0 unterschiedlich übersetzt wird. Die Übersetzung von Db2 Graph V11.5.6.0 weist dabei wie erwartet einen Join mit den beiden Tabellen auf.
 
@@ -349,12 +349,12 @@ Bei Db2 Graph handelt es sich um eine Grapherweiterung, die genutzt werden kann,
 
 Anhand dieser Topologie Informationen und einer Gremlin-Query erzeugt Db2 Graph SQL-Code. Dieser wird anschließend an eine Db2-Instanz gesendet. Die im Anschluss daran von Db2 an Db2 Graph gesendete Ergebnismenge wird schließlich von Db2 Graph aufbereitet und als Antwort auf die Gremlin-Query weitergegeben. 
 
-Um als Grapherweiterung bei diesem Prozess eine möglichst hohe Performance und geringe Ressourcen Auslastung aufzuweisen, beherrscht Db2 Graph eine Vielzahl an Optimierungsmechanismen. 
+Um als Grapherweiterung bei diesem Prozess eine möglichst hohe Performance und geringe Ressourcen Auslastung aufzuweisen, beherrscht Db2 Graph eine Vielzahl an Optimierungen. 
 
 Im Rahmen dieser Arbeit werden zwei verschiedene Versionen von Db2 Graph behandelt. Die ältere Variante Beta 3 und die neue Variante V11.5.6.0. Die beiden Versionen unterscheiden sich dabei hauptsächlich in den folgenden drei Punkten:
 
 \begin{itemize}
-    \item \textit{Optimierungstechniken}\\
+    \item \textit{Optimierung}\\
     Die Optimierung von Db2 Graph ist in V11.5.6.0 weiter fortgeschritten als in Beta 3. 
     \item \textit{Usability}\\
     Die mit V11.5.6.0 eingeführte Db2 Graph UI erleichtert den Umgang und die Einrichtung von Db2 Graph erheblich. 

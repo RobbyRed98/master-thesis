@@ -96,11 +96,11 @@ In der Adapter-Konfiguration werden dabei Werte festgelegt, die für die Konfigu
 Die Workload-Konfiguration regelt hingegen die Zusammensetzung des Workloads während einer \textit{Request}-Phase \cite{fb_linkbench_github}. Darüber hinaus werden in dieser Konfiguration wichtige Details für den Datengenerator des Benchmarks festgelegt \cite{fb_linkbench_github}. So bestimmt die Konfiguration in der \textit{Load}-Phase, welche Daten in eine Datenbank geschrieben werden \cite{fb_linkbench_github}. Zugleich wird von der Workload-Konfiguration bestimmt, wie sich der Operationsmix während der \textit{Request}-Phase zusammen setzt \cite{fb_linkbench_github}.
 
 \subsection{Zusammenfassung}
-Bei Linkbench handelt es sich um einen Benchmark für Datenbanksysteme. Er legt seinen Fokus auf das Messen der Performance von Graph-Operationen. Die Struktur der Daten spiegelt dabei einen Social-Graph wider. 
+Bei Linkbench handelt es sich um einen Benchmark für Datenbanksysteme. Er legt seinen Fokus auf das Messen der Performance von Graphoperationen. Die Struktur der Daten spiegelt dabei einen Social-Graph wider. 
 
-Bei den Graph-Operationen die in Linkbench gebenchmarkt werden handelt es sich um OLTP-Operationen für die Knoten und Kanten (Links) des Social-Graphs.
+Bei den Graphoperationen die in Linkbench gebenchmarkt werden handelt es sich um OLTP-Operationen für die Knoten und Kanten (Links) des Social-Graphs.
 
-Der Linkbench-Benchmark kann in zwei verschiedenen Phasen operieren. Während der \textit{Load}-Phase werden Daten generiert und in eine Datenbank geschrieben. In der \textit{Request}-Phase findet das eigentliche Benchmarking statt. In ihr wird die Performance der Graph-Operationen ermittelt und abschließend eine Statistik erzeugt. Die Messungen in der \textit{Request}-Phase setzen dabei einen in der \textit{Load}-Phase erzeugten Datensatz voraus. 
+Der Linkbench-Benchmark kann in zwei verschiedenen Phasen operieren. Während der \textit{Load}-Phase werden Daten generiert und in eine Datenbank geschrieben. In der \textit{Request}-Phase findet das eigentliche Benchmarking statt. In ihr wird die Performance der Graphoperationen ermittelt und abschließend eine Statistik erzeugt. Die Messungen in der \textit{Request}-Phase setzen dabei einen in der \textit{Load}-Phase erzeugten Datensatz voraus. 
 
 Linkbench ist als Open-Source-Projekt unter der Apache-2.0-Lizenz auf Github verfügbar. Die Anbindung neuer Datenbanksysteme an den Benchmark setzt die Implementierung eines Datenbanksystem-spezifischen Adapters voraus. 
 

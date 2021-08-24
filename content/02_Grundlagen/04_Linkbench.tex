@@ -43,7 +43,7 @@ Die \texttt{nodetable} repräsentiert dabei alle Knoten in einem Social-Graph. D
 
 \subsection{Operationen}
 \label{linkbench:operationen}
-Bei den Operationen, die während des Benchmarks gemessen werden, handelt es sich um klassische OLTP-Operationen bei denen einzelne oder mehrere  Knoten und Kanten eines Graphen abgefragt werden \cite{snb_paper}. 
+Bei den Operationen, die während des Benchmarks gemessen werden, handelt es sich um klassische \acs{oltp}-Operationen bei denen einzelne oder mehrere  Knoten und Kanten eines Graphen abgefragt werden \cite{snb_paper}. 
 
 Im Folgenden werden alle Knoten-spezifischen Benchmark-Operationen aufgeführt:
 \begin{itemize}
@@ -98,7 +98,7 @@ Die Workload-Konfiguration regelt hingegen die Zusammensetzung des Workloads wä
 \subsection{Zusammenfassung}
 Bei Linkbench handelt es sich um einen Benchmark für Datenbanksysteme. Er legt seinen Fokus auf das Messen der Performance von Graphoperationen. Die Struktur der Daten spiegelt dabei einen Social-Graph wider. 
 
-Bei den Graphoperationen die in Linkbench gebenchmarkt werden handelt es sich um OLTP-Operationen für die Knoten und Kanten (Links) des Social-Graphs.
+Bei den Graphoperationen die in Linkbench gebenchmarkt werden handelt es sich um \acs{oltp}-Operationen für die Knoten und Kanten (Links) des Social-Graphs.
 
 Der Linkbench-Benchmark kann in zwei verschiedenen Phasen operieren. Während der \textit{Load}-Phase werden Daten generiert und in eine Datenbank geschrieben. In der \textit{Request}-Phase findet das eigentliche Benchmarking statt. In ihr wird die Performance der Graphoperationen ermittelt und abschließend eine Statistik erzeugt. Die Messungen in der \textit{Request}-Phase setzen dabei einen in der \textit{Load}-Phase erzeugten Datensatz voraus. 
 

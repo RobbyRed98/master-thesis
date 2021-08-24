@@ -326,11 +326,6 @@ SELECT * FROM "LINKDB0"."LINKTABLE" WHERE ("ID1") IN (VALUES (1)) AND "LINK_TYPE
 SELECT COUNT(*) FROM "LINKDB0"."NODETABLE" AS VT0, "LINKDB0"."LINKTABLE" AS ET1 WHERE VT0."ID" = 1 AND ET1."LINK_TYPE" = 12345 AND VT0.ID = ET1.ID1
 \end{lstlisting}
 
-    \item \textit{Weitere Auffälligkeiten}\\
-    Neben der angesprochenen Optimierungstechnik fallen bei der Analyse von \autoref{src:join_pushdown} noch weitere Unterschiede auf. So ist bei Db2 Graph Beta 3 erkennbar, dass keine Aggregation Pushdown Optimization angewandt wird, im Gegensatz zu V11.5.6.0. Dieses Verhalten ist interessant, da die Optimierung bereits im Paper \cite{sigmod_tian} aus dem Juni 2021 aufgeführt wird. Db2 Graph Beta 3 wurde hingegen erst am 30.10.2020 veröffentlichten, mehrere Monate nach dem Paper. 
-
-    Im Kontext dieser Arbeit wird dieses Phänomen jedoch nicht als eine weitere neue Optimierungstechnik betrachtet. Schließlich wurde diese Art von Optimierung bereits sehr früh beschrieben in \cite{sigmod_tian}. Darüber hinaus ist auch Beta 3 dazu in der Lage einen Aggregation Pushdown Optimization durchzuführen, siehe \autoref{src:nachweis_agg_pushdown}. Dafür muss allerdings die Gremlin-Query anders formuliert werden. Daher wird das Phänomen im Rahmen dieser Arbeit als Verbesserung oder Fehlerbehebung des Aggregation Pushdown eingestuft, die zwischen Beta 3 und V11.5.6.0 erfolgte.
-
 \begin{lstlisting}[label=src:nachweis_agg_pushdown,caption={Nachweis für Aggregation Pushdown in Db2 Graph Beta 3},language=SQL]
 /* Gremlin-Query */
 g.V(["NODETABLE", 1])

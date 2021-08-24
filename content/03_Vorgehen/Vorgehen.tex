@@ -602,49 +602,47 @@ Die Gliederung der Messungen kann dabei \autoref{fig:gliederung_messungen} entno
 	\begin{tikzpicture}
 		\node[rotate=90] (messungen) at (0, 0) {Messungen};
 		
-		\node[anchor=west] (const) at (2, 2) {Linkbench-10M-Const};
+		\node[anchor=west] (const) at (2, 1.5) {Linkbench-10M-Const};
 		\draw (const.west) -- +(-1, 0) |- (messungen.south);
-		\node[anchor=west] (p1) at (2, 1) {$\cdots$};
+		\node[anchor=west] (p1) at (2, 0.5) {$\cdots$};
 		\draw (p1.west) -- +(-1, 0) |- (messungen.south);
-		\node[anchor=west] (p2) at (2, 0) {$\cdots$};
-		\draw (p2.west) -- +(-1, 0) |- (messungen.south);
-		\node[anchor=west] (p3) at (2, -1) {$\cdots$};
+		\node[anchor=west] (p3) at (2, -0.5) {$\cdots$};
 		\draw (p3.west) -- +(-1, 0) |- (messungen.south);
-		\node[anchor=west] (read) at (2, -2) {Linkbench-100M-Read};
+		\node[anchor=west] (read) at (2, -1.5) {Linkbench-100M-Read};
 		\draw (read.west) -- +(-1, 0) |- (messungen.south);
 		
-		\node[anchor=west] (db2) at (7.3, 3) {Db2 Graph Beta 3};
+		\node[anchor=west] (db2) at (7.3, 2.5) {Db2 Graph Beta 3};
 		\draw (db2.west) -- +(-0.5, 0) |- (const.east);
-		\node[anchor=west] (p11) at (7.3, 2) {$\cdots$};
+		\node[anchor=west] (p11) at (7.3, 1.5) {$\cdots$};
 		\draw (p11.west) -- +(-0.5, 0) |- (const.east);
-		\node[anchor=west] (p12) at (7.3, 1) {$\cdots$};
+		\node[anchor=west] (p12) at (7.3, 0.5) {$\cdots$};
 		\draw (p12.west) -- +(-0.5, 0) |- (const.east);
-		\node[anchor=west] (db2gn) at (12, 3.75) {getNode};
+		\node[anchor=west] (db2gn) at (12, 3.25) {getNode};
 		\draw (db2gn.west) -- +(-0.5, 0) |- (db2.east);
-		\node[anchor=west] (db2gl) at (12, 3.25) {getLink};
+		\node[anchor=west] (db2gl) at (12, 2.75) {getLink};
 		\draw (db2gl.west) -- +(-0.5, 0) |- (db2.east);
-		\node[anchor=west] (db2cl) at (12, 2.75) {countLink};
+		\node[anchor=west] (db2cl) at (12, 2.25) {countLink};
 		\draw (db2cl.west) -- +(-0.5, 0) |- (db2.east);
-		\node[anchor=west] (db2gll) at (12, 2.25) {getLinkList};
+		\node[anchor=west] (db2gll) at (12, 1.75) {getLinkList};
 		\draw (db2gll.west) -- +(-0.5, 0) |- (db2.east);
 		
-		\node[anchor=west] (p21) at (7.3, -1.5) {$\cdots$};
+		\node[anchor=west] (p21) at (7.3, -1.0) {$\cdots$};
 		\draw (p21.west) -- +(-0.5, 0) |- (read.east);
-		\node[anchor=west] (neo4j) at (7.3, -2.5) {Neo4j};
+		\node[anchor=west] (neo4j) at (7.3, -2.0) {Neo4j};
 		\draw (neo4j.west) -- +(-0.5, 0) |- (read.east);
-		\node[anchor=west] (n4jgn) at (9.5, -1) {getNode};
+		\node[anchor=west] (n4jgn) at (9.5, -0.5) {getNode};
 		\draw (n4jgn.west) -- +(-0.5, 0) |- (neo4j.east);
-		\node[anchor=west] (n4jgl) at (9.5, -1.5) {getLink};
+		\node[anchor=west] (n4jgl) at (9.5, -1.0) {getLink};
 		\draw (n4jgl.west) -- +(-0.5, 0) |- (neo4j.east);
-		\node[anchor=west] (n4jcl) at (9.5, -2) {countLink};
+		\node[anchor=west] (n4jcl) at (9.5, -1.5) {countLink};
 		\draw (n4jcl.west) -- +(-0.5, 0) |- (neo4j.east);
-		\node[anchor=west] (n4jgll100) at (9.5, -2.5) {getLinkList(100)};
+		\node[anchor=west] (n4jgll100) at (9.5, -2.0) {getLinkList(100)};
 		\draw (n4jgll100.west) -- +(-0.5, 0) |- (neo4j.east);
-		\node[anchor=west] (n4jgll1000) at (9.5, -3) {getLinkList(1.000)};
+		\node[anchor=west] (n4jgll1000) at (9.5, -2.5) {getLinkList(1.000)};
 		\draw (n4jgll1000.west) -- +(-0.5, 0) |- (neo4j.east);
-		\node[anchor=west] (n4jgll10000) at (9.5, -3.5) {getLinkList(10.000)};
+		\node[anchor=west] (n4jgll10000) at (9.5, -3.0) {getLinkList(10.000)};
 		\draw (n4jgll10000.west) -- +(-0.5, 0) |- (neo4j.east);
-		\node[anchor=west] (n4jgll100000) at (9.5, -4) {getLinkList(100.000)};
+		\node[anchor=west] (n4jgll100000) at (9.5, -3.5) {getLinkList(100.000)};
 		\draw (n4jgll100000.west) -- +(-0.5, 0) |- (neo4j.east);
 	\end{tikzpicture}
     \caption{Gliederung der Messungen}

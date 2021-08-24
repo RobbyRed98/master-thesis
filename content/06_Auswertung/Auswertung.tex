@@ -58,14 +58,14 @@ So beträgt der Unterschied zwischen Db2 Graph und Neo4j bei einem Range-Limit v
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/diagramme/limit_relative_durchsatz_real_10m.pdf}
-    \caption{Linkbench-10M-Real Durchsatz gemessen an getLinkList(100)}
+    \caption{Linkbench-Real-10M Durchsatz gemessen an getLinkList(100)}
     \label{fig:einbruch:durchsatz:10m}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/diagramme/limit_relative_durchsatz_real_100m.pdf}
-    \caption{Linkbench-100M-Real Performance gemessen an getLinkList(100)}
+    \caption{Linkbench-Real-100M Performance gemessen an getLinkList(100)}
     \label{fig:einbruch:durchsatz:100m}
 \end{figure}
 
@@ -110,7 +110,7 @@ Für den Vergleich der Datenbanksysteme wird dabei exemplarisch deren Ressourcen
 
 Bei der Auswertung der Statistiken gilt es dabei allerdings zu beachten, dass die CPU-Auslastung und Anzahl an IO-Ope\-ra\-ti\-on\-en (Disk xfers) pro Sekunde, die von den Abbildungen dieses Abschnitts aufgeführt werden, immer die Auslastung der ganzen Maschine, in der die Messungen stattfinden, wiedergeben. So gilt es dabei auch immer im Auge zu behalten, dass beispielsweise das Betriebssystem selbst und andere kleinere Server-Prozesse ebenfalls geringfügig etwas zur CPU- und IO-Aus\-last\-ung beitragen.  
 
-\subsection{Linkbench-10M-Const}
+\subsection{Linkbench-Const-10M}
 \label{auswertung:ressourcenauslastung:const}
 Bei der Auswertung der Ressourcenstatistiken bei dieser Messreihe kann mit Hinblick auf die Statistiken identifiziert werden, dass die CPU-Auslastung bei Neo4j (\autoref{fig:nmon:10m:const:neo4j}) am höchsten ist, gefolgt von Db2 Graph Beta 3 (\autoref{fig:nmon:10m:const:beta3}) und mit größerem Abstand Db2 Graph V11.5.6.0 (\autoref{fig:nmon:10m:const:ga}). 
 
@@ -122,14 +122,14 @@ Wird statt der CPU-Auslastung die Anzahl an IO-Ope\-ra\-ti\-on\-en pro Sekunde i
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/stats/linkbench-10m-const_beta3.pdf}
-    \caption{Linkbench-10M-Const Auslastung Db2 Graph Beta 3 (getNode)}
+    \caption{Linkbench-Const-10M Auslastung Db2 Graph Beta 3 (getNode)}
     \label{fig:nmon:10m:const:beta3}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/stats/linkbench-10m-const_ga.pdf}
-    \caption{Linkbench-10M-Const Auslastung Db2 Graph V11.5.6.0 (getNode)}
+    \caption{Linkbench-Const-10M Auslastung Db2 Graph V11.5.6.0 (getNode)}
     \label{fig:nmon:10m:const:ga}
 \end{figure}
 
@@ -138,11 +138,11 @@ Db2 Graph Beta 3 bewegt sich hingegen mit durchschnittlich ca. 900 IO-Ope\-ra\-t
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/stats/linkbench-10m-const_neo4j.pdf}
-    \caption{Linkbench-10M-Const Auslastung Neo4j (getNode)}
+    \caption{Linkbench-Const-10M Auslastung Neo4j (getNode)}
     \label{fig:nmon:10m:const:neo4j}
 \end{figure}
 
-\subsection{Linkbench-10M-Real}
+\subsection{Linkbench-Real-10M}
 \label{auswertung:ressourcenauslastung:real}
 Bei den beiden im Rahmen dieser Messreihe aufgezeichneten Ressourcenstatistiken fällt bereits bei der ersten Begutachtung auf, dass die Statistiken für Db2 Graph V11.5.6.0 und besonders Neo4j über weitaus weniger Datenpunkte verfügen als die Abbildungen aus dem vorausgegangen \autoref{auswertung:ressourcenauslastung:const}. Dies ist dabei auf den Umstand zurückzuführen, dass die Messreihe, die auf Basis eines real verteilten Datensatzes operieren, eine niedrigere Request-Anzahl pro Messung aufweisen als bei Messreihen mit konstanten-verteilten Datensätzen. Dies hat zur Folge, dass Neo4j und Db2 Graph V11.5.6.0 weniger Zeit für die Durchführung der Messungen benötigen. Der kleinere Messzeitraum sorgt dabei wiederum dafür, dass NMON weniger Datenpunkte für die Ressourcenstatistiken sammelt. Schließlich legt NMON während allen Messungen lediglich einen Datenpunkt pro Minute an. 
 
@@ -153,14 +153,14 @@ Des Weiteren weisen beide Datenbanksysteme auch über den gesamten Verlauf der M
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/stats/linkbench-10m-real_ga.pdf}
-    \caption{Linkbench-10M-Real Auslastung Db2 Graph V11.5.6.0 (getNode)}
+    \caption{Linkbench-Real-10M Auslastung Db2 Graph V11.5.6.0 (getNode)}
     \label{fig:nmon:10m:real:ga}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/stats/linkbench-10m-real_neo4j.pdf}
-    \caption{Linkbench-10M-Real Auslastung Neo4j (getNode)}
+    \caption{Linkbench-Real-10M Auslastung Neo4j (getNode)}
     \label{fig:nmon:10m:real:neo4j}
 \end{figure}
 

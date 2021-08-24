@@ -285,7 +285,7 @@ Im weiteren Verlauf der Arbeit stachen dabei die folgenden zwei Unterschiede bei
     
     Des Weiteren kann auch die Annahme gemacht werden, dass die Optimierungstechnik in die Kategorie Data-Independent Optimizations einzuordnen ist. Schließlich werden beim \textit{Limit Pushdown} keine Topologie Informationen verwertet. Somit lassen sich die Data-Dependent Optimizations ausschließen.
 
-    Ein Beispiel für die neue Optimierungstechnik stellt der \autoref{src:nachweis_limit_pushdown} dar. Er zeigt, wie eine Gremlin-Query mit einem Limit-Step von Db2 Graph v11.5.6.0 und Beta 3 unterschiedlich übersetzt wird.
+    Ein Beispiel für die neue Optimierungstechnik stellt der \autoref{src:nachweis_limit_pushdown} dar. Er zeigt, wie eine Gremlin-Query mit einem Limit-Step von Db2 Graph V11.5.6.0 und Beta 3 unterschiedlich übersetzt wird.
 
 \begin{lstlisting}[label=src:nachweis_limit_pushdown,caption={Nachweis Limit Pushdown Optimierung},language=SQL]
 /* Gremlin-Query */
@@ -421,7 +421,7 @@ Zusätzlich zu dem Graph-Modeler bietet Db2 Graph UI auch eine Art Web-Console a
     \label{fig:db2_graph_webconsole}
 \end{figure}
 
-Der bereits aus Beta 3 bekannte \texttt{manage}-Befehl ist, wie bereits zuvor angesprochen auch in V11.5.6.0 verfügbar \cite{ibm_docs_db2_graph_commands}. Allerdings wurde die Fähigkeiten des Befehls erheblich erweitert. So unterstützt er die neue Form des Session-Managements und Verbindungsaufbaus, die mit v11.5.6.0 in Db2 Graph eingeführt wurde \cite{ibm_docs_db2_graph_commands}. Während in Beta 3 die Interaktion mit Db2 Graph kaum Einschränkungen unterlag, erfordert beispielsweise das Anlegen eines Graphen folgende Schritte bei der Arbeit mit dem \texttt{manage}-Befehl:
+Der bereits aus Beta 3 bekannte \texttt{manage}-Befehl ist, wie bereits zuvor angesprochen auch in V11.5.6.0 verfügbar \cite{ibm_docs_db2_graph_commands}. Allerdings wurde die Fähigkeiten des Befehls erheblich erweitert. So unterstützt er die neue Form des Session-Managements und Verbindungsaufbaus, die mit V11.5.6.0 in Db2 Graph eingeführt wurde \cite{ibm_docs_db2_graph_commands}. Während in Beta 3 die Interaktion mit Db2 Graph kaum Einschränkungen unterlag, erfordert beispielsweise das Anlegen eines Graphen folgende Schritte bei der Arbeit mit dem \texttt{manage}-Befehl:
 
 \begin{enumerate}
     \item Das Öffnen einer Session -- hier \textit{linkdbS} genannt:\\

@@ -2,7 +2,7 @@
 \label{datenmodelle}
 In diesem Abschnitt werden die Grundlagen des Graph-basierten Datenbankmodells skizziert. Dieses Graphmodell ist im Rahmen dieser Arbeit von wesentlicher Bedeutung. Schließlich vereint die in \autoref{db2graph} beschriebene Grapherweiterung Elemente des relationalen und Graph-basierten Datenbankmodells. Grundkenntnisse über das relationale Modell werden im Rahmen dieser Arbeit vorausgesetzt. Sollten keine Grundkenntnisse über relationale Datenbanksysteme vorhanden sein, empfehlen sich \cite{rdbms_book} und \cite{codd_relational_model} als Einstieg.
 
-Um die Grundlagen des Graphmodells in diesem Abschnitt zu vermittelten, werden die folgenden Aspekte des Modells angesprochen:
+Um die Grundlagen des Graphmodells in diesem Abschnitt zu vermittelen, werden die folgenden Aspekte des Modells angesprochen:
 \begin{itemize}
     \item Herkunft und Verbreitung,
     \item Struktur und Schema.
@@ -49,7 +49,7 @@ In der folgenden Aufzählung werden dabei die drei wichtigsten Unterschiede zwis
     \item Im relationalen Modell werden alle Informationen in Tabellen abgelegt \cite{rdbms_book}. Im Graphmodell werden die Daten in Knoten und Kanten gehalten \cite{gdbms}. 
     \item Beziehungen werden in einem Graphdatenbanksystem durch Kanten zwischen einem Start- und Zielknoten repräsentiert \cite{gdbms}. Beim relationalen Modell werden Beziehungen durch die Referenzierung eines Primärschlüssels einer anderen Tabelle vorgenommen \cite{rdbms_book}. 
 \end{itemize}
-Bei der genaueren Betrachtung der Unterschiede aus der vorausgegangenen Aufzählung fällt auf, dass diese auch als Ähnlichkeiten betrachtet werden können. So verfügen beide Modelle trotz ihrer unterschiedlichen Herangehensweise über ein Schema, besitzen Strukturen, in denen Informationen gehalten werden und bieten die Möglichkeit, Beziehungen abzubilden. Somit scheinen die beiden Modell zumindest bezüglich dieser Aspekte äquivalent zu sein. Schließlich verfügen beide Datenmodelle über Strukturen und Mechanismen, um Daten zu halten und Beziehung zu modellieren. 
+Bei der genaueren Betrachtung der Unterschiede aus der vorausgegangenen Aufzählung fällt auf, dass diese auch als Ähnlichkeiten betrachtet werden können. So verfügen beide Modelle trotz ihrer unterschiedlichen Herangehensweise über ein Schema, besitzen Strukturen, in denen Informationen gehalten werden und bieten die Möglichkeit, Beziehungen abzubilden. Somit scheinen die beiden Modell zumindest bezüglich dieser Aspekte äquivalent zu sein. Schließlich verfügen beide Datenmodelle über Strukturen und Mechanismen, um Daten zu halten und Beziehungen zu modellieren. 
 
 Wenn nun allerdings beide Datenmodelle über die Mittel verfügen, Daten zu halten und Beziehungen abzubilden, stellt sich die Frage: \textit{Wann sollte welches Datenmodell herangezogen werden?}
 
@@ -60,7 +60,7 @@ In diesem Szenario wird auf Queries eingegangen, bei denen Beziehungen beziehung
 
 Hierfür wird beispielhaft die Angestelltenhierarchie eines Unternehmens herangezogen. Bei den Daten, die die Modelle hierbei repräsentieren sollen, handelt es sich um einen Datensatz an Angestellten. Diese Angestellten verfügen dabei wie in \autoref{fig:angestellten_graph} und \autoref{fig:angestellten_tabelle} erkennbar über einen Namen und einen Vorgesetzten, dem sie unterstellt sind. 
 
-Nun soll in diesem Szenario ermittelt werden, wer \textit{Alice} Vorgesetzter dritten Grades in diesem Unternehmen ist. Also wer der Vorgesetzte des Vorgesetzten des Vorgesetzten von \textit{Alice} ist. Bei dem Graphen in \autoref{fig:angestellten_tabelle} kann dies leicht nachvollzogen werden. Es muss lediglich dreimal den \texttt{hat\_vorgesetzten}-gelabelten Kanten gefolgt werden, bis der Zielknoten \textit{Dave} erreicht wird. 
+Nun soll in diesem Szenario ermittelt werden, wer \textit{Alice} Vorgesetzter dritten Grades in diesem Unternehmen ist. Also wer der Vorgesetzte des Vorgesetzten des Vorgesetzten von \textit{Alice} ist. Bei dem Graphen in \autoref{fig:angestellten_graph} kann dies leicht nachvollzogen werden. Es muss lediglich dreimal den \texttt{hat\_vorgesetzten}-gelabelten Kanten gefolgt werden, bis der Zielknoten \textit{Dave} erreicht wird. 
 
 \begin{figure}[ht]
     \centering
@@ -200,10 +200,8 @@ Auch wenn die beiden zuvor aufgeführten Szenarien hier die Vorteile des Graphmo
 Des Weiteren gilt es darauf hinzuweisen, dass die Softwareentwicklung für ein relationales Datenbanksystem in einigen Fällen mit weniger Entwicklungsaufwand als beim Graphmodell verbunden sein kann. Denn wenn auch in Szenario 2. mehrere Tabellen für die Abbildung der Küchengeräte benötigt werden, so ist bei der Abfrage eines Eintrags aus einer dieser Tabellen immer gesichert, dass er über Werte für die als Spalten definierten Eigenschaften verfügt. Bei Datenbanken, die auf dem Graphmodell basieren, ist dies nicht automatisch gesichert. Hier können Knoten mit denselben Labels unterschiedliche Eigenschaften und Werte aufweisen. So muss die entwickelte Software mit diesen heterogenen Daten umgehen können. Daraus ergibt sich jedoch meist ein höherer Entwicklungsaufwand. 
 
 \subsection{Zusammenfassung}
-Bei dem Graphmodell und Graphdatenbanksystemen handelt es sich noch um eine recht junge Technologie, die bisher lediglich eine vergleichsweise kleine Verbreitung gefunden hat. Allerdings scheint sie in den letzten Jahren ein Aufschwung in Popularität erfahren zu haben. 
+Bei dem Graphmodell und Graphdatenbanksystemen handelt es sich noch um eine recht junge Technologie, die bisher lediglich eine vergleichsweise kleine Verbreitung gefunden hat. Allerdings scheint sie in den letzten Jahren einen Aufschwung in Popularität erfahren zu haben. 
 
 Die Grundstrukturen des Graphmodells stellen hierbei Knoten und Kanten dar. Diese Strukturen werden dazu herangezogen, Entitäten und ihre Beziehungen zueinander zu repräsentieren. Darüber hinaus setzt das Graphmodell auf ein flexibles Datenbankschema. In diesem werden die Knoten und Kanten anhand von Labels organisiert.
 
 Zwischen dem Graphmodell und relationalen Datenmodell gibt es einige größere Unterschiede, allerdings lassen sich mit beiden Modellen Entitäten und ihre Beziehungen repräsentieren. Dies bedeutet aber nicht, dass sich auch beide Modelle für die Abbildung derselben Daten eignen. So scheint es Szenarien und Anwendungsfälle zu geben, für die sich jeweils eines der Modelle besser eignet. 
-
-% S11 Aufzählungslist dabei weg ziel ist es

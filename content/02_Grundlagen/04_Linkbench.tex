@@ -1,12 +1,12 @@
 \section{Linkbench}
 \label{linkbench}
-In diesem Abschnitt wird der Benchmark Linkbench genauer beschrieben. Schließlich spielt der Benchmark im Rahmen dieser Arbeit eine wichtige Rolle. Es handelt sich hierbei um den Benchmark, der für das Messen der Performance von Neo4j und Db2 Graph eingesetzt wird. Er wird dabei auch im Rahmen dieser Arbeit um entsprechende Adapter für diese Datenbanksysteme erweitert. Dazu allerdings mehr in \compref{implementierung}. Dieser Abschnitt fokussiert sich dabei auf die Theorie hinter dem Benchmark. 
+In diesem Abschnitt wird der Benchmark Linkbench genauer beschrieben. Schließlich spielt der Benchmark im Rahmen dieser Arbeit eine wichtige Rolle. Es handelt sich hierbei um den Benchmark, der für das Messen der Performance von Neo4j und Db2 Graph eingesetzt wird. Er wird dabei auch im Rahmen dieser Arbeit um entsprechende Adapter für diese Datenbanksysteme erweitert. Dazu allerdings mehr in \compref{implementierung}. Dieser Abschnitt fokussiert sich hierbei auf die Theorie hinter dem Benchmark. 
 
 \subsection{Motivation}
 Der Benchmark Linkbench wurde von Facebook entwickelt \cite{linkbench_paper}. Die Motivation hinter der Entwicklung des Benchmarks war es, einen Benchmark zu schaffen, der reale Datenbankarbeitslasten in sozialen Netzwerken beziehungsweise Anwendungen reflektiert \cite{linkbench_paper}. Ein weiteres Ziel dabei war es, anhand des Benchmarks, die Performance von Datenbanksystemen bei solchen Workloads messen und einordnen zu können \cite{linkbench_paper}.
 
 \subsection{Datenstruktur und Schema}
-Der Benchmark arbeitet auf der Basis einer Datenstruktur, die sich am Facebook-Social-Graph orientiert \cite{linkbench_paper}. Das Linkbench-Github-Repository \cite{fb_linkbench_github} von Facebook führt ein Beispiel-Schema für das relationale Datenbanksystem MySQL auf. Die darin beschriebene Datenbankstruktur sieht dabei wie \autoref{src:linkbench_mysql} in beschrieben aus \cite{fb_linkbench_github}. 
+Der Benchmark arbeitet auf der Basis einer Datenstruktur, die sich am Facebook-Social-Graph orientiert \cite{linkbench_paper}. Das Linkbench-Github-Repository \cite{fb_linkbench_github} von Facebook führt ein Beispiel-Schema für das relationale Datenbanksystem MySQL auf. Die darin beschriebene Datenbankstruktur sieht dabei wie \autoref{src:linkbench_mysql} in dargelegt aus \cite{fb_linkbench_github}. 
 
 \begin{lstlisting}[caption={Linkbench MySQL-Schema},language=SQL,label=src:linkbench_mysql]
 CREATE TABLE `linktable` (
@@ -39,7 +39,7 @@ CREATE TABLE `nodetable` (
     PRIMARY KEY(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 \end{lstlisting}
-Die \texttt{nodetable} repräsentiert dabei alle Knoten in einem Social-Graph. Die Kanten werden hingegen von \texttt{linktable} verkörpert. Zugleich gibt es noch eine dritte Tabelle \texttt{counttable}, welche eingeführt wurde, um die Performance für die \texttt{countLink}-Operation zu verbessern. Diese \texttt{counttable} spielt allerdings im Kontext der Messungen der Performance-Analyse keine Rolle.
+Die \texttt{nodetable} repräsentiert hierbei alle Knoten in einem Social-Graph. Die Kanten werden hingegen von \texttt{linktable} verkörpert. Zugleich gibt es noch eine dritte Tabelle \texttt{counttable}, welche eingeführt wurde, um die Performance für die \texttt{countLink}-Operation zu verbessern. Diese \texttt{counttable} spielt allerdings im Kontext der Messungen der Performance-Analyse keine Rolle.
 
 \subsection{Operationen}
 \label{linkbench:operationen}
@@ -91,7 +91,7 @@ Des Weiteren gilt es bezüglich der Erweiterbarkeit von Linkbench noch zu erwäh
 \subsection{Konfiguration}
 Der Linkbench Benchmark kann an verschiedenen Stellen konfiguriert werden \cite{linkbench_paper,fb_linkbench_github}. Dabei wird zwischen einer Adapter- und Workload-Konfiguration unterschieden \cite{fb_linkbench_github}. 
 
-In der Adapter-Konfiguration werden dabei Werte festgelegt, die für die Konfiguration der Datenbank-Adapter benötigt werden \cite{fb_linkbench_github}. So werden darin beispielsweise Informationen angegeben, die für den Verbindungsaufbau und die Authentifizierung an einer Datenbank benötigt werden \cite{fb_linkbench_github}. Unter anderem wird darin auch bestimmt, welche Workload-Konfiguration während der \textit{Request}-Phase herangezogen wird \cite{fb_linkbench_github}. 
+In der Adapter-Konfiguration werden hierbei Werte festgelegt, die für die Konfiguration der Datenbank-Adapter benötigt werden \cite{fb_linkbench_github}. So werden darin beispielsweise Informationen angegeben, die für den Verbindungsaufbau und die Authentifizierung an einer Datenbank benötigt werden \cite{fb_linkbench_github}. Unter anderem wird darin auch bestimmt, welche Workload-Konfiguration während der \textit{Request}-Phase herangezogen wird \cite{fb_linkbench_github}. 
 
 Die Workload-Konfiguration regelt hingegen die Zusammensetzung des Workloads während einer \textit{Request}-Phase \cite{fb_linkbench_github}. Darüber hinaus werden in dieser Konfiguration wichtige Details für den Datengenerator des Benchmarks festgelegt \cite{fb_linkbench_github}. So bestimmt die Konfiguration in der \textit{Load}-Phase, welche Daten in eine Datenbank geschrieben werden \cite{fb_linkbench_github}. Zugleich wird von der Workload-Konfiguration bestimmt, wie sich der Operationsmix während der \textit{Request}-Phase zusammen setzt \cite{fb_linkbench_github}.
 
@@ -104,4 +104,4 @@ Der Linkbench-Benchmark kann in zwei verschiedenen Phasen operieren. Während de
 
 Linkbench ist als Open-Source-Projekt unter der Apache-2.0-Lizenz auf Github verfügbar. Die Anbindung neuer Datenbanksysteme an den Benchmark setzt die Implementierung eines Datenbanksystem-spezifischen Adapters voraus. 
 
-Der Adapter verfügt über viele Konfiguration-Möglichkeiten. Einerseits liegen Adapter-Konfigurationen vor, welche Datenbanksystem-spezifische Einstellungen verwalten. Darüber hinaus gibt es Workload-Konfigurationen, die die Steuerung der \textit{Load}- oder \textit{Request}-Phase organisieren. 
+Der Adapter verfügt über viele Konfiguration-Möglichkeiten. Einerseits liegen Adapter-Konfigurationen vor, welche Datenbanksystem-spezifische Einstellungen verwalten. Andererseits gibt es Workload-Konfigurationen, die die Steuerung der \textit{Load}- oder \textit{Request}-Phase organisieren. 

@@ -1,6 +1,6 @@
 \chapter{Vorgehen}
 \label{vorgehen}
-Im Rahmen dieses Kapitels wird aufgeführt, wie die Performance-Analyse von Db2 Graph und Neo4j im Rahmen dieser Masterarbeit abläuft. Dafür wird zuerst dargelegt, warum es nicht möglich ist, die Messungen und Ergebnisse aus \cite{sigmod_tian} im Rahmen dieser Arbeit zu reproduzieren. Anschließend wird auf die neue Methode für die Performance-Analyse von Db2 Graph und Neo4j eingegangen. 
+Im Rahmen dieses Kapitels wird aufgeführt, wie die Performance-Analyse von Db2 Graph und Neo4j im in Masterarbeit abläuft. Dafür wird zuerst dargelegt, warum es nicht möglich ist, die Messungen und Ergebnisse aus \cite{sigmod_tian} im Rahmen dieser Arbeit zu reproduzieren. Anschließend wird auf die neue Methode für die Performance-Analyse von Db2 Graph und Neo4j eingegangen. 
 
 \section{Reproduktion}
 \label{analyse:reproduktion}
@@ -32,7 +32,7 @@ Da die Reproduktion der Messungen aus \cite{sigmod_tian} nicht möglich ist, mus
 Dafür wird zuerst beschrieben, welche Elemente aus \cite{sigmod_tian} in diese Arbeit übernommen werden können. Anschließend wird auf die Änderungen und neuen Aspekte der Performance-Analyse eingegangen. Dabei wird auch begründet, weshalb bestimmte Änderungen vor- und neue Aspekte aufgenommen werden. Als Nächstes wird auf den Aufbau und den Ablauf der Performance-Analyse eingegangen. 
 
 \subsection{Übernommene Elemente}
-Auch wenn die Messungen aus \cite{sigmod_tian} nicht reproduziert werden können, so werden trotzdem einige Elemente der Messmethode übernommen, da diese als einzelnen Elemente als reproduzierbar und zielführend erachtet werden. Zu diesen Elementen gehören die folgenden Aspekte der Messmethode aus \cite{sigmod_tian}:
+Auch wenn die Messungen aus \cite{sigmod_tian} nicht reproduziert werden können, so werden trotzdem einige Elemente der Messmethode übernommen, da diese einzelnen Elemente als reproduzierbar und zielführend erachtet werden. Zu diesen Elementen gehören die folgenden Aspekte der Messmethode aus \cite{sigmod_tian}:
 \begin{itemize}
     \item Der Einsatz von Linkbench als Benchmark zur Ermittelung der Performance.
     \item Arbeit mit den Datensatzgrößen 10 Millionen und 100 Millionen Knoten (Linkbench-10 und Linkbench-100).
@@ -40,18 +40,18 @@ Auch wenn die Messungen aus \cite{sigmod_tian} nicht reproduziert werden können
 \end{itemize}
 
 \subsection{Änderungen und neue Aspekte}
-Die folgenden Aspekte werden neue in Performance-Analyse mit aufgenommen:
+Die folgenden Aspekte werden neue in die Performance-Analyse mit aufgenommen:
 \begin{itemize}
     \item \textit{Db2 Graph Versionen}\\
     Statt, wie in \cite{sigmod_tian} lediglich eine Db2 Graph Version für die Analyse der Performance und den Vergleich mit anderen Graphdatenbanksystemen einzusetzen, werden in dieser Arbeit Beta 3 und V11.5.6.0 beide als Vertreter für Db2 Graph herangezogen. Die beiden Versionen werden dabei in der Performance-Analyse berücksichtigt, da es sich hierbei um die beiden Db2 Graph Versionen handelt, die zum Zeitpunkt des Verfassens der Arbeit verfügbar sind.
     \item \textit{Ergebnismenge}\\
     Im Rahmen der neuen Performance-Analyse soll auch der Einfluss der Größe einer Ergebnismenge einer Anfrage auf die Performance der jeweiligen Datenbanksysteme miteinbezogen werden. Dies wird dabei in die Performance-Analyse mit aufgenommen, da das Verhalten der Datenbanksysteme bei der Abfrage von großen Datenmengen im Kontext dieser Arbeit als relevant eingestuft wird. Wie der Aspekt im Rahmen der Messungen untersucht wird, wird in \autoref{analyse:ergebnismenge} im Detail aufgeführt.
     \item \textit{Verteilung der Datensätze}\\
-    Im Rahmen der Performance-Analyse werden nun auch Messungen mit verschieden real und konstant verteilten Datensätzen gemacht. Die Performance der Datenbanksysteme wird dabei auf Basis von real verteilten Datensätzen ermittelt, um realitätsnahe Ergebnisse zu erlangen. Messungen mit konstant verteilten Datensätzen werden dabei allerdings auch durchgeführt, da es möglich ist, bei diesen auch Ergebnisse für Db2 Graph Beta 3 zu erzielen. Welche Implikationen und Einfluss die Verteilung der Datensätze auf die Messungen der Performance-Analyse hat, wird dabei allerdings in \autoref{analyse:datensatz} genauer erläutert. 
+    Im Rahmen der Performance-Analyse werden nun auch Messungen mit verschieden real und konstant verteilten Datensätzen gemacht. Die Performance der Datenbanksysteme wird hierbei auf Basis von real verteilten Datensätzen ermittelt, um realitätsnahe Ergebnisse zu erlangen. Messungen mit konstant verteilten Datensätzen werden dabei allerdings auch durchgeführt, da es möglich ist, bei diesen auch Ergebnisse für Db2 Graph Beta 3 zu erzielen. Welche Implikationen und Einfluss die Verteilung der Datensätze auf die Messungen der Performance-Analyse hat, wird allerdings in \autoref{analyse:datensatz} genauer erläutert. 
 \end{itemize}
 
 \subsection{Ablauf}
-Die Performance-Analyse von Db2 Graph und Neo4j die im Rahmen dieser Arbeit durchgeführt wird kann in die folgenden Bestandteile unterteilt werden: 
+Die Performance-Analyse von Db2 Graph und Neo4j, die im Rahmen dieser Arbeit durchgeführt wird, kann in die folgenden Bestandteile unterteilt werden: 
 \begin{itemize}
     \item Messung,
     \item Implementierung und 
@@ -61,14 +61,14 @@ Die verschiedenen Aspekte, Parameter und Variablen, die bei der Messung eine Rol
 
 Anschließend werden alle für die Durchführung der Performance-Analyse notwendigen Implementierungen in \autoref{implementierung} beschrieben. Dabei wird auf die Wahl der Linkbench-Code-Basis und Umsetzung der Adapter eingegangen. 
 
-Die Auswertung und Präsentation der Ergebnisse erfolgen dann in \compref{ergebnisse} und \compref{auswertung}. In \compref{ergebnisse} wird dabei im Detail auf die Ergebnisse der Messreihen eingegangen, während in \compref{auswertung} eine weiterführende Analyse der Ergebnisse und der Vergleich von Db2 Graph mit Neo4j durchgeführt wird. Darüber hinaus wird in \compref{auswertung} auch versucht eine Erklärung für den Performance-Unterschied zwischen Db2 Graph Beta 3 und Neo4j zu finden. 
+Die Auswertung und Präsentation der Ergebnisse erfolgen dann in \compref{ergebnisse} und \compref{auswertung}. In \compref{ergebnisse} wird dabei im Detail auf die Ergebnisse der Messreihen eingegangen, während in \compref{auswertung} eine weiterführende Analyse der Ergebnisse und der Vergleich von Db2 Graph mit Neo4j durchgeführt wird. Darüber hinaus wird in \compref{auswertung} auch versucht, eine Erklärung für den Performance-Unterschied zwischen Db2 Graph Beta 3 und Neo4j zu finden. 
 
 \chapter{Messungen}
 \label{messungen}
 In diesem Kapitel wird auf die Aspekte, Parameter und Variablen der Messungen eingegangen die bei Performance-Analyse eine Rolle spielen. Hier wird darüber hinaus auch die Konfiguration von Db2 Graph und Neo4j beschrieben, auf deren Basis die Messungen durchgeführt werden. Abschließend wird auf die Gruppierung der Messungen in Messreihen und den Ablauf der Messungen genauer eingegangen.  
 
 \section{Linkbench}
-Als Werkzeug zur Messung der Performance wird in der Performance-Analyse der Benchmark Linkbench herangezogen. Aufgrund dessen werden Anpassungen an Linkbench  sowie Linkbench-Adapter für Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j benötigt. Die Wahl der Linkbench- und Adapter-Implementierung sowie gegebenenfalls ihre Umsetzungen werden allerdings in \autoref{implementierung} beschrieben. 
+Als Werkzeug zur Messung der Performance wird in der Performance-Analyse der Benchmark Linkbench herangezogen. Aufgrund dessen werden Anpassungen an Linkbench  sowie Linkbench-Adapter für Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j benötigt. Die Wahl der Linkbench- und Adapter-Implementierung sowie gegebenenfalls ihre Umsetzungung werden allerdings in \autoref{implementierung} beschrieben. 
 
 In diesem Abschnitt als Teil des Kapitels \nameref{messungen} wird auf die Begriffe: 
 \begin{itemize}
@@ -84,21 +84,21 @@ Dabei handelt es sich um eine Einstellung des Benchmarks, die in der Adapter-Kon
 
 Im Rahmen der Arbeit wird die Konfiguration allerdings als Linkbench-Threads bezeichnet, da durch diese spezifiziert wird, wie viele Threads während des Benchmarks gleichzeitig Requests beziehungsweise Graph-Queries an ein Datenbanksystem senden.
 
-Es handelt sich hierbei somit um eine Einstellung, die einen erheblichen Einfluss auf die bei der Performance-Analyse erzielten Ergebnisse hat. Schließlich hat die Anzahl der Threads, die gleichzeitig während den Messungen Anfragen an ein Datenbanksystem senden, einen großen Einfluss darauf, welche Last während des Benchmarks auf ein Datenbanksystem ausgeübt wird. 
+Es handelt sich somit um eine Einstellung, die einen erheblichen Einfluss auf die bei der Performance-Analyse erzielten Ergebnisse hat. Schließlich hat die Anzahl der Threads, die gleichzeitig während den Messungen Anfragen an ein Datenbanksystem senden, einen großen Einfluss darauf, welche Last während des Benchmarks auf ein Datenbanksystem ausgeübt wird. 
 
 Bei den Linkbench-Threads handelt es sich darüber hinaus um einen Parameter, der über alle Messreihen der Arbeit hinweg konstant den Wert 50 aufweist. So kann sichergestellt werden, dass während den Messungen alle Datenbanksysteme zumindest in dieser Hinsicht derselben Last ausgesetzt sind. 
 
 \subsection{Request-Anzahl}
 \label{analyse:request_anzahl}
-Bei der Request-Anzahl handelt es sich ebenfalls wie bei den Linkbench-Threads um eine Einstellung, die in der Adapter-Konfiguration von Linkbench vorgenommen wird. Um sie festzulegen, muss ein Wert für \texttt{requests} angegeben werden. 
+Bei der Request-Anzahl handelt es sich, wie bei den Linkbench-Threads, ebenfalls um eine Einstellung, die in der Adapter-Konfiguration von Linkbench vorgenommen wird. Um sie festzulegen, muss ein Wert für \texttt{requests} angegeben werden. 
 
 Zum besseren Verständnis wird die Konfiguration allerdings im weiteren Verlauf als Request-Anzahl bezeichnet. Die Request-Anzahl regelt dabei, wie viele Graph-Queries von jeweils einem der Linkbench-Threads an das zu benchmarkende Datenbanksystem gesendet werden, bevor eine \textit{Request}-Phase endet und die Ergebnisstatistik (eine CSV-Datei) erstellt. Der Faktor wirkt sich dadurch signifikant darauf aus, wie lange eine \textit{Request-Phase} andauert, bevor Linkbench die Ergebnisse für das untersuchte Datenbanksystem in Form einer Ergebnisstatistik bereitstellt. Zugleich bietet er einen Anhaltspunkt für die Qualität der durchgeführten Messungen. Denn Linkbench erhält ein umso detaillierteres Bild von der Performance der Datenbanksysteme, desto mehr Requests beziehungsweise Graph-Queries Teil des Benchmark-Durchlaufs sind. Darüber hinaus fallen bei einer höheren Anzahl an Messungen auch Anomalien weniger ins Gewicht, welche die Messergebnisse gegebenenfalls verzerren könnten.
 
-Im Rahmen der in der Arbeit durchgeführten Messreihen müssen hierbei ein Kompromiss zwischen der Qualität und der Dauer einer \textit{Request}-Phase von Linkbench gefunden werden. 
+Im Rahmen der in der Arbeit durchgeführten Messreihen muss hierbei ein Kompromiss zwischen der Qualität und der Dauer einer \textit{Request}-Phase von Linkbench gefunden werden. 
 
-So wird bei allen Messungen, die auf Basis eines konstant verteilten Datensatzes durchgeführt werden, die Request-Anzahl von 500.000 eingesetzt. Diese Anzahl wird hierbei gewählt, da sie ein detailliertes Bild von der Performance eines Datenbanksystems zeichnet und sich die \textit{Request}-Phase für alle drei Datenbanksysteme unterhalb eines Zeitraums von drei Stunden befindet -- sollte es zu keinen Anomalien kommen. 
+So wird bei allen Messungen, die auf Basis eines konstant verteilten Datensatzes durchgeführt werden, die Request-Anzahl von 500.000 eingesetzt. Diese Anzahl wird dabei gewählt, da sie ein detailliertes Bild von der Performance eines Datenbanksystems zeichnet und sich die \textit{Request}-Phase für alle drei Datenbanksysteme unterhalb eines Zeitraums von drei Stunden befindet -- sollte es zu keinen Anomalien kommen. 
 
-Für die Messungen, die auf Basis eines real verteilten Datensatzes erfolgen, wird lediglich eine Request-Anzahl von 50.000 herangezogen. Dies hängt damit zusammen, dass hierbei deutlich umfangreichere Ergebnismengen möglich sind. So kann es je nach Variation der \texttt{getLinkList}-Operation, zu einer Ergebnismenge von bis zu 100.000 Links (Kanten) kommen. Eine solch große Ergebnismenge hat hierbei einen signifikanten Einfluss auf die Performance der Datenbanksysteme während des Benchmarks. Dies kann zur Folge haben, dass die Performance eines Datenbanksystems nachweisbar einbricht. Um weiterhin eine Performance von unter drei Stunden für eine Request-Phase gewährleisten zu können, wird die Request-Anzahl daher reduziert. Auch wenn dadurch nicht dieselbe Qualität der Ergebnisse erreicht werden kann, wie bei den Messungen mit einem konstant verteilten Datensatz.
+Für die Messungen, die auf Basis eines real verteilten Datensatzes erfolgen, wird lediglich eine Request-Anzahl von 50.000 herangezogen. Dies hängt damit zusammen, dass hierbei deutlich umfangreichere Ergebnismengen möglich sind. So kann es je nach Variation der \texttt{getLinkList}-Operation, zu einer Ergebnismenge von bis zu 100.000 Links (Kanten) kommen. Eine solch große Ergebnismenge hat einen signifikanten Einfluss auf die Performance der Datenbanksysteme während des Benchmarks. Dies kann zur Folge haben, dass die Performance eines Datenbanksystems nachweisbar einbricht. Um weiterhin eine Performance von unter drei Stunden für eine Request-Phase gewährleisten zu können, wird die Request-Anzahl daher reduziert. Auch wenn dadurch nicht dieselbe Qualität der Ergebnisse erreicht werden kann, wie bei den Messungen mit einem konstant verteilten Datensatz.
 
 Die unterschiedliche Request-Anzahl bei den verschiedenen Messreihen stellt einen wichtigen Punkt dar, der später beim Vergleich der Ergebnisse miteinander beachtet werden muss. Schließlich fällt beispielsweise bei Messungen mit einer geringeren Request-Anzahl die Anfangsphase, in der die Datenbanksysteme oft erst warmlaufen, stärker ins Gewicht als bei Messungen mit einer höheren Request-Anzahl.
 
@@ -108,17 +108,17 @@ Beim Operationsmix handelt es sich um Einstellungen, die in der Workload-Konfigu
 
 Im Rahmen der Arbeit wird die Zusammensetzung des Operationsmix dabei immer zwischen allen Messungen eines Datenbanksystems in einer bestimmten Konfiguration variiert. Dabei macht eine Operation beziehungsweise Operationsart immer 100 \% aller im Rahmen einer Messung durchgeführten Requests aus. So wird jede Operationsart wie \texttt{getNode}, \texttt{getLink}, etc. im Rahmen einer separaten \textit{Request}-Phase von Linkbench gemessen und analysiert.
 
-Die Operationen werden dabei getrennt voneinander gemessen, um die während der \textit{Request}-Phase erzielte Ressourcenauslastung immer einer bestimmten Operationsart zuordnen zu können. Wie die Ressourcenauslastung gemessen wird, wird in \autoref{analyse:metriken} genauer beschrieben.
+Die Operationen werden getrennt voneinander gemessen, um die während der \textit{Request}-Phase erzielte Ressourcenauslastung immer einer bestimmten Operationsart zuordnen zu können. Wie die Ressourcenauslastung gemessen wird, wird in \autoref{analyse:metriken} genauer beschrieben.
 
 \section{Operationen}
 \label{analyse:operationen}
 In diesem Abschnitt wird auf die verschiedenen Operationen eingegangen, deren Performance im Rahmen der Analyse dieser Arbeit eine Rolle spielen. 
 
-Bei den im Rahmen der Performance-Analyse gebenchmarkten Operationen handelt es sich um dieselben Operationen, die auch in \cite{sigmod_tian} untersucht werden. Dabei gilt es allerdings zu beachten, dass obwohl die Namen der Operationen gleich lauten, nicht bekannt ist, ob die Queries, die von ihnen an die Datenbanksysteme gesendet werden, identisch sind. Daher sollten aus den gleichen Namen keine falschen Schlüsse gezogen werden. 
+Bei den im Rahmen der Performance-Analyse gebenchmarkten Operationen handelt es sich um dieselben Operationen, die auch in \cite{sigmod_tian} untersucht werden. Es gilt allerdings zu beachten, dass obwohl die Namen der Operationen gleich lauten, nicht bekannt ist, ob die Queries, die von ihnen an die Datenbanksysteme gesendet werden, identisch sind. Daher sollten aus den gleichen Namen keine falschen Schlüsse gezogen werden. 
 
 Des Weiteren ist es auch nicht möglich, die untersuchten Operationen im Vergleich zu \cite{sigmod_tian} auszuweiten. Schließlich handelt es sich bei diesen um lesende Operationen, die dadurch auch von Db2 Graph als eine Art Read-Only-Datenbanksystem unterstützt werden. Alle weiteren Operationen, die von Linkbench bereitgestellt werden (\autoref{linkbench:operationen}), sind hingegen von schreibender Natur. 
 
-Bei den im Rahmen der Performance-Analyse gebenchmarkten Operationen handelt es sich hierbei um:
+Bei den im Rahmen der Performance-Analyse gebenchmarkten Operationen handelt es sich um:
 \begin{itemize}
     \item \texttt{getNode},
     \item \texttt{getLink},
@@ -144,9 +144,9 @@ In diesem Abschnitt wird auf die Rolle der Begrenzung der Ergebnismenge bei der 
 
 Bei der Begrenzung der Ergebnismenge handelt es sich um eine Workload-Konfiguration, die lediglich die \texttt{getLinkList}-Operation betrifft. Durch sie wird eine obere Grenze für die Anzahl an Elementen einer Ergebnismenge in der Query der \texttt{getLinkList}-Operation gesetzt. Wird die Grenze beispielsweise auf 10 gesetzt, so übermitteln die abgefragten Datenbanksysteme als Antwort auf die \texttt{getLinkList}-Queries maximal eine Menge mit zehn Links (Kanten) an den Benchmark. 
 
-Die Begrenzung der Ergebnismenge wird dabei im Rahmen dieser Arbeit auch kurz als Range-Limit bezeichnet, da der Key \texttt{range\_limit} in der Workload-Konfiguration für die Steuerung der Begrenzung der Ergebnismenge verantwortlich ist.
+Die Begrenzung der Ergebnismenge wird im Rahmen dieser Arbeit auch kurz als Range-Limit bezeichnet, da der Key \texttt{range\_limit} in der Workload-Konfiguration für die Steuerung der Begrenzung der Ergebnismenge verantwortlich ist.
 
-Sie wird dabei mit der Motivation neu in den Benchmark eingeführt, dadurch die Performance der verschiedenen Datenbanksysteme bei größeren oder kleineren Ergebnismengen untersuchen zu können. 
+Sie wird mit der Motivation neu in den Benchmark eingeführt, die Performance der verschiedenen Datenbanksysteme bei größeren oder kleineren Ergebnismengen untersuchen zu können. 
 
 Bei den Messungen, die im Rahmen dieser Arbeit durchgeführt werden, nimmt die obere Grenze der Ergebnismenge die folgenden Werte an:
 \begin{itemize}

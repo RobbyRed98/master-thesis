@@ -11,13 +11,13 @@ Db2 Graph wurde mit dem Ziel entwickelt, Informationen mittels Graph-Queries aus
     \centering
     \includegraphics[width=\textwidth]{images/db2graph_system.pdf}
     \vspace{0.1em}
-    \caption{Struktur Db2 Graph-System}
+    \caption{Rolle Db2 Graph}
     \label{fig:db2graph_system}
 \end{figure}
 
 Wie in \autoref{fig:db2graph_system} erkennbar, fungiert Db2 Graph aus architektonischer Sicht als eine Art Proxy-Anwendung für Db2. Dabei übersetzt sie die von einem Client gesendeten Gremlin-Graph-Queries in SQL-An\-wei\-sung\-en \cite{vldb_tian, sigmod_tian}. Diese werden anschließend an eine Db2-Instanz weitergeleitet \cite{vldb_tian, sigmod_tian}. 
 
-Db2 Graph und Db2 erfüllen somit gemeinsam die Rolle einer Read-Only-Graph\-daten\-bank. Db2 Graph vereint dabei Elemente von Graphdatenbanksystemen und relationalen Datenbanksystemen. So ist es möglich, Graph-Anfragen an ein System zu stellen, das die Daten in relationaler Form speichert \cite{vldb_tian, sigmod_tian}. Dadurch bringt Db2 Graph das Abfragen von Elementen einer Graphstruktur mit einer relationalen Datenhaltung zusammen. 
+Db2 Graph und Db2 erfüllen somit gemeinsam die Rolle einer Read-Only-Graph\-daten\-bank. Db2 Graph vereint dabei Elemente von Graphdatenbanksystemen und relationalen Datenbanksystemen. So ist es möglich, Graphanfragen an ein System zu stellen, das die Daten in relationaler Form speichert \cite{vldb_tian, sigmod_tian}. Dadurch bringt Db2 Graph das Abfragen von Elementen einer Graphstruktur mit einer relationalen Datenhaltung zusammen. 
 
 \subsection{Aufbau}
 Wie in \autoref{fig:db2graph_aufbau} beschrieben, handelt es sich bei Db2 Graph um eine modular aufgebaute Anwendung. Die Anwendung besteht dabei aus fünf größeren Komponenten. Diese fünf Komponenten übernehmen dabei die folgenden Rollen und Aufgaben: 
@@ -114,7 +114,7 @@ Auf Basis dieser \texttt{\acs{vid}} (Zeile 4 - 7 \autoref{src:mapping_example}) 
 
 Wie im \autoref{src:mapping_example} erkennbar ist, lässt die Konfiguration auch weitere Anpassungen bezüglich des Mappings und der Graph-Topologie zu. So ist es beispielsweise möglich, die Labels für Knoten und Kanten auf Basis einer Vertex-Tabelle oder Edge-Tabelle zu definieren, siehe Zeile 15 und 43 \autoref{src:mapping_example}. Der Kern des Mappings spielt sich dabei aber wie zuvor beschrieben auf Basis der Parameter \texttt{\acs{vid}}, \texttt{table\_id}, \texttt{src\_v\_cols}, \texttt{dst\_v\_cols} sowie \texttt{src\_v\_tables} und \texttt{dst\_v\_tables} ab. Diese Werte bestimmten, wie die relationalen Daten auf einem Graph abgebildet werden.
 
-\begin{lstlisting}[caption={Beispiel Auschnitt Mapping Konfiguration},language=json,label=src:mapping_example]
+\begin{lstlisting}[caption={Beispiel Ausschnitt Mapping Konfiguration},language=json,label=src:mapping_example]
 {
     "v_tables": [
             {
@@ -344,7 +344,7 @@ Eine weitere Neuerung, die Einzug in V11.5.6.0 gehalten hat, stellt die Tatsache
 
 \subsection{Zusammenfassung}
 
-Bei Db2 Graph handelt es sich um eine Grapherweiterung, die genutzt werden kann, um Graph-Anfragen an eine relationale Datenbank zu stellen. Um diese Aufgabe zu erfüllen, nutzt sie eine Mapping-Konfiguration. Diese Mapping-Konfiguration beschreibt die Topologie eines Graphen. Dabei regelt sie, welche Tabellen einer Db2-Datenbank Teil des Graphen sind und welche Rolle sie im Graphen einnehmen.
+Bei Db2 Graph handelt es sich um eine Grapherweiterung, die genutzt werden kann, um Graphanfragen an eine relationale Datenbank zu stellen. Um diese Aufgabe zu erfüllen, nutzt sie eine Mapping-Konfiguration. Diese Mapping-Konfiguration beschreibt die Topologie eines Graphen. Dabei regelt sie, welche Tabellen einer Db2-Datenbank Teil des Graphen sind und welche Rolle sie im Graphen einnehmen.
 
 Anhand dieser Topologieinformationen und einer Gremlin-Query erzeugt Db2 Graph SQL-Code. Dieser wird anschließend an eine Db2-Instanz gesendet. Die im Anschluss daran von Db2 an Db2 Graph gesendete Ergebnismenge wird schließlich von Db2 Graph aufbereitet und als Antwort auf die Gremlin-Query weitergegeben. 
 

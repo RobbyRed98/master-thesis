@@ -7,9 +7,20 @@ Im Rahmen dieses Kapitels wird IBM Db2 Graph genauer beschrieben. Im Zuge dessen
 \label{db2graph:ansatz}
 Db2 Graph wurde mit dem Ziel entwickelt, Informationen mittels Graph-Queries aus einer relationalen Db2-Datenbank abfragen zu können \cite{vldb_tian, sigmod_tian}. So wurde Db2 Graph als eine Art Grapherweiterung für Db2 konzipiert. Der Einsatz von Db2 Graph setzt dabei eine aktive Instanz von Db2 voraus \cite{vldb_tian, sigmod_tian}. Diese hält hierbei die Informationen, auf die Db2 Graph Zugriff hat in relationaler Form \cite{vldb_tian, sigmod_tian}. Dabei müssen die Daten nicht für die Einbindung in Db2 Graph angepasst oder umformatiert werden \cite{vldb_tian, sigmod_tian}.
 
-\begin{figure}[ht]
+\begin{figure}[!ht]
+	\usetikzlibrary{shapes.arrows}
     \centering
-    \includegraphics[width=\textwidth]{images/db2graph_system.pdf}
+	\begin{tikzpicture}[
+		nodestyle/.style={draw, minimum height=15mm, minimum width=25mm},
+		databasenode/.style={cylinder, draw, thick, shape border rotate=90, shape aspect=.5, minimum height=17mm, minimum width=25mm, align=center, outer sep=-0.5\pgflinewidth, yshift=-2mm},
+		arrowstyle/.style={draw, double arrow, minimum width=0.7cm, minimum height=2cm, double arrow head extend=0.2cm}
+		]
+		\node[nodestyle] (client) at (0, 0) {Client};
+		\node[nodestyle] (graph) at (5, 0) {DB2 Graph};
+		\node[databasenode] (db2) at (10, 0) {Db2};
+		\node[arrowstyle] at (2.5, 0) {};
+		\node[arrowstyle] at (7.5, 0) {};
+	\end{tikzpicture}
     \vspace{0.1em}
     \caption{Rolle Db2 Graph}
     \label{fig:db2graph_system}

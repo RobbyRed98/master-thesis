@@ -125,7 +125,7 @@ Der Db2Graph-Adapter stellt eine Implementierung eines Adapters dar, der es erm�
 
 Ähnlich wie der \texttt{Db2GraphOld-Adapter} setzt der Adapter für V11.5.6.0 ebenfalls auf dem \texttt{Db2}-Adapter auf. Er erbt von diesem die Logik für den Verbindungsaufbau zu einer Db2-Instanz und der Durchführung der schreibenden Operationen, die nicht über Db2 Graph abgewickelt werden können. 
 
-Des Weiteren überschreibt er ebenfalls die lesenden Operationen, sodass sie mittels der in \autoref{src:gremlin_queries} formulierten Queries mit der Db2-Graph-V11.5.6.0-Instanz interagieren. Dafür baut der Adapter ähnlich wie der \texttt{Db2Graph\allowbreak Old}-Adapter eine Gremlin-Verbindung auf. Der Verbindungsaufbau erfordert allerdings aufgrund des in Db2 Graph V11.5.6.0 neu eingeführten Verbindungs- und Session-Managements weitaus mehr Logik als beim \texttt{Db2GraphOld}-Adapter. Eine Übersicht über die von dem \texttt{Db2Graph}-Adapter aufgebauten Verbindungen kann dabei \autoref{fig:adapter_verbindungen} entnommen werden.
+Des Weiteren überschreibt er ebenfalls die lesenden Operationen, sodass sie mittels der in \autoref{src:gremlin_queries} formulierten Queries mit der Db2-Graph-V11.5.6.0-Instanz interagieren. Dafür baut der Adapter ähnlich wie der \texttt{Db2Graph\allowbreak Old}-Adapter eine Gremlin-Verbindung auf. Der Verbindungsaufbau erfordert allerdings aufgrund des in Db2 Graph V11.5.6.0 neu eingeführten Verbindungs- und Session-Managements weitaus mehr Logik als bei dem \texttt{Db2GraphOld}-Adapter. Eine Übersicht über die von dem \texttt{Db2Graph}-Adapter aufgebauten Verbindungen kann dabei \autoref{fig:adapter_verbindungen} entnommen werden.
 
 \subsection{Neo4j-Adapter}
 \label{implementierung:adapter:neo4j}

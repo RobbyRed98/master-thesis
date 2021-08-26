@@ -101,7 +101,7 @@ Bei genauerer Betrachtung der durchschnittlichen Latenzergebnisse fällt darübe
 Bei Db2 Graph Beta 3 scheint dies interessanterweise nicht der Fall zu sein. Dort weisen zwar \texttt{getNode} und \texttt{getLinkList} dieselben Positionen im Ranking auf, allerdings verfügt hier \texttt{getLink} über eine geringere Performance als \texttt{countLink}.
 
 \subsection{Durchsatz}
-Die Ergebnisse für durchschnittlichen Durchsatz zeigen ein ähnliches Bild wie die Latenzwerte der Datenbanksysteme. So ist auch in \autoref{fig:durchsatz:linkbench_10m_const} erkennbar, dass Neo4j mit Abstand den höchsten Durchsatz aufweist. Gefolgt wird Neo4j von Db2 Graph Beta 3 und mit etwas größerem Abstand Db2 Graph V11.5.6.0. Dabei gilt es zu beachten, dass -- anders als bei der Latenz -- beim Durchsatz ein hoher Wert auf eine hohe Performance eines Datenbanksystems hindeutet. Schließlich bedeutet ein hoher Latenzwert, dass ein Datenbanksystem dazu in der Lage ist viele Operationen pro Sekunde zu verarbeiten.  
+Die Ergebnisse für durchschnittlichen Durchsatz zeigen ein ähnliches Bild wie die Latenzwerte der Datenbanksysteme. So ist auch in \autoref{fig:durchsatz:linkbench_10m_const} erkennbar, dass Neo4j mit Abstand den höchsten Durchsatz aufweist. Gefolgt wird Neo4j von Db2 Graph Beta 3 und mit etwas größerem Abstand Db2 Graph V11.5.6.0. Dabei gilt es zu beachten, dass -- anders als bei der Latenz -- bei dem Durchsatz ein hoher Wert auf eine hohe Performance eines Datenbanksystems hindeutet. Schließlich bedeutet ein hoher Latenzwert, dass ein Datenbanksystem dazu in der Lage ist viele Operationen pro Sekunde zu verarbeiten.  
 
 \begin{figure}[!ht]
     \centering
@@ -440,7 +440,7 @@ Die in \autoref{fig:durchsatz:linkbench_100m_real} und \autoref{fig:durchsatz:li
 
 Darüber hinaus ähneln auch die im Rahmen dieser Messreihe erzielten Durchsatzergebnisse (\autoref{fig:durchsatz:linkbench_100m_real}) denen des kleineren real verteilten Datensatzes (\autoref{fig:durchsatz:linkbench_10m_real}).
 
-Des Weiteren halbiert sich auch hier ungefähr der Durchsatz beim Anstieg des Range-Limits von 100 auf 100.000, passend zur Verdoppelung bei den Latenzwerten.
+Des Weiteren halbiert sich auch hier ungefähr der Durchsatz bei dem Anstieg des Range-Limits von 100 auf 100.000, passend zur Verdoppelung bei den Latenzwerten.
 
 \begin{figure}[!ht]
     \centering

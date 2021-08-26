@@ -45,7 +45,7 @@ In diesem Unterabschnitt findet ein kurzer Vergleich zwischen dem Graph-basierte
 
 In der folgenden Aufzählung werden dabei die drei wichtigsten Unterschiede zwischen den Datenmodellen angesprochen:
 \begin{itemize}
-    \item Das Graphmodell verfügt über ein flexibles Schema, während beim relationalen Modell auf ein striktes Schema gesetzt wird \cite{gdbms,rdbms_book}.
+    \item Das Graphmodell verfügt über ein flexibles Schema, während bei dem relationalen Modell auf ein striktes Schema gesetzt wird \cite{gdbms,rdbms_book}.
     \item Im relationalen Modell werden alle Informationen in Tabellen abgelegt \cite{rdbms_book}. Im Graphmodell werden die Daten in Knoten und Kanten gehalten \cite{gdbms}. 
     \item Beziehungen werden in einem Graphdatenbanksystem durch Kanten zwischen einem Start- und Zielknoten repräsentiert \cite{gdbms}. Beim relationalen Modell werden Beziehungen durch die Referenzierung eines Primärschlüssels einer anderen Tabelle vorgenommen \cite{rdbms_book}. 
 \end{itemize}
@@ -197,7 +197,7 @@ Die in \autoref{fig:kuechen_graph} dargestellte Repräsentation der Küchen und 
 \subsubsection{Anmerkungen}
 Auch wenn die beiden zuvor aufgeführten Szenarien hier die Vorteile des Graphmodells betonten, so können alle Szenarien auch mit dem relationalen Modell abgebildet werden. 
 
-Des Weiteren gilt es darauf hinzuweisen, dass die Softwareentwicklung für ein relationales Datenbanksystem in einigen Fällen mit weniger Entwicklungsaufwand als beim Graphmodell verbunden sein kann. Denn wenn auch in Szenario 2. mehrere Tabellen für die Abbildung der Küchengeräte benötigt werden, so ist bei der Abfrage eines Eintrags aus einer dieser Tabellen immer gesichert, dass er über Werte für die als Spalten definierten Eigenschaften verfügt. Bei Datenbanken, die auf dem Graphmodell basieren, ist dies nicht automatisch gesichert. Hier können Knoten mit denselben Labels unterschiedliche Eigenschaften und Werte aufweisen. So muss die entwickelte Software mit diesen heterogenen Daten umgehen können. Daraus ergibt sich jedoch meist ein höherer Entwicklungsaufwand. 
+Des Weiteren gilt es darauf hinzuweisen, dass die Softwareentwicklung für ein relationales Datenbanksystem in einigen Fällen mit weniger Entwicklungsaufwand als bei dem Graphmodell verbunden sein kann. Denn wenn auch in Szenario 2. mehrere Tabellen für die Abbildung der Küchengeräte benötigt werden, so ist bei der Abfrage eines Eintrags aus einer dieser Tabellen immer gesichert, dass er über Werte für die als Spalten definierten Eigenschaften verfügt. Bei Datenbanken, die auf dem Graphmodell basieren, ist dies nicht automatisch gesichert. Hier können Knoten mit denselben Labels unterschiedliche Eigenschaften und Werte aufweisen. So muss die entwickelte Software mit diesen heterogenen Daten umgehen können. Daraus ergibt sich jedoch meist ein höherer Entwicklungsaufwand. 
 
 \subsection{Zusammenfassung}
 Bei dem Graphmodell und Graphdatenbanksystemen handelt es sich noch um eine recht junge Technologie, die bisher lediglich eine vergleichsweise kleine Verbreitung gefunden hat. Allerdings scheint sie in den letzten Jahren einen Aufschwung in Popularität erfahren zu haben. 

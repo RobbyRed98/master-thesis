@@ -160,7 +160,7 @@ Bei der Range-Limit-Konfiguration handelt es sich allerdings nicht, wie bei der 
 
 Sie wird in diesem Abschnitt beschrieben, obwohl sich dieser eigentlich mit Anpassungen am Benchmark selbst befasst, weil es sich dabei um eine Änderung handelt, die sich auf mehrere der im Rahmen Arbeit implementierten Adapter bezieht.
 
-Die Anpassung sorgt bei dem \texttt{Neo4j}- und \texttt{Db2Graph}-Adapter dafür, dass aus der Workload-Konfiguration ein sogenannter Wert \texttt{range\_limit} ausgelesen wird. Bei diesem muss es sich zwingend um einen Integer handeln. Dieser Integer-Wert wird dann im Rahmen der \texttt{getLinkList}-Operationen für die Platzhalter \texttt{<LIMIT>} und \texttt{\$limit} bei den jeweiligen Queries eingesetzt (\autoref{src:cypher_queries} oder \autoref{src:gremlin_queries}). Dadurch wird die Ergebnismenge datenbankseitig nach oben beschränkt. 
+Die Anpassung sorgt bei dem \texttt{Neo4j}- und \texttt{Db2Graph}-Adapter dafür, dass aus der Workload-Konfiguration ein sogenannter Wert \texttt{range\_limit} ausgelesen wird. Bei diesem muss es sich zwingend um einen Integer handeln. Dieser Integer-Wert wird dann im Rahmen der \texttt{getLinkList}-Ope\-ra\-ti\-on\-en für die Platzhalter \texttt{<LIMIT>} und \texttt{\$limit} bei den jeweiligen Queries eingesetzt (\autoref{src:cypher_queries} oder \autoref{src:gremlin_queries}). Dadurch wird die Ergebnismenge datenbankseitig nach oben beschränkt. 
 
 \section{Zusammenfassung}
 \label{implementierung:zusammenfassung}

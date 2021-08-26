@@ -23,7 +23,7 @@ Die Implementierung von Linkbench aus dem \texttt{mdcallag/linkbench}-Repository
     \item MongoDB und
     \item PostgreSQL.
 \end{itemize}
-Anstatt ausschließlich des MySQL-Adapters über den das \texttt{facebookarchive/\break linkbench}-Repository verfügt \cite{mc_linkbench_github}. Darüber hinaus enthält das Repository auch einen generischen-SQL-Adapter \cite{mc_linkbench_github}. Dieser kann als Basis für die Implementierung eines Adapters für relationale Datenbanksysteme herangezogen werden \cite{mc_linkbench_github}. Schließlich implementiert er bereits die meisten Operationen für Datenbanksysteme, die JDBC (Java Database Connectivity) als Schnittstelle unterstützen \cite{mc_linkbench_github}. Womöglich könnte der generische SQL-Adapter auch als Basis für die Adapter für Db2 Graph eingesetzt werden, da er bereits einige schreibende Operationen implementiert. Dadurch könnte unter Umständen auch der Aufwand für die Implementierung dieser Adapter gesenkt werden.
+Anstatt ausschließlich des MySQL-Adapters über den das \texttt{facebookarchive/\break linkbench}-Repository verfügt \cite{mc_linkbench_github}. Darüber hinaus enthält das Repository auch einen generischen SQL-Adapter \cite{mc_linkbench_github}. Dieser kann als Basis für die Implementierung eines Adapters für relationale Datenbanksysteme herangezogen werden \cite{mc_linkbench_github}. Schließlich implementiert er bereits die meisten Operationen für Datenbanksysteme, die JDBC (Java Database Connectivity) als Schnittstelle unterstützen \cite{mc_linkbench_github}. Womöglich könnte der generische SQL-Adapter auch als Basis für die Adapter für Db2 Graph eingesetzt werden, da er bereits einige schreibende Operationen implementiert. Dadurch könnte unter Umständen auch der Aufwand für die Implementierung dieser Adapter gesenkt werden.
 
 Außerdem wurde bei der Implementierung in \texttt{mdcallag/linkbench}-Repository einige Anpassungen vorgenommen, die eine detailliertere Aufschlüsselung der gemessenen Latenzwerte ermöglichen und die Fehlerbehandlung verbessern \cite{mc_linkbench_github}.
 
@@ -62,7 +62,7 @@ Um einen kurzen anfänglichen Überblick darüber zu bieten, wie die Adapter auf
 		linetext/.style={fill=white, inner sep=1pt}
 	]
 		\node[nodestyle] (interface) at (0, 0) {Adapter Schnittstelle};
-		\node[nodestyle] (sql) at (-3, -3) {generischer-SQL-Adapter};
+		\node[nodestyle] (sql) at (-3, -3) {generischer SQL-Adapter};
 		\node[nodestyle] (neo4j) at (3, -3) {Neo4j-Adapter};
 		\node[nodestyle] (db2) at (-3, -6) {Db2-Adapter};
 		\node[nodestyle] (graphold) at (-6, -9) {Db2GraphOld-Adapter};
@@ -81,7 +81,7 @@ Um einen kurzen anfänglichen Überblick darüber zu bieten, wie die Adapter auf
 
 \subsection{Db2-Adapter}
 \label{implementierung:adapter:db2}
-Bei dem Db2-Adapter handelt es sich um eine Implementierung, die auf Basis des generischen-SQL-Adapters implementiert wird \cite{mc_linkbench_github}. Sie wurde dabei mit dem Ziel entwickelt, sämtliche Linkbench-Operationen für das Benchmarking einer Db2-Instanz zu implementieren, sodass sie als Basis für die Implementierung der neuen Db2-Graph-spezifischen Adapter herangezogen werden kann.
+Bei dem Db2-Adapter handelt es sich um eine Implementierung, die auf Basis des generischen SQL-Adapters implementiert wird \cite{mc_linkbench_github}. Sie wurde dabei mit dem Ziel entwickelt, sämtliche Linkbench-Operationen für das Benchmarking einer Db2-Instanz zu implementieren, sodass sie als Basis für die Implementierung der neuen Db2-Graph-spezifischen Adapter herangezogen werden kann.
 
 Die Queries, welche im Rahmen der verschiedenen Operationen an die Db2-Instanz gesendet werden, mussten dabei im Db2-spezifischen SQL-Dialekt formuliert werden. Die Kommunikation zwischen Linkbench und einer Db2-Instanz wird dabei über eine JDBC-Verbindung abgewickelt. 
 
@@ -129,7 +129,7 @@ Des Weiteren überschreibt er ebenfalls die lesenden Operationen, sodass sie mit
 
 \subsection{Neo4j-Adapter}
 \label{implementierung:adapter:neo4j}
-Bei dem \texttt{Neo4j}-Adapter handelt es sich um einen Adapter für Linkbench, der mittels der Abfragesprache Cypher mit einer Neo4j-Instanz interagiert. Dabei wird der Adapter im Rahmen dieser Arbeit zur Durchführung aller Neo4j-spezifischen Messungen genutzt. Anders als die Adapter für Db2 Graph und der \texttt{Db2}-Adapter musste dieser Adapter von Grund auf neu implementiert werden. Schließlich konnte dieser weder auf dem \texttt{Db2}-Adapter, noch auf dem generische-SQL-Adapter aufgebaut werden.
+Bei dem \texttt{Neo4j}-Adapter handelt es sich um einen Adapter für Linkbench, der mittels der Abfragesprache Cypher mit einer Neo4j-Instanz interagiert. Dabei wird der Adapter im Rahmen dieser Arbeit zur Durchführung aller Neo4j-spezifischen Messungen genutzt. Anders als die Adapter für Db2 Graph und der \texttt{Db2}-Adapter musste dieser Adapter von Grund auf neu implementiert werden. Schließlich konnte dieser weder auf dem \texttt{Db2}-Adapter, noch auf dem generischen SQL-Adapter aufgebaut werden.
 
 So implementiert der \texttt{Neo4j}-Adapter alle Operationen die von Linkbench unterstützt werden, egal ob lesend oder schreibend. Bei den Messungen, die im Rahmen dieser Arbeit durchgeführt werden spielen allerdings lediglich die lesenden Operationen und ihre in \autoref{src:cypher_queries} beschriebenen Queries eine Rolle. Die schreibenden Operationen werden somit lediglich eingesetzt, um vor den Messungen den von Linkbench erzeugten Datensatz in Neo4j zu laden.
 

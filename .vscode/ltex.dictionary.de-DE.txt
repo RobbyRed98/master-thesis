@@ -68,3 +68,4 @@ Graphstruktur
 Graphoperationen
 Graph-Structure-Access-Step
 Topologieinformationen
+Graphanfragen

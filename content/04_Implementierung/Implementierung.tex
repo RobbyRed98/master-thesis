@@ -154,11 +154,11 @@ Auch wenn die Anpassung dazu eingeführt wird, Linkbench-Messungen mit Neo4j dur
 
 \subsection{Range-Limit-Konfiguration}
 \label{implementierung:anpassung:limit}
-Hierbei handelt es sich um eine Konfiguration, die es ermöglicht eine obere Grenze für die Ergebnismenge der \texttt{getLinkList}-Query und -Operation zu setzen. Die neue Konfiguration spielt dabei auch bei allen Messungen mit Bezug zu real verteilten Datensätzen eine zentrale Rolle. Was der Grund für die Einführung der Konfiguration ist, wird allerdings in \compref{analyse:ergebnismenge} genauer beschrieben. 
+Hierbei handelt es sich um eine Konfiguration, die es ermöglicht eine obere Grenze für die Ergebnismenge der \texttt{getLinkList}-Query und -Operation zu setzen. Die neue Konfiguration spielt dabei auch bei allen Messungen mit Bezug zu real verteilten Datensätzen eine zentrale Rolle. Was der Grund für die Einführung der Konfiguration ist, wird bereits in \compref{analyse:ergebnismenge} genauer beschrieben. 
 
 Bei der Range-Limit-Konfiguration handelt es sich allerdings nicht, wie bei der \textit{Load}-Phase Änderung, um eine Anpassung die direkt im Kern des Benchmarks umgesetzt wird. Vielmehr handelt es sich um eine Konfiguration die sich gleichermaßen durch den \texttt{Neo4j}- und \texttt{Db2Graph}-Adapter zieht. 
 
-Sie wird in diesem Abschnitt beschrieben, obwohl sich dieser eigentlich mit Anpassungen am Benchmark selbst befasst, weil es sich dabei um eine Änderung handelt, die sich auf mehrere der im Rahmen Arbeit implementierten Adapter bezieht.
+Sie wird in diesem Abschnitt beschrieben, obwohl sich dieser eigentlich mit Anpassungen am Benchmark selbst befasst, weil es sich dabei um eine Änderung handelt, die sich auf mehrere der im Rahmen der Arbeit implementierten Adapter bezieht.
 
 Die Anpassung sorgt bei dem \texttt{Neo4j}- und \texttt{Db2Graph}-Adapter dafür, dass aus der Workload-Konfiguration ein sogenannter Wert \texttt{range\_limit} ausgelesen wird, bei dem es sich zwingend um einen Integer handelt. Dieser Integer-Wert wird dann im Rahmen der \texttt{getLinkList}-Ope\-ra\-ti\-on\-en für die Platzhalter \texttt{<LIMIT>} und \texttt{\$limit} bei den jeweiligen Queries eingesetzt (\autoref{src:cypher_queries} oder \autoref{src:gremlin_queries}). Dadurch wird die Ergebnismenge datenbankseitig nach oben beschränkt. 
 

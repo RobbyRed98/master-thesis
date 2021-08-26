@@ -69,3 +69,6 @@ Graphoperationen
 Graph-Structure-Access-Step
 Topologieinformationen
 Graphanfragen
+Durchsatzwerte
+Mean
+Durchsatzergebnisse

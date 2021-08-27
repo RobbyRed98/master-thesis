@@ -74,3 +74,4 @@ Mean
 Durchsatzergebnisse
 Durchsatzwert
 Durchsatzergebnissen
+Neo

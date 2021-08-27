@@ -547,9 +547,9 @@ Alle Messungen finden im Kontext der Messreihe außerdem auf der Basis der folge
 Die Messreihe ähnelt hier im Aufbau der Linkbench-Real-10M Reihe stark. So werden auch hier mehrere Messungen für die {getLinkList}-Operation durchgeführt, der Datensatz ist ebenfalls real verteilt und die Request-Anzahl beträgt 50.000. Allerdings umfasst der hierbei verwendete Datensatz 100 Millionen Knoten und ca. 530 Millionen Kanten, statt den 10 Millionen Knoten und ca. 53 Millionen Kanten bei der Messreihe Linkbench-Real-10M.
 
 \subsection{Übersicht}
-In diesen Abschnitt werden alle Messreihen und ihre Parameter nochmals übersichtlich in den beiden Tabellen \autoref{tab:uebersicht_messreihen_datensatz} und \autoref{tab:uebersicht_messreihen_parameter} zusammengefasst. In \autoref{tab:uebersicht_messreihen_datensatz} werden die Datensatz-spezifischen Parameter der Messreihen, wie Größe und Verteilung, aufgeführt. Die Parameter Messumfang, Anzahl gebenchmarkter Operationen sowie Art der Queries werden hingegen in \autoref{tab:uebersicht_messreihen_parameter} aufgelistet.
+In diesem Abschnitt werden alle Messreihen und ihre Parameter nochmals übersichtlich in den beiden Tabellen (\autoref{tab:uebersicht_messreihen_datensatz} und \autoref{tab:uebersicht_messreihen_parameter}) zusammengefasst. In \autoref{tab:uebersicht_messreihen_datensatz} werden die Datensatz-spezifischen Parameter der Messreihen, wie Größe und Verteilung, aufgeführt. Die Parameter Messumfang, Anzahl gebenchmarkter Operationen sowie Art der Queries werden hingegen in \autoref{tab:uebersicht_messreihen_parameter} aufgelistet.
 
-Der Parameter Messumfang beschreibt, wie viele Operationen insgesamt während einer \textit{Request}-Phase an von den Linkbench-Threads durchgeführt werden. So beträgt der Messumfang bei allen Messreihen immer das 50-fache der Request-Anzahl, da wie bereits zuvor beschrieben, während allen Messungen 50 Linkbench-Threads zum Einsatz kommen. 
+Der Parameter Messumfang beschreibt, wie viele Operationen insgesamt während einer \textit{Request}-Phase von den Linkbench-Threads durchgeführt werden. So beträgt der Messumfang bei allen Messreihen immer das 50-fache der Request-Anzahl, da wie bereits zuvor beschrieben, während allen Messungen 50 Linkbench-Threads zum Einsatz kommen. 
 
 \begin{table}[!ht]
     \centering
@@ -606,7 +606,7 @@ Die Gliederung der Messungen kann \autoref{fig:gliederung_messungen} entnommen w
 		\draw (p1.west) -- +(-1, 0) |- (messungen.south);
 		\node[anchor=west] (p3) at (2, -0.5) {$\cdots$};
 		\draw (p3.west) -- +(-1, 0) |- (messungen.south);
-		\node[anchor=west] (read) at (2, -1.5) {Linkbench-100M-Read};
+		\node[anchor=west] (read) at (2, -1.5) {Linkbench-Real-100M};
 		\draw (read.west) -- +(-1, 0) |- (messungen.south);
 		
 		\node[anchor=west] (db2) at (7.3, 2.5) {Db2 Graph Beta 3};

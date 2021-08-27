@@ -8,16 +8,16 @@ Darüber hinaus wird in diesem Kapitel auch auf kleinere Anpassungen an Linkbenc
 
 \section{Code-Basis}
 \label{implementierung:basis}
-Bei den Recherchen nach einer Linkbench-Code-Basis, die als Ausgangspunkt für die Implementierung eigener Datenbank-Adapter oder der Anbindung bereits existierender Datenbank-Adapter an den Benchmark dienen sollte, konnten die beiden folgenden Repositories auf Github identifiziert werden:
+Bei den Recherchen nach einer Linkbench-Code-Basis, die als Ausgangspunkt für die Implementierung eigener Datenbank-Adapter oder der Anbindung bereits existierender Datenbank-Adapter an den Benchmark dienen sollte, konnten die beiden folgenden Repositories auf GitHub identifiziert werden:
 \begin{itemize}
     \item \texttt{mdcallag/linkbench} \cite{mc_linkbench_github} und 
     \item \texttt{facebookarchive/linkbench} \cite{fb_linkbench_github}.
 \end{itemize}
-Beide Repositories enthalten dabei eine als Ausgangspunkt nutzbare Implementierung von Linkbench. Schlussendlich fiel die Entscheidung, welche Implementierung als Code-Basis für den Linkbench im Rahmen dieser Arbeit herangezogen werden soll allerdings auf das \texttt{mdcallag/linkbench}-Repository unter \cite{mc_linkbench_github}. 
+Beide Repositories enthalten dabei eine als Ausgangspunkt nutzbare Implementierung von Linkbench. Schlussendlich fiel die Entscheidung, welche Implementierung als Code-Basis für den Linkbench im Rahmen dieser Arbeit herangezogen werden soll allerdings auf das \texttt{mdcallag/linkbench}-Repository von \citeAY{mc_linkbench_github}. 
 
 Denn obwohl es sich bei dem \texttt{facebookarchive/linkbench}-Repository um die originale Implementierung des Benchmarks von Facebook handelt, ist die Implementierung von Linkbench im \texttt{mdcallag/linkbench}-Repository weitaus fortgeschrittener als die von Facebook. Dies liegt darin begründet, dass die in \texttt{facebookarchive\allowbreak /linkbench}-Repository befindliche Implementierung von Linkbench nicht mehr aktiv weiter entwickelt wird \cite{fb_linkbench_github}. Der letzte Commit in dem Repository stammt dabei vom 11.12.2015. 
 
-Die Implementierung von Linkbench aus dem \texttt{mdcallag/linkbench}-Repository, stellt dabei einen Fork von \texttt{facebookarchive\allowbreak /linkbench}-Repository dar, der in den letzten Jahren aktiv weiterentwickelt wurde \cite{mc_linkbench_github}. So enthält das \texttt{mdcallag/linkbench}-Repository unter \cite{mc_linkbench_github} Adapter für die Datenbanksysteme: 
+Die Implementierung von Linkbench aus dem \texttt{mdcallag/linkbench}-Repository, stellt dabei einen Fork von \texttt{facebookarchive\allowbreak /linkbench}-Repository dar, der in den letzten Jahren aktiv weiterentwickelt wurde \cite{mc_linkbench_github}. So enthält das \texttt{mdcallag/linkbench}-Repository von \citeAY{mc_linkbench_github} Adapter für die Datenbanksysteme: 
 \begin{itemize}
     \item MySQL,
     \item MongoDB und
@@ -37,7 +37,7 @@ Bei dem Datenbanksystem Db2 Graph ist bekannt, dass hierfür bereits eine Adapte
 
 \subsection{Neo4j}
 \label{implementierung:evaluation:neo4j}
-Auch ein Adapter für Neo4j muss im Rahmen dieser Arbeit neu implementiert werden. Dies rührt daher, dass der einzig frei verfügbare Neo4j-Adapter aus \cite{neo_linkbench_github} auf dem technischen Stand von 2013 ist. Infolgedessen ist der Adapter nicht dazu in der Lage, die Fähigkeiten neuer Neo4j-Versionen voll auszuschöpfen. So setzt der Adapter aus \cite{neo_linkbench_github} zur Interaktion mit Neo4j eine veraltete Java-basierte Traversal-API ein, obwohl inzwischen die Abfragesprache Cypher die bevorzugte Form der Interaktion mit Neo4j ist \cite{gdbms}.
+Auch ein Adapter für Neo4j muss im Rahmen dieser Arbeit neu implementiert werden. Dies rührt daher, dass der einzig auffindbare, frei verfügbare Neo4j-Adapter von \citeAY{neo_linkbench_github} auf dem technischen Stand von 2013 ist. Infolgedessen ist der Adapter nicht dazu in der Lage, die Fähigkeiten neuer Neo4j-Versionen voll auszuschöpfen. So setzt der Adapter von \citeAY{neo_linkbench_github} zur Interaktion mit Neo4j eine veraltete Java-basierte Traversal-API ein, obwohl inzwischen die Abfragesprache Cypher die bevorzugte Form der Interaktion mit Neo4j ist \cite{gdbms}.
 
 \section{Adapter}
 \label{implementierung:adapter}
@@ -164,7 +164,7 @@ Die Anpassung sorgt bei dem \texttt{Neo4j}- und \texttt{Db2Graph}-Adapter dafür
 
 \section{Zusammenfassung}
 \label{implementierung:zusammenfassung}
-Für die im Rahmen dieser Arbeit durchgeführten Implementierungsarbeiten wird das \texttt{mdcallag/linkbench}-Repository unter \cite{mc_linkbench_github} als Code-Basis gewählt.
+Für die im Rahmen dieser Arbeit durchgeführten Implementierungsarbeiten wird das \texttt{mdcallag/linkbench}-Repository von \citeAY{mc_linkbench_github} als Code-Basis gewählt.
 
 Dabei werden die Adapter für alle drei zu untersuchenden Datenbanksysteme implementiert, da keine aktuellen Adapter-Implementierungen für Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j frei verfügbar sind.
 

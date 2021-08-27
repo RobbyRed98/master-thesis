@@ -46,7 +46,7 @@ Bei Gremlin handelt es sich um eine Abfragesprache für  Graphdatenbanksysteme \
     \item CosmosDB von Microsoft \cite{cosmosdb_2021}.
 \end{itemize}
 
-Für die Interaktion mit den Graphen bietet Gremlin dabei zwei verschiedene Abfragestile \cite{gremlin_paper}. So ist es einerseits möglich, imperativ einen sogenannten Graph-Traversal durchzuführen, um mit dem Graph zu interagieren \cite{gremlin_paper}. Anderseits ist es allerdings auch möglich, einen deklarativen Pattern-Matching-Stil zu wählen \cite{gremlin_paper}. Im Rahmen dieser Arbeit wurde bei Gremlin-Queries immer der imperative Graph-Traversal basierte Ansatz gewählt \cite{gremlin_paper}. Daher werden als Beispiel in \autoref{src:gremlin_example} lediglich imperative Queries aufgeführt. 
+Für die Interaktion mit den Graphen bietet Gremlin dabei zwei verschiedene Abfragestile. So ist es einerseits möglich, imperativ einen sogenannten Graph-Traversal durchzuführen, um mit dem Graph zu interagieren \cite{gremlin_paper}. Anderseits ist es allerdings auch möglich, einen deklarativen Pattern-Matching-Stil zu wählen \cite{gremlin_paper}. Im Rahmen dieser Arbeit wurde bei Gremlin-Queries immer der imperative Graph-Traversal basierte Ansatz gewählt. Daher werden als Beispiel in \autoref{src:gremlin_example} lediglich imperative Queries aufgeführt. 
 
 \begin{lstlisting}[caption={Beispiel Gremlin-Queries},language=JAVA,label=src:gremlin_example]
 /* Daten in den Graph einfuegen */
@@ -77,7 +77,7 @@ MATCH (:Person{name: "Robin"})-[:besitzt]->(n2) RETURN n2.modell;
 MATCH (n:Person{name: "Robin"}) DETACH DELETE n;
 \end{lstlisting}
 
-Neben Neo4j, das im Kontext der Arbeit eine wichtige Rolle spielt, unterstützen auch die folgenden Datenbanksysteme Cypher als Abfragesprache:
+Neben Neo4j, das im Kontext der Arbeit eine wichtige Rolle spielt, unterstützen unter anderem auch die folgenden Datenbanksysteme Cypher als Abfragesprache:
 \begin{itemize}
     \item RedisGraph \cite{redisgraph_2021},
     \item SAP HANA Graph \cite{opencypher_2021} und

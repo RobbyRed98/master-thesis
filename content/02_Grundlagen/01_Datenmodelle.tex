@@ -1,8 +1,8 @@
 \section{Datenbankmodelle}
 \label{datenmodelle}
-In diesem Abschnitt werden die Grundlagen des Graph-basierten Datenbankmodells skizziert. Dieses Graphmodell ist im Rahmen dieser Arbeit von wesentlicher Bedeutung. Schließlich vereint die in \autoref{db2graph} beschriebene Grapherweiterung Elemente des relationalen und Graph-basierten Datenbankmodells. Grundkenntnisse über das relationale Modell werden im Rahmen dieser Arbeit vorausgesetzt. Sollten keine Grundkenntnisse über relationale Datenbanksysteme vorhanden sein, empfehlen sich \cite{rdbms_book} und \cite{codd_relational_model} als Einstieg.
+In diesem Abschnitt werden die Grundlagen des Graph-basierten Datenbankmodells skizziert. Dieses Graphmodell ist im Rahmen dieser Arbeit von wesentlicher Bedeutung. Schließlich vereint die in \autoref{db2graph} beschriebene Grapherweiterung Elemente des relationalen und Graph-basierten Datenbankmodells. Grundkenntnisse über das relationale Modell werden im Rahmen dieser Arbeit vorausgesetzt. Sollten keine Grundkenntnisse über relationale Datenbanksysteme vorhanden sein, empfehlen sich \citeAY{rdbms_book} und \citeAY{codd_relational_model} als Einstieg.
 
-Um die Grundlagen des Graphmodells in diesem Abschnitt zu vermittelen, werden die folgenden Aspekte des Modells angesprochen:
+Um die Grundlagen des Graphmodells in diesem Abschnitt zu vermitteln, werden die folgenden Aspekte des Modells angesprochen:
 \begin{itemize}
     \item Herkunft und Verbreitung,
     \item Struktur und Schema.
@@ -10,9 +10,9 @@ Um die Grundlagen des Graphmodells in diesem Abschnitt zu vermittelen, werden di
 Die Beschränkung auf diese Aspekte wurde vorgenommen, da die Erläuterung weiterer Aspekte über den Rahmen dieser Arbeit hinausgehen würde. Anschließend findet eine kurze Gegenüberstellung des Graphmodells mit dem relationalen Modell statt. Zum Schluss werden die Informationen nochmals kurz zusammengefasst. 
 
 \subsection{Herkunft und Verbreitung}
-Das Graphmodell als Datenbankmodell hat seinen Ursprung in der heutigen Form im Jahr 1999 \cite{gdbms}. Laut \cite{gdbms} wurde das Graphmodell dabei mit der Motivation entwickelt, Nachteile und Probleme des relationalen Modells auszuräumen. 
+Das Graphmodell als Datenbankmodell hat seinen Ursprung in der heutigen Form im Jahr 1999 \cite{gdbms}. Laut \citeAY{gdbms} wurde das Graphmodell dabei mit der Motivation entwickelt, Nachteile und Probleme des relationalen Modells auszuräumen. 
 
-Graphdatenbanksysteme und das Graphmodell sind heute als vergleichbar junge Technologien noch nicht so weit verbreitet wie beispielsweise das relationale Modell. Mit 1,7 \% der Ranking-Punkte in \cite{db_engines_ranking_july} ordnen sich Graphdatenbanksysteme dabei noch weit hinter anderen Technologien ein, wie \textit{Document Stores}, \textit{Key-Values Stores} oder \textit{Wide column stores} (\autoref{fig:dbms_marketshare}) \cite{db_engines_ranking_july}. Jedoch haben Graphdatenbanksysteme seit 2013 laut \cite{db_engines_ranking_july} einen erheblichen Aufschwung in ihrer Popularität erfahren. So hat sich der Popularitätsscore dieser Datenbanksystemkategorie im Zeitraum von 01.2013 bis 07.2021 verhundertfacht \cite{db_engines_ranking_july}. 
+Graphdatenbanksysteme und das Graphmodell sind heute als vergleichbar junge Technologien noch nicht so weit verbreitet wie beispielsweise das relationale Modell. Mit 1,7 \% der Ranking-Punkte in \autoref{fig:dbms_marketshare} ordnen sich Graphdatenbanksysteme dabei noch weit hinter anderen Technologien ein, wie \textit{Document Stores}, \textit{Key-Values Stores} oder \textit{Wide column stores} \cite{db_engines_ranking_july}. Jedoch haben Graphdatenbanksysteme seit 2013 laut \citeAY{db_engines_ranking_july} einen erheblichen Aufschwung in ihrer Popularität erfahren. So hat sich der Popularitätsscore dieser Datenbanksystemkategorie im Zeitraum von Januar 2013 bis Juli 2021 verhundertfacht \cite{db_engines_ranking_july}. 
 
 \begin{figure}[ht]
     \centering
@@ -20,7 +20,7 @@ Graphdatenbanksysteme und das Graphmodell sind heute als vergleichbar junge Tech
     \caption[Anteil Ranking-Punkte nach Datenbankkategorie]{Anteil an Ranking-Punkten nach Datenbankkategorie}
     \label{fig:dbms_marketshare}
     \vspace{1em}
-    \textit{Bei den hier abgebildeten Werten handelt es sich um die aufgerundeten Werte aus} \cite{db_engines_ranking_july}\textit{.}
+    \textit{Bei den hier abgebildeten Werten handelt es sich um die aufgerundeten Werte der} \citeAY{db_engines_ranking_july}\textit{.}
 \end{figure}
 
 \subsection{Struktur und Schema}
@@ -36,7 +36,7 @@ Das Graphmodell setzt, anders als das relationale Modell, auf ein flexibles Date
     \includegraphics[width=0.75\textwidth]{images/example_graph.pdf}
     \caption{Beispiel Graph}
     \vspace{1em}
-    \textit{Hier wird ein Beispiel Graph abgebildet der die Besitzbeziehungen zwischen einer Person (Besitzer) und einem Auto modelliert.}
+    \textit{Hier wird ein Beispiel Graph abgebildet, der die Besitzbeziehungen zwischen einer Person (Besitzer) und einem Auto modelliert.}
     \label{fig:beispiel_graph}
 \end{figure}
 
@@ -49,16 +49,16 @@ In der folgenden Aufzählung werden dabei die drei wichtigsten Unterschiede zwis
     \item Im relationalen Modell werden alle Informationen in Tabellen abgelegt \cite{rdbms_book}. Im Graphmodell werden die Daten in Knoten und Kanten gehalten \cite{gdbms}. 
     \item Beziehungen werden in einem Graphdatenbanksystem durch Kanten zwischen einem Start- und Zielknoten repräsentiert \cite{gdbms}. Beim relationalen Modell werden Beziehungen durch die Referenzierung eines Primärschlüssels einer anderen Tabelle vorgenommen \cite{rdbms_book}. 
 \end{itemize}
-Bei der genaueren Betrachtung der Unterschiede aus der vorausgegangenen Aufzählung fällt auf, dass diese auch als Ähnlichkeiten betrachtet werden können. So verfügen beide Modelle trotz ihrer unterschiedlichen Herangehensweise über ein Schema, besitzen Strukturen, in denen Informationen gehalten werden und bieten die Möglichkeit, Beziehungen abzubilden. Somit scheinen die beiden Modell zumindest bezüglich dieser Aspekte äquivalent zu sein. Schließlich verfügen beide Datenmodelle über Strukturen und Mechanismen, um Daten zu halten und Beziehungen zu modellieren. 
+Bei der genaueren Betrachtung der Unterschiede aus der vorausgegangenen Aufzählung fällt auf, dass diese auch als Ähnlichkeiten betrachtet werden können. So verfügen beide Modelle trotz ihrer unterschiedlichen Herangehensweise über ein Schema, besitzen Strukturen, in denen Informationen gehalten werden und bieten die Möglichkeit, Beziehungen abzubilden. Somit scheinen die beiden Modelle zumindest bezüglich dieser Aspekte äquivalent zu sein. Schließlich verfügen beide Datenmodelle über Strukturen und Mechanismen, um Daten zu halten und Beziehungen zu modellieren. 
 
-Wenn nun allerdings beide Datenmodelle über die Mittel verfügen, Daten zu halten und Beziehungen abzubilden, stellt sich die Frage: \textit{Wann sollte welches Datenmodell herangezogen werden?}
+Wenn nun allerdings beide Datenmodelle über die Mittel verfügen, Daten zu halten und Beziehungen abzubilden, stellt sich die Frage: \textit{Wann sollte welches Datenmodell genutzt werden?}
 
 Die ausführliche Beantwortung dieser Frage würde hierbei den Rahmen der Arbeit sprengen. Allerdings können die beiden folgenden Szenarien und die abschließenden Anmerkungen kleine Einblicke dazu geben. 
 
 \subsubsection{Szenario 1.}
 In diesem Szenario wird auf Queries eingegangen, bei denen Beziehungen beziehungsweise der Beziehungsgrad eine wichtige Rolle spielen. 
 
-Hierfür wird beispielhaft die Angestelltenhierarchie eines Unternehmens herangezogen. Bei den Daten, die die Modelle hierbei repräsentieren sollen, handelt es sich um einen Datensatz an Angestellten. Diese Angestellten verfügen dabei wie in \autoref{fig:angestellten_graph} und \autoref{fig:angestellten_tabelle} erkennbar über einen Namen und einen Vorgesetzten, dem sie unterstellt sind. 
+Hierfür wird beispielhaft die Angestelltenhierarchie eines Unternehmens herangezogen. Bei den Daten, die die Modelle hierbei repräsentieren sollen, handelt es sich um einen Datensatz an Angestellten. Diese Angestellten verfügen dabei, wie in \autoref{fig:angestellten_graph} und \autoref{fig:angestellten_tabelle} erkennbar, über einen Namen und einen Vorgesetzten, dem sie unterstellt sind. 
 
 Nun soll in diesem Szenario ermittelt werden, wer \textit{Alice} Vorgesetzter dritten Grades in diesem Unternehmen ist. Also wer der Vorgesetzte des Vorgesetzten des Vorgesetzten von \textit{Alice} ist. Bei dem Graphen in \autoref{fig:angestellten_graph} kann dies leicht nachvollzogen werden. Es muss lediglich dreimal den \texttt{hat\_vorgesetzten}-gelabelten Kanten gefolgt werden, bis der Zielknoten \textit{Dave} erreicht wird. 
 
@@ -83,7 +83,7 @@ In diesem Szenario wird auf die Modellierung von heterogenen Daten im Rahmen der
 
 \autoref{tab:kaffeemaschinen} bis \autoref{tab:kuechen} stellen dabei die Tabellen dar, die für die Abbildung der verschiedenen Küchengeräte und jeweiligen Küchen im relationalen Modell erforderlich sind. Dabei fällt auf, dass für die Darstellung von zehn Küchengeräten acht verschiedene Tabellen benötigt werden. Schließlich handelt es sich bei den Küchengeräten um heterogene Daten, welche für die Erfassung aller Merkmale im strikten Schema des relationalen Modells, eine solche Handhabung erfordern. 
 
-Diese Vielzahl an Tabellen sorgt dafür, dass sich beispielsweise die Abfrage aller Geräte, die zur Küche von \textit{Alice} gehören, sehr kompliziert gestaltet. Denn bei einem solchen Prozess müssen viele verschiedene Tabellen miteinander gejoined werden. Daher kann daraus geschlossen werden, dass sich das relationale Modell nicht für die Modellierung solcher heterogenen Daten eignet.
+Diese Vielzahl an Tabellen sorgt dafür, dass sich beispielsweise die Abfrage aller Geräte, die zur Küche von \textit{Alice} gehören, sehr kompliziert gestaltet. Denn bei einem solchen Prozess müssen viele verschiedene Tabellen miteinander gejoined werden. Daher kann daraus geschlossen werden, dass sich das relationale Modell nicht für die Modellierung solcher heterogener Daten eignet.
 
 \begin{table}[!ht]
     \centering
@@ -195,7 +195,7 @@ Die in \autoref{fig:kuechen_graph} dargestellte Repräsentation der Küchen und 
 \end{figure}
 
 \subsubsection{Anmerkungen}
-Auch wenn die beiden zuvor aufgeführten Szenarien hier die Vorteile des Graphmodells betonten, so können alle Szenarien auch mit dem relationalen Modell abgebildet werden. 
+Auch wenn die beiden zuvor aufgeführten Szenarien hier die Vorteile des Graphmodells betonten, können alle Szenarien auch mit dem relationalen Modell abgebildet werden. 
 
 Des Weiteren gilt es darauf hinzuweisen, dass die Softwareentwicklung für ein relationales Datenbanksystem in einigen Fällen mit weniger Entwicklungsaufwand als bei dem Graphmodell verbunden sein kann. Denn wenn auch in Szenario 2. mehrere Tabellen für die Abbildung der Küchengeräte benötigt werden, so ist bei der Abfrage eines Eintrags aus einer dieser Tabellen immer gesichert, dass er über Werte für die als Spalten definierten Eigenschaften verfügt. Bei Datenbanken, die auf dem Graphmodell basieren, ist dies nicht automatisch gesichert. Hier können Knoten mit denselben Labels unterschiedliche Eigenschaften und Werte aufweisen. So muss die entwickelte Software mit diesen heterogenen Daten umgehen können. Daraus ergibt sich jedoch meist ein höherer Entwicklungsaufwand. 
 

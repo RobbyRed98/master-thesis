@@ -4,11 +4,11 @@ Im Rahmen dieses Kapitels wird aufgeführt, wie die Performance-Analyse von Db2 
 
 \section{Reproduktion}
 \label{analyse:reproduktion}
-Wie in der \nameref{einleitung} aufgeführt, war es in dieser Arbeit vorgesehen, die in \cite{sigmod_tian} erzielten Werte für Db2 Graph zu reproduzieren und mit neuen Werten für Neo4j zu vergleichen. 
+Wie in der \nameref{einleitung} aufgeführt, war es in dieser Arbeit vorgesehen, die von \citeAY{sigmod_tian} erzielten Werte für Db2 Graph zu reproduzieren und mit neuen Werten für Neo4j zu vergleichen. 
 
-Allerdings stellte sich nach einigen Recherchen heraus, dass sich die Werte aus \cite{sigmod_tian} im Rahmen dieser Arbeit nicht reproduzieren lassen. 
+Allerdings stellte sich nach einigen Recherchen heraus, dass sich die Werte von \citeAY{sigmod_tian} im Rahmen dieser Arbeit nicht reproduzieren lassen. 
 
-Eine Reproduktion der Ergebnisse der Performance-Analyse aus \cite{sigmod_tian} setzt hierbei die folgenden sieben Punkte voraus:
+Eine Reproduktion dieser Ergebnisse der Performance-Analyse setzt hierbei die folgenden sieben Punkte voraus:
 \begin{itemize}
     \item dieselbe Version von Db2 Graph,
     \item dieselbe Db2- und Db2-Graph-Konfiguration,
@@ -18,21 +18,21 @@ Eine Reproduktion der Ergebnisse der Performance-Analyse aus \cite{sigmod_tian} 
     \item derselbe Datensatz und 
     \item dieselbe Umgebung (OS, Ressourcen, etc.) wie in \cite{sigmod_tian}.
 \end{itemize}
-Von diesen sieben Voraussetzungen können im Rahmen der Arbeit jedoch lediglich zwei in einem gewissen Umfang erfüllt werden. Bei diesen zwei Voraussetzungen, die sich teilweise erfüllen lassen, handelt es sich um den Benchmark und die Ressourcen. Die Ressourcen werden hierbei in \cite{sigmod_tian} genau beschrieben. Darüber hinaus wird in \cite{sigmod_tian} auch aufgeführt, dass Linkbench als Benchmark für die Messungen herangezogen wird. Allerdings wird keine Auskunft darüber gegeben, welche Version beziehungsweise Implementierung von Linkbench für die Messungen genutzt wird.
+Von diesen sieben Voraussetzungen können im Rahmen der Arbeit jedoch lediglich zwei in einem gewissen Umfang erfüllt werden. Bei diesen zwei Voraussetzungen, die sich teilweise erfüllen lassen, handelt es sich um den Benchmark und die Ressourcen. Die Ressourcen werden hierbei von \citeAY{sigmod_tian} genau beschrieben. Darüber hinaus wird von \citeAY{sigmod_tian} auch aufgeführt, dass Linkbench als Benchmark für die Messungen herangezogen wird. Allerdings wird keine Auskunft darüber gegeben, welche Version beziehungsweise Implementierung von Linkbench für die Messungen genutzt wird.
 
-Bezüglich der anderen Punkte werden im Rahmen von \cite{sigmod_tian} keinerlei Informationen bereitgestellt. So ist beispielsweise nicht bekannt, mit welcher Version von Db2 Graph die Messungen durchgeführt wurden. Es ist allerdings wahrscheinlich, dass es sich weder um die Version Beta 3 noch V11.5.6.0 handelt, die über den Zeitraum dieser Arbeit verfügbar sind. Schließlich wurden beide Versionen mehrere Monate nach \cite{sigmod_tian} veröffentlicht. 
+Bezüglich der anderen Punkte werden von \citeAY{sigmod_tian} keinerlei Informationen bereitgestellt. So ist beispielsweise nicht bekannt, mit welcher Version von Db2 Graph die Messungen durchgeführt wurden. Es ist allerdings wahrscheinlich, dass es sich weder um die Version Beta 3 noch V11.5.6.0 handelt, die über den Zeitraum dieser Arbeit verfügbar sind. Schließlich wurden beide Versionen mehrere Monate nach dem Artikel von \citeAY{sigmod_tian} veröffentlicht. 
 
-Über die Benchmark-Konfiguration und die Implementierung des für den Benchmark benötigten Db2-Graph-Benchmark-Adapters ist ebenfalls nichts bekannt. Genauso werden in \cite{sigmod_tian} keine Informationen bezüglich der Konfiguration der Db2-Instanz und Db2 Graph angegeben, obwohl diese für die Reproduktion der Ergebnisse eine wichtige Rolle spielen. 
+Über die Benchmark-Konfiguration und die Implementierung des für den Benchmark benötigten Db2-Graph-Benchmark-Adapters ist ebenfalls nichts bekannt. Genauso werden von \citeAY{sigmod_tian} keine Informationen bezüglich der Konfiguration der Db2-Instanz und Db2 Graph angegeben, obwohl diese für die Reproduktion der Ergebnisse eine wichtige Rolle spielen. 
 
-Bezüglich des Datensatzes werden hingegen ein paar Eigenschaften in \cite{sigmod_tian} aufgeführt. Wie und ob der dort verwendete Datensatz durch den Daten-Generator von Linkbench erzeugt werden kann, ist jedoch weiterhin unklar.
+Bezüglich des Datensatzes werden hingegen ein paar Eigenschaften von \citeAY{sigmod_tian} aufgeführt. Wie und ob der dort verwendete Datensatz durch den Daten-Generator von Linkbench erzeugt werden kann, ist jedoch weiterhin unklar.
 
 \section{Neue Methode}
-Da die Reproduktion der Messungen aus \cite{sigmod_tian} nicht möglich ist, muss ein neues Vorgehen für die Analyse der Performance von Db2 Graph und Neo4j definiert werden. Dies erfolgt in diesem Kapitel. 
+Da die Reproduktion der Messungen von \citeAY{sigmod_tian} nicht möglich ist, muss ein neues Vorgehen für die Analyse der Performance von Db2 Graph und Neo4j definiert werden. Dies erfolgt in diesem Kapitel. 
 
-Dafür wird zuerst beschrieben, welche Elemente aus \cite{sigmod_tian} in diese Arbeit übernommen werden können. Anschließend wird auf die Änderungen und neuen Aspekte der Performance-Analyse eingegangen. Dabei wird auch begründet, weshalb bestimmte Änderungen vor- und neue Aspekte aufgenommen werden. Als Nächstes wird auf den Aufbau und den Ablauf der Performance-Analyse eingegangen. 
+Dafür wird zuerst beschrieben, welche Elemente aus dem Artikel von \citeAY{sigmod_tian} in diese Arbeit übernommen werden können. Anschließend wird auf die Änderungen und neuen Aspekte der Performance-Analyse eingegangen. Dabei wird auch begründet, weshalb bestimmte Änderungen vor- und neue Aspekte aufgenommen werden. Als Nächstes wird auf den Aufbau und den Ablauf der Performance-Analyse eingegangen. 
 
 \subsection{Übernommene Elemente}
-Auch wenn die Messungen aus \cite{sigmod_tian} nicht reproduziert werden können, so werden trotzdem einige Elemente der Messmethode übernommen, da diese einzelnen Elemente als reproduzierbar und zielführend erachtet werden. Zu diesen Elementen gehören die folgenden Aspekte der Messmethode aus \cite{sigmod_tian}:
+Auch wenn die Messungen von \citeAY{sigmod_tian} nicht reproduziert werden können, so werden trotzdem einige Elemente der Messmethode übernommen, da diese einzelnen Elemente als reproduzierbar und zielführend erachtet werden. Zu diesen Elementen gehören die folgenden Aspekte der Messmethode von \citeAY{sigmod_tian}:
 \begin{itemize}
     \item Der Einsatz von Linkbench als Benchmark zur Ermittlung der Performance.
     \item Arbeit mit den Datensatzgrößen 10 Millionen und 100 Millionen Knoten (Linkbench-10 und Linkbench-100).
@@ -43,7 +43,7 @@ Auch wenn die Messungen aus \cite{sigmod_tian} nicht reproduziert werden können
 Die folgenden Aspekte werden neu in die Performance-Analyse mit aufgenommen:
 \begin{itemize}
     \item \textit{Db2 Graph Versionen}\\
-    Statt, wie in \cite{sigmod_tian} lediglich eine Db2 Graph Version für die Analyse der Performance und den Vergleich mit anderen Graphdatenbanksystemen einzusetzen, werden in dieser Arbeit Beta 3 und V11.5.6.0 beide als Vertreter für Db2 Graph herangezogen. Die beiden Versionen werden dabei in der Performance-Analyse berücksichtigt, da es sich hierbei um die beiden Db2 Graph Versionen handelt, die zum Zeitpunkt des Verfassens der Arbeit verfügbar sind.
+    Statt, wie im Artikel von \citeAY{sigmod_tian} lediglich eine Db2 Graph Version für die Analyse der Performance und den Vergleich mit anderen Graphdatenbanksystemen einzusetzen, werden in dieser Arbeit Beta 3 und V11.5.6.0 beide als Vertreter für Db2 Graph herangezogen. Die beiden Versionen werden dabei in der Performance-Analyse berücksichtigt, da es sich hierbei um die beiden Db2 Graph Versionen handelt, die zum Zeitpunkt des Verfassens der Arbeit verfügbar sind.
     \item \textit{Ergebnismenge}\\
     Im Rahmen der neuen Performance-Analyse soll auch untersucht werden, welchen Einfluss die Größe der Ergebnismenge der Anfragen auf die Datenbanksysteme hat. Dies wird in die Performance-Analyse mit aufgenommen, da das Verhalten der Datenbanksysteme bei der Abfrage von großen Datenmengen im Kontext dieser Arbeit als relevant eingestuft wird. Wie der Aspekt im Rahmen der Messungen untersucht wird, wird in \autoref{analyse:ergebnismenge} im Detail beschrieben.
     \item \textit{Verteilung der Datensätze}\\
@@ -114,9 +114,9 @@ Die Operationen werden getrennt voneinander gemessen, um die während der \texti
 \label{analyse:operationen}
 In diesem Abschnitt wird auf die verschiedenen Operationen eingegangen, deren Performance im Rahmen der Analyse dieser Arbeit eine Rolle spielen. 
 
-Bei den im Rahmen der Performance-Analyse gebenchmarkten Operationen handelt es sich um dieselben Operationen, die auch in \cite{sigmod_tian} untersucht werden. Es gilt allerdings zu beachten, dass obwohl die Namen der Operationen gleich lauten, nicht bekannt ist, ob die Queries, die von ihnen an die Datenbanksysteme gesendet werden, identisch sind. Daher sollten aus den gleichen Namen keine falschen Schlüsse gezogen werden. 
+Bei den im Rahmen der Performance-Analyse gebenchmarkten Operationen handelt es sich um dieselben Operationen, die auch von \citeAY{sigmod_tian} untersucht werden. Es gilt allerdings zu beachten, dass obwohl die Namen der Operationen gleich lauten, nicht bekannt ist, ob die Queries, die von ihnen an die Datenbanksysteme gesendet werden, identisch sind. Daher sollten aus den gleichen Namen keine falschen Schlüsse gezogen werden. 
 
-Des Weiteren ist es auch nicht möglich, die untersuchten Operationen im Vergleich zu \cite{sigmod_tian} auszuweiten. Schließlich handelt es sich bei diesen um lesende Operationen, die dadurch auch von Db2 Graph als eine Art Read-Only-Datenbanksystem unterstützt werden. Alle weiteren Operationen, die von Linkbench bereitgestellt werden (\autoref{linkbench:operationen}), sind hingegen von schreibender Natur. 
+Des Weiteren ist es auch nicht möglich, die untersuchten Operationen im Vergleich zu den Messungen von \citeAY{sigmod_tian} auszuweiten. Schließlich handelt es sich bei diesen um lesende Operationen, die dadurch auch von Db2 Graph als eine Art Read-Only-Datenbanksystem unterstützt werden. Alle weiteren Operationen, die von Linkbench bereitgestellt werden (\autoref{linkbench:operationen}), sind hingegen von schreibender Natur. 
 
 Bei den im Rahmen der Performance-Analyse gebenchmarkten Operationen handelt es sich um:
 \begin{itemize}
@@ -258,7 +258,7 @@ Aufgrund dessen und da es -- nachvollziehbarerweise -- nicht zielführend wäre,
 Aufgrund des zuvor angesprochenen Problems von Db2 Graph Beta 3 mit real verteilten Datensätzen spielt Beta 3 auch bei den Messungen, die auf real verteilten Datensätzen aufbauen, im Kontext dieser Arbeit keine Rolle. Was bedeutet, dass bei diesen keinerlei Messungen mit Beta 3 durchgeführt werden, lediglich mit Db2 Graph V11.5.6.0 und Neo4j. 
 
 \subsection{Größe}
-Die Größe eines Datensatzes stellt neben dessen Verteilung einen großen Unterschied zwischen den im Rahmen der Performance-Analyse durchzuführenden Messungen dar. Dabei wird hier unter der neuen Zielsetzung der Arbeit ebenfalls mit den aus \cite{sigmod_tian} bekannten Begriffen Linkbench-10M und Linkbench-100M gearbeitet. Die Begriffe beschreiben hierbei grob eine Datensatzgröße. So stehen die 10M und 100M jeweils dafür, dass ein Datensatz jeweils 10 oder 100 Millionen Knoten beinhaltet. Die Linkbench-10M Datensätze stellen dadurch die kleineren Datensätze im Rahmen der Performance-Analyse dar, während die Linkbench-100M Datensätze die Rolle des größeren Datensatzes einnehmen. 
+Die Größe eines Datensatzes stellt neben dessen Verteilung einen großen Unterschied zwischen den im Rahmen der Performance-Analyse durchzuführenden Messungen dar. Dabei wird hier unter der neuen Zielsetzung der Arbeit ebenfalls mit den aus dem Artikel von \cite{sigmod_tian} bekannten Begriffen Linkbench-10M und Linkbench-100M gearbeitet. Die Begriffe beschreiben hierbei grob eine Datensatzgröße. So stehen die 10M und 100M jeweils dafür, dass ein Datensatz jeweils 10 oder 100 Millionen Knoten beinhaltet. Die Linkbench-10M Datensätze stellen dadurch die kleineren Datensätze im Rahmen der Performance-Analyse dar, während die Linkbench-100M Datensätze die Rolle des größeren Datensatzes einnehmen. 
 
 Die Variation der Datensatzgröße über die im Rahmen der Performance-Analyse durchgeführten Messungen stellt dabei einen interessanten Untersuchungsaspekt dar. Schließlich gilt es bei der Beurteilung von Datenbanksystemen immer zu beachten, wie diese mit kleineren oder größeren Datenmengen umgehen.
 
@@ -281,7 +281,7 @@ Aufgrund dessen sollte auch später vom Vergleich der Messergebnisse zwischen de
 
 \section{Metriken}
 \label{analyse:metriken}
-Bei den Messungen, die im Rahmen der Arbeit durchgeführt werden, werden wie bereits in \cite{sigmod_tian} thematisiert, die Metriken Latenz und Durchsatz für die Auswertung der Ergebnisse herangezogen. Die Beiden stellen hierbei die Metriken dar, anhand derer die Performance von Db2 Graph und Neo4j in dieser Arbeit gemessen, beurteilt und verglichen wird.
+Bei den Messungen, die im Rahmen der Arbeit durchgeführt werden, werden wie bereits von \citeAY{sigmod_tian} thematisiert, die Metriken Latenz und Durchsatz für die Auswertung der Ergebnisse herangezogen. Die Beiden stellen hierbei die Metriken dar, anhand derer die Performance von Db2 Graph und Neo4j in dieser Arbeit gemessen, beurteilt und verglichen wird.
 
 Der Begriff Latenz bezeichnet dabei den Zeitraum zwischen dem Abschicken einer Anfrage an ein Datenbanksystem und dem Eintreffen der Antwort auf die Anfrage. Alternativ kann die Latenz auch als Verarbeitungszeit, also die Zeit, die ein Datenbanksystem für die Verarbeitung einer Anfrage benötigt, betrachtet werden. Die Latenzwerte, die im weiteren Verlauf dieser Arbeit aufgeführt und dargestellt werden, werden dabei alle den Ergebnisstatistiken entnommen, die nach Abschluss einer mit Linkbench durchgeführten Messung erzeugt werden. 
 

@@ -176,6 +176,10 @@
 % Define fullref (autoref + nameref)
 \newcommand*{\fullref}[1]{\hyperref[{#1}]{\autoref*{#1} \nameref*{#1}}}
 
+% master cite
+\newcommand*{\citeAY}[1]{\citeauthor{#1} \citeyear{#1}}
+\newcommand*{\citeAYY}[2]{\citeauthor{#1,#2} \citeyear{#1,#2}}
+
 %----------------------------------------------------------
 % Bibliography style
 % (Must be after \usepackage{hyperref})

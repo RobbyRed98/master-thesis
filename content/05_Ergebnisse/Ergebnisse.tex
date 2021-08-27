@@ -242,19 +242,19 @@ countLink & 18,32ms & {[}5,6{]}ms & {[}12,13{]}ms & {[}30,31{]}ms & {[}44,45{]}m
 \resizebox{\textwidth}{!}{
 \begin{tabular}{r|r|r|r|r|r|r|r}
 \hline
-\rowcolor[HTML]{EFEFEF} 
+\rowcolor[HTML]{EFEFEF}
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Limit}} & 
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Mean}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p25}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p50}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p75}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p95}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p99}} &
-\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Max.}} &
-\multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Limit}} \\ \hline
-19,64ms & {[}5,6{]}ms & {[}13,14{]}ms & {[}32,33{]}ms & {[}47,48{]}ms & {[}55,56{]}ms & 401,99ms & 100\\
-20,12ms & {[}5,6{]}ms & {[}14,15{]}ms & {[}32,33{]}ms & {[}48,49{]}ms & {[}57,58{]}ms & 442,84ms & 1.000\\
-22,37ms & {[}5,6{]}ms & {[}15,16{]}ms & {[}35,36{]}ms & {[}53,54{]}ms & {[}68,69{]}ms & 776,83ms & 10.000\\
-34,00ms & {[}6,7{]}ms & {[}20,21{]}ms & {[}44,45{]}ms & {[}82,83{]}ms & {[}100,200{]}ms & 3.125,17ms & 100.000\\ \hline
+\multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Max.}} \\ \hline
+100 & 19,64ms & {[}5,6{]}ms & {[}13,14{]}ms & {[}32,33{]}ms & {[}47,48{]}ms & {[}55,56{]}ms & 401,99ms\\
+1.000 & 20,12ms & {[}5,6{]}ms & {[}14,15{]}ms & {[}32,33{]}ms & {[}48,49{]}ms & {[}57,58{]}ms & 442,84ms\\
+10.000 & 22,37ms & {[}5,6{]}ms & {[}15,16{]}ms & {[}35,36{]}ms & {[}53,54{]}ms & {[}68,69{]}ms & 776,83ms\\
+100.000 & 34,00ms & {[}6,7{]}ms & {[}20,21{]}ms & {[}44,45{]}ms & {[}82,83{]}ms & {[}100,200{]}ms & 3.125,17ms\\ \hline
 \end{tabular}
 }
 \caption{Latenz Linkbench-Real-10M Db2 Graph V11.5.6.0 getLinkList}
@@ -287,10 +287,10 @@ countLink & 3,05ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}
 \begin{table}[!ht]
 \centering
 \resizebox{\textwidth}{!}{
-\begin{tabular}{l|r|r|r|r|r|r|r}
+\begin{tabular}{r|r|r|r|r|r|r|r}
 \hline
 \rowcolor[HTML]{EFEFEF} 
-\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Operation}} &
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Limit}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Mean}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p25}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p50}} &
@@ -298,10 +298,10 @@ countLink & 3,05ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p95}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p99}} &
 \multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Max.}} \\ \hline
-getLinkList & 3,08ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & 1.021,83ms \\
-getLinkList & 3,42ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}6,7{]}ms & {[}11,12{]}ms & 982,84ms \\
-getLinkList & 4,38ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & {[}16,17{]}ms & 1.041,73ms \\
-getLinkList & 5,46ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & {[}21,22{]}ms & 1.855,68ms \\ \hline
+100 & 3,08ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & 1.021,83ms \\
+1.000 & 3,42ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}6,7{]}ms & {[}11,12{]}ms & 982,84ms \\
+10.000 & 4,38ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & {[}16,17{]}ms & 1.041,73ms \\
+100.000 & 5,46ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & {[}21,22{]}ms & 1.855,68ms \\ \hline
 \end{tabular}
 }
 \caption{Latenz Linkbench-Real-10M Neo4j getLinkList}
@@ -369,19 +369,19 @@ countLink & 18,88ms & {[}5,6{]}ms & {[}13,14{]}ms & {[}30,31{]}ms & {[}45,46{]}m
 \resizebox{\textwidth}{!}{
 \begin{tabular}{r|r|r|r|r|r|r|r}
 \hline
-\rowcolor[HTML]{EFEFEF} 
+\rowcolor[HTML]{EFEFEF}
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Limit}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Mean}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p25}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p50}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p75}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p95}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p99}} &
-\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Max.}} &
-\multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Limit}} \\ \hline
-20,06ms & {[}6,7{]}ms & {[}14,15{]}ms & {[}32,33{]}ms & {[}47,48{]}ms & {[}54,55{]}ms & 502,66ms & 100\\
-20,78ms & {[}6,7{]}ms & {[}14,15{]}ms & {[}33,34{]}ms & {[}49,50{]}ms & {[}58,59{]}ms & 2.003,24ms & 1.000\\
-22,56ms & {[}6,7{]}ms & {[}15,16{]}ms & {[}35,36{]}ms & {[}53,54{]}ms & {[}67,68{]}ms & 2.553,64ms & 10.000\\
-36,62ms & {[}7,8{]}ms & {[}21,22{]}ms & {[}46,47{]}ms & {[}89,90{]}ms & {[}100,200{]}ms & 4.351,98ms & 100.000\\ \hline
+\multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Max.}} \\ \hline
+100 & 20,06ms & {[}6,7{]}ms & {[}14,15{]}ms & {[}32,33{]}ms & {[}47,48{]}ms & {[}54,55{]}ms & 502,66ms\\
+1.000 & 20,78ms & {[}6,7{]}ms & {[}14,15{]}ms & {[}33,34{]}ms & {[}49,50{]}ms & {[}58,59{]}ms & 2.003,24ms\\
+10.000 & 22,56ms & {[}6,7{]}ms & {[}15,16{]}ms & {[}35,36{]}ms & {[}53,54{]}ms & {[}67,68{]}ms & 2.553,64ms\\
+100.000 & 36,62ms & {[}7,8{]}ms & {[}21,22{]}ms & {[}46,47{]}ms & {[}89,90{]}ms & {[}100,200{]}ms & 4.351,98ms\\ \hline
 \end{tabular}
 }
 \caption{Latenz Linkbench-Real-100M Db2 Graph V11.5.6.0 getLinkList}
@@ -417,18 +417,18 @@ countLink & 3,05ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}
 \begin{tabular}{r|r|r|r|r|r|r|r}
 \hline
 \rowcolor[HTML]{EFEFEF} 
+\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Limit}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Mean}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p25}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p50}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p75}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p95}} &
 \multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{p99}} &
-\multicolumn{1}{c|}{\cellcolor[HTML]{EFEFEF}\textbf{Max.}} &
-\multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Limit}} \\ \hline
-3,09ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & 927,23ms & 100\\
-3,39ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}6,7{]}ms & {[}11,12{]}ms & 1.056,44ms & 1.000\\
-4,37ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & {[}16,17{]}ms & 1.157,71ms & 10.000\\
-6,53ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}10,11{]}ms & {[}29,30{]}ms & 2.037,55ms & 100.000\\ \hline
+\multicolumn{1}{c}{\cellcolor[HTML]{EFEFEF}\textbf{Max.}} \\ \hline
+100 & 3,09ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & 927,23ms\\
+1.000 & 3,39ms & {[}2,3{]}ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}6,7{]}ms & {[}11,12{]}ms & 1.056,44ms\\
+10.000 & 4,37ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}8,9{]}ms & {[}16,17{]}ms & 1.157,71ms\\
+100.000 & 6,53ms & {[}2,3{]}ms & {[}3,4{]}ms & {[}4,5{]}ms & {[}10,11{]}ms & {[}29,30{]}ms & 2.037,55ms\\ \hline
 \end{tabular}
 }
 \caption{Latenz Linkbench-Real-100M Neo4j getLinkList}

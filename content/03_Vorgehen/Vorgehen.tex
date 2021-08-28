@@ -167,7 +167,7 @@ Dieser Abschnitt setzt sich mit den Gremlin- und Cypher-Queries auseinander, die
 
 Wie zuvor erwähnt, kann bei diesen Anfragen zwischen Gremlin- und Cypher-Queries unterschieden werden. Die in der Abfragesprache Gremlin formulierten Queries werden dabei in \autoref{src:gremlin_queries} aufgeführt, während \autoref{src:cypher_queries} die in Cypher umgesetzten Queries abbildet. Im Zuge dessen gilt es darauf hinzuweisen, dass in \autoref{src:gremlin_queries} Platzhalter innerhalb der Queries von \texttt{<} und \texttt{>} umschlossen werden. Bei \autoref{src:cypher_queries} werden sie hingegen mittels eines anführenden \texttt{\$} gekennzeichnet.
 
-Die Gremlin- und Cypher-Queries, welche im \autoref{src:gremlin_queries} und \autoref{src:cypher_queries} aufgeführt werden, verfügen darüber hinaus über dieselbe Abfragelogik. Damit ist gemeint, dass beide dieselben Daten abfragen, wodurch sie äquivalent zueinander sind. Die Gremlin-Queries werden dabei zur Abfrage von Db2 Graph Beta 3 und V11.5.6.0 genutzt, während die Cypher-Queries für Neo4j zum Einsatz kommen. 
+Die Gremlin- und Cypher-Queries, welche im \autoref{src:gremlin_queries} und \ref{src:cypher_queries} aufgeführt werden, verfügen darüber hinaus über dieselbe Abfragelogik. Damit ist gemeint, dass beide dieselben Daten abfragen, wodurch sie äquivalent zueinander sind. Die Gremlin-Queries werden dabei zur Abfrage von Db2 Graph Beta 3 und V11.5.6.0 genutzt, während die Cypher-Queries für Neo4j zum Einsatz kommen. 
 
 \begin{lstlisting}[label=src:gremlin_queries,caption={Gremlin-Queries},language=Java]
 /* getNode */
@@ -476,7 +476,7 @@ Zu den Messparametern, die über alle Messreihen hinweg konstant bleiben, gehör
     \item \textit{Db2-Datenbankschema}\\
     Das Db2-Datenbankschema von \texttt{linkdb0} aus \autoref{src:linkdb0_schema} wird zwischen den Messreihen nicht verändert oder angepasst. 
     \item \textit{Queries}\\
-    Im Kontext aller Messreihen werden immer die beiden in der Abfragelogik äquivalenten Gremlin- und Cypher-Queries aus \autoref{src:gremlin_queries} und \autoref{src:cypher_queries} für die Messungen herangezogen. 
+    Im Kontext aller Messreihen werden immer die beiden in der Abfragelogik äquivalenten Gremlin- und Cypher-Queries aus \autoref{src:gremlin_queries} und \ref{src:cypher_queries} für die Messungen herangezogen. 
     \item \textit{Konfiguration Db2 Graph Beta 3 und V11.5.6.0}\\
     Die Graph-Overlay-Konfiguration in \autoref{src:db2graph_mapping} und die Gremlin-Server-Konfiguration der Db2 Graph Versionen bleiben über alle Messungen hinweg unverändert.
     \item \textit{Konfiguration und Datenbankschema Neo4j}\\

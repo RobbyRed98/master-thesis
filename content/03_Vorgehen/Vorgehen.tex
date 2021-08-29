@@ -61,7 +61,7 @@ Die verschiedenen Aspekte, Parameter und Variablen, die bei der Messung eine Rol
 
 Anschließend werden alle für die Durchführung der Performance-Analyse notwendigen Implementierungen in \autoref{implementierung} beschrieben. Dabei wird auf die Wahl der Linkbench-Code-Basis und Umsetzung der Adapter eingegangen. 
 
-Die Auswertung und Präsentation der Ergebnisse erfolgen daraufhin in \compref{ergebnisse} und \compref{auswertung}. In \compref{ergebnisse} wird im Detail auf die Ergebnisse der Messreihen eingegangen, während in \compref{auswertung} eine weiterführende Analyse der Ergebnisse und der Vergleich von Db2 Graph mit Neo4j durchgeführt wird. Darüber hinaus wird in \nameref{auswertung} auch versucht, eine Erklärung für den Performance-Unterschied zwischen Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j zu finden. 
+Die Auswertung und Präsentation der Ergebnisse erfolgen daraufhin in \compref{ergebnisse} und \compref{auswertung}. In \compref{ergebnisse} wird im Detail auf die Ergebnisse der Messreihen eingegangen, während in \compref{auswertung} eine weiterführende Analyse der Ergebnisse und der Vergleich von Db2 Graph mit Neo4j durchgeführt wird. Darüber hinaus wird in der \nameref{auswertung} auch versucht, eine Erklärung für den Performance-Unterschied zwischen Db2 Graph Beta 3, Db2 Graph V11.5.6.0 und Neo4j zu finden. 
 
 \chapter{Messungen}
 \label{messungen}
@@ -146,7 +146,7 @@ Bei der Begrenzung der Ergebnismenge handelt es sich um eine Workload-Konfigurat
 
 Die Begrenzung der Ergebnismenge wird im Rahmen dieser Arbeit auch kurz als Range-Limit bezeichnet, da der Key \texttt{range\_limit} in der Workload-Konfiguration für die Steuerung der Begrenzung der Ergebnismenge verantwortlich ist. 
 
-Sie wird in den Benchmark eingeführt, um die Performance der verschiedenen Datenbanksysteme bei größeren oder kleineren Ergebnismengen untersuchen zu können.
+Die Begrenzung wird in den Benchmark eingeführt, um die Performance der verschiedenen Datenbanksysteme bei größeren oder kleineren Ergebnismengen untersuchen zu können.
 
 Bei den Messungen, die im Rahmen dieser Arbeit durchgeführt werden, nimmt die obere Grenze der Ergebnismenge die folgenden Werte an:
 \begin{itemize}
@@ -281,7 +281,7 @@ Aufgrund dessen sollte auch später vom Vergleich der Messergebnisse zwischen de
 
 \section{Metriken}
 \label{analyse:metriken}
-Bei den Messungen, die im Rahmen der Arbeit durchgeführt werden, werden -- wie bereits von \citeAY{sigmod_tian} thematisiert -- die Metriken Latenz und Durchsatz für die Auswertung der Ergebnisse herangezogen. Die Beiden stellen die Metriken dar, anhand derer die Performance von Db2 Graph und Neo4j in dieser Arbeit gemessen, beurteilt und verglichen wird.
+Bei den Messungen, die im Rahmen der Arbeit durchgeführt werden, werden -- wie bereits von \citeAY{sigmod_tian} thematisiert -- die Metriken Latenz und Durchsatz für die Auswertung der Ergebnisse herangezogen. Diese Beiden stellen die Metriken dar, anhand derer die Performance von Db2 Graph und Neo4j in dieser Arbeit gemessen, beurteilt und verglichen wird.
 
 Der Begriff Latenz bezeichnet dabei den Zeitraum zwischen dem Abschicken einer Anfrage an ein Datenbanksystem und dem Eintreffen der Antwort auf die Anfrage. Alternativ kann die Latenz auch als Verarbeitungszeit, also die Zeit, die ein Datenbanksystem für die Verarbeitung einer Anfrage benötigt, betrachtet werden. Die Latenzwerte, die im weiteren Verlauf dieser Arbeit aufgeführt und dargestellt werden, werden alle den Ergebnisstatistiken entnommen, die nach Abschluss einer mit Linkbench durchgeführten Messung erzeugt werden. 
 

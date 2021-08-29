@@ -19,7 +19,7 @@ Um eine dementsprechende Kennzahl zur Einordnung der Datenbanksysteme bezüglich
     \item \texttt{countLink} und 
     \item \texttt{getLinkList} (Range-Limit 100) ermittelt.
 \end{itemize}
-Der gemeinsame Durchschnittswert für den Durchsatz wird dabei einmal für jedes Datenbanksystem im Kontext einer Messreihe ermittelt. Anschließend wird der niedrigste Wert einer Messreihe herangezogen -- immer Db2 Graph V11.5.6.0 -- und als Faktor 1 festgelegt. Im nächsten Schritt werden, basierend auf diesem Faktor 1 und dem damit verbundenen Durchschnittswert, die jeweiligen Faktoren für Neo4j und gegebenenfalls Db2 Graph Beta 3 errechnet. Die dabei erhaltenen Performance-Faktoren -- basierend auf dem Durchsatz -- werden für die Messreihen mit einem konstant verteilten Datensatz in \autoref{fig:faktor:durchsatz:const} dargelegt, während die mit real verteilten Datensätzen in \autoref{fig:faktor:durchsatz:real} abgebildet werden.
+Der gemeinsame Durchschnittswert für den Durchsatz wird dabei einmal für jedes Datenbanksystem im Kontext einer Messreihe ermittelt. Anschließend wird der niedrigste Wert einer Messreihe herangezogen -- immer Db2 Graph V11.5.6.0 -- und als Faktor 1 festgelegt. Im nächsten Schritt werden, basierend auf diesem Faktor 1 und dem damit verbundenen Durchschnittswert, die jeweiligen Faktoren für Neo4j und gegebenenfalls Db2 Graph Beta 3 errechnet. Die dabei erhaltenen Performance-Faktoren -- basierend auf dem Durchsatz -- werden für die Messreihen mit einem konstant verteilten Datensatz in \autoref{fig:faktor:durchsatz:const} dargestellt, während die mit real verteilten Datensätzen in \autoref{fig:faktor:durchsatz:real} abgebildet werden.
 
 \begin{figure}[!ht]
     \centering
@@ -35,11 +35,11 @@ Der gemeinsame Durchschnittswert für den Durchsatz wird dabei einmal für jedes
     \label{fig:faktor:durchsatz:real}
 \end{figure}
 
-Bei der Analyse der in \autoref{fig:faktor:durchsatz:const} und \ref{fig:faktor:durchsatz:real} dargestellten Faktoren fällt auf, dass Neo4j immer sechs bis siebenmal so viele Operationen pro Sekunde verarbeitet wie Db2 Graph Db2 Graph V11.5.6.0. Dies offenbart einen erheblichen Performance-Unterschied zwischen Db2 Graph V11.5.6.0 und Neo4j. Während Db2 Graph Beta 3 zwar mit einem Faktor von 2,25 eine höhere Performance aufweist als V11.5.6.0, verfügt es gemessen am Faktor von Neo4j lediglich über ca. ein Drittel seiner Performance (\autoref{fig:faktor:durchsatz:const}).  
+Bei der Analyse der in \autoref{fig:faktor:durchsatz:const} und \ref{fig:faktor:durchsatz:real} dargestellten Faktoren fällt auf, dass Neo4j immer sechs bis siebenmal so viele Operationen pro Sekunde verarbeitet wie Db2 Graph V11.5.6.0. Dies offenbart einen erheblichen Performance-Unterschied zwischen Db2 Graph V11.5.6.0 und Neo4j. Während Db2 Graph Beta 3 zwar mit einem Faktor von 2,25 eine höhere Performance aufweist als V11.5.6.0, verfügt es lediglich über ca. ein Drittel der Performance von Neo4j (\autoref{fig:faktor:durchsatz:const}).  
 
-So war von Beginn an nicht davon auszugehen, dass Db2 Graph als Grapherweiterung in Kombination mit Db2, Neo4j als natives Graphdatenbanksystem übertrifft. Schließlich verursacht die Kommunikation zwischen Db2 Graph und Db2, die für die Beantwortung einer Anfrage nötig ist, einen Aufwand, den Neo4j nicht betreiben muss. Einen Performance-Unterschied um mindestens den Faktor 6 galt es jedoch nicht zu erwarten. 
+So war von Beginn an nicht davon auszugehen, dass Db2 Graph als Grapherweiterung in Kombination mit Db2, Neo4j als natives Graphdatenbanksystem übertrifft. Schließlich verursacht die Kommunikation zwischen Db2 Graph und Db2, die für die Beantwortung einer Anfrage nötig ist, einen Aufwand, den Neo4j nicht betreiben muss. Einen Performance-Unterschied um mindestens den Faktor 6 wurde jedoch nicht erwarten. 
 
-Eine interessante Gegebenheit, die in der \autoref{fig:faktor:durchsatz:const} beobachtet werden kann, stellt der Fakt dar, dass Db2 Graph Beta 3 als ältere Version von Db2 Graph zwei bis 2,5 Mal mehr Operationen pro Sekunde bewältigen kann, als Db2 Graph V11.5.6.0 (der erste GA Release). Zu Beginn wäre hier eigentlich die Vermutung nahe gelegen, dass V11.5.6.0 als neuere Version, die über mehr Optimierungen verfügt als Beta 3, eine höhere Performance aufweist. Dies ist allerdings nicht der Fall. 
+Eine interessante Gegebenheit, die in der \autoref{fig:faktor:durchsatz:const} beobachtet werden kann, stellt der Fakt dar, dass Db2 Graph Beta 3 als ältere Version von Db2 Graph 2 bis 2,5 Mal mehr Operationen pro Sekunde bewältigen kann, als Db2 Graph V11.5.6.0 (der erste \acs{ga} Release). Zu Beginn wäre hier eigentlich die Vermutung nahe gelegen, dass V11.5.6.0 als neuere Version, die über mehr Optimierungen verfügt als Beta 3, eine höhere Performance aufweist. Dies ist allerdings nicht der Fall. 
 
 Dabei gilt es hingegen zu beachten, dass Db2 Graph Beta 3 trotz der höheren Performance bei den Messreihen mit konstant verteilten Datensätzen, nicht als allgemein performantere Version von Db2 Graph einzustufen ist. Schließlich spielt sie bei den Messreihen mit real verteilten Datensätzen keine Rolle, da sie für den Einsatz dort aufgrund fehlender Optimierungen derart ungeeignet ist, dass das Erzielen von Ergebnissen im Rahmen des üblichen Zeitraums nicht möglich ist.
 
@@ -47,13 +47,13 @@ Dabei gilt es hingegen zu beachten, dass Db2 Graph Beta 3 trotz der höheren Per
 \label{auswertung:ergebnismenge}
 Bei der Untersuchung der Ergebnismenge bei den Messreihen mit real verteilten Datensätzen wird bereits in \autoref{ergebnisse:10m_real} und \ref{ergebnisse:100m_real} ein kurzer Überblick über das jeweilige Verhalten bezüglich des Durchsatzes gegeben. Wie groß der verhältnismäßige Einbruch des Durchsatzes und entsprechend auch der Performance, bei einer variierenden oberen Grenze für die Anzahl an Elementen in einer Ergebnismenge ist, lässt sich an den Abbildungen, die absolute Zahlen präsentieren, nicht ablesen. Schließlich bewegen sich die Datenbanksysteme mit beispielsweise 15.742 und 2.466 Operationen pro Sekunde in \autoref{ergebnisse:10m_real} in anderen Größenordnungen, werden aber in derselben Grafik abgebildet. 
 
-Um nun der Frage auf den Grund zugehen: \textit{Welches Datenbanksystem bei einem steigenden Range-Limit den verhältnismäßig größeren Performance-Einbruch aufweist?}, wird in \autoref{fig:einbruch:durchsatz:10m} und \ref{fig:einbruch:durchsatz:100m} dargestellt, wie viele Prozente des Durchsatzes bei einem steigenden Range-Limit noch erreicht werden können. Der Wert für \texttt{getLinkList} mit einem Range-Limit von 100 repräsentiert dabei jeweils 100 \% des Durchsatzes von Neo4j oder Db2 Graph. So sinkt beispielsweise der Durchsatz bei Neo4j in \autoref{fig:einbruch:durchsatz:10m} bei einem Range-Limit von 10.000 auf lediglich 69,74 \% des bei einem Range-Limit von 100 erzielten Durchsatzes. 
+Um nun der Frage auf den Grund zugehen: \textit{Welches Datenbanksystem bei einem steigenden Range-Limit den verhältnismäßig größeren Performance-Einbruch aufweist?}, wird in \autoref{fig:einbruch:durchsatz:10m} und \ref{fig:einbruch:durchsatz:100m} dargestellt, wie viel Prozent des Durchsatzes bei einem steigenden Range-Limit noch erreicht werden können. Der Wert für \texttt{getLinkList} mit einem Range-Limit von 100 repräsentiert dabei jeweils 100 \% des Durchsatzes von Neo4j oder Db2 Graph. So sinkt beispielsweise der Durchsatz bei Neo4j in \autoref{fig:einbruch:durchsatz:10m} bei einem Range-Limit von 10.000 auf lediglich 69,74~\% des bei einem Range-Limit von 100 erzielten Durchsatzes. 
 
-Bei der Betrachtung des Kurvenverlaufs in \autoref{fig:einbruch:durchsatz:10m} und \ref{fig:einbruch:durchsatz:100m} fällt auf, dass der Rückgang des Durchsatzes bei Neo4j eher linear ausfällt, während er sich bei Db2 Graph eher exponentiell gestaltet. Für eine endgültige Einstufung der Kurven von Db2 Graph als exponentiell, fehlen allerdings einige Mess- beziehungsweise Datenpunkte.
+Bei der Betrachtung des Kurvenverlaufs in \autoref{fig:einbruch:durchsatz:10m} und \ref{fig:einbruch:durchsatz:100m} fällt auf, dass der Rückgang des Durchsatzes bei Neo4j eher linear ausfällt, während er sich bei Db2 Graph eher exponentiell gestaltet. Für eine endgültige Einstufung der Kurven von Db2 Graph als exponentiell fehlen allerdings einige Mess- beziehungsweise Datenpunkte.
 
-Des Weiteren ist erkennbar, dass der Performance-Einbruch bei Db2 Graph V11.5.6.0 bei einem steigenden Range-Limit immer geringer zu sein scheint, als bei Neo4j. So weist V11.5.6.0 bei einem Range-Limit von 100.000 noch 54,18 \% des Durchsatzes auf den es bei einem Range-Limit von 100 erreicht hat. Neo4j hingegen erlangt bei 100.000 lediglich 43,29 \% des Durchsatzes den es erreicht, wenn die Ergebnismenge auf eine obere Grenze von 100 Elemente begrenzt wird. 
+Des Weiteren ist erkennbar, dass der Performance-Einbruch bei Db2 Graph V11.5.6.0 bei einem steigenden Range-Limit immer geringer zu sein scheint als bei Neo4j. So weist V11.5.6.0 bei einem Range-Limit von 100.000 noch 54,18 \% des Durchsatzes auf den es bei einem Range-Limit von 100 erreicht hat. Neo4j hingegen erlangt bei 100.000 lediglich 43,29 \% des Durchsatzes den es erreicht, wenn die Ergebnismenge auf eine obere Grenze von 100 Elemente begrenzt wird. 
 
-So beträgt der Unterschied zwischen Db2 Graph und Neo4j bei einem Range-Limit von 100.000 ca. 11 \% zueinander in \autoref{fig:einbruch:durchsatz:10m}, während es bei 10.000 sogar ca. 18 \% sind. Bei einem Range-Limit von 1.000 sind es jedoch lediglich ca. 8 \% Unterschied zueinander. Wobei es hier anzumerken gilt, dass Db2 Graph mit 97,58 \% ein außergewöhnlich hohes Ergebnis erreicht. Die in \autoref{fig:einbruch:durchsatz:100m} dargestellten Werte bestätigen dabei grob die Beobachtungen aus \autoref{fig:einbruch:durchsatz:10m}. So weichen die Werte in den beiden Abbildungen (\autoref{fig:einbruch:durchsatz:10m} und \ref{fig:einbruch:durchsatz:100m}) maximal um 2 \% voneinander ab. 
+So beträgt der Unterschied zwischen Db2 Graph und Neo4j bei einem Range-Limit von 100.000 ca. 11 \% zueinander in \autoref{fig:einbruch:durchsatz:10m}, während es bei 10.000 sogar ca. 18 \% sind. Bei einem Range-Limit von 1.000 sind es jedoch lediglich ca. 8 \% Unterschied zueinander. Wobei es hier anzumerken gilt, dass Db2 Graph mit 97,58~\% ein außergewöhnlich hohes Ergebnis erreicht. Die in \autoref{fig:einbruch:durchsatz:100m} dargestellten Werte bestätigen dabei grob die Beobachtungen aus \autoref{fig:einbruch:durchsatz:10m}. So weichen die Werte in den beiden Abbildungen (\autoref{fig:einbruch:durchsatz:10m} und \ref{fig:einbruch:durchsatz:100m}) maximal um 2 \% voneinander ab. 
 
 \begin{figure}[!ht]
     \centering
@@ -75,7 +75,7 @@ Allerdings bewegt sich Neo4j dauerhaft auf einem höheren Niveau als Db2 Graph, 
 
 \section{Einfluss der Datensatzgröße}
 \label{auswertung:groesse}
-Im Rahmen dieses Abschnitts wird genauer untersucht, welchen Einfluss die Größe eines Datensatzes auf konstant oder real verteilte Datensätze hat. Um dies bei den Datenbanksystemen zu identifizieren, wird der relative Unterschied zwischen den Durchsatzergebnissen von Linkbench-10M und Linkbench-100M Datensätzen ermittelt. Die jeweiligen Durchsatzergebnisse, die mit Linkbench-10M Datensätzen erzielt werden, werden dabei als 100 \% betrachtet. An diesen 100 \% wird im nächsten Schritt der Durchsatz bei den Linkbench-100M Datensätzen gemessen. Die prozentualen Abweichungen zwischen den Datensätzen werden dabei in \autoref{fig:durchsatz:10m_vs_100m:const} und \ref{fig:durchsatz:10m_vs_100m:real} dargestellt.
+Im Rahmen dieses Abschnitts wird genauer untersucht, welchen Einfluss die Größe eines Datensatzes auf konstant oder real verteilte Datensätze hat. Um dies bei den Datenbanksystemen zu identifizieren, wird der relative Unterschied zwischen den Durchsatzergebnissen von Linkbench-10M und Linkbench-100M Datensätzen ermittelt. Die jeweiligen Durchsatzergebnisse, die mit Linkbench-10M Datensätzen erzielt werden, werden dabei als 100~\% betrachtet. An diesen 100~\% wird im nächsten Schritt der Durchsatz bei den Linkbench-100M Datensätzen gemessen. Die prozentualen Abweichungen zwischen den Datensätzen werden dabei in \autoref{fig:durchsatz:10m_vs_100m:const} und \ref{fig:durchsatz:10m_vs_100m:real} dargestellt.
 
 \begin{figure}[!ht]
     \centering
@@ -84,7 +84,7 @@ Im Rahmen dieses Abschnitts wird genauer untersucht, welchen Einfluss die Größ
     \label{fig:durchsatz:10m_vs_100m:const}
 \end{figure}
 
-So gilt es den in \autoref{fig:durchsatz:10m_vs_100m:const} bei \texttt{getNode} für Db2 Graph Beta 3 angegebenen Wert von 2,91 \% so zu verstehen, dass der Durchsatz bei Linkbench-100M um diesen Prozentsatz geringer ausfällt als bei derselben Messung mit dem Linkbench-10M. Db2 Graph Beta 3 erreicht also bei der Messreihe \nameref{ergebnisse:100m_const} lediglich 97,09 \% des Durchsatzes von der Messreihe \nameref{ergebnisse:10m_const}, wodurch sich der Unterschied von 2,91 \% bei \texttt{getNode} ergibt.
+Es gilt den in \autoref{fig:durchsatz:10m_vs_100m:const} bei \texttt{getNode} für Db2 Graph Beta 3 angegebenen Wert von 2,91 \% so zu verstehen, dass der Durchsatz bei Linkbench-100M um diesen Prozentsatz geringer ausfällt als bei derselben Messung mit dem Linkbench-10M. Db2 Graph Beta 3 erreicht also bei der Messreihe \nameref{ergebnisse:100m_const} lediglich 97,09 \% des Durchsatzes von der Messreihe \nameref{ergebnisse:10m_const}, wodurch sich der Unterschied von 2,91 \% bei \texttt{getNode} ergibt.
 
 Die in \autoref{fig:durchsatz:10m_vs_100m:const} für konstant verteilte Datensätze dargestellten Ergebnisse zeigen hier ein konstantes Bild über alle Datenbanksysteme hinweg. So weisen alle Messergebnisse, egal welches Datenbanksystem oder welche Operation, eine positive prozentuale Abnahme auf. Dies bedeutet, dass -- wie bei größeren Datensätzen erwartet -- alle Durchsatzergebnisse von \nameref{ergebnisse:100m_const} im Verhältnis zu \nameref{ergebnisse:10m_const} niedriger ausfallen. Db2 Graph V11.5.6.0 weist dabei mit 1,31 \% bis 2,12 \% den geringsten Performance-Einbruch auf. Neo4j und Db2 Graph Beta 3 hingegen verfügen über deutlich höhere Performance-Einbrüche bei dem größeren Datensatz mit jeweils 4,60 \% (\texttt{getNode}) und 5,23 \% (\texttt{getLink}). 
 
@@ -97,7 +97,7 @@ Die in \autoref{fig:durchsatz:10m_vs_100m:const} für konstant verteilte Datens�
     \textit{Bei den hier abgebildeten Werten für getLinkList, handelt es sich um Werte, die mit einem Range-Limit von 100 erzielt werden.}
 \end{figure}
 
-Die in \autoref{fig:durchsatz:10m_vs_100m:real} abgebildeten Ergebnisse überraschen hingegen. Die Ergebnisse für Neo4j bewegen sich hier bei \texttt{getNode} und \texttt{getLink} im negativen Bereich. Dies bedeutet, dass für Neo4j bei diesen Operationen in \nameref{ergebnisse:100m_real} ein höherer Durchsatz erzielt werden konnte, als bei dem kleineren Datensatz in \nameref{ergebnisse:10m_real}, was der bereits zuvor geäußerten These, dass größere Datensätze einen geringeren Durchsatz beziehungsweise eine geringere Performance aufweisen widerspricht. Auch gibt es bei den Messungen keinerlei Anhaltspunkte, warum dieses Phänomen bei Neo4j auftritt. Alle anderen Werte von Neo4j und Db2 Graph V11.5.6.0 weisen hingegen positive Performance-Einbrüche auf.
+Die in \autoref{fig:durchsatz:10m_vs_100m:real} abgebildeten Ergebnisse überraschen hingegen. Die Ergebnisse für Neo4j bewegen sich hier bei \texttt{getNode} und \texttt{getLink} im negativen Bereich. Dies bedeutet, dass für Neo4j bei diesen Operationen in \nameref{ergebnisse:100m_real} ein höherer Durchsatz erzielt werden konnte, als bei dem kleineren Datensatz in \nameref{ergebnisse:10m_real}, was der bereits zuvor geäußerten These, dass größere Datensätze einen geringeren Durchsatz beziehungsweise eine geringere Performance aufweisen, widerspricht. Auch gibt es bei den Messungen keinerlei Anhaltspunkte, warum dieses Phänomen bei Neo4j auftritt. Alle anderen Werte von Neo4j und Db2 Graph V11.5.6.0 weisen hingegen positive Performance-Verschlechterungen auf.
 
 Bezüglich der Höhe der Abweichungen kann aus \autoref{fig:durchsatz:10m_vs_100m:real} abgeleitet werden, dass Db2 Graph mit Abweichungen zwischen 2,3 \% und 3,48 \% eine höhere Abweichung aufweist als Neo4j, welche sich im Bereich von 0,09 \% bis (-)1,64 \% bewegt. 
 
@@ -108,7 +108,7 @@ Im Rahmen dieses Kapitels werden einige NMON-Statistiken zur Ressourcenauslastun
 
 Ziel dieses Abschnitts ist es dabei die Ressourcenauslastung der Datenbanksysteme miteinander zu Vergleichen und möglicherweise einen Hinweis darauf zu finden, warum der Performance-Unterschied zwischen Db2 Graph Beta 3 und V11.5.6.0 mit einem Unterschied des Faktors 2,25 derart signifikant ausfällt. 
 
-Für den Vergleich der Datenbanksysteme wird dabei exemplarisch deren Ressourcenauslastung bei der Operation \texttt{getNode} in den Messreihen \nameref{ergebnisse:10m_const} und \nameref{ergebnisse:10m_real} herangezogen. Denn die Abbildung und Auswertung aller 52 Statistiken, die bei der Performance-Analyse durch das Werkzeug NMON aufgezeichnet werden, wäre hier aufgrund des Umfangs nicht zielführend. Alle Statistiken die im Rahmen der Arbeit aufgezeichnet werden, werden allerdings als NMON-Dateien dem digitalen Anhang der Arbeit beigelegt, sodass alle erzielten Statistiken einsehbar sind.
+Für den Vergleich der Datenbanksysteme wird dabei exemplarisch deren Ressourcenauslastung bei der Operation \texttt{getNode} in den Messreihen \nameref{ergebnisse:10m_const} und \nameref{ergebnisse:10m_real} herangezogen. Denn die Abbildung und Auswertung aller 52 Statistiken, die bei der Performance-Analyse durch das Werkzeug NMON aufgezeichnet werden, wäre hier aufgrund des Umfangs nicht zielführend. Alle Statistiken, die im Rahmen der Arbeit aufgezeichnet werden, werden allerdings als NMON-Dateien dem digitalen Anhang der Arbeit beigelegt, sodass alle erzielten Statistiken einsehbar sind.
 
 Bei der Auswertung der Statistiken gilt es allerdings zu beachten, dass die CPU-Auslastung und Anzahl an IO-Ope\-ra\-ti\-on\-en (Disk xfers) pro Sekunde, die von den Abbildungen dieses Abschnitts aufgeführt werden, immer die Auslastung der ganzen Maschine, in der die Messungen stattfinden, wiedergeben. So gilt es dabei auch immer im Auge zu behalten, dass beispielsweise das Betriebssystem selbst und andere kleinere Server-Prozesse ebenfalls geringfügig etwas zur CPU- und IO-Aus\-last\-ung beitragen.  
 
@@ -116,54 +116,54 @@ Bei der Auswertung der Statistiken gilt es allerdings zu beachten, dass die CPU-
 \label{auswertung:ressourcenauslastung:const}
 Bei der Auswertung der Ressourcenstatistiken dieser Messreihe kann mit Hinblick auf diese identifiziert werden, dass die CPU-Auslastung bei Neo4j (\autoref{fig:nmon:10m:const:neo4j}) am höchsten ist, gefolgt von Db2 Graph Beta 3 (\autoref{fig:nmon:10m:const:beta3}) und mit größerem Abstand Db2 Graph V11.5.6.0 (\autoref{fig:nmon:10m:const:ga}). 
 
-Dabei fällt auf, dass der Unterschied bei der CPU-Auslastung zwischen Neo4j und Db2 Graph Beta 3 mit ca. 5 bis 7 \% eher geringer ausfällt, während der Unterschied zwischen Beta 3 und V11.5.6.0 ca. 30 \% umfasst. Dies scheint allerdings ungefähr zu den Beobachtungen in \nameref{auswertung:einordnung} zu passen, bei der Beta 3 die 2,25-fache Performance von V11.5.6.0 aufweist. Schließlich weist Beta 3 mit ca. 69 \% gegenüber der rund 39 \% von V11.5.6.0 auch nahezu die doppelte Ressourcenauslastung auf.
+Dabei fällt auf, dass der Unterschied bei der CPU-Auslastung zwischen Neo4j und Db2 Graph Beta 3 mit ca. 5 bis 7 \% eher geringer ausfällt, während der Unterschied zwischen Beta 3 und V11.5.6.0 ca. 30 \% umfasst. Dies scheint allerdings ungefähr zu den Beobachtungen in \compref{auswertung:einordnung} zu passen, bei der Beta 3 die 2,25-fache Performance von V11.5.6.0 aufweist. Schließlich weist Beta 3 mit ca. 69 \% gegenüber der rund 39 \% von V11.5.6.0 auch nahezu die doppelte Ressourcenauslastung auf.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/stats/linkbench-10m-const_beta3.pdf}
-    \caption{Linkbench-Const-10M Auslastung Db2 Graph Beta 3 (getNode)}
+    \caption{Linkbench-Const-10M Auslastung Db2 Graph Beta 3 getNode}
     \label{fig:nmon:10m:const:beta3}
 \end{figure}
 
 Allgemein kann angemerkt werden, dass alle Statistiken eine konstante CPU-Auslastung über den jeweiligen Messzeitraum aufweisen. So zeigt beispielsweise die Aufzeichnung für Neo4j (\autoref{fig:nmon:10m:const:neo4j}) eine andauernde CPU-Auslastung von ca. 76 \% über den Messzeitraum an, bis auf den Beginn und das Ende der Aufzeichnung. Db2 Graph Beta 3 und V11.5.6.0 weisen in ihren jeweiligen Statistiken ein ähnlich konstantes Niveau der CPU-Auslastung auf. 
 
-Wird statt der CPU-Auslastung die Anzahl an IO-Ope\-ra\-ti\-on\-en pro Sekunde in den Ressourcenstatistiken der Datenbanksysteme untersucht, so fällt auf, dass sich die Skalen und Werte der IO-Aus\-last\-ung (Disk xfers) in \autoref{fig:nmon:10m:const:beta3}, \ref{fig:nmon:10m:const:neo4j} und \ref{fig:nmon:10m:const:ga} erheblich unterscheiden. Während bei Db2 Graph V11.5.6.0 ca. 7.500 Read- oder Write-Ope\-ra\-ti\-on\-en pro Sekunde auf den Festplattenspeicher durchgeführt werden, sind es bei Neo4j lediglich 2,5 bis 5. 
+Wird statt der CPU-Auslastung die Anzahl an IO-Ope\-ra\-ti\-on\-en pro Sekunde in den Ressourcenstatistiken der Datenbanksysteme untersucht, so fällt auf, dass sich die Skalen und Werte der IO-Aus\-last\-ung (Disk xfers) in \autoref{fig:nmon:10m:const:beta3}, \ref{fig:nmon:10m:const:neo4j} und \ref{fig:nmon:10m:const:ga} erheblich unterscheiden. Während bei Db2 Graph V11.5.6.0 ca. 3.700 Read- oder Write-Ope\-ra\-ti\-on\-en pro Sekunde auf den Festplattenspeicher durchgeführt werden, sind es bei Neo4j lediglich 2,5 bis 5. 
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/stats/linkbench-10m-const_neo4j.pdf}
-    \caption{Linkbench-Const-10M Auslastung Neo4j (getNode)}
+    \caption{Linkbench-Const-10M Auslastung Neo4j getNode}
     \label{fig:nmon:10m:const:neo4j}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/stats/linkbench-10m-const_ga.pdf}
-    \caption{Linkbench-Const-10M Auslastung Db2 Graph V11.5.6.0 (getNode)}
+    \caption{Linkbench-Const-10M Auslastung Db2 Graph V11.5.6.0 getNode}
     \label{fig:nmon:10m:const:ga}
 \end{figure}
 
-Db2 Graph Beta 3 bewegt sich hingegen mit durchschnittlich ca. 900 IO-Ope\-ra\-ti\-on\-en pro Sekunde im Mittelfeld. Damit liegt Beta 3 zwar unterhalb von V11.5.6.0, weist allerdings immer noch mehr als das Hundertfache der IO-Ope\-ra\-ti\-on\-en pro Sekunde auf als Neo4j im Durchschnitt. Die signifikant geringere IO-Aus\-last\-ung könnte sich damit erklären lassen, dass Neo4j scheinbar ein erheblich aggressiveres Caching betreibt als Db2, auf das sich die beiden Db2 Graph Versionen verlassen. 
+Db2 Graph Beta 3 bewegt sich hingegen mit durchschnittlich ca. 900 IO-Ope\-ra\-ti\-on\-en pro Sekunde im Mittelfeld. Damit liegt Beta 3 zwar unterhalb von V11.5.6.0, weist allerdings immer noch mehr als das Hundertfache der durchschnittlichen IO-Ope\-ra\-ti\-on\-en pro Sekunde von Neo4j auf. Die signifikant geringere IO-Aus\-last\-ung könnte sich damit erklären lassen, dass Neo4j scheinbar ein erheblich aggressiveres Caching betreibt als Db2, auf das sich die beiden Db2 Graph Versionen verlassen. 
 
 \subsection{Linkbench-Real-10M}
 \label{auswertung:ressourcenauslastung:real}
-Bei den beiden im Rahmen dieser Messreihe aufgezeichneten Ressourcenstatistiken fällt bereits bei der ersten Begutachtung auf, dass die Statistiken für Db2 Graph V11.5.6.0 und besonders Neo4j über weitaus weniger Datenpunkte verfügen als die Abbildungen aus dem vorausgegangen \autoref{auswertung:ressourcenauslastung:const}. Dies ist dabei auf den Umstand zurückzuführen, dass die Messreihen, die auf Basis eines real verteilten Datensatzes operieren, eine niedrigere Request-Anzahl pro Messung aufweisen als bei Messreihen mit konstanten-verteilten Datensätzen. Dies hat zur Folge, dass Neo4j und Db2 Graph V11.5.6.0 weniger Zeit für die Durchführung der Messungen benötigen. Der kleinere Messzeitraum sorgt dabei wiederum dafür, dass NMON weniger Datenpunkte für die Ressourcenstatistiken sammelt. Schließlich legt NMON während allen Messungen lediglich einen Datenpunkt pro Minute an. 
+Bei den beiden im Rahmen dieser Messreihe aufgezeichneten Ressourcenstatistiken fällt bereits bei der ersten Begutachtung auf, dass die Statistiken für Db2 Graph V11.5.6.0 und besonders Neo4j über weitaus weniger Datenpunkte verfügen als die Abbildungen aus dem vorausgegangen \autoref{auswertung:ressourcenauslastung:const}. Dies ist dabei auf den Umstand zurückzuführen, dass die Messreihen, die auf Basis eines real verteilten Datensatzes operieren, eine niedrigere Request-Anzahl pro Messung aufweisen als bei Messreihen mit konstant verteilten Datensätzen. Dies hat zur Folge, dass Neo4j und Db2 Graph V11.5.6.0 weniger Zeit für die Durchführung der Messungen benötigen. Der kleinere Messzeitraum sorgt dabei wiederum dafür, dass NMON weniger Datenpunkte für die Ressourcenstatistiken sammelt. Schließlich legt NMON während allen Messungen lediglich einen Datenpunkt pro Minute an. 
 
-Bei der Analyse der CPU-Auslastung fällt auf, dass Db2 Graph V11.5.6.0 \autoref{fig:nmon:10m:real:ga} und Neo4j \autoref{fig:nmon:10m:real:neo4j} mit durchschnittlich ca. 39 \% und 76 \% ähnliche Werte wie im vorausgegangen \autoref{auswertung:ressourcenauslastung:const} darlegen. So verursacht Neo4j über seinen Messzeitraum eine höhere CPU-Auslastung als V11.5.6.0 in seinem.   
+Bei der Analyse der CPU-Auslastung fällt auf, dass Db2 Graph V11.5.6.0 (\autoref{fig:nmon:10m:real:ga}) und Neo4j (\autoref{fig:nmon:10m:real:neo4j}) mit durchschnittlich ca. 39 \% und 76 \% ähnliche Werte wie im vorausgegangen \autoref{auswertung:ressourcenauslastung:const} darlegen. So verursacht Neo4j über seinen Messzeitraum eine höhere CPU-Auslastung als V11.5.6.0 in seinem.   
 
-Des Weiteren weisen beide Datenbanksysteme auch über den gesamten Verlauf der Messung ein Niveau auf, dass sie bis auf die erste Messung konstant halten. Wobei es hierbei zu beachten gilt, dass für diese Erhebung bei Neo4j lediglich vier Datenpunkte herangezogen werden.
+Des Weiteren weisen beide Datenbanksysteme auch über den gesamten Verlauf der Messung ein Niveau auf, das sie bis auf die erste Messung konstant halten. Wobei es hierbei zu beachten gilt, dass für diese Erhebung bei Neo4j lediglich vier Datenpunkte herangezogen werden.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/stats/linkbench-10m-real_ga.pdf}
-    \caption{Linkbench-Real-10M Auslastung Db2 Graph V11.5.6.0 (getNode)}
+    \caption{Linkbench-Real-10M Auslastung Db2 Graph V11.5.6.0 getNode}
     \label{fig:nmon:10m:real:ga}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=\textwidth]{images/stats/linkbench-10m-real_neo4j.pdf}
-    \caption{Linkbench-Real-10M Auslastung Neo4j (getNode)}
+    \caption{Linkbench-Real-10M Auslastung Neo4j getNode}
     \label{fig:nmon:10m:real:neo4j}
 \end{figure}
 
@@ -209,7 +209,7 @@ SELECT * FROM "LINKDB0"."LINKTABLE" WHERE "LINK_TYPE" = <LINK_TYPE> AND "ID1" = 
 SELECT "ID1", "ID2", "LINK_TYPE", "ID1", "ID2", "VISIBILITY","LINK_TYPE", "DATA", "ID2", "ID1", "VERSION", "TIME" FROM "LINKDB0"."LINKTABLE" WHERE "LINK_TYPE" = <LINK_TYPE> AND "ID1" = <NODE_ID1> AND "ID2" IN (VALUES <NODE_ID2_0>, <NODE_ID2_1>, <...>);
 \end{lstlisting}
 
-Bei der Untersuchung der von \texttt{countLink} und \texttt{getLinkList} sind jedoch größere Unterschiede erkennbar. So verfügt, wie in \autoref{db2graph:optimierung} erläutert wird, Beta 3 nicht über die Optimierungen \textit{Join Pushdown} und \textit{Limit Pushdown}, was sich im Kontext von \texttt{countLink} (\autoref{src:sql_countlink}) und \texttt{getLinkList} (\autoref{src:sql_getlinklist}) bemerkbar macht. Beta 3 erzeugt und sendet dabei den Aufzeichnungen zu Folge zwei SQL-Anweisungen an Db2, während V11.5.6.0 dazu in der Lage ist, die Logik der Gremlin-Query durch einen (impliziten) Join in eine SQL-Anweisung zu integrieren. Dies sollte sich auf die Performance der Queries auswirken, allerdings entgegen der in \autoref{ergebnisse} aufgeführten Messergebnisse zum Vorteil von V11.5.6.0 -- nicht Beta 3. 
+Bei der Untersuchung der von \texttt{countLink} und \texttt{getLinkList} sind jedoch größere Unterschiede erkennbar. So verfügt, wie in \autoref{db2graph:optimierung} erläutert wird, Beta 3 nicht über die Optimierungen \textit{Join Pushdown} und \textit{Limit Pushdown}, was sich im Kontext von \texttt{countLink} (\autoref{src:sql_countlink}) und \texttt{getLinkList} (\autoref{src:sql_getlinklist}) bemerkbar macht. Beta 3 erzeugt und sendet dabei den Aufzeichnungen zu Folge zwei SQL-Anweisungen an Db2, während V11.5.6.0 dazu in der Lage ist, die Logik der Gremlin-Query durch einen (impliziten) Join in eine SQL-Anweisung zu integrieren. Dies sollte sich auf die Performance der Queries auswirken, allerdings, entgegen der in \autoref{ergebnisse} aufgeführten Messergebnisse, zum Vorteil von V11.5.6.0, nicht Beta 3. 
 
 Des Weiteren reflektiert die von Beta 3 erzeugte Anweisung auch nicht die Existenz des Limit-Steps in SQL, da es die Optimierung \textit{Limit Pushdown} nicht beherrscht. Dies dürfte sich allerdings, wie in \autoref{analyse:datensatz} erläutert wird, nicht auf die Performance bei konstant verteilten Datensätzen auswirken. Da, wie in \autoref{analyse:datensatz} ebenfalls beschrieben wird, aufgrund dieser fehlenden Optimierung auch keine Messungen mit Beta 3 und real verteilten Datensätzen durchgeführt werden, sollte dieser Aspekt im Kontext des hier untersuchten Phänomens vernachlässigbar sein. 
 \begin{lstlisting}[caption={Generierter SQL-Code countLink},label=src:sql_countlink,language=SQL]
@@ -256,7 +256,7 @@ Abschließend kann zusammengefasst werden, dass auf Basis des hier durchgeführt
 \label{sql:performance}
 Um die Performance der von Db2 Graph erzeugten SQL-Anweisungen zu überprüfen, werden diese mittels des Db2-Werkzeuges \texttt{db2batch} in einer kleinen Messung gebenchmarkt. Anschließend wird überprüft, ob die in \autoref{sql:struktur} aufgestellten Hypothesen in der Praxis zutreffen.
 
-Wie hoch die Verarbeitungszeit der SQL-Anweisungen aus \autoref{src:sql_getnode} bis \ref{src:sql_getlinklist} ist, wird in \autoref{tab:sql_benchmark} dargestellt. Die darin abgebildeten Werte werden dabei mit dem \texttt{db2batch}-Werkzeug auf Basis des konstant verteilten Linkbench-10M Datensatzes ermittelt.  Außerdem gilt es zu erwähnen, dass die Werte bei \texttt{countLink} und \texttt{getLinkList} für Db2 Graph Beta 3 in \autoref{tab:sql_benchmark} die addierten Werte beider erzeugten SQL-Anweisungen widerspiegeln. 
+Wie hoch die Verarbeitungszeit der SQL-Anweisungen aus \autoref{src:sql_getnode} bis \ref{src:sql_getlinklist} ist, wird in \autoref{tab:sql_benchmark} dargestellt. Die darin abgebildeten Werte werden mit dem \texttt{db2batch}-Werkzeug auf Basis des konstant verteilten Linkbench-10M Datensatzes ermittelt. Außerdem gilt es zu erwähnen, dass die Werte bei \texttt{countLink} und \texttt{getLinkList} für Db2 Graph Beta 3 in \autoref{tab:sql_benchmark} die addierten Werte beider erzeugten SQL-Anweisungen widerspiegeln. 
 
 Bevor mit der Beurteilung der Werte in \autoref{tab:sql_benchmark} begonnen werden kann, muss darauf hingewiesen werden, dass die in der Tabelle aufgeführten Zeiten nicht mit den im Rahmen der Performance-Analyse ermittelten Latenzen vergleichbar sind. Schließlich liegen bei den Messungen mit dem \texttt{db2batch}-Werkzeug andere Bedingungen vor als bei dem Einsatz von Linkbench. 
 
